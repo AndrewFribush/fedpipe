@@ -41,6 +41,7 @@
     "docs:dev": "npm run docs:generate && npm run docs:typedoc && vitepress dev docs",
     "docs:build": "npm run docs:generate && npm run docs:typedoc && vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "docs:pull": "npm run build && node scripts/fetch-api-docs.mjs",
     "prepare": "npm run build"
   },
   "keywords": [
