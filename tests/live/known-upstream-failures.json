@@ -1,0 +1,7 @@
+{
+  "_comment": "Tools that fail because of the upstream API, not this repo. Each is run with it.fails: the nightly stays green while the outage persists and turns RED when the tool starts working again — that is the signal to remove the entry. Keep the reason and date.",
+  "fbi_use_of_force": { "since": "2026-09-01", "reason": "FBI CDE removed every /participation/*/uof* endpoint (all variants 404; other CDE endpoints still 200)" },
+  "nrel_fuel_stations": { "since": "2026-09-01", "reason": "nrel.gov does not resolve in DNS (checked 8.8.8.8 and 1.1.1.1)" },
+  "nrel_utility_rates": { "since": "2026-09-01", "reason": "nrel.gov does not resolve in DNS" },
+  "nrel_solar": { "since": "2026-09-01", "reason": "nrel.gov does not resolve in DNS" }
+}

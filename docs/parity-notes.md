@@ -120,7 +120,7 @@ The community [anshumax/world_bank_mcp_server](https://github.com/anshumax/world
 
 ## Still open (not started)
 
-- Recorded-fixture contract tests per module (offline shape checks).
+- Recorded-fixture contract tests per module (offline shape checks). (The nightly live run is in place; this would be the offline tier.)
 - SEC segment data; Form 3/5; concept search; CAGR.
 - Census methodology guidance; ZCTA / county-subdivision name resolution.
 - Data Commons module.

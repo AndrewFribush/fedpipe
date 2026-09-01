@@ -14,6 +14,12 @@
 import { describe, it, expect } from "vitest";
 import { moduleDirs, getModule, getTools, getAuth, type ModuleTool } from "../helpers.js";
 import { TOOL_ARGS, type Args, type DeriveCtx } from "./args.js";
+import knownFailuresJson from "./known-upstream-failures.json" with { type: "json" };
+
+/** Tools currently broken upstream — run with it.fails so recovery shows up as a red test. */
+const KNOWN_UPSTREAM: Record<string, { since: string; reason: string }> = Object.fromEntries(
+  Object.entries(knownFailuresJson).filter(([k]) => !k.startsWith("_")) as [string, { since: string; reason: string }][],
+);
 
 /** Modules that declare an auth env var but degrade gracefully without one. */
 const WORKS_WITHOUT_KEY = new Set(["fda", "bls"]);
@@ -89,7 +95,10 @@ describe.each(moduleDirs)("%s", (dir) => {
   const label = missing.length ? ` [skipped: set ${missing.join(", ")}]` : "";
 
   for (const tool of getTools(mod)) {
-    runner(`${tool.name}${label}`, async () => {
+    const known = KNOWN_UPSTREAM[tool.name];
+    const run = known && !missing.length ? it.fails : runner;
+    const suffix = known ? ` [expected to fail — upstream since ${known.since}: ${known.reason}]` : label;
+    run(`${tool.name}${suffix}`, async () => {
       const args = await resolveArgs(tool);
       const parsed = (tool.parameters as any)?.safeParse?.(args);
       if (parsed && !parsed.success) throw new Error(`args in tests/live/args.ts do not satisfy schema: ${parsed.error.message}`);

@@ -264,3 +264,9 @@ Two suites:
 Every tool with required params needs an entry in `tests/live/args.ts` — the suite fails if one is
 missing. Detail tools whose IDs churn (press releases, filings, complaints) derive their ID at runtime
 from the sibling search tool. Run one module with `npm run test:live -- -t usgs`.
+
+Tools broken *upstream* (an agency removed an endpoint, a domain is down) go in
+`tests/live/known-upstream-failures.json` with the date and reason. They run with `it.fails`, so the
+suite stays green during the outage and turns red the day the tool starts working again — remove the
+entry then. The suite runs nightly in CI (`.github/workflows/live-smoke.yml`) with API keys from repo
+secrets; the job summary lists every failure and per-module counts.
