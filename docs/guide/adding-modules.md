@@ -251,3 +251,16 @@ npx tsc          # compile
 ```
 
 That's it. The server auto-discovers the new folder — no imports or wiring needed.
+
+## Testing
+
+Two suites:
+
+- `npm test` — static checks (module structure, schemas, sandbox, rate limiter). Runs in CI, no network.
+- `npm run test:live` — **live smoke suite**: calls every tool once against the real upstream API.
+  Not run in CI. Modules whose API key env var is unset are skipped (the skip reason names the var).
+  Failures are tagged `[REPO BUG (4xx)]` vs `[UPSTREAM (5xx/timeout)]`.
+
+Every tool with required params needs an entry in `tests/live/args.ts` — the suite fails if one is
+missing. Detail tools whose IDs churn (press releases, filings, complaints) derive their ID at runtime
+from the sibling search tool. Run one module with `npm run test:live -- -t usgs`.
