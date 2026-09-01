@@ -10,8 +10,8 @@ export default {
   displayName: "SEC EDGAR",
   category: "Financial",
   description: "Company filings, financial data (XBRL), and full-text search across SEC EDGAR",
-  workflow: "sec_filing_search to find companies/CIKs → sec_company_search for details → sec_company_financials for XBRL data",
-  tips: "No API key required. Rate limit: 10 req/sec. CIK numbers must be looked up first — use sec_filing_search to find them by company name.",
+  workflow: "sec_ticker_lookup (name/ticker → CIK; every tool also accepts a ticker directly) → sec_company_financials for XBRL metrics with YoY → sec_recent_filings (8-K events decoded) → sec_filing_text for risk factors / MD&A → sec_insider_transactions for Form 4 buys/sells → sec_concept_across_companies to rank every filer (or a peer set via companies=) on any concept; sec_company_concept for one metric's full history.",
+  tips: "No API key required (set SEC_CONTACT_EMAIL for the User-Agent). Rate limit: 10 req/sec. Insider signal = codes P (buy) and S (sell); A/M/F are compensation mechanics. Balance-sheet frames need an instant period: 'CY2023Q4I'.",
   domains: ["finance"],
   crossRef: [
     { question: "drug investigation", route: "sec_company_financials (pharma company financials via XBRL)" },
