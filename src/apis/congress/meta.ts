@@ -70,6 +70,7 @@ export default {
     } as Record<number, string>,
     docs: {
       "API Docs": "https://api.congress.gov/",
+      "API Guide (GitHub)": "https://raw.githubusercontent.com/LibraryOfCongress/api.congress.gov/main/README.md",
       "Interactive Docs": "https://api.congress.gov/#/",
       "Sign Up": "https://api.congress.gov/sign-up/",
       "GitHub": "https://github.com/LibraryOfCongress/api.congress.gov/",

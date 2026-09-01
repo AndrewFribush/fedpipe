@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Tropical Storm Edouard to Impact the Northwest Gulf Coast; Heat Expands Eastward
+# Tropical Storm Edouard Impacting the Northwestern Gulf Coast; Hazardous Heat expands in the East
 
-Tropical Storm Edouard will bring tropical storm to hurricane conditions, heavy rainfall, flash and some river flooding, and storm surge to portions of Upper Texas and southwestern Louisiana coasts into Wednesday. Severe thunderstorms are possible in the Central Plains and Mid-Atlantic. Hot and humid conditions will expand from the Central Plains into the Ohio Valley and Mid-Atlantic.
+Tropical Storm Edouard will impact the northwestern Gulf Coast through Wednesday with gusty winds, storm surge, and heavy rainfall. Flash and river flooding will be possible, especially in southeastern Texas. Hazardous heat will expand across the central and eastern U.S. by mid-week, and daily chances for severe thunderstorms are expected from the eastern Great Lakes to the Mid-Atlantic this week.
 Read More >
 
 Customize Your Weather.gov

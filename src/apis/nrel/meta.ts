@@ -24,10 +24,10 @@ export default {
   reference: {
   fuelTypes: FUEL_TYPES,
   docs: {
-    "NREL Developer": "https://developer.nrel.gov/",
-    "Alt Fuel Stations API": "https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/",
-    "Utility Rates API": "https://developer.nrel.gov/docs/electricity/utility-rates-v3/",
-    "Solar Resource API": "https://developer.nrel.gov/docs/solar/solar-resource-v1/",
+    "NREL Developer (now developer.nlr.gov)": "https://developer.nlr.gov/",
+    "Alt Fuel Stations API": "https://developer.nlr.gov/docs/transportation/alt-fuel-stations-v1/",
+    "Utility Rates API": "https://developer.nlr.gov/docs/electricity/utility-rates-v3/",
+    "Solar Resource API": "https://developer.nlr.gov/docs/solar/solar-resource-v1/",
   },
 },
 } satisfies ModuleMeta;

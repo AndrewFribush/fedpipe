@@ -98,7 +98,9 @@ async function fetchDoc({ module: mod, label, url }) {
       const type = (res.headers.get("content-type") ?? "").toLowerCase();
       if (type.includes("pdf")) return { mod, label, url, status: "pdf", body: null };
       // Anchored on the subtype: "openxmlformats" (xlsx) must not match "xml".
-      if (!/^text\/|[/+](html|json|yaml|xml|markdown|csv|plain)\b/.test(type.split(";")[0])) {
+      // Some servers ship yaml/json specs as octet-stream (data.uspto.gov) — trust the extension.
+      const textExt = /\.(ya?ml|json|md|txt)$/i.test(new URL(url).pathname);
+      if (!textExt && !/^text\/|[/+](html|json|yaml|xml|markdown|csv|plain)\b/.test(type.split(";")[0])) {
         return { mod, label, url, status: `binary (${type.split(";")[0]})`, body: null };
       }
       const raw = await res.text();
@@ -106,11 +108,20 @@ async function fetchDoc({ module: mod, label, url }) {
       if (type.includes("json")) {
         try { body = "```json\n" + JSON.stringify(JSON.parse(raw), null, 2) + "\n```"; }
         catch { body = raw; }
-      } else if (type.includes("html")) {
+      } else if (type.includes("html") && !textExt) {
         body = htmlToText(raw);
-        if (body.length < SHELL_THRESHOLD) return { mod, label, url, status: "client-rendered", body: null };
+        if (body.length < SHELL_THRESHOLD) {
+          // Some sites (huduser.gov) serve a JS shell to unknown UAs with HTTP 200.
+          if (attempt === 0) continue;
+          return { mod, label, url, status: "client-rendered", body: null };
+        }
       } else {
-        body = raw.trim(); // markdown / plain text — keep verbatim
+        body = raw.trim(); // markdown / yaml / plain text — keep verbatim
+        // A WAF can serve an HTML challenge in place of a spec file with HTTP 200.
+        if (/^<(!doctype|html)/i.test(body)) {
+          if (attempt === 0) continue;
+          return { mod, label, url, status: "html challenge page", body: null };
+        }
       }
       return { mod, label, url, status: "ok", body };
     } catch (err) {

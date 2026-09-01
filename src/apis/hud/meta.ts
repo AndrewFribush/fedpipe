@@ -30,8 +30,7 @@ export default {
   ],
   reference: {
     docs: {
-      "FMR API": "https://www.huduser.gov/portal/dataset/fmr-api.html",
-      "Income Limits API": "https://www.huduser.gov/portal/dataset/il-api.html",
+      "FMR & Income Limits API": "https://www.huduser.gov/portal/dataset/fmr-api.html",
       "API Registration": "https://www.huduser.gov/hudapi/public/register",
     },
   },

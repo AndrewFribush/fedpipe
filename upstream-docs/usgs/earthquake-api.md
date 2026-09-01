@@ -171,10 +171,10 @@ is assumed. Examples:
 2026-09-01,
 Implicit UTC timezone, and time at start of the day (00:00:00)
 
-2026-09-01T21:02:49,
+2026-09-01T21:57:05,
 Implicit UTC timezone.
 
-2026-09-01T21:02:49+00:00,
+2026-09-01T21:57:05+00:00,
 Explicit timezone.
 
 parameter
