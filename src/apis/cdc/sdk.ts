@@ -157,7 +157,7 @@ export async function getWeeklyDeaths(opts?: {
   state?: string; year?: number; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  clauses.push(`group = 'By Week'`);
+  clauses.push("`group` = 'By Week'"); // `group` is a SoQL reserved word — must be backticked
   if (opts?.state) clauses.push(`state = '${opts.state}'`);
   if (opts?.year) clauses.push(`year = '${opts.year}'`);
   return queryDataset(DATASETS.weekly_deaths.id, {
