@@ -199,12 +199,11 @@ export async function getComplaintAggregations(opts: {
   zip_code?: string;
   size?: number;
 }): Promise<ComplaintSearchResult> {
-  return searchComplaints({
-    ...opts,
-    size: 0,
-    no_aggs: false,
-    field: opts.field,
-  });
+  // `field` here is the aggregation to read, NOT the API's `field` search-scope param
+  // (which only accepts all|complaint_what_happened|company|company_public_response and
+  // returns HTTP 400 otherwise). All aggregations come back when no_aggs=false.
+  const { field: _field, ...rest } = opts;
+  return searchComplaints({ ...rest, size: 0, no_aggs: false });
 }
 
 /**
@@ -277,7 +276,7 @@ export async function getStateComplaints(opts?: {
  *   const suggestions = await suggestCompany("wells");
  */
 export async function suggestCompany(text: string, size?: number): Promise<SuggestResult> {
-  return client.get<SuggestResult>("/_suggest_company", {
+  return client.get<SuggestResult>("/_suggest_company/", {
     text,
     size: size ?? 10,
   });
@@ -290,7 +289,7 @@ export async function suggestCompany(text: string, size?: number): Promise<Sugge
  *   const suggestions = await suggestSearch("mortgage fraud");
  */
 export async function suggestSearch(text: string, size?: number): Promise<SuggestResult> {
-  return client.get<SuggestResult>("/_suggest", {
+  return client.get<SuggestResult>("/_suggest/", {
     text,
     size: size ?? 10,
   });

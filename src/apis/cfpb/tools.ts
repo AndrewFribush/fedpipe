@@ -77,8 +77,9 @@ export const tools: Tool<any, any>[] = [
       const total = typeof data.hits?.total === "object" ? data.hits.total.value : data.hits?.total ?? 0;
       // Extract aggregation buckets — the key varies by field
       const aggs = (data as any).aggregations ?? (data as any).aggs ?? {};
-      const firstKey = Object.keys(aggs)[0];
-      const buckets: Record<string, unknown>[] = firstKey ? (aggs[firstKey]?.buckets ?? []) : [];
+      const agg = aggs[args.field];
+      // Aggregations are nested one level (agg.<field>.buckets) or flat (agg.buckets)
+      const buckets: Record<string, unknown>[] = agg?.[args.field]?.buckets ?? agg?.buckets ?? [];
       if (!buckets.length) return emptyResponse(`No aggregation results for '${args.field}'.`);
       return tableResponse(
         `CFPB aggregation by '${args.field}': ${total.toLocaleString()} total complaints, ${buckets.length} groups`,
