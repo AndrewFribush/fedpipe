@@ -10,8 +10,8 @@ export default {
   category: "Economic",
   description: "800K+ economic time series: GDP, CPI, unemployment, interest rates, money supply, housing",
   auth: { envVar: "FRED_API_KEY", signup: "https://fredaccount.stlouisfed.org/apikeys" },
-  workflow: "fred_search → fred_series_data to get values",
-  tips: "Popular: GDP, UNRATE, CPIAUCSL, FEDFUNDS, DGS10, MORTGAGE30US, M2SL, SP500",
+  workflow: "fred_search (or fred_browse to walk categories/releases) → fred_series_data to get values. Use units='pc1' for YoY % change instead of computing it yourself; vintage_dates for revision history.",
+  tips: "Popular: GDP, UNRATE, CPIAUCSL, FEDFUNDS, DGS10, MORTGAGE30US, M2SL, SP500. fred_series_data units: pc1 (YoY %), pch (period %), chg (change), log. fred_browse kind='updates' answers 'what data just came out?'.",
   domains: ["economy", "finance", "housing"],
   crossRef: [
     { question: "debt/deficit", route: "fred_series_data with GDP, FYFSGDA188S (deficit as % of GDP)" },
