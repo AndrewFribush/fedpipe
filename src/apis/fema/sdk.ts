@@ -66,11 +66,12 @@ export interface PublicAssistanceRecord {
   state?: string;
   applicantName?: string;
   county?: string;
-  damageCategory?: string;
-  projectAmount?: number;
+  damageCategoryCode?: string;
   federalShareObligated?: number;
-  obligatedDate?: string;
+  dateObligated?: string;
   projectTitle?: string;
+  declarationTitle?: string;
+  incidentType?: string;
   [key: string]: unknown;
 }
 
@@ -258,7 +259,7 @@ export async function getPublicAssistance(opts?: {
   const params: Record<string, string> = {
     $format: "json",
     $top: String(opts?.top ?? 50),
-    $orderby: "obligatedDate desc",
+    $orderby: "dateObligated desc",
   };
   if (opts?.skip) params.$skip = String(opts.skip);
 
