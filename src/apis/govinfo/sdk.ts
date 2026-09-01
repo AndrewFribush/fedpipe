@@ -174,6 +174,9 @@ export async function getPackageGranules(packageId: string, pageSize = 5): Promi
  * top-level metadata. We try the htm link first (pre-formatted text), then
  * fall back to granules for older/uncommon packages.
  */
+/** Bill text versions, most final first: enrolled → engrossed → reported → introduced. */
+const BILL_VERSION_FALLBACK = ["enr", "eas", "eah", "eh", "es", "rs", "rh", "is", "ih"];
+
 export async function getBillText(opts: {
   congress: number;
   billType: string;
@@ -181,10 +184,23 @@ export async function getBillText(opts: {
   version?: string;
   maxLength?: number;
 }): Promise<BillTextResult> {
-  const ver = opts.version || "enr";
-  const packageId = `BILLS-${opts.congress}${opts.billType.toLowerCase()}${opts.billNumber}${ver}`;
-
-  const meta = await getPackageSummary(packageId);
+  // Most bills are never enrolled, so a fixed default of "enr" 404s. If no version was
+  // requested, walk from the most final version to the introduced version until one exists.
+  const candidates = opts.version ? [opts.version] : BILL_VERSION_FALLBACK;
+  let packageId = "";
+  let meta: Record<string, unknown> | undefined;
+  let lastErr: unknown;
+  for (const ver of candidates) {
+    packageId = `BILLS-${opts.congress}${opts.billType.toLowerCase()}${opts.billNumber}${ver}`;
+    try {
+      meta = await getPackageSummary(packageId);
+      break;
+    } catch (e) {
+      lastErr = e;
+      if (!/HTTP 404/.test(String((e as Error)?.message))) throw e;
+    }
+  }
+  if (!meta) throw lastErr;
   const download = (meta.download ?? {}) as Record<string, unknown>;
 
   let text = "";
