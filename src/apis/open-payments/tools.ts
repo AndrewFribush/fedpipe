@@ -65,6 +65,11 @@ export const tools: Tool<any, any>[] = [
       limit: z.number().int().max(100).default(20).describe("Number of top results (default 20)"),
     }),
     execute: async (args) => {
+      // Unfiltered sorts/group-bys scan the whole ~14M-row annual dataset and time out upstream
+      // (3+ minutes); with a state/company/specialty filter they return in ~2s.
+      if (!args.state && !args.company && !args.specialty && !args.doctor) {
+        throw new Error("open_payments_top: provide at least one of state, company, specialty, or doctor — an unfiltered sort times out on the CMS API.");
+      }
       const data = await searchPaymentsAdvanced({
         ...args,
         sortBy: "total_amount_of_payment_usdollars",
@@ -93,6 +98,11 @@ export const tools: Tool<any, any>[] = [
       limit: z.number().int().max(100).default(20).describe("Number of top doctors (default 20)"),
     }),
     execute: async (args) => {
+      // Unfiltered sorts/group-bys scan the whole ~14M-row annual dataset and time out upstream
+      // (3+ minutes); with a state/company/specialty filter they return in ~2s.
+      if (!args.state && !args.company && !args.specialty) {
+        throw new Error("open_payments_top_doctors: provide at least one of state, company, specialty, or doctor — an unfiltered sort times out on the CMS API.");
+      }
       const data = await getTopDoctorTotals(args);
       if (!data.results?.length) return emptyResponse("No grouped payment data found.");
       return tableResponse(
