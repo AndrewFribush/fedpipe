@@ -6,7 +6,7 @@
  * Rate limit: 1,000 req/hour without token, 20x with token.
  *
  * Usage:
- *   import { queryDataset, getLeadingCausesOfDeath } from "us-gov-open-data-mcp/sdk/cdc";
+ *   import { queryDataset, getLeadingCausesOfDeath } from "fedpipe/sdk/cdc";
  *   const data = await getLeadingCausesOfDeath({ state: "New York", year: 2021 });
  */
 

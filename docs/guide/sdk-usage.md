@@ -5,7 +5,7 @@ Use the SDK directly in your TypeScript/JavaScript code without running the MCP 
 ### Installation
 
 ```bash
-npm install us-gov-open-data-mcp
+npm install fedpipe
 ```
 
 ### Basic Pattern
@@ -13,7 +13,7 @@ npm install us-gov-open-data-mcp
 Every SDK module follows the same pattern — import the function, call it, get typed results:
 
 ```typescript
-import { getObservations } from "us-gov-open-data-mcp/sdk/fred";
+import { getObservations } from "fedpipe/sdk/fred";
 
 const gdp = await getObservations("GDP", { sort: "desc", limit: 5 });
 
@@ -29,7 +29,7 @@ All functions include disk-backed caching, retry with exponential backoff, and r
 ### Get GDP, Unemployment, Inflation from FRED
 
 ```typescript
-import { getObservations, searchSeries } from "us-gov-open-data-mcp/sdk/fred";
+import { getObservations, searchSeries } from "fedpipe/sdk/fred";
 
 // Latest GDP
 const gdp = await getObservations("GDP", { sort: "desc", limit: 1 });
@@ -50,7 +50,7 @@ Set `FRED_API_KEY` env var. Get one free at [fredaccount.stlouisfed.org/apikeys]
 ### Query Treasury Fiscal Data
 
 ```typescript
-import { queryFiscalData, searchEndpoints } from "us-gov-open-data-mcp/sdk/treasury";
+import { queryFiscalData, searchEndpoints } from "fedpipe/sdk/treasury";
 
 // Find the right endpoint
 const endpoints = searchEndpoints("debt");
@@ -69,7 +69,7 @@ No API key required.
 ### Compare Countries via World Bank
 
 ```typescript
-import { compareCountries } from "us-gov-open-data-mcp/sdk/world-bank";
+import { compareCountries } from "fedpipe/sdk/world-bank";
 
 // Compare health spending per capita: US, Germany, Canada, UK
 const health = await compareCountries(
@@ -94,7 +94,7 @@ import {
   searchBills,
   getBillDetails,
   getSenateVotes,
-} from "us-gov-open-data-mcp/sdk/congress";
+} from "fedpipe/sdk/congress";
 
 // Search for bills about AI
 const bills = await searchBills({ query: "artificial intelligence", congress: 118 });
@@ -114,7 +114,7 @@ console.log(vote);
 ### Search Executive Orders
 
 ```typescript
-import { searchExecutiveOrders } from "us-gov-open-data-mcp/sdk/federal-register";
+import { searchExecutiveOrders } from "fedpipe/sdk/federal-register";
 
 const eos = await searchExecutiveOrders({
   president: "donald-trump",
@@ -138,7 +138,7 @@ import {
   getCandidateFinancials,
   searchCommittees,
   getCommitteeDisbursements,
-} from "us-gov-open-data-mcp/sdk/fec";
+} from "fedpipe/sdk/fec";
 
 // Find a candidate
 const candidates = await searchCandidates({ name: "Mike Crapo", state: "ID" });
@@ -169,7 +169,7 @@ for (const d of disbursements.results) {
 ### Search Lobbying Filings
 
 ```typescript
-import { searchFilings, getFilingDetail } from "us-gov-open-data-mcp/sdk/senate-lobbying";
+import { searchFilings, getFilingDetail } from "fedpipe/sdk/senate-lobbying";
 
 // Find lobbying by a company
 const filings = await searchFilings({
@@ -189,7 +189,7 @@ No API key required.
 ### Leading Causes of Death by State
 
 ```typescript
-import { getLeadingCausesOfDeath, getMortalityRates } from "us-gov-open-data-mcp/sdk/cdc";
+import { getLeadingCausesOfDeath, getMortalityRates } from "fedpipe/sdk/cdc";
 
 // By state
 const deaths = await getLeadingCausesOfDeath({
@@ -209,7 +209,7 @@ No API key required.
 ### Search Clinical Trials
 
 ```typescript
-import { searchTrials } from "us-gov-open-data-mcp/sdk/clinical-trials";
+import { searchTrials } from "fedpipe/sdk/clinical-trials";
 
 const trials = await searchTrials({
   condition: "diabetes",
@@ -230,7 +230,7 @@ No API key required.
 ### Who Gets the Money
 
 ```typescript
-import { spendingByAgency, searchAwards, spendingByState } from "us-gov-open-data-mcp/sdk/usaspending";
+import { spendingByAgency, searchAwards, spendingByState } from "fedpipe/sdk/usaspending";
 
 // Top agencies by spending
 const agencies = await spendingByAgency({ fiscalYear: 2025, limit: 10 });
@@ -257,9 +257,9 @@ No API key required.
 The real power is combining modules. Here's an example that cross-references:
 
 ```typescript
-import { getObservations } from "us-gov-open-data-mcp/sdk/fred";
-import { queryFiscalData } from "us-gov-open-data-mcp/sdk/treasury";
-import { compareCountries } from "us-gov-open-data-mcp/sdk/world-bank";
+import { getObservations } from "fedpipe/sdk/fred";
+import { queryFiscalData } from "fedpipe/sdk/treasury";
+import { compareCountries } from "fedpipe/sdk/world-bank";
 
 // Get U.S. GDP
 const gdp = await getObservations("GDP", { sort: "desc", limit: 1 });

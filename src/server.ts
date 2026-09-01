@@ -171,7 +171,7 @@ for (const mod of activeModules) {
 // ─── Server ──────────────────────────────────────────────────────────
 
 const server = new FastMCP({
-  name: "US Government Open Data",
+  name: "fedpipe",
   version: "2.0.0",
   logger,
   instructions: buildInstructions(activeModules),

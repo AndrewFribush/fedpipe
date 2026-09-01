@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { queryEia } from "us-gov-open-data-mcp/sdk/eia";
+ *   import { queryEia } from "fedpipe/sdk/eia";
  *
  * Requires EIA_API_KEY env var — register at https://www.eia.gov/opendata/register.php
  */

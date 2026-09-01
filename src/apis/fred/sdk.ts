@@ -5,7 +5,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getObservations, searchSeries } from "us-gov-open-data-mcp/sdk/fred";
+ *   import { getObservations, searchSeries } from "fedpipe/sdk/fred";
  *
  *   const gdp = await getObservations("GDP", { start: "2024-01-01" });
  *   console.log(gdp.observations);

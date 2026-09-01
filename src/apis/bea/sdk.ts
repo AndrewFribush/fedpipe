@@ -6,7 +6,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getNationalGdp, getGdpByState } from "us-gov-open-data-mcp/sdk/bea";
+ *   import { getNationalGdp, getGdpByState } from "fedpipe/sdk/bea";
  *
  *   const gdp = await getNationalGdp({ year: "2023" });
  *   console.log(gdp.series);

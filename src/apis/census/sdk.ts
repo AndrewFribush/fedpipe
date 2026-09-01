@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { queryCensus, searchVariables } from "us-gov-open-data-mcp/sdk/census";
+ *   import { queryCensus, searchVariables } from "fedpipe/sdk/census";
  *
  *   const data = await queryCensus("2023/acs/acs1", "NAME,B01001_001E", "state:*");
  *   console.log(data.headers, data.rows);

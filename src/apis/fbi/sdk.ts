@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getAgenciesByState, getSummarizedCrime, getArrestData } from "us-gov-open-data-mcp/sdk/fbi";
+ *   import { getAgenciesByState, getSummarizedCrime, getArrestData } from "fedpipe/sdk/fbi";
  *
  * Requires DATA_GOV_API_KEY env var. Get one at https://api.data.gov/signup/
  * Base URL: https://api.usa.gov/crime/fbi/cde

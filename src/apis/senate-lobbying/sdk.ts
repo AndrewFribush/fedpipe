@@ -5,7 +5,7 @@
  * No API key required. Returns paginated JSON.
  *
  * Usage:
- *   import { searchFilings, searchContributions } from "us-gov-open-data-mcp/sdk/senate-lobbying";
+ *   import { searchFilings, searchContributions } from "fedpipe/sdk/senate-lobbying";
  *   const filings = await searchFilings({ registrant_name: "Pfizer", filing_year: 2025 });
  */
 

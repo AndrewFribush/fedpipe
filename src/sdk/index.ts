@@ -2,11 +2,11 @@
  * SDK barrel export — import any SDK function without running the MCP server.
  *
  * Usage:
- *   import { searchBills, getBillDetails } from "us-gov-open-data-mcp/sdk/congress";
- *   import { searchFilings } from "us-gov-open-data-mcp/sdk/senate-lobbying";
+ *   import { searchBills, getBillDetails } from "fedpipe/sdk/congress";
+ *   import { searchFilings } from "fedpipe/sdk/senate-lobbying";
  *
  * Or import everything:
- *   import * as sdk from "us-gov-open-data-mcp/sdk";
+ *   import * as sdk from "fedpipe/sdk";
  *   const bills = await sdk.congress.searchBills({ congress: 118 });
  *
  * Each sub-module is a standalone typed client with caching, retry, and rate limiting.

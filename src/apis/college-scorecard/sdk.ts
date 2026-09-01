@@ -6,7 +6,7 @@
  * Requires DATA_GOV_API_KEY (same key used for FBI/GovInfo — get one at https://api.data.gov/signup).
  *
  * Usage:
- *   import { searchSchools, getSchoolById } from "us-gov-open-data-mcp/sdk/college-scorecard";
+ *   import { searchSchools, getSchoolById } from "fedpipe/sdk/college-scorecard";
  *   const results = await searchSchools({ name: "MIT", fields: POPULAR_FIELDS });
  */
 

@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchFacilities, getUVIndex, getToxicReleases } from "us-gov-open-data-mcp/sdk/epa";
+ *   import { searchFacilities, getUVIndex, getToxicReleases } from "fedpipe/sdk/epa";
  *
  *   const facilities = await searchFacilities({ state: "NY", mediaType: "air", majorOnly: true });
  *   const uv = await getUVIndex({ zip: "10001" });

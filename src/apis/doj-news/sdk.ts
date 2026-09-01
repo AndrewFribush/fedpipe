@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchPressReleases, getPressRelease, searchBlogEntries } from "us-gov-open-data-mcp/sdk/doj-news";
+ *   import { searchPressReleases, getPressRelease, searchBlogEntries } from "fedpipe/sdk/doj-news";
  *
  *   const releases = await searchPressReleases({ sort: "date", direction: "DESC", pagesize: 10 });
  *   const detail = await getPressRelease("98baba74-8922-41de-95f1-73a82695a3d1");

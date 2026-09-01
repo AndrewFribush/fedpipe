@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchBills, getBillDetails } from "us-gov-open-data-mcp/sdk/congress";
+ *   import { searchBills, getBillDetails } from "fedpipe/sdk/congress";
  *
  * Requires DATA_GOV_API_KEY env var. Get one at https://api.data.gov/signup/
  */
@@ -323,7 +323,7 @@ async function getHouseVotesFromClerk(opts: {
     const url = `${HOUSE_CLERK_BASE}/${year}/roll${num}.xml`;
 
     const resp = await fetch(url, {
-      headers: { "User-Agent": "us-gov-open-data-mcp/2.0 (gov-accountability-tool)" },
+      headers: { "User-Agent": "fedpipe/2.0 (gov-accountability-tool)" },
       signal: AbortSignal.timeout(30_000),
     });
     if (!resp.ok) throw new Error(`House vote fetch failed: ${resp.status} ${resp.statusText} (${url})`);
@@ -377,7 +377,7 @@ async function getHouseVotesFromClerk(opts: {
   // List votes: parse HTML index page from clerk.house.gov
   const url = `${HOUSE_CLERK_BASE}/${year}/index.asp`;
   const resp = await fetch(url, {
-    headers: { "User-Agent": "us-gov-open-data-mcp/2.0 (gov-accountability-tool)" },
+    headers: { "User-Agent": "fedpipe/2.0 (gov-accountability-tool)" },
     signal: AbortSignal.timeout(30_000),
   });
   if (!resp.ok) throw new Error(`House vote index fetch failed: ${resp.status} (${url})`);
@@ -1616,7 +1616,7 @@ export async function getSenateVotes(opts: {
       `/vote_${congressNum}_${sessionNum}_${padVoteNumber(opts.vote_number)}.xml`;
 
     const resp = await fetch(url, {
-      headers: { "User-Agent": "us-gov-open-data-mcp/2.0 (gov-accountability-tool)" },
+      headers: { "User-Agent": "fedpipe/2.0 (gov-accountability-tool)" },
       signal: AbortSignal.timeout(30_000),
     });
     if (!resp.ok) throw new Error(`Senate vote fetch failed: ${resp.status} ${resp.statusText} (${url})`);
@@ -1688,7 +1688,7 @@ export async function getSenateVotes(opts: {
   // List recent votes — fetch list XML
   const listUrl = `${SENATE_BASE}/roll_call_lists/vote_menu_${congressNum}_${sessionNum}.xml`;
   const resp = await fetch(listUrl, {
-    headers: { "User-Agent": "us-gov-open-data-mcp/2.0 (gov-accountability-tool)" },
+    headers: { "User-Agent": "fedpipe/2.0 (gov-accountability-tool)" },
     signal: AbortSignal.timeout(30_000),
   });
   if (!resp.ok) throw new Error(`Senate vote list fetch failed: ${resp.status} ${resp.statusText} (${listUrl})`);

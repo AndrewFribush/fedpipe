@@ -8,7 +8,7 @@
  * Auth: none. NWS requires a descriptive User-Agent header per their guidelines.
  *
  * Usage:
- *   import { getForecast, getActiveAlerts } from "us-gov-open-data-mcp/sdk/nws";
+ *   import { getForecast, getActiveAlerts } from "fedpipe/sdk/nws";
  *   const fc = await getForecast({ lat: 38.89, lon: -77.04 });
  *   const alerts = await getActiveAlerts({ area: "CA" });
  */
@@ -17,7 +17,7 @@ import { createClient } from "../../shared/client.js";
 
 const USER_AGENT =
   process.env.NWS_USER_AGENT?.trim() ||
-  "us-gov-open-data-mcp (https://github.com/lzinga/us-gov-open-data-mcp)";
+  "fedpipe (https://github.com/AndrewFribush/fedpipe)";
 
 const api = createClient({
   baseUrl: "https://api.weather.gov",

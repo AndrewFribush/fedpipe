@@ -12,7 +12,7 @@
  *
  * Standalone - no MCP server required. Usage:
  *
- *   import { searchCeilingRates } from "us-gov-open-data-mcp/sdk/gsa-calc";
+ *   import { searchCeilingRates } from "fedpipe/sdk/gsa-calc";
  *
  *   const rates = await searchCeilingRates({ keyword: "software engineer" });
  *   console.log(rates.total, rates.hits);

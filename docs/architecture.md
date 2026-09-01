@@ -31,7 +31,7 @@ src/
 `createClient(config)` returns an `ApiClient` with `.get()`, `.post()`, `.clearCache()`.
 
 Built-in:
-- **Disk-backed TTL cache** — survives MCP server restarts (`~/.cache/us-gov-open-data-mcp/`)
+- **Disk-backed TTL cache** — survives MCP server restarts (`~/.cache/fedpipe/`)
 - **Retry with exponential backoff** — 429, 502, 503, 504
 - **Token-bucket rate limiting** — per-client
 - **Timeout** (30s default)

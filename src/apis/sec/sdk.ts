@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getCompanyByCik, getCompanyFacts, searchEdgar } from "us-gov-open-data-mcp/sdk/sec";
+ *   import { getCompanyByCik, getCompanyFacts, searchEdgar } from "fedpipe/sdk/sec";
  *
  * No API key required. Must include User-Agent with contact info.
  * Rate limit: 10 requests/second.
@@ -15,7 +15,7 @@ import he from "he";
 
 // ─── Clients ─────────────────────────────────────────────────────────
 
-const USER_AGENT = `us-gov-open-data-mcp/2.0 (${process.env.SEC_CONTACT_EMAIL || "contact@example.com"})`;
+const USER_AGENT = `fedpipe/2.0 (${process.env.SEC_CONTACT_EMAIL || "contact@example.com"})`;
 
 const dataApi = createClient({
   baseUrl: "https://data.sec.gov",

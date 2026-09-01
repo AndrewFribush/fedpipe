@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchProjects, searchPublications } from "us-gov-open-data-mcp/sdk/nih";
+ *   import { searchProjects, searchPublications } from "fedpipe/sdk/nih";
  *
  *   const projects = await searchProjects({ text: "Alzheimer", fiscal_years: [2024] });
  *   const pubs = await searchPublications({ core_project_nums: ["R01AG060942"] });

@@ -16,7 +16,7 @@
 ### Quick Start
 
 ```bash
-npx us-gov-open-data-mcp
+npx fedpipe
 ```
 
 That's it — the server starts on stdio and works with any MCP client.
@@ -30,7 +30,7 @@ Add to `.vscode/mcp.json`:
   "servers": {
     "us-gov-open-data": {
       "command": "npx",
-      "args": ["-y", "us-gov-open-data-mcp"],
+      "args": ["-y", "fedpipe"],
       "env": {
         "FRED_API_KEY": "your_key_here",
         "DATA_GOV_API_KEY": "your_key_here"
@@ -49,7 +49,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "us-gov-open-data": {
       "command": "npx",
-      "args": ["-y", "us-gov-open-data-mcp"],
+      "args": ["-y", "fedpipe"],
       "env": {
         "FRED_API_KEY": "your_key_here"
       }
@@ -88,9 +88,9 @@ With all 41 modules, the server sends ~14K tokens of instructions to the LLM. Wi
 To see all available module names without starting the server:
 
 ```bash
-npx us-gov-open-data-mcp --list-modules
+npx fedpipe --list-modules
 # or shorter:
-npx us-gov-open-data-mcp --list
+npx fedpipe --list
 ```
 
 Modules are grouped by domain, with tool count and env var name for modules that require an API key:
@@ -113,7 +113,7 @@ Health
 For scripting or tooling, add `--json` to get structured output:
 
 ```bash
-npx us-gov-open-data-mcp --list-modules --json
+npx fedpipe --list-modules --json
 ```
 
 ```json
@@ -142,19 +142,19 @@ Use the APIs directly in your code — no MCP server required.
 ### Install
 
 ```bash
-npm install us-gov-open-data-mcp
+npm install fedpipe
 ```
 
 ### Usage
 
 ```typescript
 // Import individual modules
-import { getObservations } from "us-gov-open-data-mcp/sdk/fred";
-import { searchBills } from "us-gov-open-data-mcp/sdk/congress";
-import { getLeadingCausesOfDeath } from "us-gov-open-data-mcp/sdk/cdc";
+import { getObservations } from "fedpipe/sdk/fred";
+import { searchBills } from "fedpipe/sdk/congress";
+import { getLeadingCausesOfDeath } from "fedpipe/sdk/cdc";
 
 // Or import everything
-import * as sdk from "us-gov-open-data-mcp/sdk";
+import * as sdk from "fedpipe/sdk";
 const gdp = await sdk.fred.getObservations("GDP", { sort: "desc", limit: 5 });
 ```
 

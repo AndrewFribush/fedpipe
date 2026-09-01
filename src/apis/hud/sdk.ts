@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getFairMarketRents, getIncomeLimits } from "us-gov-open-data-mcp/sdk/hud";
+ *   import { getFairMarketRents, getIncomeLimits } from "fedpipe/sdk/hud";
  *
  * Requires HUD_USER_TOKEN from https://www.huduser.gov/hudapi/public/register
  * Docs: https://www.huduser.gov/portal/dataset/fmr-api.html

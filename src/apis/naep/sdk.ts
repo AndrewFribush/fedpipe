@@ -5,7 +5,7 @@
  * No API key required. Returns JSON.
  *
  * Usage:
- *   import { getScores, getAchievementLevels, compareAcrossYears } from "us-gov-open-data-mcp/sdk/naep";
+ *   import { getScores, getAchievementLevels, compareAcrossYears } from "fedpipe/sdk/naep";
  *   const scores = await getScores({ subject: "reading", grade: 4, year: "2022" });
  */
 

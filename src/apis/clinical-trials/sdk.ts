@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchTrials, getTrialDetail, getFieldValueStats } from "us-gov-open-data-mcp/sdk/clinical-trials";
+ *   import { searchTrials, getTrialDetail, getFieldValueStats } from "fedpipe/sdk/clinical-trials";
  *
  *   const trials = await searchTrials({ condition: "lung cancer", status: "RECRUITING" });
  *   const detail = await getTrialDetail("NCT06000000");

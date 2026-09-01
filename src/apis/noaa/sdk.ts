@@ -6,7 +6,7 @@
  * Rate limit: 5 req/sec, 10,000 req/day
  *
  * Usage:
- *   import { getClimateData, searchStations } from "us-gov-open-data-mcp/sdk/noaa";
+ *   import { getClimateData, searchStations } from "fedpipe/sdk/noaa";
  *   const data = await getClimateData({ datasetId: "GHCND", stationId: "GHCND:USW00094728", startDate: "2025-01-01", endDate: "2025-12-31" });
  */
 

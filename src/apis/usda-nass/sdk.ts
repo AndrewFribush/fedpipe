@@ -7,7 +7,7 @@
  * Max 50,000 records per request.
  *
  * Usage:
- *   import { queryStats, getTopCommodities } from "us-gov-open-data-mcp/sdk/usda-nass";
+ *   import { queryStats, getTopCommodities } from "fedpipe/sdk/usda-nass";
  *   const corn = await queryStats({ commodity_desc: "CORN", year: 2024, state_alpha: "IA" });
  */
 

@@ -193,12 +193,12 @@ export class TokenBucket {
 
 function getCacheDir(): string {
   const base = process.env.XDG_CACHE_HOME || join(homedir(), ".cache");
-  const dir = join(base, "us-gov-open-data-mcp");
+  const dir = join(base, "fedpipe");
   try {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
     return dir;
   } catch {
-    const fallback = join(tmpdir(), "us-gov-open-data-mcp");
+    const fallback = join(tmpdir(), "fedpipe");
     if (!existsSync(fallback)) mkdirSync(fallback, { recursive: true });
     return fallback;
   }

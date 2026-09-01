@@ -4,10 +4,10 @@ import typedocSidebar from "../api/typedoc-sidebar.json";
 import { toolsSidebar, dsSidebar } from "../generated-sidebar.json";
 
 export default withMermaid(defineConfig({
-  title: "US Government Open Data MCP",
+  title: "fedpipe",
   description:
     "MCP server + TypeScript SDK for 40+ U.S. government APIs",
-  base: "/us-gov-open-data-mcp/",
+  base: "/fedpipe/",
   lastUpdated: true,
 
   head: [
@@ -41,11 +41,11 @@ export default withMermaid(defineConfig({
         items: [
           {
             text: "npm",
-            link: "https://www.npmjs.com/package/us-gov-open-data-mcp",
+            link: "https://www.npmjs.com/package/fedpipe",
           },
           {
             text: "GitHub",
-            link: "https://github.com/lzinga/us-gov-open-data-mcp",
+            link: "https://github.com/AndrewFribush/fedpipe",
           },
         ],
       },
@@ -122,11 +122,11 @@ export default withMermaid(defineConfig({
     socialLinks: [
       {
         icon: "github",
-        link: "https://github.com/lzinga/us-gov-open-data-mcp",
+        link: "https://github.com/AndrewFribush/fedpipe",
       },
       {
         icon: "npm",
-        link: "https://www.npmjs.com/package/us-gov-open-data-mcp",
+        link: "https://www.npmjs.com/package/fedpipe",
       },
     ],
 
@@ -136,7 +136,7 @@ export default withMermaid(defineConfig({
 
     editLink: {
       pattern:
-        "https://github.com/lzinga/us-gov-open-data-mcp/edit/main/docs/:path",
+        "https://github.com/AndrewFribush/fedpipe/edit/main/docs/:path",
     },
 
     footer: {

@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchCandidates, getCandidateFinancials } from "us-gov-open-data-mcp/sdk/fec";
+ *   import { searchCandidates, getCandidateFinancials } from "fedpipe/sdk/fec";
  *
  * Requires DATA_GOV_API_KEY env var. Get one at https://api.data.gov/signup/
  * Docs: https://api.open.fec.gov/developers/

@@ -5,7 +5,7 @@
  * No auth required. No published rate limit.
  *
  * Usage:
- *   import { getIndicator, searchIndicators } from "us-gov-open-data-mcp/sdk/world-bank";
+ *   import { getIndicator, searchIndicators } from "fedpipe/sdk/world-bank";
  *   const gdp = await getIndicator("NY.GDP.MKTP.CD", { country: "US", dateRange: "2020:2024" });
  */
 

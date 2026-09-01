@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchDatasets, queryDataset } from "us-gov-open-data-mcp/sdk/cms";
+ *   import { searchDatasets, queryDataset } from "fedpipe/sdk/cms";
  *
  * No API key required.
  * Docs: https://data.cms.gov/provider-data/

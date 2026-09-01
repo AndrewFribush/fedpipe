@@ -37,7 +37,7 @@ jobs:
             echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
           else
             BASE=$(date -u +'%Y.%-m.%-d')
-            EXISTING=$(npm view us-gov-open-data-mcp versions --json 2>/dev/null || echo "[]")
+            EXISTING=$(npm view fedpipe versions --json 2>/dev/null || echo "[]")
             if echo "$EXISTING" | grep -q "\"$BASE\""; then
               SUFFIX=2
               while echo "$EXISTING" | grep -q "\"$BASE-$SUFFIX\""; do

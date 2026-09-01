@@ -7,7 +7,7 @@
  *
  * Standalone, no MCP server required. Usage:
  *
- *   import { searchApplications, getApplication } from "us-gov-open-data-mcp/sdk/uspto";
+ *   import { searchApplications, getApplication } from "fedpipe/sdk/uspto";
  *
  *   const results = await searchApplications({ q: "applicationMetaData.applicationTypeLabelName:Utility" });
  *   console.log(results);

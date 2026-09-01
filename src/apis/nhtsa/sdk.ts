@@ -4,7 +4,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getRecalls, getComplaints, decodeVin } from "us-gov-open-data-mcp/sdk/nhtsa";
+ *   import { getRecalls, getComplaints, decodeVin } from "fedpipe/sdk/nhtsa";
  *
  * No API key required.
  * Docs: https://www.nhtsa.gov/nhtsa-datasets-and-apis

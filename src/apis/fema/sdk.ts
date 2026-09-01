@@ -3,7 +3,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getDisasterDeclarations, getHousingAssistance } from "us-gov-open-data-mcp/sdk/fema";
+ *   import { getDisasterDeclarations, getHousingAssistance } from "fedpipe/sdk/fema";
  *
  * No API key required.
  * Docs: https://www.fema.gov/about/openfema/api

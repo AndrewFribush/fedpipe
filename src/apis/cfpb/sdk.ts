@@ -4,7 +4,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { searchComplaints, getCompanyComplaints, getComplaintTrends } from "us-gov-open-data-mcp/sdk/cfpb";
+ *   import { searchComplaints, getCompanyComplaints, getComplaintTrends } from "fedpipe/sdk/cfpb";
  *
  *   const data = await searchComplaints({ product: "Mortgage", state: "CA" });
  *   console.log(data);

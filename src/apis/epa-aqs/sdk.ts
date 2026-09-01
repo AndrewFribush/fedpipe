@@ -6,7 +6,7 @@
  *
  * Standalone — no MCP server required. Usage:
  *
- *   import { getAirQuality, getDailyAirQuality, getAirMonitors } from "us-gov-open-data-mcp/sdk/epa-aqs";
+ *   import { getAirQuality, getDailyAirQuality, getAirMonitors } from "fedpipe/sdk/epa-aqs";
  *
  *   const annual = await getAirQuality({ state: "06", param: "44201", bdate: "20240101", edate: "20241231" });
  *   const daily  = await getDailyAirQuality({ state: "06", param: "88101", bdate: "20240601", edate: "20240630" });

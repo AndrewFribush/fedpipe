@@ -2,7 +2,7 @@
  * SDK barrel completeness — every folder under src/apis/ must be re-exported
  * from src/apis/index.ts so consumers can do:
  *
- *   import * as sdk from "us-gov-open-data-mcp/sdk";
+ *   import * as sdk from "fedpipe/sdk";
  *   sdk.epaAqs.getAirQuality(...)
  *
  * The kebab-case folder name maps to a camelCase namespace export

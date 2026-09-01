@@ -1,19 +1,19 @@
 <div align="center">
 
-# US Government Open Data MCP
+# fedpipe
 
-**MCP Server + TypeScript SDK for 40+ U.S. Government APIs**
+**MCP server + TypeScript SDK for 40+ U.S. government data APIs — verified against the live endpoints every night**
 
-[![npm version](https://img.shields.io/npm/v/us-gov-open-data-mcp)](https://www.npmjs.com/package/us-gov-open-data-mcp)
-[![npm downloads](https://img.shields.io/npm/dm/us-gov-open-data-mcp)](https://www.npmjs.com/package/us-gov-open-data-mcp)
+[![npm version](https://img.shields.io/npm/v/fedpipe)](https://www.npmjs.com/package/fedpipe)
+[![npm downloads](https://img.shields.io/npm/dm/fedpipe)](https://www.npmjs.com/package/fedpipe)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Live API smoke test](https://github.com/AndrewFribush/us-gov-open-data-mcp/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AndrewFribush/us-gov-open-data-mcp/actions/workflows/live-smoke.yml)
+[![Live API smoke test](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml)
 
 300+ tools covering economic, fiscal, health, education, energy, environment, lobbying, housing, patents, safety, banking, consumer protection, workplace safety, transportation, seismic, clinical trials, pharma payments, research funding, procurement, and legislative data.
 
 **20+ APIs require no key** · The rest use free keys that take under a minute to get
 
-[Getting Started](https://lzinga.github.io/us-gov-open-data-mcp/guide/getting-started) · [API Reference](https://lzinga.github.io/us-gov-open-data-mcp/api/) · [Documentation](https://lzinga.github.io/us-gov-open-data-mcp/)
+[Getting Started](https://andrewfribush.github.io/fedpipe/guide/getting-started) · [API Reference](https://andrewfribush.github.io/fedpipe/api/) · [Documentation](https://andrewfribush.github.io/fedpipe/)
 
 </div>
 
@@ -35,7 +35,7 @@
 ### MCP Server
 
 ```bash
-npx us-gov-open-data-mcp
+npx fedpipe
 ```
 
 Add to `.vscode/mcp.json` for VS Code / Copilot:
@@ -45,7 +45,7 @@ Add to `.vscode/mcp.json` for VS Code / Copilot:
   "servers": {
     "us-gov-open-data": {
       "command": "npx",
-      "args": ["-y", "us-gov-open-data-mcp"],
+      "args": ["-y", "fedpipe"],
       "env": {
         "FRED_API_KEY": "your_key",
         "DATA_GOV_API_KEY": "your_key"
@@ -62,7 +62,7 @@ Add to `claude_desktop_config.json` for Claude Desktop:
   "mcpServers": {
     "us-gov-open-data": {
       "command": "npx",
-      "args": ["-y", "us-gov-open-data-mcp"],
+      "args": ["-y", "fedpipe"],
       "env": {
         "FRED_API_KEY": "your_key",
         "DATA_GOV_API_KEY": "your_key"
@@ -89,12 +89,12 @@ Once connected, ask your AI assistant natural language questions:
 ### TypeScript SDK
 
 ```bash
-npm install us-gov-open-data-mcp
+npm install fedpipe
 ```
 
 ```typescript
-import { getObservations } from "us-gov-open-data-mcp/sdk/fred";
-import { searchBills } from "us-gov-open-data-mcp/sdk/congress";
+import { getObservations } from "fedpipe/sdk/fred";
+import { searchBills } from "fedpipe/sdk/congress";
 
 const gdp = await getObservations("GDP", { sort: "desc", limit: 5 });
 ```
@@ -103,17 +103,17 @@ No MCP server required. All functions include caching, retry, and rate limiting.
 
 ## Documentation
 
-Full documentation at **[lzinga.github.io/us-gov-open-data-mcp](https://lzinga.github.io/us-gov-open-data-mcp/)**
+Full documentation at **[andrewfribush.github.io/fedpipe](https://andrewfribush.github.io/fedpipe/)**
 
 | | |
 |---|---|
-| [Getting Started](https://lzinga.github.io/us-gov-open-data-mcp/guide/getting-started) | MCP setup, SDK install, client configs |
-| [API Keys](https://lzinga.github.io/us-gov-open-data-mcp/guide/api-keys) | Which APIs need keys, where to get them |
-| [Data Sources](https://lzinga.github.io/us-gov-open-data-mcp/guide/data-sources) | All 40+ APIs grouped by category |
-| [API Reference](https://lzinga.github.io/us-gov-open-data-mcp/api/) | Auto-generated from TypeScript — every function and type |
-| [Examples](https://lzinga.github.io/us-gov-open-data-mcp/guide/sdk-usage) | SDK code, MCP prompts, analysis showcases |
-| [Architecture](https://lzinga.github.io/us-gov-open-data-mcp/guide/architecture) | How the system works |
-| [Adding Modules](https://lzinga.github.io/us-gov-open-data-mcp/guide/adding-modules) | Add a new API — just create a folder |
+| [Getting Started](https://andrewfribush.github.io/fedpipe/guide/getting-started) | MCP setup, SDK install, client configs |
+| [API Keys](https://andrewfribush.github.io/fedpipe/guide/api-keys) | Which APIs need keys, where to get them |
+| [Data Sources](https://andrewfribush.github.io/fedpipe/guide/data-sources) | All 40+ APIs grouped by category |
+| [API Reference](https://andrewfribush.github.io/fedpipe/api/) | Auto-generated from TypeScript — every function and type |
+| [Examples](https://andrewfribush.github.io/fedpipe/guide/sdk-usage) | SDK code, MCP prompts, analysis showcases |
+| [Architecture](https://andrewfribush.github.io/fedpipe/guide/architecture) | How the system works |
+| [Adding Modules](https://andrewfribush.github.io/fedpipe/guide/adding-modules) | Add a new API — just create a folder |
 
 ## Data Sources
 
@@ -137,6 +137,14 @@ This project integrates **a significant number of government APIs**, many of whi
 This is a community-driven effort — if you find something that's broken or could be improved, **please open an issue or submit a PR**. Contributions that fix edge cases, improve schema accuracy, or expand coverage are especially welcome. The goal is to make U.S. government data as accessible and reliable as possible, together.
 
 All data is sourced from official U.S. government and international APIs — the server does not generate, modify, or editorialize any data.
+
+## Credits
+
+fedpipe started as a fork of [lzinga/fedpipe](https://github.com/AndrewFribush/fedpipe)
+by Lucas Elzinga (MIT). The module architecture, shared client, and most of the 40+ API modules
+originate there. fedpipe adds continuous live verification of every tool, the bug fixes that
+verification surfaced, and deeper FRED / Census / SEC / World Bank coverage — see
+[docs/parity-notes.md](docs/parity-notes.md).
 
 ## License
 
