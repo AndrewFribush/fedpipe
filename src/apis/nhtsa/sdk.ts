@@ -107,9 +107,12 @@ export interface SafetyRating {
 
 /** Car seat inspection station. */
 export interface CssiStation {
-  name?: string; address?: string; city?: string; state?: string;
-  zip?: string; phone?: string; lat?: number; long?: number;
-  spanishSpeaking?: boolean; cpsWeek?: boolean;
+  Organization?: string; AddressLine1?: string; AddressLine2?: string | null;
+  City?: string; State?: string; Zip?: string; Phone1?: string | null; Email?: string | null;
+  ContactFirstName?: string | null; ContactLastName?: string | null;
+  LocationLatitude?: number | null; LocationLongitude?: number | null;
+  CPSWeekEventFlag?: string; MobileStationFlag?: string; CountiesServed?: string | null;
+  LastUpdatedDate?: string;
   [key: string]: unknown;
 }
 

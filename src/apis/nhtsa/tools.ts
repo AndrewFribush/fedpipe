@@ -307,8 +307,10 @@ export const tools: Tool<any, any>[] = [
         {
           total: data.length,
           items: data.slice(0, 50).map(s => ({
-            name: s.name, address: s.address, city: s.city,
-            state: s.state, zip: s.zip, phone: s.phone,
+            name: s.Organization, address: [s.AddressLine1, s.AddressLine2].filter(Boolean).join(", "),
+            city: s.City, state: s.State, zip: s.Zip, phone: s.Phone1 ?? null, email: s.Email ?? null,
+            contact: [s.ContactFirstName, s.ContactLastName].filter(Boolean).join(" ") || null,
+            latitude: s.LocationLatitude ?? null, longitude: s.LocationLongitude ?? null,
           })),
         },
       );
