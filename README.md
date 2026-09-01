@@ -7,6 +7,7 @@
 [![npm version](https://img.shields.io/npm/v/us-gov-open-data-mcp)](https://www.npmjs.com/package/us-gov-open-data-mcp)
 [![npm downloads](https://img.shields.io/npm/dm/us-gov-open-data-mcp)](https://www.npmjs.com/package/us-gov-open-data-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Live API smoke test](https://github.com/AndrewFribush/us-gov-open-data-mcp/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AndrewFribush/us-gov-open-data-mcp/actions/workflows/live-smoke.yml)
 
 300+ tools covering economic, fiscal, health, education, energy, environment, lobbying, housing, patents, safety, banking, consumer protection, workplace safety, transportation, seismic, clinical trials, pharma payments, research funding, procurement, and legislative data.
 

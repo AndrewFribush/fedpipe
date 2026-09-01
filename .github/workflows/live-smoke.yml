@@ -1,0 +1,70 @@
+name: Live API smoke test
+
+# Calls every tool once against the real government APIs (npm run test:live).
+# Runs nightly and on demand — never on PRs, because upstream flakiness must not block merges.
+# Tools listed in tests/live/known-upstream-failures.json are expected to fail; the job turns
+# red when one of them recovers (remove it from the list) or when anything else breaks.
+on:
+  schedule:
+    - cron: "17 6 * * *"   # 06:17 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-smoke
+  cancel-in-progress: true
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
+      CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+      EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      BEA_API_KEY: ${{ secrets.BEA_API_KEY }}
+      BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+      NOAA_API_KEY: ${{ secrets.NOAA_API_KEY }}
+      USDA_NASS_API_KEY: ${{ secrets.USDA_NASS_API_KEY }}
+      HUD_USER_TOKEN: ${{ secrets.HUD_USER_TOKEN }}
+      DOL_API_KEY: ${{ secrets.DOL_API_KEY }}
+      USPTO_API_KEY: ${{ secrets.USPTO_API_KEY }}
+      AQS_API_KEY: ${{ secrets.AQS_API_KEY }}
+      AQS_EMAIL: ${{ secrets.AQS_EMAIL }}
+      SEC_CONTACT_EMAIL: ${{ secrets.SEC_CONTACT_EMAIL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Run live smoke suite
+        id: live
+        continue-on-error: true
+        run: |
+          npx vitest run --config vitest.live.config.ts --reporter=default --reporter=json --outputFile=live-results.json
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Summarize
+        if: always()
+        run: node scripts/live-summary.mjs live-results.json >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-results-${{ github.run_id }}
+          path: live-results.json
+          retention-days: 30
+
+      - name: Fail if any test failed
+        if: steps.live.outcome == 'failure'
+        run: exit 1
