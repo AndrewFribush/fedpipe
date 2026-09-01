@@ -10,8 +10,8 @@ export default {
   displayName: "World Bank",
   category: "International",
   description: "International economic indicators for 200+ countries: GDP, population, health spending, life expectancy, trade, inequality",
-  workflow: "wb_indicator for a single country, wb_compare to compare countries, wb_search to find indicator IDs",
-  tips: "Countries: US, GB, DE, JP, CN, IN, BR. Indicators: NY.GDP.MKTP.CD (GDP), SP.POP.TOTL (population), SP.DYN.LE00.IN (life expectancy)",
+  workflow: "wb_search to find an indicator ID (or indicator_id= for its definition) → wb_indicator for one country / wb_compare for several. Country names work everywhere ('Kenya', 'United Kingdom', 'World'); wb_countries resolves names and lists aggregates.",
+  tips: "Indicators: NY.GDP.MKTP.CD (GDP), NY.GDP.PCAP.CD (GDP per capita), SP.POP.TOTL (population), SP.DYN.LE00.IN (life expectancy), FP.CPI.TOTL.ZG (inflation). Aggregates: WLD, EUU, HIC, OED. wb_search ranks the full ~29,000-indicator catalog; source=2 narrows to WDI. wb_topics / wb_sources / wb_reference for browsing.",
   domains: ["international", "economy"],
   crossRef: [
     { question: "debt/deficit", route: "wb_indicator with GC.DOD.TOTL.GD.ZS (central govt debt % GDP)" },

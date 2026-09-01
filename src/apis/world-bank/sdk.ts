@@ -117,47 +117,91 @@ export async function compareCountries(indicatorId: string, countries: string[],
 }
 
 /**
- * Search for indicators by keyword.
+ * Search indicators by keyword.
  *
- * The World Bank API has no server-side text search, so we fetch the indicator
- * catalog and filter client-side over the full ≈29,000-indicator catalog
- * (2 requests, cached 24h). Pass `source` to scope to a single source database
- * (e.g. 2 = World Development Indicators) for tighter, faster results.
+ * The World Bank API has no server-side text search, so the indicator catalog (~29,000 across all
+ * sources, or ~1,500 with `source: 2` = World Development Indicators) is fetched — paged, cached 24h —
+ * and ranked client-side: every term must appear in the name (or, failing that, the definition);
+ * exact-ID, whole-phrase, and phrase-at-start matches rank first; shorter names break ties.
  */
 export async function searchIndicators(query: string, opts: {
   limit?: number;
   source?: string | number; // restrict to a single source database (e.g. 2 = WDI)
 } = {}): Promise<WBIndicatorInfo[]> {
   const limit = opts.limit ?? 30;
-  const q = query.toLowerCase();
-  const matches: WBIndicatorInfo[] = [];
-
-  const baseParams: Record<string, string | number | undefined> = {
-    format: "json",
-    per_page: 20000,
-    source: opts.source,
-  };
-
-  let page = 1;
-  let pages = 1;
+  const catalog: WBIndicatorInfo[] = [];
+  let page = 1, pages = 1;
   do {
-    const data = await api.get<WBResponse<WBIndicatorInfo>>("/indicator", { ...baseParams, page });
+    const data = await api.get<WBResponse<WBIndicatorInfo>>("/indicator", { format: "json", per_page: 20000, source: opts.source, page });
     if (!Array.isArray(data) || data.length < 2 || !data[1]) break;
     pages = data[0].pages;
-    for (const i of data[1]) {
-      if (
-        i.name?.toLowerCase().includes(q) ||
-        i.id?.toLowerCase().includes(q) ||
-        i.sourceNote?.toLowerCase().includes(q)
-      ) {
-        matches.push(i);
-      }
-    }
-    if (matches.length >= limit) break; // stop early once we have enough
+    catalog.push(...data[1]);
     page++;
   } while (page <= pages);
 
-  return matches.slice(0, limit);
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const phrase = terms.join(" ");
+  const scored = catalog
+    .map(i => {
+      const name = (i.name ?? "").toLowerCase(), id = (i.id ?? "").toLowerCase();
+      if (id === query.toLowerCase()) return { i, score: 100 };
+      const inName = terms.filter(t => name.includes(t)).length;
+      const inNote = inName < terms.length ? terms.filter(t => (i.sourceNote ?? "").toLowerCase().includes(t)).length : 0;
+      if (inName < terms.length && inName + inNote < terms.length) return null;
+      return { i, score: (inName === terms.length ? 10 : 0) + (name.includes(phrase) ? 5 : 0) + (name.startsWith(phrase) ? 3 : 0) - name.length / 200 };
+    })
+    .filter((x): x is { i: WBIndicatorInfo; score: number } => !!x)
+    .sort((a, b) => b.score - a.score);
+  return scored.slice(0, limit).map(x => x.i);
+}
+
+/** Metadata for one indicator (definition, source, unit). */
+export async function getIndicatorInfo(indicatorId: string): Promise<WBIndicatorInfo | null> {
+  const data = await api.get<WBResponse<WBIndicatorInfo>>(`/indicator/${indicatorId}`, { format: "json" });
+  if (!Array.isArray(data) || data.length < 2) return null;
+  return data[1]?.[0] ?? null;
+}
+
+/** Common aggregate/region codes the API accepts alongside country codes. */
+export const WB_AGGREGATES: Record<string, string> = {
+  WLD: "World", HIC: "High income", MIC: "Middle income", LIC: "Low income", LMY: "Low & middle income",
+  EUU: "European Union", OED: "OECD members", EAS: "East Asia & Pacific", ECS: "Europe & Central Asia",
+  LCN: "Latin America & Caribbean", MEA: "Middle East & North Africa", NAC: "North America", SAS: "South Asia", SSF: "Sub-Saharan Africa",
+};
+
+/**
+ * Resolve a country name, ISO2, or ISO3 code to the ISO2 code the API expects.
+ * "Kenya" → "KE", "KEN" → "KE", "United Kingdom" → "GB", "UK" → "GB". Aggregates (WLD, EUU) pass through.
+ */
+export async function resolveCountry(input: string): Promise<{ code: string; name: string } | null> {
+  const q = input.trim();
+  if (!q) return null;
+  const up = q.toUpperCase();
+  if (WB_AGGREGATES[up]) return { code: up, name: WB_AGGREGATES[up] };
+  const aggByName = Object.entries(WB_AGGREGATES).find(([, name]) => name.toLowerCase() === q.toLowerCase());
+  if (aggByName) return { code: aggByName[0], name: aggByName[1] };
+  const aliases: Record<string, string> = { UK: "GB", USA: "US", "UNITED STATES": "US", "SOUTH KOREA": "KR", "NORTH KOREA": "KP", RUSSIA: "RU", IRAN: "IR", VIETNAM: "VN", SYRIA: "SY", LAOS: "LA", "CZECH REPUBLIC": "CZ", TURKEY: "TR", EGYPT: "EG", VENEZUELA: "VE", BOLIVIA: "BO", TANZANIA: "TZ", "IVORY COAST": "CI", "HONG KONG": "HK", MACAU: "MO", TAIWAN: "TW", "THE GAMBIA": "GM", "THE BAHAMAS": "BS" };
+  const countries = await listCountries();
+  const alias = aliases[up];
+  const byCode = countries.find(c => c.iso2Code === (alias ?? up) || c.id === up);
+  if (byCode) return { code: byCode.iso2Code, name: byCode.name };
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
+  const nq = norm(q);
+  const exact = countries.find(c => norm(c.name) === nq);
+  if (exact) return { code: exact.iso2Code, name: exact.name };
+  const partial = countries.filter(c => norm(c.name).includes(nq) || nq.includes(norm(c.name)));
+  if (partial.length) { partial.sort((a, b) => a.name.length - b.name.length); return { code: partial[0].iso2Code, name: partial[0].name }; }
+  return null;
+}
+
+/** Resolve a list like "US;United Kingdom;KEN;World" to ISO2/aggregate codes, reporting anything unresolved. */
+export async function resolveCountries(list: string[]): Promise<{ codes: string[]; names: Record<string, string>; unresolved: string[] }> {
+  const codes: string[] = [], names: Record<string, string> = {}, unresolved: string[] = [];
+  for (const item of list) {
+    const r = await resolveCountry(item);
+    if (r) { codes.push(r.code); names[r.code] = r.name; } else unresolved.push(item);
+  }
+  return { codes, names, unresolved };
 }
 
 /** List countries with metadata. */
