@@ -28,7 +28,7 @@ export const tools: Tool<any, any>[] = [
     annotations: { title: "USAspending: Search Awards", readOnlyHint: true },
     parameters: z.object({
       keyword: z.string().optional().describe("Keyword to search across award descriptions and recipient names"),
-      award_type: z.enum(["contracts", "grants", "loans", "direct_payments"]).optional().describe("Award type filter"),
+      award_type: z.enum(["contracts", "grants", "loans", "direct_payments"]).optional().describe("Award type group (default: contracts). The API only accepts one group per search."),
       agency: z.string().optional().describe("Awarding agency name, e.g. 'Department of Defense'"),
       recipient: z.string().optional().describe("Recipient/company name to search for"),
       state: z.string().optional().describe("Two-letter state code, e.g. 'CA', 'TX'"),
@@ -49,7 +49,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data.awards.length) return emptyResponse("No awards found matching the criteria.");
       return listResponse(
-        `USAspending award search: ${data.total} total results, showing ${data.awards.length}`,
+        `USAspending award search: showing ${data.awards.length} result(s)${data.hasNext ? " (more pages available)" : ""}`,
         { items: data.awards, total: data.total },
       );
     },

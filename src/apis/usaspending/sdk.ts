@@ -41,7 +41,10 @@ export interface Award {
 
 /** Award Search Result. */
 export interface AwardSearchResult {
+  /** Result count for this page — the API does not report an overall total. */
   total: number;
+  /** Whether another page of results exists. */
+  hasNext: boolean;
   awards: Award[];
 }
 
@@ -173,10 +176,9 @@ export async function searchAwards(params: {
   const filters: Record<string, unknown> = {};
 
   if (params.keyword) filters.keywords = [params.keyword];
-  // award_type_codes is required by the API — default to all types
-  filters.award_type_codes = params.awardType
-    ? resolveAwardTypeCodes(params.awardType)
-    : [...awardTypes.contracts, ...awardTypes.grants, ...awardTypes.loans, ...awardTypes.direct_payments, ...awardTypes.insurance, ...awardTypes.other];
+  // award_type_codes is required by the API and must all come from ONE group
+  // (mixing e.g. contracts + grants returns HTTP 422) — default to contracts
+  filters.award_type_codes = resolveAwardTypeCodes(params.awardType || "contracts");
   if (params.agency) filters.agencies = [{ type: "awarding", tier: "toptier", name: params.agency }];
   if (params.recipient) filters.recipient_search_text = [params.recipient];
   if (params.state) filters.place_of_performance_locations = [{ country: "USA", state: params.state.toUpperCase() }];
@@ -205,12 +207,14 @@ export async function searchAwards(params: {
     order: "desc",
   };
 
-  const res = await api.post<{ results?: Record<string, unknown>[]; page_metadata?: { total?: number } }>(
+  const res = await api.post<{ results?: Record<string, unknown>[]; page_metadata?: { total?: number; hasNext?: boolean } }>(
     "/search/spending_by_award/", body,
   );
 
+  // spending_by_award does not return a total count — only hasNext for pagination
   return {
-    total: res.page_metadata?.total ?? 0,
+    total: res.page_metadata?.total ?? res.results?.length ?? 0,
+    hasNext: res.page_metadata?.hasNext ?? false,
     awards: (res.results ?? []).map(r => ({
       recipientName: (r["Recipient Name"] as string) || null,
       awardAmount: Number(r["Award Amount"] || 0),
