@@ -82,6 +82,7 @@ export const tools: Tool<any, any>[] = [
         {
           total: typeof total === "number" ? total : undefined,
           items: results.map(pr => ({
+            uuid: pr.uuid,
             title: pr.title,
             date: parseUnixDate(pr.date),
             components: pr.component?.map(c => c.name),
@@ -152,6 +153,7 @@ export const tools: Tool<any, any>[] = [
         {
           total: typeof total === "number" ? total : undefined,
           items: results.map(blog => ({
+            uuid: blog.uuid,
             title: blog.title,
             date: parseUnixDate(blog.date),
             components: blog.component?.map(c => c.name),
