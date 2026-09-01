@@ -19,5 +19,10 @@ export default {
     { question: "debt/deficit", route: "govinfo_cbo_reports (CBO deficit projections and debt analysis)" },
   ],
   reference: {
-},
+    docs: {
+      "API Docs (Swagger)": "https://api.govinfo.gov/docs/",
+      "API Guide (GitHub)": "https://raw.githubusercontent.com/usgpo/api/main/README.md",
+      "Collections": "https://www.govinfo.gov/help/whats-available",
+    },
+  },
 } satisfies ModuleMeta;

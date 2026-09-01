@@ -37,7 +37,7 @@ export default {
   reference: {
     docs: {
       "ECHO Web Services": "https://echo.epa.gov/tools/web-services",
-      "Envirofacts (DMAP)": "https://data.epa.gov/dmapservice",
+      "Envirofacts Web Services": "https://www.epa.gov/enviro/web-services",
       "TRI": "https://www.epa.gov/toxics-release-inventory-tri-program",
       "GHGRP": "https://www.epa.gov/ghgreporting",
       "SDWIS": "https://www.epa.gov/ground-water-and-drinking-water/safe-drinking-water-information-system-sdwis-federal-reporting",

@@ -24,5 +24,12 @@ export default {
     { question: "college", route: "cms_hospitals (teaching hospital quality and medical education context)" },
     { question: "spending/budget", route: "cms_query (Medicare/Medicaid spending data by provider)" },
   ],
-  reference: { datasets: DATASETS },
+  reference: {
+    datasets: DATASETS,
+    docs: {
+      "Provider Data API": "https://data.cms.gov/provider-data/docs",
+      "Provider Data Catalog": "https://data.cms.gov/provider-data/",
+      "General CMS Data API": "https://data.cms.gov/api-docs",
+    },
+  },
 } satisfies ModuleMeta;

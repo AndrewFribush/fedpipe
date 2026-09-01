@@ -30,5 +30,10 @@ export default {
     { question: "banking", route: "usa_spending_by_award (FDIC/Treasury financial sector awards)" },
   ],
   reference: {
-},
+    docs: {
+      "API Home": "https://api.usaspending.gov/",
+      "Endpoint Index": "https://raw.githubusercontent.com/fedspendingtransparency/usaspending-api/master/usaspending_api/api_docs/markdown/endpoints.md",
+      "Tutorial": "https://api.usaspending.gov/docs/intro-tutorial",
+    },
+  },
 } satisfies ModuleMeta;

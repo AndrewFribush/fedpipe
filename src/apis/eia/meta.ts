@@ -25,7 +25,7 @@ export default {
   sedsMsnCodes: sedsMsnCodes as Record<string, string>,
   routes: routes.map(r => ({ path: r.path, description: r.description, frequency: r.frequency })),
   docs: {
-    "API Docs": "https://www.eia.gov/opendata/commands.php",
+    "API Docs": "https://www.eia.gov/opendata/documentation.php",
     "API Browser": "https://www.eia.gov/opendata/browser/",
     "Registration": "https://www.eia.gov/opendata/register.php",
   },

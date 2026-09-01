@@ -28,4 +28,11 @@ export default {
     { question: "economy", route: "hud_income_limits (income limit thresholds as economic indicator)" },
     { question: "college", route: "hud_fair_market_rents (housing costs near colleges for affordability analysis)" },
   ],
+  reference: {
+    docs: {
+      "FMR API": "https://www.huduser.gov/portal/dataset/fmr-api.html",
+      "Income Limits API": "https://www.huduser.gov/portal/dataset/il-api.html",
+      "API Registration": "https://www.huduser.gov/hudapi/public/register",
+    },
+  },
 } satisfies ModuleMeta;

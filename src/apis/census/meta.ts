@@ -25,5 +25,12 @@ export default {
     { question: "international", route: "census_population (U.S. population for per-capita international comparisons)" },
   ],
   reference: {
-},
+    docs: {
+      "API User Guide": "https://www.census.gov/data/developers/guidance/api-user-guide.html",
+      "Available APIs": "https://www.census.gov/data/developers/data-sets.html",
+      "ACS 5-Year": "https://www.census.gov/data/developers/data-sets/acs-5year.html",
+      "Geocoder": "https://geocoding.geo.census.gov/geocoder/",
+      "Dataset Discovery (data.json)": "https://api.census.gov/data.html",
+    },
+  },
 } satisfies ModuleMeta;

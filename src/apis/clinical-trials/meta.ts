@@ -56,6 +56,7 @@ export default {
     agencyClasses: AGENCY_CLASSES,
     docs: {
       "API v2 Documentation": "https://clinicaltrials.gov/data-api/api",
+      "OpenAPI Spec": "https://clinicaltrials.gov/api/oas/v2",
       "API Migration Guide": "https://clinicaltrials.gov/data-api/about-api/api-migration",
       "Study Data Structure": "https://clinicaltrials.gov/data-api/about-api/study-data-structure",
       "Search Areas": "https://clinicaltrials.gov/data-api/about-api/search-areas",

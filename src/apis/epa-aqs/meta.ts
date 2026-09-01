@@ -36,7 +36,7 @@ export default {
   reference: {
     docs: {
       "AQS API": "https://aqs.epa.gov/aqsweb/documents/data_api.html",
-      "Signup": "https://aqs.epa.gov/data/api/signup",
+      "Signup": "https://aqs.epa.gov/aqsweb/documents/data_api.html#signup",
       "About AQS Data": "https://aqs.epa.gov/aqsweb/documents/about_aqs_data.html",
     },
   },

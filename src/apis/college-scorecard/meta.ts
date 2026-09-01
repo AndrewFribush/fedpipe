@@ -25,7 +25,7 @@ export default {
   degreeTypes: DEGREE_TYPES,
   docs: {
     "College Scorecard": "https://collegescorecard.ed.gov/",
-    "API Documentation": "https://collegescorecard.ed.gov/data/documentation/",
+    "API Documentation": "https://collegescorecard.ed.gov/data/api-documentation/",
     "Data Dictionary": "https://collegescorecard.ed.gov/assets/CollegeScorecardDataDictionary.xlsx",
     "Get API Key": "https://api.data.gov/signup/",
   },

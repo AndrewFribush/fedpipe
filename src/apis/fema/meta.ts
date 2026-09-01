@@ -24,5 +24,12 @@ export default {
     { question: "spending/budget", route: "fema_public_assistance, fema_housing_assistance (federal disaster spending)" },
     { question: "presidential comparison", route: "fema_disaster_declarations (disaster responses across administrations)" },
   ],
-  reference: { datasets: DATASETS },
+  reference: {
+    datasets: DATASETS,
+    docs: {
+      "OpenFEMA API": "https://www.fema.gov/about/openfema/api",
+      "Data Sets": "https://www.fema.gov/about/openfema/data-sets",
+      "Disaster Declarations Summaries": "https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2",
+    },
+  },
 } satisfies ModuleMeta;
