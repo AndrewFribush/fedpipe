@@ -6,12 +6,14 @@ fedpipe's independent continuation of `lzinga/us-gov-open-data-mcp` (see
 Credits in the README). Everything below is on top of upstream v2026.6.10.
 
 ### Added
-- **Lazy loading** (opt-in, `--lazy`): registers 7 discovery tools at startup
+- **Lazy loading, on by default**: a bare start registers 7 discovery tools
   (the cross-agency resolvers, `find_tools`, `load_modules`, `code_mode`,
   `clear_cache`); modules register mid-session via `load_modules` with
-  `tools/list_changed` notifications, so a large tool surface never floods the
-  client's context. Opt-in rather than default because it depends on the client
-  re-fetching `tools/list` after the notification.
+  `tools/list_changed` notifications, so a 360+ tool surface never floods the
+  client's context. `--eager` restores full up-front registration for clients
+  that ignore the notification; `--modules a,b` registers exactly those,
+  eagerly. `load_modules` waits for the session to register before adding
+  tools, so the notification lands even on the first call of a session.
 - **3 new modules**: `gleif` (Global LEI registry — entity resolution + corporate
   ownership, keyless), `courtlistener` (federal/state court opinions + RECAP/PACER
   dockets; search keyless, detail needs a free token), `nonprofits` (IRS Form 990
