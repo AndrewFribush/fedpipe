@@ -97,7 +97,7 @@ export const tools: Tool<any, any>[] = [
     annotations: { title: "EPA: Toxic Releases (TRI)", readOnlyHint: true },
     parameters: z.object({
       state: z.string().describe("Two-letter state code: 'CA', 'TX', 'NY'"),
-      county: z.string().optional().describe("County name to filter by: 'LOS ANGELES', 'HARRIS'"),
+      county: z.string().optional().describe("County to filter by — name ('LOS ANGELES', 'HARRIS') or FIPS code ('22095' or '095'). FIPS is more reliable for names with a period (e.g. 'ST. JOHN THE BAPTIST')."),
       rows: z.number().int().max(1000).optional().describe("Max results (default 100)"),
     }),
     execute: async ({ state, county, rows }) => {
