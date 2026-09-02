@@ -320,7 +320,7 @@ Work done after the initial audit, in roughly the order it landed:
   the largest arrays shrink — always valid JSON with a note saying what was
   trimmed. cfpb trends/state tools digest raw Elasticsearch payloads
   (231KB → 13KB). FBI CDE chart maps digest into sorted {period, value} series.
-- cdc_mortality_rates gained a state param projecting the ~50 rate_<state>
+- cdc_mortality_rates gained a state param projecting the ~50 `rate_<state>`
   columns down to one.
 
 **Infrastructure**
@@ -355,5 +355,5 @@ fail, 46 key-gated), doctor --live green on 32 modules.
 - All 55 MCP prompts verified to render via prompts/get with correct tool
   references and argument interpolation.
 - 43 MCP resources (was 1): every module's reference data is browsable at
-  govdata://reference/<module>.
+  `govdata://reference/<module>`.
 - Final cold-cache verification: 480 live + 1 expected fail, 1057 unit.

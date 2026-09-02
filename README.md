@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Live API smoke test](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml)
 
-300+ tools covering economic, fiscal, health, education, energy, environment, lobbying, housing, patents, safety, banking, consumer protection, workplace safety, transportation, seismic, clinical trials, pharma payments, research funding, procurement, and legislative data.
+355 tools covering economic, fiscal, health, education, energy, environment, lobbying, housing, patents, safety, banking, consumer protection, workplace safety, transportation, seismic, clinical trials, pharma payments, research funding, procurement, and legislative data.
 
 **20+ APIs require no key** · The rest use free keys that take under a minute to get
 
@@ -150,7 +150,7 @@ All data is sourced from official U.S. government and international APIs — the
 
 ## Credits
 
-fedpipe started as a fork of [lzinga/fedpipe](https://github.com/AndrewFribush/fedpipe)
+fedpipe started as a fork of [lzinga/us-gov-open-data-mcp](https://github.com/lzinga/us-gov-open-data-mcp)
 by Lucas Elzinga (MIT). The module architecture, shared client, and most of the 40+ API modules
 originate there. fedpipe adds continuous live verification of every tool, the bug fixes that
 verification surfaced, and deeper FRED / Census / SEC / World Bank coverage — see
