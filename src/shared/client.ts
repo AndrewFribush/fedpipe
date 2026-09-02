@@ -456,13 +456,35 @@ class DiskCache {
 // ─── Fetch with timeout ──────────────────────────────────────────────
 
 
-/** Read a response body with a deadline — the fetch abort timer stops at
- * headers, so a stalled body would otherwise hang the call forever. */
+/** Max response body we will buffer — a broken/runaway upstream must not
+ * OOM the server. Big legit payloads (WB catalog ~20MB) fit comfortably. */
+const MAX_BODY_BYTES = Number(process.env.FEDPIPE_MAX_BODY_BYTES ?? 64 * 1024 * 1024);
+
+/** Read a response body with a deadline and a size cap — the fetch abort
+ * timer stops at headers, so a stalled or unbounded body would otherwise
+ * hang the call or exhaust memory. */
 async function textWithTimeout(res: Response, timeoutMs: number, name: string): Promise<string> {
   let timer: ReturnType<typeof setTimeout> | undefined;
+  const read = (async () => {
+    if (!res.body) return res.text();
+    const reader = res.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let total = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > MAX_BODY_BYTES) {
+        reader.cancel().catch(() => {});
+        throw new Error(`${name}: response body exceeded ${Math.round(MAX_BODY_BYTES / 1e6)}MB — refusing to buffer it`);
+      }
+      chunks.push(value);
+    }
+    return Buffer.concat(chunks).toString("utf-8");
+  })();
   try {
     return await Promise.race([
-      res.text(),
+      read,
       new Promise<never>((_, reject) => {
         timer = setTimeout(() => reject(new Error(`${name}: body read timed out after ${timeoutMs}ms`)), timeoutMs);
       }),
