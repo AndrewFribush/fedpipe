@@ -457,7 +457,18 @@ added and their modules audited live for the first time.
 - ✅ **bls** — key raises the 25/day keyless cap; CPI breakdown verified.
 - ✅ **courtlistener** — token unlocks `courts_opinion` (read a 20K-char opinion)
   and `courts_docket`.
-- ⏳ **bea** (13 tools) — key added and activated on BEA's site ("Your key has
-  been activated!"), but BEA's data endpoint lags activation propagation; audit
-  pending the key going live. 43/45 modules now have working keys; DOL, HUD,
-  NOAA, USDA NASS, AQS still unclaimed.
+- ✅ **bea** (13 tools) — audited live once the key activated (BEA's activation
+  propagates unevenly across their server pool, so ~half of calls return "This
+  UserId is not active" for the first hour — a transient BEA state, not cached:
+  the client's checkError throws before the cache write, verified). All 13 tools
+  return data: national GDP (450 rows), GDP by state (55), personal income,
+  GDP by industry (25), NIPA underlying detail, fixed assets, international
+  transactions/investment/services-trade, MNE, input-output (272 rows),
+  underlying GDP by industry, dataset info. ❌→✅ **Real bug:** the NIPA,
+  NIUnderlyingDetail, and FixedAssets datasets reject BEA's own "LAST5"/"LAST10"
+  year token (only Regional accepts it) — every default-argument call returned
+  "No data exists for the Year/Frequencies passed". `expandLastNYears()` now
+  turns LASTn into explicit years, valid in every dataset.
+
+45/45 modules now have working keys except DOL, HUD, NOAA, USDA NASS, AQS (still
+unclaimed). BEA, USPTO, BLS, CourtListener all live-audited for the first time.
