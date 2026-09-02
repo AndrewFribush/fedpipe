@@ -533,7 +533,9 @@ server.addTool({
       const cols: string[] = fin?.data?.columns ?? [];
       const rows: unknown[][] = fin?.data?.rows ?? [];
       if (rows.length && !fin?._error) {
-        const last = rows[rows.length - 1] as unknown[];
+        // Row order varies — pick the cycle with the latest coverage end.
+        const endIdx = cols.indexOf("coverageEnd");
+        const last = [...rows].sort((a, b) => String(a[endIdx] ?? "").localeCompare(String(b[endIdx] ?? "")))[rows.length - 1] as unknown[];
         const at = (c: string) => last[cols.indexOf(c)] ?? null;
         money = {
           receipts: at("receipts"),

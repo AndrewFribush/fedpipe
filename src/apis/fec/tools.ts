@@ -147,9 +147,15 @@ export const tools: Tool<any, any>[] = [
     execute: async ({ candidate_id, cycle }) => {
       const results = await getCandidateFinancials(candidate_id, cycle);
       if (!results.length) return emptyResponse(`No financial data for candidate ${candidate_id}.`);
-      const latest = results[0];
+      const sorted = [...results].sort((a: any, b: any) => String(b.coverage_end_date ?? "").localeCompare(String(a.coverage_end_date ?? "")));
+      const latest = sorted[0] ?? results[0];
+      // Multiple filing entities (campaign committee, leadership PAC, prior
+      // races) can share the newest coverage date — biggest one leads, but say so.
+      const peers = sorted.filter((r: any) => r.coverage_end_date === (latest as any).coverage_end_date);
+      const lead = peers.sort((a: any, b: any) => (b.receipts ?? 0) - (a.receipts ?? 0))[0] ?? latest;
       return tableResponse(
-        `${candidate_id}: ${results.length} cycle(s), latest receipts ${fmtUsd(latest.receipts ?? 0)}`,
+        `${candidate_id}: ${results.length} cycle(s), latest receipts ${fmtUsd(lead.receipts ?? 0)}` +
+          (peers.length > 1 ? ` (largest of ${peers.length} filings covering through ${String((lead as any).coverage_end_date).slice(0, 10)})` : ""),
         { rows: results.map(summarizeFinancials), meta: { candidateId: candidate_id } },
       );
     },
@@ -168,7 +174,7 @@ export const tools: Tool<any, any>[] = [
     execute: async ({ committee_id, cycle }) => {
       const results = await getCommitteeFinancials(committee_id, cycle);
       if (!results.length) return emptyResponse(`No financial data for committee ${committee_id}.`);
-      const latest = results[0];
+      const latest = [...results].sort((a: any, b: any) => String(b.coverage_end_date ?? "").localeCompare(String(a.coverage_end_date ?? "")))[0] ?? results[0];
       return tableResponse(
         `${committee_id}: ${results.length} cycle(s), latest receipts ${fmtUsd(latest.receipts ?? 0)}`,
         { rows: results.map(summarizeFinancials), meta: { committeeId: committee_id } },
