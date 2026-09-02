@@ -264,6 +264,10 @@ export async function resolveGeography(query: string, opts: {
   const q = normalize(name);
   const results: CensusGeography[] = [];
 
+  // Input that normalizes away (non-Latin scripts, symbols) would otherwise
+  // "".includes-match every geography — same bug class as WB's Cuba.
+  if (q.length < 2 && !/^\d{5}$/.test(name.trim())) return [];
+
   // ZIP codes → ZCTA (no lookup needed; ZCTAs are their own codes)
   if (/^\d{5}$/.test(name.trim()) || opts.level === "zcta") {
     const zip = name.trim();
@@ -449,6 +453,7 @@ export async function searchVariables(
   // Match per token so "travel time work" finds "TRAVEL TIME TO WORK" —
   // a whole-phrase substring test misses labels with intervening words.
   const tokens = keyword.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return []; // empty keyword would match every variable
   const all: CensusVariableMatch[] = [];
   const partial: Array<CensusVariableMatch & { hits: number }> = [];
   for (const [id, info] of Object.entries(data.variables)) {
