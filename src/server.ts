@@ -537,12 +537,17 @@ server.addTool({
     // Congress-side: no name search upstream — pull the state delegation and
     // match on name tokens.
     let member: any = null;
-    if (best?.state) {
-      const members = await call("congress_search_members", { state: best.state, currentMember: true, limit: 100 });
-      const tokens = name.toLowerCase().split(/[\s,.-]+/).filter((t: string) => t.length > 1);
+    // A presidential run gives state "US" (Bernie Sanders is P60007168
+    // before he is a senator) — walk the candidate list's real states
+    // until the delegation match lands.
+    const states = [...new Set(candidates.map((c: any) => c.state).filter((s: string) => /^[A-Z]{2}$/.test(s ?? "") && s !== "US"))] as string[];
+    const tokens = name.toLowerCase().split(/[\s,.-]+/).filter((t: string) => t.length > 1);
+    for (const state of states.slice(0, 3)) {
+      const members = await call("congress_search_members", { state, currentMember: true, limit: 100 });
       member = (members?.data?.items ?? []).find((m: any) =>
         tokens.every((t: string) => String(m.name ?? "").toLowerCase().includes(t)) ||
         String(m.name ?? "").toLowerCase().includes(tokens[tokens.length - 1]));
+      if (member) break;
     }
 
     // Likely principal campaign committee: committees named for the candidate
