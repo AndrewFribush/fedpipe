@@ -108,6 +108,8 @@ export default withMermaid(defineConfig({
             { text: "Architecture", link: "/guide/architecture" },
             { text: "Adding Modules", link: "/guide/adding-modules" },
             { text: "Troubleshooting", link: "/guide/troubleshooting" },
+            { text: "Tool Audit", link: "/tool-audit" },
+            { text: "Parity Notes", link: "/parity-notes" },
           ],
         },
       ],
