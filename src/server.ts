@@ -169,6 +169,7 @@ if (doctor) {
     for (const r of missingRows) console.log(r);
   }
 
+  let liveFailures = 0;
   if (live) {
     if (process.argv.includes("--fresh")) {
       // True connectivity check: bypass the disk cache for these probes.
@@ -223,6 +224,7 @@ if (doctor) {
         if (/needs filters|provide|required/i.test(lastErr)) {
           console.log(`  ${dim("–")} ${m.name.padEnd(18)} ${dim(`(no probe-able tool: ${lastErr})`)}`);
         } else {
+          liveFailures++;
           console.log(`  ${red("✗")} ${m.name.padEnd(18)} ${lastErr}`);
         }
       }
@@ -230,7 +232,8 @@ if (doctor) {
   } else {
     console.log(dim("\nRun with --live to also ping each module's API."));
   }
-  process.exit(0);
+  // Scriptable: non-zero when required keys are missing or live probes failed.
+  process.exit(missing > 0 || liveFailures > 0 ? 1 : 0);
 }
 
 if (listModules) {
