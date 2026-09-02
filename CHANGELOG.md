@@ -14,10 +14,17 @@ Credits in the README). Everything below is on top of upstream v2026.6.10.
   that ignore the notification; `--modules a,b` registers exactly those,
   eagerly. `load_modules` waits for the session to register before adding
   tools, so the notification lands even on the first call of a session.
-- **3 new modules**: `gleif` (Global LEI registry — entity resolution + corporate
+- **4 new modules**: `gleif` (Global LEI registry — entity resolution + corporate
   ownership, keyless), `courtlistener` (federal/state court opinions + RECAP/PACER
   dockets; search keyless, detail needs a free token), `nonprofits` (IRS Form 990
-  financials via ProPublica Nonprofit Explorer, keyless). 45 modules total.
+  financials via ProPublica Nonprofit Explorer, keyless), and `form5500` (DOL
+  employee-benefit-plan filings). 46 modules total.
+- **Bulk-ingest modules**: a new module shape for datasets published as bulk
+  downloads rather than live APIs. `form5500` downloads DOL's ~29MB annual Form
+  5500 dataset once on first use, extracts it (built-in `zlib`, no zip dep) and
+  indexes it into a local SQLite database (built-in `node:sqlite`, no native dep;
+  requires Node ≥ 22.5, degrades with a clear message otherwise), then serves fast
+  local queries — a company's 401(k)/pension/welfare plans by sponsor EIN or name.
 - **Cross-agency resolvers**: `resolve_entity` (SEC/FEC/lobbying/USAspending/
   Open Payments/FAERS), `resolve_person` (FEC identity + fundraising +
   principal committee + BioGuide), `resolve_place` (Census/ACS/QCEW/FEMA),

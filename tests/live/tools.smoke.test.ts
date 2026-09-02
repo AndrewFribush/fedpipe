@@ -49,6 +49,14 @@ const KNOWN_UPSTREAM: Record<string, { since: string; reason: string }> = Object
 /** Modules that declare an auth env var but degrade gracefully without one. */
 const WORKS_WITHOUT_KEY = new Set(["fda", "bls"]);
 
+/**
+ * Bulk-ingest modules download and index a large dataset (tens of MB) on first
+ * use instead of calling a live API per query. They don't belong in the
+ * per-request smoke suite — a fresh CI runner would re-download every night and
+ * risk the per-test timeout. They're verified by hand / a dedicated path.
+ */
+const BULK_INGEST = new Set(["form5500"]);
+
 const noop = () => {};
 const ctx = { log: { info: noop, warn: noop, error: noop, debug: noop }, reportProgress: async () => {}, session: {} };
 
@@ -103,6 +111,7 @@ function missingEnv(auth: { envVar: string | string[] } | undefined): string[] {
 
 describe("args table covers every tool with required params", () => {
   for (const dir of moduleDirs) {
+    if (BULK_INGEST.has(dir)) continue;
     for (const tool of getTools(getModule(dir))) {
       const acceptsEmpty = (tool.parameters as any)?.safeParse?.({}).success;
       if (acceptsEmpty) continue;
@@ -115,9 +124,10 @@ describe("args table covers every tool with required params", () => {
 
 describe.each(moduleDirs)("%s", (dir) => {
   const mod = getModule(dir);
+  const bulk = BULK_INGEST.has(dir);
   const missing = WORKS_WITHOUT_KEY.has(dir) ? [] : missingEnv(getAuth(mod));
-  const runner = missing.length ? it.skip : it;
-  const label = missing.length ? ` [skipped: set ${missing.join(", ")}]` : "";
+  const runner = bulk || missing.length ? it.skip : it;
+  const label = bulk ? " [skipped: bulk-ingest module, verified separately]" : missing.length ? ` [skipped: set ${missing.join(", ")}]` : "";
 
   for (const tool of getTools(mod)) {
     const known = KNOWN_UPSTREAM[tool.name];

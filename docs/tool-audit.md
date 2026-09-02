@@ -472,3 +472,16 @@ added and their modules audited live for the first time.
 
 45/45 modules now have working keys except DOL, HUD, NOAA, USDA NASS, AQS (still
 unclaimed). BEA, USPTO, BLS, CourtListener all live-audited for the first time.
+
+**First bulk-ingest module (2026-09-02):** `form5500` — DOL Form 5500 employee
+benefit plan filings. Unlike every other module (live API + cache), there's no
+query API, so it downloads DOL's ~29MB annual ZIP once, extracts it with built-in
+`zlib` (no zip dep), and indexes it into a local SQLite DB via built-in
+`node:sqlite` (no native dep; needs Node ≥22.5, degrades with a clear message).
+Verified live: cold ingest indexed 225,591 filings (2024) in ~30s; Boeing resolves
+to 32 plans incl. the 401(k) (143,146 active participants) and, by EIN 91-0425694,
+22 plans / 808,110 total active participants. Excluded from the nightly smoke
+suite (a fresh CI runner would re-download each night) — verified by hand instead.
+The sponsor EIN is the join key back to resolve_entity/SEC. Still bulk-shaped and
+pending: 5500-SF small plans and Schedule H asset dollars (separate DOL datasets),
+plus the FAA aircraft registry (bot-blocked download — needs a fetch workaround).

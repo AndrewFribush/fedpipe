@@ -35,6 +35,7 @@ export * as fdic from "./fdic/sdk.js";
 export * as fec from "./fec/sdk.js";
 export * as federalRegister from "./federal-register/sdk.js";
 export * as fema from "./fema/sdk.js";
+export * as form5500 from "./form5500/sdk.js";
 export * as fred from "./fred/sdk.js";
 export * as gleif from "./gleif/sdk.js";
 export * as govinfo from "./govinfo/sdk.js";

@@ -21,8 +21,9 @@
 
 ## Features
 
-- **355 tools** across 42 government APIs — economic, health, legislative, financial, environmental, and more
-- **Cross-referencing** — built-in instructions guide the LLM to combine data from multiple agencies (e.g., FDA adverse events + lobbying spend + campaign contributions)
+- **360+ tools** across 46 government data sources — economic, health, legislative, financial, legal, environmental, and more
+- **Cross-referencing** — built-in instructions plus `resolve_entity`/`resolve_person`/`resolve_place` combine data from multiple agencies (e.g., FDA adverse events + lobbying spend + campaign contributions + benefit-plan filings)
+- **Bulk-ingest sources** — where an agency publishes bulk downloads instead of a query API (e.g. DOL Form 5500), the module fetches and indexes the dataset locally on first use (SQLite via built-in `node:sqlite`), then serves fast local queries
 - **Code mode** — WASM-sandboxed JavaScript execution reduces context window usage by 98-100% for large responses
 - **Lazy by default** — the server starts with just 7 discovery tools (the cross-agency resolvers, `find_tools`, `load_modules`); the client discovers what covers a topic and loads those modules mid-session via `tools/list_changed`, so 360+ tool schemas never flood its context. `--eager` registers everything up front for clients that ignore the notification
 - **Selective loading** — `--modules fred,treasury,congress` registers exactly those modules, eagerly
