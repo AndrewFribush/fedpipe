@@ -99,6 +99,25 @@ const { transport, port, modulesFilter, listModules, doctor } = parseArgs();
 
 if (doctor) {
   const live = process.argv.includes("--live");
+  const asJson = process.argv.includes("--json");
+  if (asJson) {
+    const report = MODULES.map(m => {
+      const envVars = m.auth ? (Array.isArray(m.auth.envVar) ? m.auth.envVar : [m.auth.envVar]) : [];
+      const unset = envVars.filter(v => !process.env[v]);
+      return {
+        module: m.name,
+        toolCount: m.tools.length,
+        keyStatus: !envVars.length ? "not_required"
+          : !unset.length ? "configured"
+          : m.auth?.optional ? "optional_missing"
+          : "missing",
+        missingEnvVars: unset.length ? unset : undefined,
+        signup: unset.length ? m.auth?.signup : undefined,
+      };
+    });
+    console.log(JSON.stringify({ modules: report.length, tools: report.reduce((n, r) => n + r.toolCount, 0), report }, null, 2));
+    process.exit(0);
+  }
   const green = (t: string) => `\x1b[32m${t}\x1b[0m`;
   const red = (t: string) => `\x1b[31m${t}\x1b[0m`;
   const dim = (t: string) => `\x1b[2m${t}\x1b[0m`;
