@@ -545,6 +545,23 @@ server.addTool({
         String(m.name ?? "").toLowerCase().includes(tokens[tokens.length - 1]));
     }
 
+    // Likely principal campaign committee: committees named for the candidate
+    // with the office-matching type (H/S/P) — makes the contributions
+    // next-step directly executable.
+    let committee: any = null;
+    if (best?.name) {
+      const lastName = String(best.name).split(",")[0].trim();
+      const comms = await call("fec_search_committees", { name: lastName, per_page: 8 });
+      const typeWant = best.office === "House" || best.office === "H" ? "H" : best.office === "Senate" || best.office === "S" ? "S" : "P";
+      const items = comms?.data?.items ?? [];
+      const officeTypeNames: Record<string, RegExp> = { H: /house/i, S: /senate/i, P: /presidential/i };
+      const nameRe = new RegExp(`\\b${lastName.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b`, "i");
+      committee = items.find((c: any) => officeTypeNames[typeWant]?.test(String(c.type ?? "")) && nameRe.test(c.name))
+        ?? items.find((c: any) => nameRe.test(c.name) && !/victory|joint/i.test(c.name))
+        ?? null;
+      if (committee) committee = { committeeId: committee.committeeId, name: committee.name, type: committee.type };
+    }
+
     // Latest fundraising for the top candidate match.
     let money: any = null;
     if (best?.candidateId) {
@@ -581,13 +598,15 @@ server.addTool({
         query: name,
         fecCandidates: candidates.length ? candidates : (fec?._error ? { error: fec._error } : null),
         congressMember: member ? { bioguideId: member.bioguideId, name: member.name, party: member.party, state: member.state } : null,
+        likelyPrincipalCommittee: committee,
         latestFundraising: money,
         nextSteps: {
           fundraisingDetail: best ? `fec_candidate_financials(candidate_id='${best.candidateId}', cycle=<year>)` : undefined,
           outsideSpending: best ? `fec_outside_spending_by_candidate(candidate_id='${best.candidateId}', cycle=<year>)` : undefined,
           bills: member ? `congress_member_bills(bioguide_id='${member.bioguideId}')` : undefined,
           fullBio: member ? `congress_member_details(bioguide_id='${member.bioguideId}')` : undefined,
-          contributions: best ? `fec_individual_contributions(committee_id=<their committee>, cycle=<year>)` : undefined,
+          contributions: committee ? `fec_individual_contributions(committee_id='${committee.committeeId}', cycle=2026)` : undefined,
+          committeeMoney: committee ? `fec_committee_financials(committee_id='${committee.committeeId}')` : undefined,
         },
       },
     });
