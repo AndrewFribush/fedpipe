@@ -423,7 +423,18 @@ export const tools: Tool<any, any>[] = [
       companies: z.string().optional().describe("Restrict to a peer set — comma-separated CIKs or tickers: 'AAPL,MSFT,GOOGL'"),
     }),
     execute: async ({ concept, period, taxonomy, unit, order, limit, companies }) => {
-      const peerCiks = companies ? new Set(await Promise.all(companies.split(",").map((c: string) => toCik(c.trim()).then(Number)))) : null;
+      let peerCiks: Set<number> | null = null;
+      let peerNames: Map<number, string> | null = null;
+      if (companies) {
+        peerCiks = new Set();
+        peerNames = new Map();
+        for (const c of companies.split(",")) {
+          const input = c.trim();
+          const cikNum = Number(await toCik(input));
+          peerCiks.add(cikNum);
+          peerNames.set(cikNum, input.toUpperCase());
+        }
+      }
       let frame;
       try {
         frame = await getFrame({ tag: concept, period, taxonomy, unit });
@@ -435,10 +446,17 @@ export const tools: Tool<any, any>[] = [
       }
       const pool = peerCiks ? frame.data.filter(d => peerCiks.has(d.cik)) : frame.data;
       if (peerCiks && !pool.length) return emptyResponse(`None of ${companies} reported ${concept} for ${period} (check the period suffix — balance-sheet items need 'I').`);
+      // Name the peers that DIDN'T report, with the next step.
+      let missingNote = "";
+      if (peerCiks && peerNames && pool.length < peerCiks.size) {
+        const reported = new Set(pool.map(d => d.cik));
+        const missing = [...peerCiks].filter(c => !reported.has(c)).map(c => peerNames.get(c) ?? String(c));
+        missingNote = ` — ${missing.join(", ")} did not report this exact tag for ${period}; use sec_concept_search to find the tag they use`;
+      }
       const sorted = [...pool].sort((a, b) => order === "asc" ? a.val - b.val : b.val - a.val);
       const top = sorted.slice(0, limit);
       return tableResponse(
-        `${frame.label} (${frame.tag}) ${frame.period} [${frame.unit}]: ${peerCiks ? `${pool.length} of the requested companies reported` : `${frame.count} companies reported`}, showing ${order === "asc" ? "lowest" : "highest"} ${top.length}`,
+        `${frame.label} (${frame.tag}) ${frame.period} [${frame.unit}]: ${peerCiks ? `${pool.length} of the requested companies reported${missingNote}` : `${frame.count} companies reported`}, showing ${order === "asc" ? "lowest" : "highest"} ${top.length}`,
         {
           rows: top.map(d => ({
             company: d.entityName,
