@@ -104,17 +104,28 @@ describe.each(moduleDirs)("%s", (dir) => {
       if (parsed && !parsed.success) throw new Error(`args in tests/live/args.ts do not satisfy schema: ${parsed.error.message}`);
 
       let out: unknown;
-      try {
-        out = await tool.execute!(parsed?.data ?? args, ctx);
-      } catch (e: any) {
-        const msg = String(e?.message ?? e);
-        const status = /HTTP (\d{3})/.exec(msg)?.[1];
-        const kind = status
-          ? (status.startsWith("4") ? "REPO BUG (4xx)" : "UPSTREAM (5xx)")
-          : /abort|timeout/i.test(msg) ? "UPSTREAM (timeout)"
-          : /fetch failed|ENOTFOUND|ECONNRE|EAI_AGAIN/i.test(msg) ? "UPSTREAM (network/DNS)"
-          : "THREW";
-        throw new Error(`[${kind}] ${tool.name} ${JSON.stringify(args)}\n${msg.slice(0, 600)}`);
+      // A transient upstream flap (5xx, timeout, DNS blip) gets two extra
+      // attempts with backoff before failing the nightly — its job is to
+      // catch persistent outages, not one-minute blips. Repo bugs (4xx)
+      // fail immediately: they are deterministic.
+      for (let attempt = 0; ; attempt++) {
+        try {
+          out = await tool.execute!(parsed?.data ?? args, ctx);
+          break;
+        } catch (e: any) {
+          const msg = String(e?.message ?? e);
+          const status = /HTTP (\d{3})/.exec(msg)?.[1];
+          const kind = status
+            ? (status.startsWith("4") ? "REPO BUG (4xx)" : "UPSTREAM (5xx)")
+            : /abort|timeout/i.test(msg) ? "UPSTREAM (timeout)"
+            : /fetch failed|ENOTFOUND|ECONNRE|EAI_AGAIN/i.test(msg) ? "UPSTREAM (network/DNS)"
+            : "THREW";
+          if (kind.startsWith("UPSTREAM") && attempt < 2) {
+            await new Promise(r => setTimeout(r, (attempt + 1) * 3000));
+            continue;
+          }
+          throw new Error(`[${kind}] ${tool.name} ${JSON.stringify(args)}\n${msg.slice(0, 600)}`);
+        }
       }
       const res = parse(out);
       const err = looksLikeError(res);
