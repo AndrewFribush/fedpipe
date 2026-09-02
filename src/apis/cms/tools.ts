@@ -120,7 +120,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!result.results.length) return emptyResponse("No records found.");
       return tableResponse(
-        `CMS query: ${(result.count ?? result.results.length).toLocaleString()} record(s)`,
+        `CMS query: ${(result.count ?? result.results.length).toLocaleString()} total, showing ${result.results.length}`,
         { rows: result.results, total: result.count },
       );
     },
