@@ -41,6 +41,7 @@ function total(data: any): number {
 const searchParams = z.object({
   search: z.string().optional().describe("OpenFDA search query. Examples: 'field:value', 'field:\"Exact Phrase\"', 'field:[20200101+TO+20231231]', '_exists_:field'. Combine with '+AND+', '+OR+', '+NOT+'."),
   limit: z.number().int().max(100).default(10).describe("Max results (default 10, max 100)"),
+  skip: z.number().int().min(0).optional().describe("Records to skip, for pagination (openFDA caps skip+limit at 25,000)"),
 });
 
 const endpointEnum = keysEnum(FDA_ENDPOINTS);
@@ -64,8 +65,8 @@ export const tools: Tool<any, any>[] = [
       "search 'patient.drug.activesubstance.activesubstancename:\"SEMAGLUTIDE\"' (uppercase) instead.",
     annotations: { title: "FDA: Drug Adverse Events", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDrugEvents({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDrugEvents({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No drug event reports found.");
       return listResponse(
         `FDA drug adverse events: ${total(data).toLocaleString()} total reports, showing ${data.results.length}`,
@@ -124,8 +125,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: openfda.product_type.exact, openfda.brand_name.exact, openfda.route.exact",
     annotations: { title: "FDA: Drug Labels", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDrugLabels({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDrugLabels({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No drug labels found.");
       return listResponse(
         `FDA drug labels: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -164,8 +165,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: pharm_class.exact, dea_schedule, dosage_form.exact, route.exact",
     annotations: { title: "FDA: NDC Directory", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDrugNdc({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDrugNdc({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No NDC records found.");
       return listResponse(
         `FDA NDC Directory: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -197,8 +198,8 @@ export const tools: Tool<any, any>[] = [
       "- 'reason_for_recall:listeria' — recalls due to listeria",
     annotations: { title: "FDA: Drug Recalls", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDrugRecalls({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDrugRecalls({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No drug recalls found.");
       return listResponse(
         `FDA drug recalls: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -228,8 +229,8 @@ export const tools: Tool<any, any>[] = [
       "- 'products.active_ingredients.name:\"SEMAGLUTIDE\"' — by ingredient",
     annotations: { title: "FDA: Approved Drugs", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchApprovedDrugs({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchApprovedDrugs({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No approved drugs found.");
       return listResponse(
         `FDA approved drugs: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -266,8 +267,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: update_type, status.exact, therapeutic_category.exact",
     annotations: { title: "FDA: Drug Shortages", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDrugShortages({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDrugShortages({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No drug shortages found.");
       return listResponse(
         `FDA drug shortages: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -300,8 +301,8 @@ export const tools: Tool<any, any>[] = [
       "- 'event_type:death' — events resulting in death",
     annotations: { title: "FDA: Device Events", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDeviceEvents({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDeviceEvents({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No device event reports found.");
       return listResponse(
         `FDA device events: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -331,8 +332,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: country_code, advisory_committee, clearance_type.exact, decision_code",
     annotations: { title: "FDA: 510(k) Clearances", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDevice510k({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDevice510k({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No 510(k) records found.");
       return listResponse(
         `FDA 510(k) clearances: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -364,8 +365,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: device_class, medical_specialty.exact",
     annotations: { title: "FDA: Device Classification", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDeviceClassification({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDeviceClassification({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No device classifications found.");
       return listResponse(
         `FDA device classifications: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -397,8 +398,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: voluntary_mandated.exact, classification.exact, status.exact",
     annotations: { title: "FDA: Device Enforcement", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDeviceEnforcement({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDeviceEnforcement({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No device enforcement reports found.");
       return listResponse(
         `FDA device enforcement: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -426,8 +427,8 @@ export const tools: Tool<any, any>[] = [
       "- 'reason_for_recall:\"software\"' — software-related recalls",
     annotations: { title: "FDA: Device Recalls", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDeviceRecalls({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDeviceRecalls({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No device recalls found.");
       return listResponse(
         `FDA device recalls: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -459,8 +460,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: advisory_committee, decision_code",
     annotations: { title: "FDA: Device PMA", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDevicePma({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDevicePma({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No PMA records found.");
       return listResponse(
         `FDA device PMA: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -491,8 +492,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: products.openfda.device_class",
     annotations: { title: "FDA: Device Registrations", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDeviceRegistrations({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDeviceRegistrations({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No device registrations found.");
       return listResponse(
         `FDA device registrations: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -525,8 +526,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: product_codes.openfda.device_class, is_rx, mri_safety.exact",
     annotations: { title: "FDA: Device UDI", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchDeviceUdi({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchDeviceUdi({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No UDI records found.");
       return listResponse(
         `FDA device UDI: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -559,8 +560,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: type (sample material), manufacturer.exact",
     annotations: { title: "FDA: COVID-19 Serology", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchCovidSerology({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchCovidSerology({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No serology records found.");
       return listResponse(
         `FDA COVID-19 serology: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -594,8 +595,8 @@ export const tools: Tool<any, any>[] = [
       "- 'reason_for_recall:listeria' — recalls due to listeria",
     annotations: { title: "FDA: Food Recalls", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchFoodRecalls({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchFoodRecalls({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No food recalls found.");
       return listResponse(
         `FDA food recalls: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -625,8 +626,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: reactions.exact, outcomes.exact, products.industry_name.exact",
     annotations: { title: "FDA: Food Adverse Events", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchFoodAdverseEvents({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchFoodAdverseEvents({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No food adverse event reports found.");
       return listResponse(
         `FDA food adverse events: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -661,8 +662,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: animal.species.exact, primary_reporter.exact, serious_ae",
     annotations: { title: "FDA: Animal/Vet Events", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchAnimalEvents({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchAnimalEvents({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No animal event reports found.");
       return listResponse(
         `FDA animal/vet events: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -698,8 +699,8 @@ export const tools: Tool<any, any>[] = [
       "Count fields: tobacco_products.exact, reported_health_problems.exact",
     annotations: { title: "FDA: Tobacco Problems", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchTobaccoProblems({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchTobaccoProblems({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No tobacco problem reports found.");
       return listResponse(
         `FDA tobacco problem reports: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -731,8 +732,8 @@ export const tools: Tool<any, any>[] = [
       "- 'text:\"thalidomide\"' — mentions of thalidomide",
     annotations: { title: "FDA: Historical Documents", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchHistoricalDocs({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchHistoricalDocs({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No historical documents found.");
       return listResponse(
         `FDA historical documents: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -758,8 +759,8 @@ export const tools: Tool<any, any>[] = [
       "- '_missing_:\"marketing_end_date\"' — currently marketed products",
     annotations: { title: "FDA: NSDE", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchNsde({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchNsde({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No NSDE records found.");
       return listResponse(
         `FDA NSDE: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -789,8 +790,8 @@ export const tools: Tool<any, any>[] = [
       "- 'structure.formula:\"C6H12\"' — by molecular formula",
     annotations: { title: "FDA: Substance Data", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchSubstances({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchSubstances({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No substance records found.");
       return listResponse(
         `FDA substances: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
@@ -816,8 +817,8 @@ export const tools: Tool<any, any>[] = [
       "- 'substance_name:\"ASPIRIN\"' — by substance name",
     annotations: { title: "FDA: UNII", readOnlyHint: true },
     parameters: searchParams,
-    execute: async ({ search, limit }) => {
-      const data = await searchUnii({ search, limit });
+    execute: async ({ search, limit, skip }) => {
+      const data = await searchUnii({ search, limit, skip });
       if (!data.results?.length) return emptyResponse("No UNII records found.");
       return listResponse(
         `FDA UNII: ${total(data).toLocaleString()} total, showing ${data.results.length}`,
