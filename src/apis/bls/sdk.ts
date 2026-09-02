@@ -30,6 +30,131 @@ const api = createClient({
   },
 });
 
+
+// ─── QCEW (Quarterly Census of Employment and Wages) ─────────────────
+// Open CSV API, no key: county/MSA/state/national employment, wages, and
+// establishment counts by industry, with location quotients and
+// over-the-year changes. https://www.bls.gov/cew/additional-resources/open-data/
+
+const qcewApi = createClient({
+  baseUrl: "https://data.bls.gov/cew/data/api",
+  name: "bls-qcew",
+  rateLimit: { perSecond: 3, burst: 6 },
+  cacheTtlMs: 24 * 60 * 60 * 1000, // quarterly data — cache a day
+});
+
+export interface QcewRow {
+  area_fips: string; own_code: string; industry_code: string; agglvl_code: string;
+  year: string; qtr: string;
+  qtrly_estabs: number | null;
+  employment: number | null; total_wages: number | null;
+  avg_pay: number | null; pay_basis: "weekly" | "annual";
+  lq_avg_pay: number | null;
+  oty_employment_pct_chg: number | null; oty_avg_pay_pct_chg: number | null;
+  [key: string]: unknown;
+}
+
+/** Minimal CSV parser for QCEW files (quoted fields, no embedded newlines). */
+function parseCsv(text: string): Record<string, string>[] {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const parseLine = (line: string): string[] => {
+    const out: string[] = [];
+    let cur = "", inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (inQ) {
+        if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
+        else if (ch === '"') inQ = false;
+        else cur += ch;
+      } else if (ch === '"') inQ = true;
+      else if (ch === ",") { out.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out;
+  };
+  const headers = parseLine(lines[0]);
+  return lines.slice(1).map(l => Object.fromEntries(parseLine(l).map((v, i) => [headers[i], v])));
+}
+
+/** Normalize a QCEW area input: 'US'→US000, 'TX'→48000, 5-digit FIPS as-is. */
+export function normalizeQcewArea(input: string): string {
+  const t = input.trim().toUpperCase();
+  if (t === "US" || t === "US000" || t === "USA") return "US000";
+  if (/^\d{5}$/.test(t)) return t;
+  if (/^\d{2}$/.test(t)) return `${t}000`;
+  const st = QCEW_STATE_FIPS[t];
+  if (st) return `${st}000`;
+  return t; // MSA codes like C1642, or already-valid values
+}
+
+const QCEW_STATE_FIPS: Record<string, string> = {
+  AL: "01", AK: "02", AZ: "04", AR: "05", CA: "06", CO: "08", CT: "09", DE: "10",
+  DC: "11", FL: "12", GA: "13", HI: "15", ID: "16", IL: "17", IN: "18", IA: "19",
+  KS: "20", KY: "21", LA: "22", ME: "23", MD: "24", MA: "25", MI: "26", MN: "27",
+  MS: "28", MO: "29", MT: "30", NE: "31", NV: "32", NH: "33", NJ: "34", NM: "35",
+  NY: "36", NC: "37", ND: "38", OH: "39", OK: "40", OR: "41", PA: "42", RI: "44",
+  SC: "45", SD: "46", TN: "47", TX: "48", UT: "49", VT: "50", VA: "51", WA: "53",
+  WV: "54", WI: "55", WY: "56", PR: "72",
+};
+
+const num = (v: string | undefined): number | null =>
+  v === undefined || v === "" ? null : Number.isNaN(Number(v)) ? null : Number(v);
+
+/**
+ * QCEW area profile: employment, wages, establishments for one area
+ * (county FIPS, state, MSA, or US), optionally filtered to an industry.
+ */
+export async function getQcewArea(opts: {
+  area: string; year: number; quarter?: number | "a";
+  industry?: string; ownCode?: string; limit?: number;
+}): Promise<QcewRow[]> {
+  const area = normalizeQcewArea(opts.area);
+  const qtr = opts.quarter ?? 1;
+  const raw = await qcewApi.getText(`/${opts.year}/${qtr}/area/${area}.csv`);
+  let rows = parseCsv(raw);
+  if (opts.industry) rows = rows.filter(r => r.industry_code === opts.industry);
+  if (opts.ownCode) rows = rows.filter(r => r.own_code === opts.ownCode);
+  else if (!opts.industry) rows = rows.filter(r => r.own_code === "0" || r.own_code === "5");
+  return rows.slice(0, opts.limit ?? 100).map(normalizeQcewRow) as QcewRow[];
+}
+
+/** Annual files name their columns differently — normalize both layouts. */
+function normalizeQcewRow(r: Record<string, string>): Record<string, unknown> {
+  const annual = "annual_avg_emplvl" in r;
+  return {
+    ...r,
+    qtrly_estabs: num(annual ? r.annual_avg_estabs : r.qtrly_estabs),
+    employment: num(annual ? r.annual_avg_emplvl : r.month3_emplvl),
+    total_wages: num(annual ? r.total_annual_wages : r.total_qtrly_wages),
+    avg_pay: num(annual ? r.avg_annual_pay : r.avg_wkly_wage),
+    pay_basis: annual ? "annual" : "weekly",
+    lq_avg_pay: num(annual ? r.lq_avg_annual_pay : r.lq_avg_wkly_wage),
+    oty_employment_pct_chg: num(annual ? r.oty_annual_avg_emplvl_pct_chg : r.oty_month3_emplvl_pct_chg),
+    oty_avg_pay_pct_chg: num(annual ? r.oty_avg_annual_pay_pct_chg : r.oty_avg_wkly_wage_pct_chg),
+  };
+}
+
+/**
+ * QCEW industry slice: one NAICS industry across all areas — filter by state
+ * to compare its counties.
+ */
+export async function getQcewIndustry(opts: {
+  industry: string; year: number; quarter?: number | "a";
+  state?: string; ownCode?: string; limit?: number;
+}): Promise<QcewRow[]> {
+  const qtr = opts.quarter ?? 1;
+  const raw = await qcewApi.getText(`/${opts.year}/${qtr}/industry/${opts.industry}.csv`);
+  let rows = parseCsv(raw);
+  if (opts.state) {
+    const st = QCEW_STATE_FIPS[opts.state.trim().toUpperCase()] ?? opts.state.trim();
+    rows = rows.filter(r => r.area_fips.startsWith(st));
+  }
+  rows = rows.filter(r => r.own_code === (opts.ownCode ?? "5"));
+  return rows.slice(0, opts.limit ?? 100).map(normalizeQcewRow) as QcewRow[];
+}
+
 // ─── Types ───────────────────────────────────────────────────────────
 
 /** Bls Observation. */

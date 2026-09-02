@@ -12,6 +12,8 @@ import {
   cpiSeries,
   industrySeries,
   type BlsSeries,
+  getQcewArea,
+  getQcewIndustry,
 } from "./sdk.js";
 import { tableResponse, listResponse, emptyResponse } from "../../shared/response.js";
 
@@ -234,6 +236,55 @@ export const tools: Tool<any, any>[] = [
           rows: industries,
           columns: ["seriesId", "label", "valueThousands", "period", "periodName", "year", "yoyChangeThousands"],
         },
+      );
+    },
+  },
+  {
+    name: "bls_county_wages",
+    description:
+      "County/state/metro employment and wages from QCEW (Quarterly Census of Employment and Wages) — " +
+      "establishment counts, employment level, total and average weekly wages, with year-over-year % changes. " +
+      "No API key needed. Area: 5-digit county FIPS ('17031' = Cook County IL), 2-letter state, MSA code ('C1642'), or 'US'. " +
+      "industry_code: NAICS ('10' = all industries, '722511' = restaurants, '5415' = computer services).",
+    annotations: { title: "BLS: County Wages (QCEW)", readOnlyHint: true },
+    parameters: z.object({
+      area: z.string().describe("County FIPS, state code, MSA code, or 'US'"),
+      year: z.number().int().describe("Year (data from 1990; latest quarters lag ~5 months)"),
+      quarter: z.union([z.number().int().min(1).max(4), z.literal("a")]).optional().describe("Quarter 1-4, or 'a' for annual averages (default 1)"),
+      industry_code: z.string().optional().describe("NAICS code filter ('10' = total all industries). Omit for the area's industry breakdown."),
+      own_code: z.string().optional().describe("Ownership: '0' total, '5' private, '1' federal, '2' state, '3' local government"),
+      limit: z.number().int().max(500).default(100).describe("Max rows (default 100)"),
+    }),
+    execute: async ({ area, year, quarter, industry_code, own_code, limit }) => {
+      const rows = await getQcewArea({ area, year, quarter, industry: industry_code, ownCode: own_code, limit });
+      if (!rows.length) return emptyResponse(`No QCEW data for area ${area}, ${year} Q${quarter ?? 1}. County FIPS must be 5 digits; recent quarters publish ~5 months after they end.`);
+      return tableResponse(
+        `QCEW ${area} ${year} Q${quarter ?? 1}: ${rows.length} rows (employment, wages by industry/ownership)`,
+        { rows: rows as unknown as Record<string, unknown>[], columns: ["area_fips", "own_code", "industry_code", "qtrly_estabs", "employment", "total_wages", "avg_pay", "pay_basis", "oty_employment_pct_chg", "oty_avg_pay_pct_chg"] },
+      );
+    },
+  },
+
+  {
+    name: "bls_industry_wages",
+    description:
+      "One industry's employment and wages across areas (QCEW) — compare counties or states for a NAICS industry. " +
+      "No API key needed. E.g. industry_code '5415' (computer systems design) across Texas counties shows where tech jobs and pay concentrate.",
+    annotations: { title: "BLS: Industry Wages by Area (QCEW)", readOnlyHint: true },
+    parameters: z.object({
+      industry_code: z.string().describe("NAICS industry code: '10' all, '23' construction, '5415' computer services, '722511' restaurants"),
+      year: z.number().int().describe("Year"),
+      quarter: z.union([z.number().int().min(1).max(4), z.literal("a")]).optional().describe("Quarter 1-4 or 'a' annual (default 1)"),
+      state: z.string().optional().describe("Restrict to a state (2-letter code) — otherwise national list"),
+      own_code: z.string().optional().describe("Ownership code (default '5' private)"),
+      limit: z.number().int().max(500).default(100).describe("Max rows (default 100)"),
+    }),
+    execute: async ({ industry_code, year, quarter, state, own_code, limit }) => {
+      const rows = await getQcewIndustry({ industry: industry_code, year, quarter, state, ownCode: own_code, limit });
+      if (!rows.length) return emptyResponse(`No QCEW data for industry ${industry_code}, ${year} Q${quarter ?? 1}${state ? ` in ${state}` : ""}.`);
+      return tableResponse(
+        `QCEW industry ${industry_code} ${year} Q${quarter ?? 1}${state ? ` — ${state}` : ""}: ${rows.length} areas`,
+        { rows: rows as unknown as Record<string, unknown>[], columns: ["area_fips", "agglvl_code", "qtrly_estabs", "employment", "total_wages", "avg_pay", "pay_basis", "lq_avg_pay", "oty_avg_pay_pct_chg"] },
       );
     },
   },

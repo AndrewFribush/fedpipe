@@ -29,6 +29,7 @@ export default {
   ],
   reference: {
   docs: {
+      "QCEW Open Data API": "https://www.bls.gov/cew/additional-resources/open-data/",
     "API v2": "https://www.bls.gov/developers/api_signature_v2.htm",
     "Series Formats": "https://www.bls.gov/help/hlpforma.htm",
     "Registration": "https://www.bls.gov/developers/home.htm",

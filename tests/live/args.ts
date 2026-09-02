@@ -36,6 +36,8 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   bls_search_series: { topic: "unemployment" },
 
   // ─── CDC ────────────────────────────────────────────────────────────
+  bls_county_wages: { area: "17031", year: 2024, quarter: 1, industry_code: "10" },
+  bls_industry_wages: { industry_code: "5415", year: 2024, quarter: 1, state: "TX", limit: 5 },
   cdc_query: { dataset_id: "bi63-dtpu", limit: 5 },
 
   // ─── Census ─────────────────────────────────────────────────────────
