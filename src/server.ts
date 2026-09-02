@@ -351,6 +351,47 @@ for (const mod of activeModules) {
 // ─── clear_cache tool ────────────────────────────────────────────────
 
 server.addTool({
+  name: "find_tools",
+  description:
+    "Search this server's " + String(activeModules.reduce((n, m) => n + m.tools.length, 0)) + " tools by keyword. " +
+    "Matches tool names, descriptions, and module names; returns the best matches with their descriptions. " +
+    "Use when you're unsure which tool covers a topic ('drought', 'insider trading', 'school lunch').",
+  annotations: { title: "Find Tools", readOnlyHint: true, idempotentHint: true, openWorldHint: false, destructiveHint: false },
+  parameters: z.object({
+    query: z.string().describe("Topic or keyword(s): 'wildfire', 'mortgage rates', 'clinical trial results'"),
+    limit: z.number().int().max(50).default(10).describe("Max matches (default 10)"),
+  }),
+  execute: async ({ query, limit }) => {
+    const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!tokens.length) return JSON.stringify({ summary: "Provide a search keyword.", dataType: "empty", data: null });
+    const scored: Array<{ tool: string; module: string; description: string; score: number }> = [];
+    for (const mod of activeModules) {
+      for (const t of mod.tools) {
+        const name = t.name.toLowerCase();
+        const desc = (t.description ?? "").toLowerCase();
+        let score = 0;
+        for (const tok of tokens) {
+          if (name.includes(tok)) score += 5;
+          if (mod.name.toLowerCase().includes(tok)) score += 3;
+          if (desc.includes(tok)) score += 1;
+        }
+        if (score > 0) {
+          scored.push({ tool: t.name, module: mod.name, description: (t.description ?? "").split("\n")[0].slice(0, 160), score });
+        }
+      }
+    }
+    scored.sort((a, b) => b.score - a.score || a.tool.localeCompare(b.tool));
+    const top = scored.slice(0, limit);
+    if (!top.length) return JSON.stringify({ summary: `No tools match "${query}".`, dataType: "empty", data: null });
+    return JSON.stringify({
+      summary: `${scored.length} tool(s) match "${query}", showing ${top.length}`,
+      dataType: "list",
+      data: { items: top.map(({ score: _s, ...r }) => r), total: scored.length },
+    });
+  },
+});
+
+server.addTool({
   name: "clear_cache",
   description: "Clear cached API responses to force fresh data on next query. " +
     "Specify a source name or omit to clear all.",
