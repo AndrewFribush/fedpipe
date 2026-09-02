@@ -226,7 +226,7 @@ export const tools: Tool<any, any>[] = [
         subject, grade, years, jurisdictions,
         variable: variable || "TOTAL",
       });
-      if (!data.result?.length) return emptyResponse("No gap data found.");
+      if (!data.result?.length) return emptyResponse("No gap data found. Gap statistics only exist for two-category variables (GENDER, SDRACEM pairs, IEP, LEP…) and select year/jurisdiction combos — multi-category variables like SLUNCH3 have no single gap; use naep_compare_groups-style score queries per category instead.");
       return tableResponse(
         `NAEP year-gap across jurisdictions: ${subject} grade ${grade}, ${years} for ${jurisdictions}`,
         { rows: data.result },
@@ -253,7 +253,7 @@ export const tools: Tool<any, any>[] = [
         subject, grade, variable, years,
         jurisdiction: jurisdiction || "NP",
       });
-      if (!data.result?.length) return emptyResponse("No gap data found.");
+      if (!data.result?.length) return emptyResponse("No gap data found. Gap statistics only exist for two-category variables (GENDER, SDRACEM pairs, IEP, LEP…) and select year/jurisdiction combos — multi-category variables like SLUNCH3 have no single gap; use naep_compare_groups-style score queries per category instead.");
       return tableResponse(
         `NAEP group-gap across years: ${subject} grade ${grade}, ${variable} for ${years}`,
         { rows: data.result },
@@ -280,7 +280,7 @@ export const tools: Tool<any, any>[] = [
         subject, grade, variable, jurisdictions,
         year: year || "Current",
       });
-      if (!data.result?.length) return emptyResponse("No gap data found.");
+      if (!data.result?.length) return emptyResponse("No gap data found. Gap statistics only exist for two-category variables (GENDER, SDRACEM pairs, IEP, LEP…) and select year/jurisdiction combos — multi-category variables like SLUNCH3 have no single gap; use naep_compare_groups-style score queries per category instead.");
       return tableResponse(
         `NAEP group-gap across jurisdictions: ${subject} grade ${grade}, ${variable} for ${jurisdictions}`,
         { rows: data.result },
