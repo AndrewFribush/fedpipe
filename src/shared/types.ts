@@ -125,6 +125,8 @@ export interface ModuleMeta {
     /** Env var name(s) to check at startup. String for one key, array for multi-credential (e.g. ["AQS_API_KEY", "AQS_EMAIL"]). */
     envVar: string | string[];
     signup: string;
+    /** Key raises quota but the API works without one (BLS, Census). */
+    optional?: boolean;
   };
   /** Tool workflow guidance for the MCP client (e.g. "fred_search → fred_series_data"). */
   workflow: string;

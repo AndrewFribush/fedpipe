@@ -90,11 +90,99 @@ function parseArgs() {
   const port = Number(get("--port") ?? process.env.MCP_PORT ?? 8080);
   const modulesFilter = get("--modules") ?? process.env.MODULES;
   const listModules = args.includes("--list-modules") || args.includes("--list");
+  const doctor = args.includes("doctor") || args.includes("--doctor");
 
-  return { transport, port, modulesFilter, listModules };
+  return { transport, port, modulesFilter, listModules, doctor };
 }
 
-const { transport, port, modulesFilter, listModules } = parseArgs();
+const { transport, port, modulesFilter, listModules, doctor } = parseArgs();
+
+if (doctor) {
+  const live = process.argv.includes("--live");
+  const green = (t: string) => `\x1b[32m${t}\x1b[0m`;
+  const red = (t: string) => `\x1b[31m${t}\x1b[0m`;
+  const dim = (t: string) => `\x1b[2m${t}\x1b[0m`;
+
+  console.log(`fedpipe doctor — ${MODULES.length} modules, ${MODULES.reduce((n, m) => n + m.tools.length, 0)} tools\n`);
+
+  let keyless = 0, keyed = 0, missing = 0;
+  const missingRows: string[] = [];
+  for (const m of MODULES) {
+    const envVars = m.auth ? (Array.isArray(m.auth.envVar) ? m.auth.envVar : [m.auth.envVar]) : [];
+    if (!envVars.length) { keyless++; continue; }
+    const unset = envVars.filter(v => !process.env[v]);
+    if (unset.length && m.auth?.optional) {
+      keyless++; // works without a key; a key only raises the quota
+      missingRows.push(`  ${dim("○")} ${m.name.padEnd(18)} works keyless ${dim(`(set ${unset.join(", ")} to raise quota — ${m.auth.signup})`)}`);
+    } else if (unset.length) {
+      missing++;
+      missingRows.push(`  ${red("✗")} ${m.name.padEnd(18)} needs ${unset.join(", ")}${m.auth?.signup ? dim(`  → ${m.auth.signup}`) : ""}`);
+    } else {
+      keyed++;
+    }
+  }
+  console.log(`${green("✓")} ${keyless} modules need no API key`);
+  console.log(`${green("✓")} ${keyed} keyed modules have their keys set`);
+  if (missingRows.length) {
+    if (missing) console.log(`${red("✗")} ${missing} modules are missing required keys:`);
+    for (const r of missingRows) console.log(r);
+  }
+
+  if (live) {
+    console.log("\nLive connectivity (one no-argument tool per reachable module):");
+    const ctx: any = { log: { debug() {}, error() {}, info() {}, warn() {} } };
+    for (const m of MODULES) {
+      const envVars = m.auth ? (Array.isArray(m.auth.envVar) ? m.auth.envVar : [m.auth.envVar]) : [];
+      if (envVars.some(v => !process.env[v])) continue;
+      const candidates = m.tools.filter(t => {
+        const shape = (t.parameters as any)?.shape ?? {};
+        return Object.values(shape).every((f: any) => {
+          const tn = f?._def?.typeName ?? f?._def?.type;
+          return tn === "ZodOptional" || tn === "optional" || tn === "ZodDefault" || tn === "default";
+        });
+      }).slice(0, 5);
+      if (!candidates.length) { console.log(`  ${dim("–")} ${m.name.padEnd(18)} ${dim("(no argument-free tool to probe)")}`); continue; }
+      let lastErr = "";
+      let ok = false;
+      for (const probe of candidates) {
+        const t0 = Date.now();
+        // Keep the probe cheap: ask for a single row when the tool paginates.
+        const shape = (probe.parameters as any)?.shape ?? {};
+        const limitKey = ["limit", "per_page", "page_size", "top", "pagesize", "rows", "length"].find(k => k in shape);
+        const probeArgs = limitKey ? { [limitKey]: 1 } : {};
+        try {
+          const out = await Promise.race([
+            probe.execute!(probeArgs, ctx),
+            new Promise<never>((_, rej) => setTimeout(() => rej(new Error("timeout after 15s")), 15_000)),
+          ]);
+          // A guarded "provide a filter" empty is not a connectivity signal — try the next tool.
+          if (typeof out === "string" && /"dataType":"empty"/.test(out) && /provide|filter|required/i.test(out)) {
+            lastErr = `${probe.name}: needs filters`;
+            continue;
+          }
+          console.log(`  ${green("✓")} ${m.name.padEnd(18)} ${probe.name} ${dim(`(${Date.now() - t0}ms)`)}`);
+          ok = true;
+          break;
+        } catch (e: any) {
+          lastErr = `${probe.name}: ${String(e?.message ?? e).slice(0, 90)}`;
+          if (/provide|required|filter/i.test(lastErr)) continue;
+          break;
+        }
+      }
+      if (!ok) {
+        // "needs filters" is a probe limitation, not a connectivity failure.
+        if (/needs filters|provide|required/i.test(lastErr)) {
+          console.log(`  ${dim("–")} ${m.name.padEnd(18)} ${dim(`(no probe-able tool: ${lastErr})`)}`);
+        } else {
+          console.log(`  ${red("✗")} ${m.name.padEnd(18)} ${lastErr}`);
+        }
+      }
+    }
+  } else {
+    console.log(dim("\nRun with --live to also ping each module's API."));
+  }
+  process.exit(0);
+}
 
 if (listModules) {
   const asJson = process.argv.includes("--json");
