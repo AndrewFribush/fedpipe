@@ -18,4 +18,20 @@ export const prompts: InputPrompt<any, any>[] = [
       "Which industries are growing vs shrinking?\n" +
       "Present the full picture of the labor market.",
   },
+  {
+    name: "county_economy",
+    description: "Profile a county's economy: employment, wages, industry mix, demographics, and housing — QCEW + Census, no API keys required for the wage data.",
+    arguments: [
+      { name: "county", description: "County name with state (e.g. 'Cook County, IL' or 'Deschutes County, Oregon')", required: true },
+    ],
+    load: async ({ county }) => {
+      return `Build an economic profile of ${county}:\n\n` +
+        "1. **Resolve the county** — census_resolve_geography(name='" + county + "', level='county') to get its 5-digit FIPS code\n" +
+        "2. **Employment & wages** — bls_county_wages(area=<fips>, year=<latest full year>, quarter='a', industry_code='10') for totals, then omit industry_code for the industry breakdown (avg_pay, oty_avg_pay_pct_chg show wage levels and growth)\n" +
+        "3. **Dominant industries** — from the breakdown, identify the top private sectors by employment and any with location quotient lq_avg_pay well above 1\n" +
+        "4. **Demographics** — census_query with B01001_001E (population), B19013_001E (median household income), B25077_001E (median home value) using the resolved forGeo/inGeo\n" +
+        "5. **Context** — compare avg annual pay (QCEW) to median household income (ACS); note that QCEW covers jobs located in the county while ACS covers residents\n\n" +
+        "Summarize: what drives this county's economy, how do its wages compare to its cost of living, and is it growing?";
+    },
+  },
 ];
