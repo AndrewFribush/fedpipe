@@ -307,6 +307,12 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   uspto_application_transactions: { application_number: "14412875" },
   uspto_application_documents: { application_number: "14412875" },
   uspto_ptab_proceeding_details: { trial_number: "IPR2025-01319" },
+  uspto_search_applications: { q: "machine learning", limit: 3 },
+  uspto_ptab_proceedings: { q: "trialMetaData.trialTypeCode:IPR", limit: 3 },
+  // These two silently returned empty until the response-bag key fix — a
+  // non-empty result here is the regression guard.
+  uspto_ptab_decisions: { q: "trialMetaData.trialTypeCode:IPR", limit: 3 },
+  uspto_petition_decisions: { limit: 3 },
 
   // ─── World Bank ─────────────────────────────────────────────────────
   wb_indicator: { indicator: "NY.GDP.MKTP.CD", country: "US", start_year: 2020, end_year: 2023 },

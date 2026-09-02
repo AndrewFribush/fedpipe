@@ -316,7 +316,9 @@ export async function searchPtabDecisions(params: {
   return {
     count: Number(res.count ?? 0),
     requestIdentifier: res.requestIdentifier as string | undefined,
-    results: Array.isArray(res.patentTrialDecisionDataBag) ? res.patentTrialDecisionDataBag : [],
+    // The decisions endpoint returns the document bag, not a "decision" bag —
+    // the misnamed key silently returned empty for every query.
+    results: Array.isArray(res.patentTrialDocumentDataBag) ? res.patentTrialDocumentDataBag : [],
   };
 }
 
@@ -341,7 +343,7 @@ export async function searchPetitionDecisions(params: {
   return {
     count: Number(res.count ?? 0),
     requestIdentifier: res.requestIdentifier as string | undefined,
-    results: Array.isArray(res.petitionDecisionBag) ? res.petitionDecisionBag : [],
+    results: Array.isArray(res.petitionDecisionDataBag) ? res.petitionDecisionDataBag : [],
   };
 }
 

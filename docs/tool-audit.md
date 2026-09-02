@@ -443,3 +443,21 @@ registers the rest mid-session. Found a FastMCP limitation while testing: a stdi
 session is registered asynchronously after the initialize handshake, so tools
 added in the first moment of a session can miss the `tools/list_changed`
 delivery. Invisible at human speed, but real — so lazy is opt-in, not the default.
+
+**Keys arrived (2026-09-02, later still):** USPTO, BLS, CourtListener tokens
+added and their modules audited live for the first time.
+- ✅ **uspto** (10 tools) — search (191K "machine learning" applications), the
+  four application-detail tools, PTAB proceedings, PTAB decisions, petition
+  decisions all verified. ❌→✅ **Two real bugs, live-only:** `uspto_ptab_decisions`
+  read `patentTrialDecisionDataBag` (API returns `patentTrialDocumentDataBag`) and
+  `uspto_petition_decisions` read `petitionDecisionBag` (API returns
+  `petitionDecisionDataBag`) — both silently returned empty for every query.
+  Fixed; now 19,838 and 7,489 results respectively. Both added to live-smoke args
+  as regression guards.
+- ✅ **bls** — key raises the 25/day keyless cap; CPI breakdown verified.
+- ✅ **courtlistener** — token unlocks `courts_opinion` (read a 20K-char opinion)
+  and `courts_docket`.
+- ⏳ **bea** (13 tools) — key added and activated on BEA's site ("Your key has
+  been activated!"), but BEA's data endpoint lags activation propagation; audit
+  pending the key going live. 43/45 modules now have working keys; DOL, HUD,
+  NOAA, USDA NASS, AQS still unclaimed.
