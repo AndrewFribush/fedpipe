@@ -2233,11 +2233,11 @@ export const tools: Tool<any, any>[] = [
       return listResponse(
         `${report_type.toUpperCase()} ${report_number} (${congress}th Congress): ${data.text.length} text versions`,
         {
-          items: data.text.map(t => ({
-            type: t.type ?? null,
-            url: t.url ?? null,
-            isErrata: t.isErrata ?? null,
-          })),
+          // Each text entry nests its variants inside formats[].
+          items: data.text.flatMap((t: any) =>
+            Array.isArray(t.formats)
+              ? t.formats.map((f: any) => ({ type: f.type ?? null, url: f.url ?? null, isErrata: f.isErrata ?? null }))
+              : [{ type: t.type ?? null, url: t.url ?? null, isErrata: t.isErrata ?? null }]),
         },
       );
     },
