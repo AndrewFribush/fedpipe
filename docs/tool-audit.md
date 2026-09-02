@@ -422,3 +422,24 @@ financials tools could report a stale cycle as "latest" (rows aren't
 date-ordered and several filing entities share coverage windows — summaries
 now sort explicitly and disclose multi-filing coverage). find_tools indexes
 the server-level tools; company_full_profile prompt added. 358 tools.
+
+**Coverage expansion (2026-09-02, later):** three new modules, each live-verified.
+- ✅ **gleif** (3 tools) — Global LEI registry, keyless. `gleif_search` (Boeing →
+  LEI RVHJWBXLJ1RFUBSY1F30), `gleif_record`, `gleif_ownership`. A 404 on
+  parent lookups is GLEIF's way of saying "no parent reported" — mapped to a
+  clean absence, not an error. The LEI is the canonical entity-resolution join key.
+- ✅ **courtlistener** (3 tools) — Free Law Project. `courts_search` (opinions
+  type='o' and RECAP/PACER dockets type='d') is keyless and verified (2,220 hits
+  for "737 MAX", 1,291 OpenAI dockets); `courts_opinion` and `courts_docket`
+  need a free `COURTLISTENER_API_TOKEN` and return a clean name-the-env-var
+  error without one. Module is skip-gated on the token in tokenless CI.
+- ✅ **nonprofits** (2 tools) — IRS Form 990 via ProPublica Nonprofit Explorer,
+  keyless. `nonprofits_search` → EIN, `nonprofit_financials` (Red Cross FY2023:
+  $3.2B revenue, $4.0B assets). 990-N postcard filers have no financial extract
+  (stated honestly in the summary). 366 tools across 45 modules.
+
+**Lazy loading (`--lazy`, opt-in):** starts with 7 discovery tools; `load_modules`
+registers the rest mid-session. Found a FastMCP limitation while testing: a stdio
+session is registered asynchronously after the initialize handshake, so tools
+added in the first moment of a session can miss the `tools/list_changed`
+delivery. Invisible at human speed, but real — so lazy is opt-in, not the default.

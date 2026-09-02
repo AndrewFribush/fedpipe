@@ -24,8 +24,8 @@
 - **355 tools** across 42 government APIs — economic, health, legislative, financial, environmental, and more
 - **Cross-referencing** — built-in instructions guide the LLM to combine data from multiple agencies (e.g., FDA adverse events + lobbying spend + campaign contributions)
 - **Code mode** — WASM-sandboxed JavaScript execution reduces context window usage by 98-100% for large responses
-- **Lazy by default** — the server starts with just 7 discovery tools (the cross-agency resolvers, `find_tools`, `load_modules`); the client discovers what covers a topic and loads those modules mid-session, so 350+ tool schemas never flood its context. `--eager` registers everything up front for clients that ignore `tools/list_changed`
-- **Selective loading** — `--modules fred,treasury,congress` registers exactly those modules eagerly
+- **Selective loading** — `--modules fred,treasury,congress` registers exactly the modules you need
+- **Lazy loading** (opt-in) — `--lazy` starts with just 7 discovery tools (the cross-agency resolvers, `find_tools`, `load_modules`); the client discovers what covers a topic and loads those modules mid-session via `tools/list_changed`, so 350+ tool schemas never flood its context
 - **Dual transport** — stdio for desktop clients, HTTP Stream for web/remote
 - **TypeScript SDK** — every API is importable as a standalone typed client, no MCP required
 - **Disk-backed caching** — responses cached to disk, survives restarts

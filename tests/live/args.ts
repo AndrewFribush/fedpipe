@@ -313,6 +313,20 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   wb_compare: { indicator: "NY.GDP.MKTP.CD", countries: "US;GB;DE" },
   wb_search: { query: "gdp" },
   wb_reference: { type: "region" },
+
+  // ─── GLEIF (Legal Entity Identifiers) ───────────────────────────────
+  gleif_search: { query: "Boeing Company", country: "US", limit: 3 },
+  gleif_record: { lei: "RVHJWBXLJ1RFUBSY1F30" }, // The Boeing Company
+  gleif_ownership: { lei: "549300G4GEDCU2LBWA48" }, // Apple Inc (reports children)
+
+  // ─── CourtListener (federal courts) ─────────────────────────────────
+  courts_search: { query: "737 MAX", type: "o", limit: 3 },
+  courts_opinion: { opinion_id: 8488454, max_chars: 2000 }, // needs token; key-hint otherwise
+  courts_docket: { docket_id: 65774898 },                    // needs token
+
+  // ─── Nonprofits (IRS Form 990) ──────────────────────────────────────
+  nonprofits_search: { query: "American Red Cross", limit: 3 },
+  nonprofit_financials: { ein: "53-0196605", years: 3 }, // American National Red Cross
 };
 
 /**

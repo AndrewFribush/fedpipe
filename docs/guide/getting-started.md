@@ -83,29 +83,23 @@ MODULES=fred,bls,treasury node dist/server.js
 node dist/server.js --modules fred,treasury --transport httpStream --port 8080
 ```
 
-With all 42 modules, the server sends ~16K tokens of instructions to the LLM. With 3 modules, this drops to ~3K. Use selective loading when you only need a few data sources and want to minimize context overhead.
+With all 45 modules, the server sends ~16K tokens of instructions to the LLM. With 3 modules, this drops to ~3K. Use selective loading when you only need a few data sources and want to minimize context overhead.
 
-### Lazy Loading (the default)
+### Lazy Loading (opt-in)
 
-A bare start is lazy — the server registers only 7 tools: the three cross-agency resolvers (`resolve_entity`, `resolve_person`, `resolve_place` — these work immediately, no loading required), `find_tools`, `load_modules`, `code_mode`, and `clear_cache`. The client's workflow is:
+`--lazy` (or `FEDPIPE_LAZY=1`) registers only 7 tools at startup: the three cross-agency resolvers (`resolve_entity`, `resolve_person`, `resolve_place` — these work immediately, no loading required), `find_tools`, `load_modules`, `code_mode`, and `clear_cache`. The client's workflow is:
 
 1. `find_tools("insider trading")` → matches name `sec` tools and says the module isn't loaded yet
 2. `load_modules(modules=["sec"])` → registers SEC's tools; the server sends `notifications/tools/list_changed` so the client picks them up mid-session
 3. Call the tools normally
 
-Instructions shrink to a short module directory (~1K tokens) until modules load.
-
-Three ways to override the default:
+Instructions shrink to a short module directory (~1K tokens) until modules load. `--lazy` composes with `--modules` (the filter bounds what is *loadable*):
 
 ```bash
-node dist/server.js --eager                 # register all 42 modules up front
-                                            # (use for clients that ignore
-                                            # tools/list_changed notifications)
-node dist/server.js --modules fred,bls      # register exactly these, eagerly
-node dist/server.js --lazy --modules sec,fec # lazy, but only these are loadable
+node dist/server.js --lazy --modules sec,fec   # lazy, only these loadable
 ```
 
-`FEDPIPE_EAGER=1` / `FEDPIPE_LAZY=1` are the env equivalents.
+**Client requirement:** lazy mode relies on `notifications/tools/list_changed` — after `load_modules` registers a module, the client must re-fetch `tools/list` to see the new tools. Clients that ignore the notification (or fire `load_modules` in the very first moment of a session, before their session is fully established) may not see loaded tools; those should use the default eager mode or `--modules`. This is why lazy is opt-in rather than the default.
 
 To see all available module names without starting the server:
 
@@ -129,7 +123,7 @@ Health
   cms    Centers for Medicare & Medicaid        4 tools
   ...
 
-42 modules total.
+45 modules total.
 ```
 
 ### Health check

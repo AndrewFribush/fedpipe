@@ -91,14 +91,14 @@ function parseArgs() {
   const modulesFilter = get("--modules") ?? process.env.MODULES;
   const listModules = args.includes("--list-modules") || args.includes("--list");
   const doctor = args.includes("doctor") || args.includes("--doctor");
-  // Lazy discovery is the default: with 42 modules / 360+ tools, dumping
-  // every schema into the client up front is the wrong trade. Explicitly
-  // naming modules (--modules) means "I know what I need" — those register
-  // eagerly. --eager restores full up-front registration for clients that
-  // don't honor tools/list_changed notifications.
-  const eager = args.includes("--eager") || process.env.FEDPIPE_EAGER === "1" || process.env.FEDPIPE_LAZY === "0";
-  const lazyRequested = args.includes("--lazy") || process.env.FEDPIPE_LAZY === "1";
-  const lazy = lazyRequested || (!eager && !modulesFilter);
+  // Lazy discovery is opt-in (--lazy / FEDPIPE_LAZY=1). It would be the
+  // better default — 42 modules / 360+ tools is a lot of schema to hand a
+  // client up front — but FastMCP registers a stdio session asynchronously
+  // after the initialize handshake, so tools added by load_modules in the
+  // first moment of a session can miss the session and never appear. That
+  // race is invisible at human speed but real, so lazy stays explicit until
+  // it's addressed upstream. --modules still selects a subset, eagerly.
+  const lazy = args.includes("--lazy") || process.env.FEDPIPE_LAZY === "1";
 
   return { transport, port, modulesFilter, listModules, doctor, lazy };
 }
@@ -113,16 +113,12 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
   console.log(`fedpipe ${PKG_VERSION} — MCP server for U.S. government data APIs
 
 Usage:
-  fedpipe                          start the MCP server (stdio transport).
-                                   Lazy by default: starts with the 7
-                                   discovery tools; the client loads
-                                   modules on demand via find_tools +
-                                   load_modules
+  fedpipe                          start the MCP server (stdio transport)
   fedpipe --transport httpStream --port 8080
-  fedpipe --modules fred,census    register only the named modules,
-                                   eagerly (you said what you need)
-  fedpipe --eager                  register all 42 modules up front, for
-                                   clients that ignore tools/list_changed
+  fedpipe --modules fred,census    register only the named modules
+  fedpipe --lazy                   start with the 7 discovery tools only;
+                                   the client loads modules on demand via
+                                   find_tools + load_modules (opt-in)
   fedpipe --list-modules [--json]  list modules and their key requirements
   fedpipe doctor [--live] [--fresh] [--json]
                                    check key setup and API connectivity
@@ -859,7 +855,8 @@ if (lazy) {
         summary: (loaded.length ? `Loaded ${loaded.join(", ")}` : "Nothing new to load") +
           (already.length ? `; already loaded: ${already.join(", ")}` : "") +
           (suggestions.length ? `; unknown: ${suggestions.join(", ")}` : "") +
-          `. ${registeredModules.size}/${activeModules.length} modules (${totalTools} tools) now active.`,
+          `. ${registeredModules.size}/${activeModules.length} modules (${totalTools} tools) now active.` +
+          (loaded.length ? " If the new tools aren't visible yet, request tools/list to refresh." : ""),
         dataType: "record",
         record: { loaded, alreadyLoaded: already, unknown: suggestions, registeredModules: [...registeredModules].sort() },
       });

@@ -85,6 +85,11 @@ export const QUESTION_TYPES = [
   "patents",
   "procurement/contracting",
   "international",
+
+  // ── Legal & Civil Society ──
+  "courts/litigation",
+  "nonprofits/charities",
+  "corporate structure/ownership",
 ] as const;
 
 /** Valid question type for routing hints. */
