@@ -340,9 +340,9 @@ export async function getRecentUpdates(opts: { limit?: number; filter?: "all" | 
  * console.log(`${release.release.name}: ${release.series.length} series`);
  * ```
  */
-export async function getReleaseData(releaseId: number, limit?: number): Promise<FredReleaseResult> {
+export async function getReleaseData(releaseId: number, limit?: number, cursor?: string): Promise<FredReleaseResult> {
   return apiV2.get<FredReleaseResult>("/fred/v2/release/observations", {
-    release_id: releaseId, format: "json", ...(limit ? { limit } : {}),
+    release_id: releaseId, format: "json", ...(limit ? { limit } : {}), ...(cursor ? { next_cursor: cursor } : {}),
   });
 }
 

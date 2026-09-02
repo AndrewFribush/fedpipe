@@ -117,8 +117,8 @@ export const tools: Tool<any, any>[] = [
       release_id: z.number().int().positive().describe("e.g. 53 (GDP)"),
       limit: z.number().int().max(500000).optional().describe("Max obs"),
     }),
-    execute: async ({ release_id, limit }) => {
-      const data = await getReleaseData(release_id, limit);
+    execute: async ({ release_id, limit, cursor }) => {
+      const data = await getReleaseData(release_id, limit, cursor);
       const series = data.series ?? [];
       if (!series.length) return emptyResponse(`No series found for release ${release_id}.`);
       return listResponse(
@@ -144,6 +144,7 @@ export const tools: Tool<any, any>[] = [
       kind: z.enum(["categories", "category_series", "releases", "release_series", "release_dates", "sources", "source_releases", "updates"]).optional().describe("What to browse (default: categories)"),
       id: z.number().int().min(0).optional().describe("category_id, release_id, or source_id depending on kind (default 0 = root category)"),
       limit: z.number().int().max(1000).optional().describe("Max items (default 50–100 depending on kind)"),
+      cursor: z.string().optional().describe("Pagination cursor from a previous call's meta.nextCursor"),
       offset: z.number().int().min(0).optional().describe("Pagination offset (category_series, release_series, releases)"),
       include_future: z.boolean().optional().describe("release_dates only: include scheduled future release dates"),
       filter: z.enum(["all", "macro", "regional"]).optional().describe("updates only: restrict to macro or regional series"),
