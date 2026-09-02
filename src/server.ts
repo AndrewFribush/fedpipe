@@ -209,6 +209,41 @@ function editDistance(a: string, b: string): number {
  * accepts — so a misspelled filter is a one-step fix for the caller instead
  * of silently returning unfiltered data.
  */
+/** Unwrap optional/default/nullable layers to find a field's base type. */
+function baseType(schema: any): string {
+  let cur = schema;
+  for (let i = 0; i < 6 && cur?._def; i++) {
+    const tn = cur._def.typeName ?? cur._def.type;
+    if (["ZodOptional", "optional", "ZodDefault", "default", "ZodNullable", "nullable"].includes(tn)) {
+      cur = cur._def.innerType;
+    } else {
+      return String(tn).replace(/^Zod/, "").toLowerCase();
+    }
+  }
+  return "unknown";
+}
+
+/**
+ * Normalize LLM-typical argument sloppiness before validation: trim stray
+ * whitespace on strings, and coerce numeric strings ("2023") / boolean
+ * strings ("true") when the schema expects number/boolean.
+ */
+function normalizeArgs(shape: Record<string, any>, input: unknown): unknown {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return input;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(input as Record<string, unknown>)) {
+    const expected = shape[k] ? baseType(shape[k]) : null;
+    let val = v;
+    if (typeof val === "string") {
+      val = val.trim();
+      if (expected === "number" && val !== "" && !Number.isNaN(Number(val))) val = Number(val);
+      else if (expected === "boolean" && /^(true|false)$/i.test(val as string)) val = (val as string).toLowerCase() === "true";
+    }
+    out[k] = val;
+  }
+  return out;
+}
+
 function strictParams(obj: z.ZodObject<any>): z.ZodObject<any> {
   const valid = Object.keys(obj.shape);
   return z.strictObject(obj.shape, {
@@ -330,7 +365,9 @@ for (const mod of activeModules) {
     // Reject unknown parameters instead of zod's default silent stripping —
     // a misspelled filter (min_magnitude vs minmagnitude) must error loudly,
     // not quietly return unfiltered data.
-    parameters: t.parameters instanceof z.ZodObject ? strictParams(t.parameters) : t.parameters,
+    parameters: t.parameters instanceof z.ZodObject
+      ? z.preprocess(v => normalizeArgs((t.parameters as z.ZodObject<any>).shape, v), strictParams(t.parameters))
+      : t.parameters,
     annotations: { ...DEFAULT_TOOL_ANNOTATIONS, ...(t.annotations ?? {}) },
   }));
   server.addTools(annotated as any);
