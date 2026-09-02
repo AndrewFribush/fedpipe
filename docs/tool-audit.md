@@ -92,3 +92,40 @@ self-documenting. Database: 601k studies.
 - ⚠️ `scorecard_query` filters are **semicolon**-separated; a comma-separated
   string doesn't error — the API silently misparses it and returns wrong results.
   The description documents the format; callers must heed it.
+## congress — Congress.gov (32 tools)
+
+Representative probe of every endpoint family (all 32 pass the smoke suite):
+- ❌→✅ `congress_crs_reports` returned only titles — the API's field is `id`
+  (e.g. IF12513), not `reportNumber`, so the report number needed by
+  `congress_crs_report_details` was missing. Fixed; the pair now chains.
+- ❌→✅ `congress_congressional_record` returned rows of empty objects — the
+  endpoint answers in PascalCase (`Issue`, `Volume`, `PublishDate`, `Links`).
+  Fixed; issues now include the full-record PDF URL.
+- ⚠️ `congress_search_bills` `query` only title-matches the ~250 most recently
+  updated bills (the API has no text search). Description now says so and the
+  empty result points to `govinfo_search` for real full-text search.
+- ✅ Verified live: recent laws, senate votes (voter-ID cloture rejected Aug 2026),
+  house votes, nominations, treaties, committees, member search + details.
+- ⚠️ `congress_committee_bills` returns oldest-first (upstream provides no sort).
+
+## doj-news — DOJ Newsroom (4 tools)
+
+- ✅ All 4: title filter verified (269 antitrust releases), blog entries, both
+  detail tools (fetch full text by UUID).
+
+## dol — Dept. of Labor (7 tools) 🔑
+
+- 🔑 All 7 blocked on `DOL_API_KEY`; the missing-key error is clean and names
+  the env var. Not verifiable live until a key arrives.
+
+## eia — Energy Information Administration (5 tools)
+
+- ❌→✅ `eia_petroleum` was returning the wrong data for everything: "crude" set
+  an invalid facet (`product=EPCWTI` — the spot route's facet is `series`), which
+  EIA ignored, returning an arbitrary spot series (Gulf Coast gasoline $/GAL).
+  Now: crude/wti→RWTC, brent→RBRTE, plus jet/propane/heating_oil; raw series ids
+  pass through.
+- ❌→✅ `eia_natural_gas` `process` was uppercased and sent as a facet code —
+  "RESIDENTIAL" matches nothing (codes are PRS/PCS/PG1/…). Friendly names now map
+  to codes.
+- ✅ `eia_electricity` (HI residential = 52.7¢/kWh!), `eia_state_energy`, `eia_total_energy`.

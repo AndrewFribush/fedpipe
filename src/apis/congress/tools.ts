@@ -186,8 +186,10 @@ export const tools: Tool<any, any>[] = [
   {
     name: "congress_search_bills",
     description:
-      "Search for bills in Congress by keyword, congress number, or bill type. " +
+      "List bills in Congress, optionally filtered by congress number or bill type. " +
       "Returns bill number, title, sponsor, latest action, and status.\n\n" +
+      "NOTE: 'query' matches against titles of only the ~250 most recently updated bills " +
+      "(the API has no text search) — for real full-text search across legislation use govinfo_search.\n\n" +
       "Congress numbers: 118th (2023-2024), 119th (2025-2026), 117th (2021-2022).\n" +
       "Bill types: hr (House), s (Senate), hjres, sjres, hconres, sconres, hres, sres",
     annotations: { title: "Congress: Search Bills", readOnlyHint: true },
@@ -205,7 +207,9 @@ export const tools: Tool<any, any>[] = [
       const data = await searchBills({ query, congress, bill_type, limit, offset, fromDateTime, toDateTime, sort });
       const bills = data.bills;
       if (!bills.length) {
-        return emptyResponse(query ? `No bills found matching "${query}".` : "No bills found.");
+        return emptyResponse(query
+          ? `No bills found matching "${query}" among the most recently updated bills. This tool only title-matches recent bills — use govinfo_search for full-text search across all legislation.`
+          : "No bills found.");
       }
       return listResponse(
         `Bill search${query ? ` "${query}"` : ""}${congress ? ` (${congress}th Congress)` : ""}: ${bills.length} results`,
@@ -1124,10 +1128,11 @@ export const tools: Tool<any, any>[] = [
         `${data.reports.length} CRS reports`,
         {
           items: data.reports.map(r => ({
-            reportNumber: r.reportNumber ?? null,
+            reportNumber: (r as any).id ?? null,
             title: r.title ?? null,
-            type: r.type ?? null,
-            activeRecord: r.activeRecord ?? null,
+            status: (r as any).status ?? null,
+            publishDate: (r as any).publishDate ?? null,
+            updateDate: (r as any).updateDate ?? null,
           })),
         },
       );
@@ -1268,13 +1273,14 @@ export const tools: Tool<any, any>[] = [
       return listResponse(
         `${data.issues.length} Congressional Record issues`,
         {
-          items: data.issues.map(i => ({
-            issueNumber: i.issueNumber ?? null,
-            volumeNumber: i.volumeNumber ?? null,
-            issueDate: i.issueDate ?? null,
-            congress: i.congress ?? null,
-            sessionNumber: i.sessionNumber ?? null,
-            url: i.url ?? null,
+          // The congressional-record endpoint returns PascalCase fields.
+          items: data.issues.map((i: any) => ({
+            issueNumber: i.Issue ?? i.issueNumber ?? null,
+            volumeNumber: i.Volume ?? i.volumeNumber ?? null,
+            issueDate: i.PublishDate ?? i.issueDate ?? null,
+            congress: i.Congress ?? i.congress ?? null,
+            id: i.Id ?? null,
+            pdfUrl: i.Links?.FullRecord?.PDF?.[0]?.Url ?? null,
           })),
         },
       );

@@ -129,15 +129,28 @@ export async function getPetroleum(opts: {
   length?: number;
   offset?: number;
 } = {}): Promise<EiaResponse> {
-  const productMap: Record<string, string> = {
-    crude: "/petroleum/pri/spt/data",
-    gasoline: "/petroleum/pri/gnd/data",
-    diesel: "/petroleum/pri/gnd/data",
-    all: "/petroleum/pri/spt/data",
+  // route + spot/retail series for each friendly product name. Spot-price
+  // (spt) series ids: RWTC = Cushing WTI, RBRTE = Europe Brent.
+  const productMap: Record<string, { route: string; facet?: [string, string] }> = {
+    crude: { route: "/petroleum/pri/spt/data", facet: ["series", "RWTC"] },
+    wti: { route: "/petroleum/pri/spt/data", facet: ["series", "RWTC"] },
+    brent: { route: "/petroleum/pri/spt/data", facet: ["series", "RBRTE"] },
+    gasoline: { route: "/petroleum/pri/gnd/data", facet: ["series", "EMM_EPMRU_PTE_NUS_DPG"] },
+    diesel: { route: "/petroleum/pri/gnd/data", facet: ["series", "EMD_EPD2D_PTE_NUS_DPG"] },
+    jet: { route: "/petroleum/pri/spt/data", facet: ["series", "EER_EPJK_PF4_RGC_DPG"] },
+    propane: { route: "/petroleum/pri/spt/data", facet: ["series", "EER_EPLLPA_PF4_Y44MB_DPG"] },
+    heating_oil: { route: "/petroleum/pri/spt/data", facet: ["series", "EER_EPD2F_PF4_Y35NY_DPG"] },
+    all: { route: "/petroleum/pri/spt/data" },
   };
 
-  const prod = (opts.product || "crude").toLowerCase();
-  const route = productMap[prod] || "/petroleum/pri/spt/data";
+  const prod = (opts.product || "crude").toLowerCase().replace(/[\s-]+/g, "_");
+  // An unknown product that looks like an EIA series id passes through as a
+  // series facet on the spot route (e.g. "RWTC", "EER_EPJK_PF4_RGC_DPG").
+  const entry = productMap[prod]
+    ?? (opts.product && /^[A-Za-z0-9_]{3,}$/.test(opts.product)
+      ? { route: "/petroleum/pri/spt/data", facet: ["series", opts.product.toUpperCase()] as [string, string] }
+      : productMap.crude);
+  const route = entry.route;
 
   const params = qp({
     frequency: opts.frequency || "monthly",
@@ -150,10 +163,7 @@ export async function getPetroleum(opts: {
     offset: opts.offset,
   });
 
-  // Set correct facet based on product selection and route
-  if (prod === "crude") params["facets[product][]"] = "EPCWTI";
-  else if (prod === "gasoline") params["facets[series][]"] = "EMM_EPMRU_PTE_NUS_DPG";
-  else if (prod === "diesel") params["facets[series][]"] = "EMD_EPD2D_PTE_NUS_DPG";
+  if (entry.facet) params[`facets[${entry.facet[0]}][]`] = entry.facet[1];
 
   return queryEia(route, params);
 }
@@ -186,6 +196,15 @@ export async function getElectricity(opts: {
 }
 
 /** Get natural gas prices. */
+
+// Friendly name → natural-gas price process code (facet values are codes
+// like PRS, not words — "RESIDENTIAL" matches nothing).
+const GAS_PROCESS: Record<string, string> = {
+  residential: "PRS", commercial: "PCS", industrial: "PIN",
+  citygate: "PG1", city_gate: "PG1", electric: "PEU", electric_power: "PEU",
+  wellhead: "FWA", imports: "PM0", exports: "PEX", lng_imports: "PML", lng_exports: "PNG",
+};
+
 export async function getNaturalGas(opts: {
   process?: string;
   frequency?: string;
@@ -203,7 +222,7 @@ export async function getNaturalGas(opts: {
     end: opts.end,
     length: opts.length,
     offset: opts.offset,
-    "facets[process][]": opts.process?.toUpperCase(),
+    "facets[process][]": opts.process ? (GAS_PROCESS[opts.process.toLowerCase()] ?? opts.process.toUpperCase()) : undefined,
   });
 
   return queryEia("/natural-gas/pri/sum/data", params);

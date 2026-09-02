@@ -34,18 +34,13 @@ export const tools: Tool<any, any>[] = [
     description:
       "Get petroleum/oil prices — crude oil spot prices (WTI, Brent), " +
       "retail gasoline prices, diesel, heating oil.\n\n" +
-      "Product codes:\n" +
-      "- EPCBRENT: Brent crude oil spot price\n" +
-      "- EPCWTI: WTI crude oil spot price\n" +
-      "- EMM_EPMRU_PTE_NUS_DPG: US regular gasoline retail\n" +
-      "- EMM_EPMPU_PTE_NUS_DPG: US premium gasoline retail\n" +
-      "- EMD_EPD2D_PTE_NUS_DPG: US diesel retail\n" +
-      "- EER_EPJK_PF4_RGC_DPG: US jet fuel spot price",
+      "Products: crude/wti (Cushing WTI spot), brent (Europe Brent spot), gasoline (US retail regular), " +
+      "diesel (US retail), jet, propane, heating_oil, all (every spot series).",
     annotations: { title: "EIA: Petroleum Prices", readOnlyHint: true },
     parameters: z.object({
       product: z.string().optional().describe(
-        "Product type: 'crude' (default — WTI), 'gasoline', 'diesel', 'all'. " +
-        "Or a specific series ID like 'EPCWTI'",
+        "Product: 'crude'/'wti' (default), 'brent', 'gasoline', 'diesel', 'jet', 'propane', 'heating_oil', 'all'. " +
+        "Or a specific spot series ID like 'RWTC' or 'RBRTE'.",
       ),
       frequency: z.enum(["daily", "weekly", "monthly", "annual"]).optional().describe("Frequency (default: monthly)"),
       start: z.string().optional().describe("Start date (YYYY-MM or YYYY-MM-DD). Default: 2 years ago"),
