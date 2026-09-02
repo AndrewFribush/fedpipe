@@ -404,3 +404,9 @@ the live sources — all current.
   English. All 55 prompts render-tested (0 failures) + county_economy added
   and its workflow executed end-to-end (Deschutes: 93,866 jobs, $66,229 avg
   pay +6.1%). Nightly also now replays the offline suite on the warmed cache.
+
+**Dawn find (06:40):** EDGAR full-text search silently ignores a lone date
+bound — "filings since X" without an end date returned the entire corpus back
+to 2018. Missing bounds now default (endDate→today, startDate→2001 FTS epoch);
+verified congress/cfpb handle lone bounds correctly, so the quirk was
+EFTS-specific.
