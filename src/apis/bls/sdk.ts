@@ -26,7 +26,12 @@ const api = createClient({
   cacheTtlMs: 60 * 60 * 1000, // 1 hour — BLS data updates monthly
   checkError: (data) => {
     const d = data as any;
-    return d?.status === "REQUEST_NOT_PROCESSED" ? (d.message?.join("; ") ?? "Error") : null;
+    if (d?.status !== "REQUEST_NOT_PROCESSED") return null;
+    let msg = d.message?.join("; ") ?? "Error";
+    if (/daily threshold/i.test(msg) && !process.env.BLS_API_KEY) {
+      msg += " (keyless quota is 25 requests/day — set BLS_API_KEY for 500/day: https://www.bls.gov/developers/home.htm)";
+    }
+    return msg;
   },
 });
 

@@ -131,7 +131,8 @@ describe.each(moduleDirs)("%s", (dir) => {
         } catch (e: any) {
           const msg = String(e?.message ?? e);
           const status = /HTTP (\d{3})/.exec(msg)?.[1];
-          const kind = status
+          const kind = /daily threshold|daily limit|quota/i.test(msg) ? "QUOTA EXHAUSTED (keyless daily cap hit — set the module's API key or wait for reset)"
+            : status
             ? (status.startsWith("4") ? "REPO BUG (4xx)" : "UPSTREAM (5xx)")
             : /abort|timeout/i.test(msg) ? "UPSTREAM (timeout)"
             : /fetch failed|ENOTFOUND|ECONNRE|EAI_AGAIN/i.test(msg) ? "UPSTREAM (network/DNS)"
