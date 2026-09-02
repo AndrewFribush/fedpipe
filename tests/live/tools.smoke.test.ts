@@ -22,6 +22,15 @@ import { dirname, join } from "path";
 
 /** Tools currently broken upstream — run with it.fails so recovery shows up as a red test. */
 const RECORD_SHAPES = !!process.env.RECORD_SHAPES;
+const OFFLINE = !!process.env.FEDPIPE_OFFLINE_REPLAY;
+if (OFFLINE) {
+  // Any cache miss surfaces as this sentinel — the test then skips rather
+  // than fails, since offline replay can only cover what the cache holds.
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async () => {
+    throw new Error("OFFLINE_REPLAY_MISS");
+  }) as typeof realFetch;
+}
 const SHAPES: Record<string, { dataType: string; columns?: string[] }> = responseShapesJson as never;
 const recordedShapes: Record<string, { dataType: string; columns?: string[] }> = {};
 
@@ -114,8 +123,14 @@ describe.each(moduleDirs)("%s", (dir) => {
     const known = KNOWN_UPSTREAM[tool.name];
     const run = known && !missing.length ? it.fails : runner;
     const suffix = known ? ` [expected to fail — upstream since ${known.since}: ${known.reason}]` : label;
-    run(`${tool.name}${suffix}`, async () => {
-      const args = await resolveArgs(tool);
+    run(`${tool.name}${suffix}`, async (ctx0) => {
+      let args: Args;
+      try {
+        args = await resolveArgs(tool);
+      } catch (e: any) {
+        if (OFFLINE && /OFFLINE_REPLAY_MISS/.test(String(e?.message ?? e))) ctx0.skip();
+        throw e;
+      }
       const parsed = (tool.parameters as any)?.safeParse?.(args);
       if (parsed && !parsed.success) throw new Error(`args in tests/live/args.ts do not satisfy schema: ${parsed.error.message}`);
 
@@ -130,6 +145,9 @@ describe.each(moduleDirs)("%s", (dir) => {
           break;
         } catch (e: any) {
           const msg = String(e?.message ?? e);
+          if (OFFLINE && /OFFLINE_REPLAY_MISS/.test(msg)) {
+            ctx0.skip(); // not in the local cache — nothing to replay
+          }
           const status = /HTTP (\d{3})/.exec(msg)?.[1];
           const kind = /daily threshold|daily limit|quota/i.test(msg) ? "QUOTA EXHAUSTED (keyless daily cap hit — set the module's API key or wait for reset)"
             : status
@@ -149,6 +167,7 @@ describe.each(moduleDirs)("%s", (dir) => {
       }
       const res = parse(out);
       const err = looksLikeError(res);
+      if (OFFLINE && err && /OFFLINE_REPLAY_MISS/.test(typeof out === "string" ? out : JSON.stringify(out))) ctx0.skip(); // tool caught the network miss itself
       expect(err, `${tool.name} returned an error payload: ${err}`).toBeNull();
       expect(res, `${tool.name} returned nothing`).toBeTruthy();
 

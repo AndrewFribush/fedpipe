@@ -36,6 +36,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:live": "vitest run --config vitest.live.config.ts",
+    "test:offline": "vitest run --config vitest.offline.config.ts",
     "docs:typedoc": "cd docs && npx typedoc",
     "docs:generate": "node docs/scripts/generate.mjs",
     "docs:dev": "npm run docs:generate && npm run docs:typedoc && vitepress dev docs",
