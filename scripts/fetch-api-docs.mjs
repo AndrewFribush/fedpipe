@@ -159,7 +159,9 @@ async function fetchDoc({ module: mod, label, url }) {
       if (!res.ok) {
         // Some agencies bot-block the honest UA; retry once as a browser.
         if ((res.status >= 500 || res.status === 403) && attempt === 0) continue;
-        return { mod, label, url, status: `HTTP ${res.status}`, body: null, transient: res.status >= 500 || res.status === 429 };
+        // 403 counts as transient for pruning: from a datacenter IP it almost
+        // always means bot-blocking, not that the page is gone.
+        return { mod, label, url, status: `HTTP ${res.status}`, body: null, transient: res.status >= 500 || res.status === 429 || res.status === 403 };
       }
       const type = (res.headers.get("content-type") ?? "").toLowerCase();
       if (type.includes("pdf")) {
@@ -206,6 +208,8 @@ async function fetchDoc({ module: mod, label, url }) {
 }
 
 // ── Expand crawl sets into page jobs ──
+
+const failedCrawls = [];
 
 async function crawlJobs() {
   const out = [];
@@ -257,6 +261,7 @@ async function crawlJobs() {
       }
     } catch (err) {
       console.warn(`  WARN crawl ${c.module}/${c.prefix} failed: ${err.message}`);
+      failedCrawls.push(c);
     }
   }
   return out;
@@ -374,7 +379,10 @@ for (const r of results.sort((a, b) => a.mod.localeCompare(b.mod) || a.label.loc
     expected.add(rel);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, `# ${r.label}\n\nSource: ${r.url}\n\n---\n\n${r.body}\n`);
-  } else if (r.transient && existsSync(file)) {
+  } else if (existsSync(file) && !/^HTTP (404|410)$/.test(r.status)) {
+    // Prune only on definitive gone (404/410) or when the link itself is
+    // dropped from metadata; any other skip keeps the previous snapshot —
+    // CI runner IPs get bot-blocked in ways a laptop doesn't.
     expected.add(rel);
     skipped.push({ ...r, status: `${r.status} — kept previous snapshot` });
   } else {
@@ -383,9 +391,12 @@ for (const r of results.sort((a, b) => a.mod.localeCompare(b.mod) || a.label.loc
 }
 
 // Prune files that are no longer expected (removed links, renamed labels, permanent skips).
+const crawlProtected = (modDir, f) =>
+  failedCrawls.some(c => c.module === modDir && f.startsWith(`${slugify(c.prefix)}-`));
+
 for (const modDir of readdirSync(OUT_DIR, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)) {
   for (const f of readdirSync(join(OUT_DIR, modDir))) {
-    if (!expected.has(`${modDir}/${f}`)) unlinkSync(join(OUT_DIR, modDir, f));
+    if (!expected.has(`${modDir}/${f}`) && !crawlProtected(modDir, f)) unlinkSync(join(OUT_DIR, modDir, f));
   }
   if (readdirSync(join(OUT_DIR, modDir)).length === 0) rmSync(join(OUT_DIR, modDir), { recursive: true });
 }
