@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # the doc-mirror step commits upstream doc changes
 
 concurrency:
   group: live-smoke
@@ -64,6 +64,32 @@ jobs:
           name: live-results-${{ github.run_id }}
           path: live-results.json
           retention-days: 30
+
+      # Refresh the upstream API doc mirror. Diffs mean an agency changed
+      # its docs (or moved, like NREL->NLR and FDIC->api.fdic.gov did) —
+      # committed so each change lands as a reviewable diff.
+      - name: Refresh upstream doc mirror
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          sudo apt-get install -y -q poppler-utils >/dev/null  # pdftotext for BEA's PDF guide
+          node scripts/fetch-api-docs.mjs
+          if ! git diff --quiet upstream-docs/; then
+            git config user.name "fedpipe-nightly"
+            git config user.email "actions@users.noreply.github.com"
+            git add upstream-docs/
+            git commit -m "docs: nightly upstream doc mirror refresh
+
+          $(git diff --cached --stat upstream-docs/ | tail -1)"
+            git pull --rebase origin "$GITHUB_REF_NAME" || true
+            git push origin "HEAD:$GITHUB_REF_NAME" || echo "push failed (non-fatal)"
+            {
+              echo "### Upstream doc changes detected"
+              git show --stat --format="" HEAD | head -30
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Doc mirror unchanged." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Fail if any test failed
         if: steps.live.outcome == 'failure'
