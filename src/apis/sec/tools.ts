@@ -329,13 +329,22 @@ export const tools: Tool<any, any>[] = [
     annotations: { title: "SEC: Filing Text", readOnlyHint: true },
     parameters: z.object({
       cik: z.string().describe("CIK or ticker"),
-      accession_number: z.string().describe("Accession number, e.g. '0000320193-24-000123'"),
+      accession_number: z.string().describe("Accession number ('0000320193-24-000123'), or 'latest' / 'latest:10-K' to auto-pick the newest filing (optionally of one form type)"),
       section: z.enum(Object.keys(FILING_SECTIONS) as [string, ...string[]]).optional().describe("Section to extract (10-K item). Omit for the full document."),
       offset: z.number().int().min(0).optional().describe("Character offset to start from (for paging)"),
       max_chars: z.number().int().max(200000).optional().describe("Max characters to return (default 20000)"),
     }),
     execute: async ({ cik: idOrTicker, accession_number, section, offset, max_chars }) => {
       const cik = await toCik(idOrTicker);
+      // 'latest' / 'latest:10-K' resolves to the newest matching filing.
+      const latestMatch = /^latest(?::(.+))?$/i.exec(accession_number.trim());
+      if (latestMatch) {
+        const form = latestMatch[1]?.trim();
+        const recent = await getRecentFilings(cik, { forms: form ? [form] : undefined, limit: 1 });
+        const f = recent.filings[0];
+        if (!f) return emptyResponse(`No recent ${form ?? ""} filings found for ${recent.company}.`);
+        accession_number = f.accessionNumber;
+      }
       const doc = await getFilingText(cik, accession_number);
       let title = `${doc.form} filed ${doc.filingDate}`;
       let body = doc.text;

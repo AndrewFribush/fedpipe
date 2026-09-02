@@ -659,6 +659,10 @@ export function htmlToText(html: string): string {
       .replace(/<ix:header[\s\S]*?<\/ix:header>/gi, " ")
       .replace(/<\/(p|div|tr|li|h[1-6]|table|br)>/gi, "\n")
       .replace(/<br\s*\/?>/gi, "\n")
+      // Inline tags vanish without a space — XBRL viewers wrap single words in
+      // nested spans, and a space here split words mid-letter ("RIS K FACTORS"
+      // in MSFT's 10-K), breaking section extraction.
+      .replace(/<\/?(span|font|b|i|u|em|strong|a|ix:[a-z]+|sup|sub)\b[^>]*>/gi, "")
       .replace(/<[^>]+>/g, " "),
   ).replace(/[ \t\u00a0]+/g, " ").replace(/\n\s*\n+/g, "\n\n").trim();
 }
@@ -667,17 +671,23 @@ export function htmlToText(html: string): string {
 export function extractSection(text: string, section: keyof typeof FILING_SECTIONS): { title: string; text: string } | null {
   const spec = FILING_SECTIONS[section];
   const re = new RegExp(spec.pattern.source, "gi");
-  const starts: number[] = [];
-  for (let m = re.exec(text); m; m = re.exec(text)) starts.push(m.index);
+  const starts: Array<{ index: number; own: string }> = [];
+  for (let m = re.exec(text); m; m = re.exec(text)) {
+    const own = /item\s*(\d+[a-c]?)/i.exec(m[0])?.[1]?.toLowerCase() ?? "";
+    starts.push({ index: m.index, own });
+  }
   if (!starts.length) return null;
-  // Next "Item N." heading after the start marks the end
-  const nextItem = /\n\s*item\s*\d+[a-c]?\.?\s+[A-Z]/gi;
+  // The next DIFFERENT "Item N." heading marks the end — filings repeat the
+  // section's own item number as a running page header/footer.
+  const nextItem = /\n\s*item\s*(\d+[a-c]?)\.?\s+[A-Z]/gi;
   let best: { start: number; end: number } | null = null;
-  for (const s of starts) {
-    nextItem.lastIndex = s + 20;
-    const n = nextItem.exec(text);
-    const end = n ? n.index : text.length;
-    if (!best || end - s > best.end - best.start) best = { start: s, end };
+  for (const st of starts) {
+    nextItem.lastIndex = st.index + 20;
+    let end = text.length;
+    for (let n = nextItem.exec(text); n; n = nextItem.exec(text)) {
+      if (n[1].toLowerCase() !== st.own) { end = n.index; break; }
+    }
+    if (!best || end - st.index > best.end - best.start) best = { start: st.index, end };
   }
   if (!best) return null;
   return { title: spec.title, text: text.slice(best.start, best.end).trim() };
