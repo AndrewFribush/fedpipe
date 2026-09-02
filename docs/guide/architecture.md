@@ -167,6 +167,20 @@ fuzzy registry-name resolution (NHTSA models, World Bank countries, SEC
 tickers), a JSON repairer for NAEP's unescaped quotes, and endpoint-name
 alias fallbacks (DOL).
 
+### Environmental resilience (all verified with hostile tests)
+
+- **Upstream misbehavior**: stalled response bodies hit a read deadline;
+  runaway bodies are refused at 64MB; 5xx/429/network errors retry with
+  backoff honoring Retry-After; bot-walls and quota caps get labeled errors.
+- **Cache**: flushed synchronously on exit/SIGINT/SIGTERM (short sessions
+  persist), merged per-entry across concurrent server processes, written
+  atomically (temp+rename), size-capped per entry, and fully optional — a
+  corrupt cache file or read-only filesystem degrades to memory-only
+  operation without failing a single call.
+- **Input chaos**: garbage JSON-RPC lines, multi-MB junk input, unknown
+  methods, and parallel calls on one session are all absorbed; 400+ calls
+  hold RSS flat (~220MB).
+
 ## The Test Ladder
 
 | Layer | Command | What it proves |
