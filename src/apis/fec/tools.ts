@@ -228,11 +228,16 @@ export const tools: Tool<any, any>[] = [
     }),
     execute: async ({ committee_id, cycle, recipient_name, per_page }) => {
       const data = await getCommitteeDisbursements({ committee_id, cycle, recipient_name, per_page });
-      const results = data.results ?? [];
+      let results = data.results ?? [];
       if (!results.length) return emptyResponse(`No disbursements found for committee ${committee_id}.`);
+      // Conduit committees (ActBlue/WinRed) report aggregate memo rows with
+      // null amounts, and FEC sorts those first regardless — put itemized
+      // rows with real amounts on top.
+      results = [...results].sort((a, b) => Number(b.disbursement_amount != null) - Number(a.disbursement_amount != null));
 
       return tableResponse(
-        `Disbursements from ${results[0]?.committee?.name ?? committee_id}: ${data.pagination.count} total, showing ${results.length}`,
+        `Disbursements from ${results[0]?.committee?.name ?? committee_id}: ${data.pagination.count} total, showing ${results.length}` +
+          (results.some(r => r.disbursement_amount == null) ? " (rows with null amounts are conduit-committee aggregates — use recipient_name to find itemized rows)" : ""),
         {
           rows: results.map(d => ({
             recipient: d.recipient_name,
