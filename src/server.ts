@@ -430,7 +430,12 @@ server.addTool({
       const fn = allToolMap.get(tool);
       if (!fn) return null;
       try {
-        const out = await (fn as (a: unknown, c: unknown) => Promise<unknown>)(args, { log: { debug() {}, error() {}, info() {}, warn() {} } });
+        // One slow agency must not stall the whole fan-out — cap each
+        // source and report the timeout as that source's error.
+        const out = await Promise.race([
+          (fn as (a: unknown, c: unknown) => Promise<unknown>)(args, { log: { debug() {}, error() {}, info() {}, warn() {} } }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error(`${tool} timed out after 25s`)), 25_000).unref?.()),
+        ]);
         return JSON.parse(typeof out === "string" ? out : JSON.stringify(out));
       } catch (e) {
         return { _error: String((e as Error)?.message ?? e).slice(0, 160) };
