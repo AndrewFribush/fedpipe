@@ -444,6 +444,19 @@ server.addTool({
 
 // ─── Auto-generate resources ─────────────────────────────────────────
 
+// Per-module reference data (lookup tables, dataset maps, docs links) as
+// browsable resources — saves tool calls for things that never change.
+for (const mod of activeModules) {
+  if (!mod.reference || !Object.keys(mod.reference).length) continue;
+  server.addResource({
+    uri: `govdata://reference/${mod.name}`,
+    name: `${mod.displayName} reference data`,
+    description: `Lookup tables for the ${mod.name} module: ${Object.keys(mod.reference).join(", ")}`,
+    mimeType: "application/json",
+    load: async () => ({ text: JSON.stringify(mod.reference, null, 2) }),
+  });
+}
+
 server.addResource({
   uri: "govdata://reference",
   name: "API Reference",
