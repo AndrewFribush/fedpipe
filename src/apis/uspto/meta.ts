@@ -24,6 +24,7 @@ export default {
   ],
   reference: {
     docs: {
+      "Shared Schemas (yaml)": "https://data.uspto.gov/swagger/odp-common-base.yaml",
       "API docs": "https://data.uspto.gov/apis/getting-started",
       "Swagger": "https://data.uspto.gov/swagger/swagger.yaml",
       "Rate limits": "https://data.uspto.gov/apis/api-rate-limits",

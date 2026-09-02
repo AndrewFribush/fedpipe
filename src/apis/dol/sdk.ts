@@ -364,13 +364,28 @@ async function queryDol<T>(
   // DOL wraps rows in {"data": [...]}. Typing this as T[] made every tool see a
   // non-array and report "no results" — the API was returning rows the whole
   // time. Tolerate a bare array too, in case an endpoint ever returns one.
-  const res = await client.get<DolEnvelope<T> | T[] | null>(
-    `/${agencyEndpoint}/json`,
-    params,
-  );
-  if (!res) return [];
-  return Array.isArray(res) ? res : (res.data ?? []);
+  // DOL renamed some datasets (the live /v4/datasets catalog says
+  // ui_national_weekly_claims where older docs said ui_claims_national) —
+  // if the primary name 404s, retry the alias before giving up.
+  const attempt = async (endpoint: string) => {
+    const res = await client.get<DolEnvelope<T> | T[] | null>(`/${endpoint}/json`, params);
+    if (!res) return [] as T[];
+    return Array.isArray(res) ? res : (res.data ?? []);
+  };
+  try {
+    return await attempt(agencyEndpoint);
+  } catch (e) {
+    const alias = DOL_ENDPOINT_ALIASES[agencyEndpoint];
+    if (alias && /HTTP 404/.test(String(e))) return attempt(alias);
+    throw e;
+  }
 }
+
+/** Old name → current catalog name, tried on 404. */
+const DOL_ENDPOINT_ALIASES: Record<string, string> = {
+  "ETA/ui_claims_national": "ETA/ui_national_weekly_claims",
+  "ETA/ui_claims_state": "ETA/ui_state_weekly_claims",
+};
 
 // ─── Public API ──────────────────────────────────────────────────────
 
