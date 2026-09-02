@@ -6,6 +6,15 @@ fedpipe's independent continuation of `lzinga/us-gov-open-data-mcp` (see
 Credits in the README). Everything below is on top of upstream v2026.6.10.
 
 ### Added
+- **Lazy loading, on by default**: a bare start registers 7 discovery tools
+  (the cross-agency resolvers, `find_tools`, `load_modules`, `code_mode`,
+  `clear_cache`); modules register mid-session via `load_modules` with
+  `tools/list_changed` notifications. `--eager` restores full up-front
+  registration; `--modules a,b` registers exactly those, eagerly.
+- **Cross-agency resolvers**: `resolve_entity` (SEC/FEC/lobbying/USAspending/
+  Open Payments/FAERS), `resolve_person` (FEC identity + fundraising +
+  principal committee + BioGuide), `resolve_place` (Census/ACS/QCEW/FEMA),
+  each returning ready-to-run follow-up calls.
 - **Live verification**: nightly CI runs every tool against the real APIs,
   with silent-empty detection, schema-drift baselines, quota/upstream/repo-bug
   failure classification, and a `doctor --live` health summary.

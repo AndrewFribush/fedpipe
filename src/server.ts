@@ -91,7 +91,14 @@ function parseArgs() {
   const modulesFilter = get("--modules") ?? process.env.MODULES;
   const listModules = args.includes("--list-modules") || args.includes("--list");
   const doctor = args.includes("doctor") || args.includes("--doctor");
-  const lazy = args.includes("--lazy") || process.env.FEDPIPE_LAZY === "1";
+  // Lazy discovery is the default: with 42 modules / 360+ tools, dumping
+  // every schema into the client up front is the wrong trade. Explicitly
+  // naming modules (--modules) means "I know what I need" — those register
+  // eagerly. --eager restores full up-front registration for clients that
+  // don't honor tools/list_changed notifications.
+  const eager = args.includes("--eager") || process.env.FEDPIPE_EAGER === "1" || process.env.FEDPIPE_LAZY === "0";
+  const lazyRequested = args.includes("--lazy") || process.env.FEDPIPE_LAZY === "1";
+  const lazy = lazyRequested || (!eager && !modulesFilter);
 
   return { transport, port, modulesFilter, listModules, doctor, lazy };
 }
@@ -106,12 +113,16 @@ if (process.argv.includes("--help") || process.argv.includes("-h")) {
   console.log(`fedpipe ${PKG_VERSION} — MCP server for U.S. government data APIs
 
 Usage:
-  fedpipe                          start the MCP server (stdio transport)
+  fedpipe                          start the MCP server (stdio transport).
+                                   Lazy by default: starts with the 7
+                                   discovery tools; the client loads
+                                   modules on demand via find_tools +
+                                   load_modules
   fedpipe --transport httpStream --port 8080
-  fedpipe --modules fred,census    load only the named modules
-  fedpipe --lazy                   start with discovery tools only; the
-                                   client loads modules on demand via
-                                   find_tools + load_modules
+  fedpipe --modules fred,census    register only the named modules,
+                                   eagerly (you said what you need)
+  fedpipe --eager                  register all 42 modules up front, for
+                                   clients that ignore tools/list_changed
   fedpipe --list-modules [--json]  list modules and their key requirements
   fedpipe doctor [--live] [--fresh] [--json]
                                    check key setup and API connectivity
