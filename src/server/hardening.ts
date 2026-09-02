@@ -49,9 +49,15 @@ export function normalizeArgs(shape: Record<string, any>, input: unknown): unkno
     const expected = shape[k] ? baseType(shape[k]) : null;
     let val = v;
     if (typeof val === "string") {
-      val = val.trim();
+      // Strip zero-width/invisible characters (copy-paste artifacts) too.
+      val = val.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
       if (expected === "number" && val !== "" && !Number.isNaN(Number(val))) val = Number(val);
       else if (expected === "boolean" && /^(true|false)$/i.test(val as string)) val = (val as string).toLowerCase() === "true";
+    }
+    // Pagination-family params can't be negative — several agencies 400 on
+    // them; clamp to 1 (0 stays: some APIs use it for count-only queries).
+    if (typeof val === "number" && val < 0 && /^(limit|per_page|page_size|pagesize|top|rows|length|max_results|page_number|offset|skip|page)$/.test(k)) {
+      val = k === "offset" || k === "skip" || k === "page" || k === "page_number" ? 0 : 1;
     }
     out[k] = val;
   }

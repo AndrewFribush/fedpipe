@@ -187,9 +187,12 @@ export async function resolveCountry(input: string): Promise<{ code: string; nam
   if (byCode) return { code: byCode.iso2Code, name: byCode.name };
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim();
   const nq = norm(q);
+  // Non-Latin input normalizes to nothing — and "".includes matches every
+  // country ("США" used to resolve to Cuba, the shortest name). Bail out.
+  if (nq.length < 2) return null;
   const exact = countries.find(c => norm(c.name) === nq);
   if (exact) return { code: exact.iso2Code, name: exact.name };
-  const partial = countries.filter(c => norm(c.name).includes(nq) || nq.includes(norm(c.name)));
+  const partial = countries.filter(c => norm(c.name).includes(nq) || (nq.length >= 4 && nq.includes(norm(c.name))));
   if (partial.length) { partial.sort((a, b) => a.name.length - b.name.length); return { code: partial[0].iso2Code, name: partial[0].name }; }
   return null;
 }

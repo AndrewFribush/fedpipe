@@ -62,6 +62,17 @@ describe("normalizeArgs", () => {
     expect(normalizeArgs(shape, { unknown_key: " x " })).toEqual({ unknown_key: "x" });
   });
 
+  it("strips zero-width characters from strings", () => {
+    expect(normalizeArgs(shape, { state: "Harv\u200Bard\uFEFF" })).toEqual({ state: "Harvard" });
+  });
+
+  it("clamps negative pagination params (0 preserved for count-style queries)", () => {
+    expect(normalizeArgs(shape, { limit: -5 })).toEqual({ limit: 1 });
+    expect(normalizeArgs(shape, { limit: 0 })).toEqual({ limit: 0 });
+    expect(normalizeArgs(shape, { offset: -3 } as any)).toEqual({ offset: 0 });
+    expect(normalizeArgs(shape, { year: -1 })).toEqual({ year: -1 }); // non-pagination untouched
+  });
+
   it("passes through non-object input", () => {
     expect(normalizeArgs(shape, undefined)).toBeUndefined();
     expect(normalizeArgs(shape, "raw")).toBe("raw");
