@@ -33,6 +33,25 @@ const nibrsEnum = keysEnum(NIBRS_OFFENSES);
 const biasEnum = keysEnum(HATE_CRIME_BIAS_CODES);
 const lesdcEnum = [...LESDC_CHART_TYPES] as [string, ...string[]];
 
+
+/**
+ * CDE payloads key time series as {"01-2020": 0.53, "02-2020": …} maps
+ * shaped for their charts. Recursively convert every such map into a
+ * chronologically sorted [{period, value}] array.
+ */
+function digestSeries(node: unknown): unknown {
+  if (!node || typeof node !== "object" || Array.isArray(node)) return node;
+  const keys = Object.keys(node as Record<string, unknown>);
+  if (keys.length && keys.every(k => /^\d{2}-\d{4}$/.test(k))) {
+    return keys
+      .sort((a, b) => (a.slice(3) + a.slice(0, 2)).localeCompare(b.slice(3) + b.slice(0, 2)))
+      .map(k => ({ period: k, value: (node as Record<string, unknown>)[k] }));
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(node)) out[k] = digestSeries(v);
+  return out;
+}
+
 export const tools: Tool<any, any>[] = [
   // ── 1. Agency Lookup ─────────────────────────────────────────────
   {
@@ -69,7 +88,7 @@ export const tools: Tool<any, any>[] = [
         return emptyResponse(`No FBI agencies found for state '${state}'.`);
       }
       if (Array.isArray(data)) return tableResponse(`FBI agencies in ${state}: ${data.length} agencies`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI agencies in ${state}`, data as Record<string, unknown>);
+      return recordResponse(`FBI agencies in ${state}`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -100,7 +119,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No summarized crime data found for offense '${offense}' at ${level} level.`);
       if (Array.isArray(data)) return tableResponse(`FBI summarized crime (${offense}) at ${level} level: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI summarized crime (${offense}) at ${level} level`, data as Record<string, unknown>);
+      return recordResponse(`FBI summarized crime (${offense}) at ${level} level`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -131,7 +150,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No arrest data found for offense '${offense}' at ${level} level.`);
       if (Array.isArray(data)) return tableResponse(`FBI arrest data (${offense}) at ${level} level: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI arrest data (${offense}) at ${level} level`, data as Record<string, unknown>);
+      return recordResponse(`FBI arrest data (${offense}) at ${level} level`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -157,7 +176,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No expanded homicide data found at ${level} level.`);
       if (Array.isArray(data)) return tableResponse(`FBI expanded homicide data at ${level} level: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI expanded homicide data at ${level} level`, data as Record<string, unknown>);
+      return recordResponse(`FBI expanded homicide data at ${level} level`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -188,7 +207,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No hate crime data found at ${level} level.`);
       if (Array.isArray(data)) return tableResponse(`FBI hate crime data at ${level} level: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI hate crime data at ${level} level`, data as Record<string, unknown>);
+      return recordResponse(`FBI hate crime data at ${level} level`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -212,7 +231,7 @@ export const tools: Tool<any, any>[] = [
       const label = state ? `${state}${ori ? ` (${ori})` : ""}` : "national";
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No law enforcement employee data found for ${label}.`);
       if (Array.isArray(data)) return tableResponse(`FBI law enforcement employees (${label}): ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI law enforcement employees (${label})`, data as Record<string, unknown>);
+      return recordResponse(`FBI law enforcement employees (${label})`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -234,7 +253,7 @@ export const tools: Tool<any, any>[] = [
       const data = await getLesdcData({ chartType: chart_type, year });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No LESDC data found for '${chart_type}' in ${year}.`);
       if (Array.isArray(data)) return tableResponse(`FBI LESDC (${chart_type}) for ${year}: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI LESDC (${chart_type}) for ${year}`, data as Record<string, unknown>);
+      return recordResponse(`FBI LESDC (${chart_type}) for ${year}`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -260,7 +279,7 @@ export const tools: Tool<any, any>[] = [
         : await getUseOfForceNational({ year, quarter });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No use of force data found (${scope}) for ${year}.`);
       if (Array.isArray(data)) return tableResponse(`FBI use of force (${scope}) for ${year}: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI use of force (${scope}) for ${year}`, data as Record<string, unknown>);
+      return recordResponse(`FBI use of force (${scope}) for ${year}`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -292,7 +311,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No NIBRS data found for offense '${offense}' at ${level} level.`);
       if (Array.isArray(data)) return tableResponse(`FBI NIBRS data (${offense}) at ${level} level: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI NIBRS data (${offense}) at ${level} level`, data as Record<string, unknown>);
+      return recordResponse(`FBI NIBRS data (${offense}) at ${level} level`, digestSeries(data) as Record<string, unknown>);
     },
   },
 
@@ -323,7 +342,7 @@ export const tools: Tool<any, any>[] = [
       });
       if (!data || (Array.isArray(data) && !data.length)) return emptyResponse(`No expanded property data found for offense '${offense}' at ${level} level.`);
       if (Array.isArray(data)) return tableResponse(`FBI expanded property (${offense}) at ${level} level: ${data.length} records`, { rows: data as Record<string, unknown>[] });
-      return recordResponse(`FBI expanded property (${offense}) at ${level} level`, data as Record<string, unknown>);
+      return recordResponse(`FBI expanded property (${offense}) at ${level} level`, digestSeries(data) as Record<string, unknown>);
     },
   },
 ];
