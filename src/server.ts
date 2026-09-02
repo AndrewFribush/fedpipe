@@ -556,9 +556,16 @@ server.addTool({
       const items = comms?.data?.items ?? [];
       const officeTypeNames: Record<string, RegExp> = { H: /house/i, S: /senate/i, P: /presidential/i };
       const nameRe = new RegExp(`\\b${lastName.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b`, "i");
-      committee = items.find((c: any) => officeTypeNames[typeWant]?.test(String(c.type ?? "")) && nameRe.test(c.name))
-        ?? items.find((c: any) => nameRe.test(c.name) && !/victory|joint/i.test(c.name))
+      const pick = (list: any[]) =>
+        list.find((c: any) => officeTypeNames[typeWant]?.test(String(c.type ?? "")) && nameRe.test(c.name))
+        ?? list.find((c: any) => nameRe.test(c.name) && !/victory|joint/i.test(c.name))
         ?? null;
+      committee = pick(items);
+      if (!committee) {
+        // Common surnames flood the last-name search — retry with the query as given.
+        const retry = await call("fec_search_committees", { name, per_page: 8 });
+        committee = pick(retry?.data?.items ?? []);
+      }
       if (committee) committee = { committeeId: committee.committeeId, name: committee.name, type: committee.type };
     }
 
