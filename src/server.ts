@@ -643,11 +643,27 @@ server.addTool({
       }
     };
 
-    const geo = await call("census_resolve_geography", { name, limit: 3 });
-    const match = geo?.data?.items?.[0] ?? null;
-    if (!match) {
+    const geo = await call("census_resolve_geography", { name, limit: 12 });
+    let matches: any[] = geo?.data?.items ?? [];
+    if (!matches.length) {
       return JSON.stringify({ summary: `No Census geography matched "${name}". Try 'City, ST', 'X County, ST', a state, or a 5-digit ZIP.`, dataType: "empty", data: null });
     }
+    // Bare-name queries ("Portland") match dozens of places in upstream
+    // (alphabetical) order — rank the candidates by population so the
+    // Oregon city outranks the Pennsylvania borough.
+    if (matches.length > 1 && matches.every((m: any) => m.ucgid)) {
+      const pops = await call("census_query", {
+        dataset: "2023/acs/acs5", variables: "B01001_001E",
+        ucgid: matches.map((m: any) => m.ucgid).join(","),
+      });
+      const pcols: string[] = pops?.data?.columns ?? [];
+      const gi = pcols.indexOf("ucgid"), pi = pcols.indexOf("B01001_001E");
+      if (gi >= 0 && pi >= 0) {
+        const popBy = new Map<unknown, number>((pops?.data?.rows ?? []).map((r: unknown[]) => [r[gi], Number(r[pi]) || 0]));
+        matches = [...matches].sort((a, b) => (popBy.get(b.ucgid) ?? 0) - (popBy.get(a.ucgid) ?? 0));
+      }
+    }
+    const match = matches[0];
 
     const [demo, fema] = await Promise.all([
       call("census_query", {
@@ -671,9 +687,15 @@ server.addTool({
       return { title: r[fcols.indexOf("declarationTitle")], type: r[fcols.indexOf("incidentType")], date: String(r[fcols.indexOf("declarationDate")] ?? "").slice(0, 10) };
     });
 
+    // A bare city name ("Springfield") matches dozens of places — say so
+    // loudly instead of silently answering for whichever ranked first.
+    const others = matches.slice(1, 4);
+    const ambiguous = others.length > 0 && !/,|\d{5}/.test(name.trim());
+
     return JSON.stringify({
       summary: `${match.name} — ${match.level}, GEOID ${match.geoid}` +
-        (at("B01001_001E") ? `. Population ${Number(at("B01001_001E")).toLocaleString()}, median income $${Number(at("B19013_001E")).toLocaleString()}, median home $${Number(at("B25077_001E")).toLocaleString()}` : ""),
+        (at("B01001_001E") ? `. Population ${Number(at("B01001_001E")).toLocaleString()}, median income $${Number(at("B19013_001E")).toLocaleString()}, median home $${Number(at("B25077_001E")).toLocaleString()}` : "") +
+        (ambiguous ? `. AMBIGUOUS: "${name}" also matches ${others.map((m: any) => m.name).join("; ")} — add a state ('${name.trim()}, ST') to pin it` : ""),
       dataType: "record",
       record: {
         query: name,
@@ -681,7 +703,7 @@ server.addTool({
         demographics: row ? { population: at("B01001_001E"), medianHouseholdIncome: at("B19013_001E"), medianHomeValue: at("B25077_001E"), source: "ACS 2023 5-year" } : (demo?._error ? { error: demo._error } : null),
         qcewArea,
         recentStateDisasters: disasters.length ? disasters : undefined,
-        otherMatches: (geo?.data?.items ?? []).slice(1).map((m: any) => ({ level: m.level, name: m.name, geoid: m.geoid })),
+        otherMatches: others.map((m: any) => ({ level: m.level, name: m.name, geoid: m.geoid })),
         nextSteps: {
           moreDemographics: `census_query(dataset='2023/acs/acs5', variables='...', ${match.ucgid ? `ucgid='${match.ucgid}'` : `for_geo='${match.forGeo}'${match.inGeo ? `, in_geo='${match.inGeo}'` : ""}`})`,
           wages: qcewArea ? `bls_county_wages(area='${qcewArea}', year=2024, quarter='a')` : undefined,
