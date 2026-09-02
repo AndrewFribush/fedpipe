@@ -357,3 +357,26 @@ fail, 46 key-gated), doctor --live green on 32 modules.
 - 43 MCP resources (was 1): every module's reference data is browsable at
   `govdata://reference/<module>`.
 - Final cold-cache verification: 480 live + 1 expected fail, 1057 unit.
+
+**Second overnight round (03:00–07:00 CDT):**
+- New data: QCEW county/industry wages (bls_county_wages, bls_industry_wages —
+  keyless CSV API, quarterly+annual layouts normalized); electricity
+  generation by fuel on eia_electricity (TX wind: 129 TWh in 2025);
+  sec_concept_search, Forms 3/5 holdings, CAGR; ZIP→ZCTA and township
+  resolution in census.
+- Bug class hunted to extinction: empty-needle matching ("США"→Cuba,
+  "北京"→Parish village NY) guarded in every resolver.
+- The strengthened silent-empty guard (all-empty rows = field-mapping bug)
+  caught congress_committee_report_text (fields nested in formats[]) and
+  usa_spending_over_time (tool asked the envelope for raw API keys the sdk
+  had renamed — 37 periods of empty rows had passed every previous check).
+- fred_release_data cursor pagination (FRED's param is next_cursor — 'cursor'
+  is silently ignored); nws_glossary term filter; code_mode did-you-mean;
+  doctor --fresh.
+- Schema-drift baselines recorded for 308 tools ([SCHEMA DRIFT] on column
+  changes); troubleshooting guide; CI doc-mirror scoped to nightly with a
+  refresh_docs opt-in; doctor --live in the CI job summary.
+
+Final tally: **42 modules, 355 tools, 1057 unit tests, 484 live tests**
+(1 expected upstream failure, 46 key-gated), docs site green, package
+verified from the tarball, four consecutive green CI validations.
