@@ -144,6 +144,9 @@ async function withModelResolution<T>(
   issueType: "r" | "c",
   query: (model: string) => Promise<T[]>,
 ): Promise<T[]> {
+  if (!opts.model?.trim()) {
+    throw new Error("model is required — use nhtsa_models to list models for a make/year.");
+  }
   try {
     const out = await query(opts.model);
     if (out.length > 0) return out;
