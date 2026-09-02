@@ -33,7 +33,7 @@
 - **LLM-friendly hardening** — strict schemas with did-you-mean rejections, argument normalization (whitespace, numeric strings, zero-width chars), fuzzy name resolution (tickers, country/state names, vehicle models), and a 120KB output cap that degrades gracefully
 - **`fedpipe doctor`** — one command to check key setup and live connectivity per module
 - **Discovery built in** — `find_tools` searches all tools by topic; per-module reference data is browsable as MCP resources
-- **Cross-agency entity resolution** — `resolve_entity('Boeing')` links a company across SEC (CIK/ticker), FEC (PACs), lobbying disclosures, and USAspending in one call, with ready-to-run follow-ups
+- **Cross-agency resolvers** — `resolve_entity` (companies: SEC/FEC/lobbying/USAspending/OpenPayments/FAERS), `resolve_person` (politicians: FEC + Congress), and `resolve_place` (Census/QCEW/FEMA) each link identities across agencies in one call with ready-to-run follow-ups
 
 ## Quick Start
 

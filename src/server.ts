@@ -352,6 +352,16 @@ const server = new FastMCP({
 
 // ─── Prompt argument completions ─────────────────────────────────────
 
+const STATE_BY_FIPS: Record<string, string> = {
+  "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE",
+  "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA",
+  "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN",
+  "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM",
+  "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI",
+  "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA",
+  "54": "WV", "55": "WI", "56": "WY", "72": "PR",
+};
+
 const US_STATES = ["AL Alabama","AK Alaska","AZ Arizona","AR Arkansas","CA California","CO Colorado","CT Connecticut","DE Delaware","DC District of Columbia","FL Florida","GA Georgia","HI Hawaii","ID Idaho","IL Illinois","IN Indiana","IA Iowa","KS Kansas","KY Kentucky","LA Louisiana","ME Maine","MD Maryland","MA Massachusetts","MI Michigan","MN Minnesota","MS Mississippi","MO Missouri","MT Montana","NE Nebraska","NV Nevada","NH New Hampshire","NJ New Jersey","NM New Mexico","NY New York","NC North Carolina","ND North Dakota","OH Ohio","OK Oklahoma","OR Oregon","PA Pennsylvania","RI Rhode Island","SC South Carolina","SD South Dakota","TN Tennessee","TX Texas","UT Utah","VT Vermont","VA Virginia","WA Washington","WV West Virginia","WI Wisconsin","WY Wyoming"];
 
 /** Attach state-name completion to any prompt argument named "state". */
@@ -578,6 +588,79 @@ server.addTool({
           bills: member ? `congress_member_bills(bioguide_id='${member.bioguideId}')` : undefined,
           fullBio: member ? `congress_member_details(bioguide_id='${member.bioguideId}')` : undefined,
           contributions: best ? `fec_individual_contributions(committee_id=<their committee>, cycle=<year>)` : undefined,
+        },
+      },
+    });
+  },
+});
+
+server.addTool({
+  name: "resolve_place",
+  description:
+    "Resolve a U.S. place across agencies in one call: Census identity (FIPS, ucgid, ready-to-use " +
+    "census_query params), quick demographics (population, income, home value), the QCEW area code for " +
+    "county wage data, and recent FEMA disaster history for its state. Accepts county/city/state names " +
+    "or a 5-digit ZIP. The geographic sibling of resolve_entity and resolve_person.",
+  annotations: { title: "Resolve Place Across Agencies", readOnlyHint: true, idempotentHint: true, openWorldHint: true, destructiveHint: false },
+  parameters: z.object({
+    name: z.string().describe("Place: 'Deschutes County, OR', 'Pittsburgh, PA', 'Vermont', or a ZIP like '96813'"),
+  }),
+  execute: async ({ name }) => {
+    const call = async (tool: string, args: Record<string, unknown>): Promise<any> => {
+      const fn = allToolMap.get(tool);
+      if (!fn) return null;
+      try {
+        const out = await (fn as (a: unknown, c: unknown) => Promise<unknown>)(args, { log: { debug() {}, error() {}, info() {}, warn() {} } });
+        return JSON.parse(typeof out === "string" ? out : JSON.stringify(out));
+      } catch (e) {
+        return { _error: String((e as Error)?.message ?? e).slice(0, 160) };
+      }
+    };
+
+    const geo = await call("census_resolve_geography", { name, limit: 3 });
+    const match = geo?.data?.items?.[0] ?? null;
+    if (!match) {
+      return JSON.stringify({ summary: `No Census geography matched "${name}". Try 'City, ST', 'X County, ST', a state, or a 5-digit ZIP.`, dataType: "empty", data: null });
+    }
+
+    const [demo, fema] = await Promise.all([
+      call("census_query", {
+        dataset: "2023/acs/acs5",
+        variables: "B01001_001E,B19013_001E,B25077_001E",
+        ...(match.ucgid ? { ucgid: match.ucgid } : { for_geo: match.forGeo, ...(match.inGeo ? { in_geo: match.inGeo } : {}) }),
+      }),
+      match.fips?.state
+        ? call("fema_disaster_declarations", { state: STATE_BY_FIPS[match.fips.state] ?? "", top: 3 })
+        : Promise.resolve(null),
+    ]);
+
+    const row = demo?.data?.rows?.[0] ?? null;
+    const cols = demo?.data?.columns ?? [];
+    const at = (v: string) => (row ? row[cols.indexOf(v)] : null);
+    const qcewArea = match.level === "county" ? `${match.fips.state}${match.fips.county}`
+      : match.level === "state" ? `${match.fips.state}000`
+      : match.level === "zcta" ? null : null;
+    const disasters = (fema?.data?.rows ?? []).map((r: unknown[]) => {
+      const fcols = fema?.data?.columns ?? [];
+      return { title: r[fcols.indexOf("declarationTitle")], type: r[fcols.indexOf("incidentType")], date: String(r[fcols.indexOf("declarationDate")] ?? "").slice(0, 10) };
+    });
+
+    return JSON.stringify({
+      summary: `${match.name} — ${match.level}, GEOID ${match.geoid}` +
+        (at("B01001_001E") ? `. Population ${Number(at("B01001_001E")).toLocaleString()}, median income $${Number(at("B19013_001E")).toLocaleString()}, median home $${Number(at("B25077_001E")).toLocaleString()}` : ""),
+      dataType: "record",
+      record: {
+        query: name,
+        census: { level: match.level, name: match.name, geoid: match.geoid, fips: match.fips, forGeo: match.forGeo, inGeo: match.inGeo, ucgid: match.ucgid },
+        demographics: row ? { population: at("B01001_001E"), medianHouseholdIncome: at("B19013_001E"), medianHomeValue: at("B25077_001E"), source: "ACS 2023 5-year" } : (demo?._error ? { error: demo._error } : null),
+        qcewArea,
+        recentStateDisasters: disasters.length ? disasters : undefined,
+        otherMatches: (geo?.data?.items ?? []).slice(1).map((m: any) => ({ level: m.level, name: m.name, geoid: m.geoid })),
+        nextSteps: {
+          moreDemographics: `census_query(dataset='2023/acs/acs5', variables='...', ${match.ucgid ? `ucgid='${match.ucgid}'` : `for_geo='${match.forGeo}'${match.inGeo ? `, in_geo='${match.inGeo}'` : ""}`})`,
+          wages: qcewArea ? `bls_county_wages(area='${qcewArea}', year=2024, quarter='a')` : undefined,
+          disasters: match.fips?.state ? `fema_disaster_declarations(state='${STATE_BY_FIPS[match.fips.state] ?? "??"}', top=20)` : undefined,
+          healthIndicators: match.level === "county" ? `cdc_places_health(state='${STATE_BY_FIPS[match.fips.state] ?? "??"}')` : undefined,
         },
       },
     });
