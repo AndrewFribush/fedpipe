@@ -199,6 +199,7 @@ if (listModules) {
     const output = MODULES.map(m => ({
       name: m.name,
       displayName: m.displayName,
+      description: m.description,
       toolCount: m.tools.length,
       requiresApiKey: !!m.auth,
       envVars: m.auth ? (Array.isArray(m.auth.envVar) ? m.auth.envVar : [m.auth.envVar]) : null,
