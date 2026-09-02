@@ -405,6 +405,86 @@ for (const mod of activeModules) {
 // ─── clear_cache tool ────────────────────────────────────────────────
 
 server.addTool({
+  name: "resolve_entity",
+  description:
+    "Resolve a company across federal agencies in one call: SEC identity (CIK, tickers, exchange), " +
+    "its corporate PACs (FEC committee IDs), lobbying activity (registrations as client), and federal " +
+    "award activity (USAspending). Returns the identifiers every follow-up tool needs — the starting " +
+    "point for any follow-the-money question. Sources that find nothing are reported as such.",
+  annotations: { title: "Resolve Entity Across Agencies", readOnlyHint: true, idempotentHint: true, openWorldHint: true, destructiveHint: false },
+  parameters: z.object({
+    name: z.string().describe("Company name or stock ticker: 'Boeing', 'PFE', 'Lockheed Martin'"),
+  }),
+  execute: async ({ name }) => {
+    const call = async (tool: string, args: Record<string, unknown>): Promise<any> => {
+      const fn = allToolMap.get(tool);
+      if (!fn) return null;
+      try {
+        const out = await (fn as (a: unknown, c: unknown) => Promise<unknown>)(args, { log: { debug() {}, error() {}, info() {}, warn() {} } });
+        return JSON.parse(typeof out === "string" ? out : JSON.stringify(out));
+      } catch (e) {
+        return { _error: String((e as Error)?.message ?? e).slice(0, 160) };
+      }
+    };
+
+    const sec = await call("sec_ticker_lookup", { query: name, limit: 3 });
+    const secItems = sec?.data?.items ?? [];
+    const secBest = secItems[0] ?? null;
+    // A ticker input ("PLTR") resolves at SEC to the real company name —
+    // search the other agencies with that, not the literal ticker.
+    const looksLikeTicker = /^[A-Z]{1,5}$/.test(name.trim()) && secBest?.name;
+    const searchName = looksLikeTicker
+      ? String(secBest.name).replace(/[,.]?\s+(INC|CORP|CO|LLC|LP|PLC|LTD|HOLDINGS?|GROUP|COMPANY|TECHNOLOGIES)\.?$/i, "").trim()
+      : name;
+
+    const [fec, lobbyClient, spending] = await Promise.all([
+      call("fec_search_committees", { name: searchName, per_page: 5 }),
+      call("lobbying_search", { client_name: searchName, page_size: 3 }),
+      call("usa_spending_by_award", { recipient: searchName, limit: 3 }),
+    ]);
+    const fecItems = (fec?.data?.items ?? []).map((c: any) => ({
+      committeeId: c.committeeId, name: c.name, type: c.type, designation: c.designation, state: c.state,
+    }));
+    const lobbyTotal = Number(/(\d[\d,]*) total/.exec(lobbyClient?.summary ?? "")?.[1]?.replace(/,/g, "") ?? (lobbyClient?.data?.total ?? 0));
+    const lobbyItems = (lobbyClient?.data?.items ?? []).map((f: any) => ({
+      registrant: f.registrant, year: f.year, type: f.type, issues: f.issuesLobbied?.slice?.(0, 4),
+    }));
+    const awards = (spending?.data?.items ?? []).map((a: any) => ({
+      recipientName: a.recipientName, awardAmount: a.awardAmount, awardingAgency: a.awardingAgency,
+    }));
+
+    const found: string[] = [];
+    const notFound: string[] = [];
+    (secBest ? found : notFound).push("SEC");
+    (fecItems.length ? found : notFound).push("FEC");
+    (lobbyItems.length ? found : notFound).push("lobbying");
+    (awards.length ? found : notFound).push("USAspending");
+
+    return JSON.stringify({
+      summary: `Entity "${name}": found in ${found.join(", ") || "no sources"}` +
+        (notFound.length ? ` — nothing in ${notFound.join(", ")}` : "") +
+        (secBest ? `. SEC: ${secBest.name ?? secBest.title ?? ""} CIK ${secBest.cik}` : ""),
+      dataType: "record",
+      record: {
+        query: name,
+        searchedAs: searchName !== name ? searchName : undefined,
+        sec: secBest ? { matches: secItems } : (sec?._error ? { error: sec._error } : null),
+        fecCommittees: fecItems.length ? fecItems : (fec?._error ? { error: fec._error } : null),
+        lobbying: lobbyItems.length ? { totalFilings: lobbyTotal || undefined, recent: lobbyItems } : (lobbyClient?._error ? { error: lobbyClient._error } : null),
+        federalAwards: awards.length ? awards : (spending?._error ? { error: spending._error } : null),
+        nextSteps: {
+          financials: secBest ? `sec_company_financials(cik='${secBest.cik}')` : undefined,
+          insiders: secBest ? `sec_insider_transactions(cik='${secBest.cik}')` : undefined,
+          pacMoney: fecItems[0] ? `fec_committee_disbursements(committee_id='${fecItems[0].committeeId}', cycle=2026)` : undefined,
+          lobbyingDetail: lobbyItems.length ? `lobbying_search(client_name='${searchName}', filing_year=2026)` : undefined,
+          awardsDetail: awards.length ? `usa_spending_by_award(recipient='${searchName}', limit=25)` : undefined,
+        },
+      },
+    });
+  },
+});
+
+server.addTool({
   name: "find_tools",
   description:
     "Search this server's " + String(activeModules.reduce((n, m) => n + m.tools.length, 0)) + " tools by keyword. " +
