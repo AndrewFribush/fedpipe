@@ -118,9 +118,10 @@ if (doctor) {
     console.log(JSON.stringify({ modules: report.length, tools: report.reduce((n, r) => n + r.toolCount, 0), report }, null, 2));
     process.exit(0);
   }
-  const green = (t: string) => `\x1b[32m${t}\x1b[0m`;
-  const red = (t: string) => `\x1b[31m${t}\x1b[0m`;
-  const dim = (t: string) => `\x1b[2m${t}\x1b[0m`;
+  const tty = process.stdout.isTTY ?? false;
+  const green = (t: string) => (tty ? `\x1b[32m${t}\x1b[0m` : t);
+  const red = (t: string) => (tty ? `\x1b[31m${t}\x1b[0m` : t);
+  const dim = (t: string) => (tty ? `\x1b[2m${t}\x1b[0m` : t);
 
   console.log(`fedpipe doctor — ${MODULES.length} modules, ${MODULES.reduce((n, m) => n + m.tools.length, 0)} tools\n`);
 
