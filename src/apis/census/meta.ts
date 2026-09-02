@@ -11,7 +11,7 @@ export default {
   description: "Population, demographics, income, housing, business data from ACS, Decennial Census",
   auth: { envVar: "CENSUS_API_KEY", optional: true, signup: "https://api.census.gov/data/key_signup.html" },
   workflow: "census_resolve_geography ('Philadelphia, PA' → FIPS/ucgid) → census_search_tables ('median income' → B19013) → census_query with descriptive=true. census_datasets / census_geography_levels when you need a dataset path or a sub-state level.",
-  tips: "Common variables: NAME, B01001_001E (population), B19013_001E (median income), B25077_001E (home value). Datasets: 2023/acs/acs1 (1yr, areas 65k+), 2023/acs/acs5 (5yr, all geographies incl. tracts), 2020/dec/pl (Decennial). Never guess FIPS codes — resolve them.",
+  tips: "Methodology: ACS values are estimates with margins of error — request the M-suffix variable (B19013_001M) alongside the E-suffix estimate when precision matters; 1-year files (areas 65k+) are current but noisy, 5-year files cover all geographies and smooth small-area noise; never compare overlapping 5-year windows. Common variables: NAME, B01001_001E (population), B19013_001E (median income), B25077_001E (home value). Datasets: 2023/acs/acs1 (1yr, areas 65k+), 2023/acs/acs5 (5yr, all geographies incl. tracts), 2020/dec/pl (Decennial). Never guess FIPS codes — resolve them.",
   domains: ["economy", "housing", "education"],
   crossRef: [
     { question: "spending/budget", route: "census_population (population for per-capita spending)" },

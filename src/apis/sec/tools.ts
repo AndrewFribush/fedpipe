@@ -35,6 +35,16 @@ async function toCik(idOrTicker: string): Promise<string> {
 }
 
 /** Year-over-year changes for a sequence of annual observations. */
+/** Compound annual growth rate over a sorted annual series (%, or null). */
+function cagr(obs: { period: string | undefined; value: number }[]): { years: number; percent: number } | null {
+  const sorted = [...obs].filter(o => o.period && o.value > 0).sort((a, b) => a.period!.localeCompare(b.period!));
+  if (sorted.length < 2) return null;
+  const first = sorted[0], last = sorted[sorted.length - 1];
+  const years = (new Date(last.period!).getTime() - new Date(first.period!).getTime()) / (365.25 * 24 * 3600 * 1000);
+  if (years < 1) return null;
+  return { years: Math.round(years * 10) / 10, percent: Math.round(((last.value / first.value) ** (1 / years) - 1) * 10000) / 100 };
+}
+
 function withYoY(obs: { period: string | undefined; value: number; filed: string }[]) {
   return obs.map((o, i) => {
     const prev = obs[i - 1];
@@ -171,6 +181,7 @@ export const tools: Tool<any, any>[] = [
             description: data.description,
             unit: data.unit,
             annual: withYoY(data.annual.map(d => ({ period: d.end, value: d.val, filed: d.filed }))),
+            cagr: cagr(data.annual.map(d => ({ period: d.end, value: d.val }))),
             quarterly: data.quarterly.map(d => ({ period: d.end, value: d.val, filed: d.filed })),
           },
         );
