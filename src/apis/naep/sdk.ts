@@ -466,6 +466,38 @@ export async function gapVariableAcrossJurisdictions(opts: {
 
 /** List available independent variables for a subject and cohort/year.
  * API type: independentvariables. Useful for discovering what variables are available. */
+/**
+ * NAEP's data service emits invalid JSON on some endpoints: double quotes
+ * inside string values are not escaped (survey questions quoting themselves).
+ * Walk the text and escape any quote that does not terminate a string —
+ * i.e. one not followed (after whitespace) by a structural character.
+ */
+function parseNaepJson<T>(raw: string): T {
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    let out = "";
+    let inString = false;
+    for (let i = 0; i < raw.length; i++) {
+      const ch = raw[i];
+      if (!inString) {
+        if (ch === '"') inString = true;
+        out += ch;
+      } else if (ch === "\\") {
+        out += ch + (raw[i + 1] ?? "");
+        i++;
+      } else if (ch === '"') {
+        const rest = raw.slice(i + 1).match(/^\s*([,:}\]]|$)/);
+        if (rest) { inString = false; out += ch; }
+        else out += '\\"';
+      } else {
+        out += ch;
+      }
+    }
+    return JSON.parse(out) as T;
+  }
+}
+
 export async function getAvailableVariables(opts: {
   subject: string;
   cohort: number;
@@ -478,7 +510,8 @@ export async function getAvailableVariables(opts: {
     cohort: String(opts.cohort),
     Year: opts.years,
   };
-  return api.get<NaepResponse>("/Dataservice/GetAdhocData.aspx", params);
+  const raw = await api.getText("/Dataservice/GetAdhocData.aspx", params);
+  return parseNaepJson<NaepResponse>(raw);
 }
 
 /**

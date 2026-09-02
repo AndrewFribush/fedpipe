@@ -59,7 +59,9 @@ export const tools: Tool<any, any>[] = [
       "Example searches:\n" +
       "- 'patient.drug.openfda.brand_name:aspirin' — events involving aspirin\n" +
       "- 'patient.drug.openfda.generic_name:ibuprofen+AND+serious:1' — serious ibuprofen events\n" +
-      "- 'patient.reaction.reactionmeddrapt:nausea' — events where nausea was reported",
+      "- 'patient.reaction.reactionmeddrapt:nausea' — events where nausea was reported\n\n" +
+      "TIP: openfda.* fields are only populated when openFDA matched the drug — for newer drugs " +
+      "search 'patient.drug.activesubstance.activesubstancename:\"SEMAGLUTIDE\"' (uppercase) instead.",
     annotations: { title: "FDA: Drug Adverse Events", readOnlyHint: true },
     parameters: searchParams,
     execute: async ({ search, limit }) => {

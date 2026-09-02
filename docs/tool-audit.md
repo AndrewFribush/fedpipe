@@ -129,3 +129,90 @@ Representative probe of every endpoint family (all 32 pass the smoke suite):
   "RESIDENTIAL" matches nothing (codes are PRS/PCS/PG1/…). Friendly names now map
   to codes.
 - ✅ `eia_electricity` (HI residential = 52.7¢/kWh!), `eia_state_energy`, `eia_total_energy`.
+## epa — EPA ECHO/Envirofacts (8 tools)
+
+- ✅ All 8 verified: facilities (major_only works), UV index (city/state), TRI
+  (county filter works), GHG, drinking water, Superfund, facility detail.
+- ❌→✅ `epa_enforcement` state filter never worked (fixed earlier this audit:
+  ECHO's case service wants `p_state`, not `p_st`).
+
+## epa-aqs — EPA Air Quality System (3 tools) 🔑
+
+- 🔑 Blocked on `AQS_API_KEY` + `AQS_EMAIL`. AQS reports missing credentials as
+  HTTP 400, so the shared client's missing-key hint now covers 400s too.
+
+## fbi — FBI Crime Data Explorer (8 tools)
+
+- ✅ 7 verified: agencies, summarized crime, arrests, hate crime, LESDC,
+  expanded homicide, LE employees.
+- ⚠️ Responses are the CDE's raw period-keyed maps ("01-2020": 0.53…) — complete
+  but shaped for their charts, not for reading. `fbi_lesdc` returns chart JSON
+  as a string inside one cell.
+- ❌ `fbi_use_of_force` — endpoint removed upstream (known failure since 2026-09-01).
+
+## fda — openFDA (25 tools)
+
+- ✅ All 25 pass the smoke suite; spot-checked devices, food recalls, shortages,
+  counts with novel queries.
+- ❌→✅ openFDA reports zero matches as **HTTP 404 NOT_FOUND** — every tool threw
+  an error instead of returning an empty result. Now a clean empty.
+- ⚠️ FAERS `openfda.*` fields are only populated when openFDA matched the drug;
+  newer drugs (semaglutide) need `patient.drug.activesubstance.activesubstancename`
+  (uppercase). Documented in the tool description.
+
+## fdic — FDIC BankFind (6 tools)
+
+- ✅ All 6 verified live on the new host (api.fdic.gov — migrated earlier this
+  audit after banks.data.fdic.gov started 301ing). Bank-failure history includes
+  July 2026 failures.
+
+## fec — Federal Election Commission (9 tools)
+
+- ✅ Verified: candidate search, top candidates by cycle, individual contributions.
+- ⚠️ `fec_individual_contributions` name search is fuzzy upstream ("Thiel, Peter"
+  matches "THIELEN, PETER" first) — check the contributor column.
+- ✅ `fec_independent_expenditures` correctly refuses unfiltered queries with guidance.
+
+## federal-register (7 tools)
+
+- ✅ All verified: executive orders by keyword (56 tariff EOs), presidential docs
+  by type, rules by agency, public inspection (pre-publication docs), suggested
+  searches, agencies, document detail.
+
+## fema — FEMA OpenFEMA (5 tools)
+
+- ✅ All verified: declarations (state+incident filters), housing assistance,
+  NFIP claims via fema_query with OData filter syntax, regions.
+- Row-cap parameter is `top` (OData), not `limit`.
+
+## fred — Federal Reserve Economic Data (8 tools)
+
+- ✅ Heavily exercised during the parity build (v2 Bearer auth, vintages, units,
+  browse). Spot-checked release_data and search this audit.
+- ⚠️ `fred_search` uses FRED's API search, which is stricter than the website
+  ("electric vehicle sales" → 0; simpler phrases work). Not a repo bug.
+
+## govinfo — GovInfo (3 tools)
+
+- ❌→✅ Collection filtering was silently ignored — the search service takes
+  filters as query-string field operators (`collection:(CRPT)`), not body fields.
+  `govinfo_cbo_reports` was returning presidential-debate transcripts; now
+  returns committee reports. Bill-text version fallback verified earlier.
+
+## gsa-calc — GSA CALC+ labor rates (3 tools)
+
+- ✅ All 3: rate search with experience filters, autocomplete (100 data-science
+  variants), per-contract rates.
+
+## hud — HUD User (5 tools) 🔑
+
+- 🔑 All blocked on `HUD_USER_TOKEN`; clean missing-key error verified.
+
+## naep — Nation's Report Card (9 tools)
+
+- ✅ 8 verified across scores/levels/comparisons/gaps.
+- ❌→✅ `naep_available_variables` died on NAEP's **invalid JSON** (unescaped
+  quotes inside survey-question labels). Added a tolerant parser that repairs
+  non-terminating quotes.
+- ⚠️ Some subject/year/jurisdiction combos legitimately have no data (state-level
+  science exists only for certain years); empties are accurate.

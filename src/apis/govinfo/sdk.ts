@@ -123,13 +123,16 @@ export async function searchPublications(params: {
   congress?: number;
   pageSize?: number;
 }): Promise<SearchResult> {
+  // The search service takes filters as field operators inside the query
+  // string — top-level body fields like "collection" are silently ignored.
+  let query = params.query;
+  if (params.collection) query += ` collection:(${params.collection})`;
+  if (params.congress) query += ` congress:${params.congress}`;
   const body: Record<string, unknown> = {
-    query: params.query,
+    query,
     pageSize: params.pageSize ?? 10,
     offsetMark: "*",
   };
-  if (params.collection) body.collection = params.collection;
-  if (params.congress) body.congress = params.congress;
 
   const res = await api.post<{ count?: number; results?: Record<string, unknown>[] }>("/search", body);
 

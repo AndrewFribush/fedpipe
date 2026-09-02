@@ -559,7 +559,8 @@ export function createClient(config: ClientConfig): ApiClient {
       const body = await res.text();
 
       // Friendly error for auth failures when no credentials are configured
-      if ((res.status === 401 || res.status === 403) && auth && !hasAuth()) {
+      // 400 included: query-param-auth APIs (EPA AQS) report missing key/email as a 400.
+      if ((res.status === 400 || res.status === 401 || res.status === 403) && auth && !hasAuth()) {
         const envVars = Object.values(auth.envParams).join(", ");
         throw new Error(
           `${name}: API key required (HTTP ${res.status}). ` +

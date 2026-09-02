@@ -74,12 +74,21 @@ function normSearch(search?: string): string | undefined {
 }
 
 /** Generic search for any OpenFDA endpoint. */
-function fdaSearch<T>(path: string, opts: SearchOpts = {}): Promise<FdaResult<T>> {
-  return api.get<FdaResult<T>>(`/${path}.json`, {
-    search: normSearch(opts.search),
-    limit: opts.limit ?? 10,
-    skip: opts.skip,
-  });
+async function fdaSearch<T>(path: string, opts: SearchOpts = {}): Promise<FdaResult<T>> {
+  try {
+    return await api.get<FdaResult<T>>(`/${path}.json`, {
+      search: normSearch(opts.search),
+      limit: opts.limit ?? 10,
+      skip: opts.skip,
+    });
+  } catch (e) {
+    // openFDA reports zero matches as HTTP 404 NOT_FOUND — that's an empty
+    // result, not an error.
+    if (/HTTP 404/.test(String(e)) && /NOT_FOUND|No matches found/i.test(String(e))) {
+      return { meta: { results: { skip: 0, limit: opts.limit ?? 10, total: 0 } }, results: [] } as unknown as FdaResult<T>;
+    }
+    throw e;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -405,11 +414,18 @@ export async function countEndpoint(endpoint: string, field: string, opts: {
   search?: string;
   limit?: number;
 } = {}): Promise<CountResult> {
-  return api.get<CountResult>(`/${endpoint}.json`, {
-    search: normSearch(opts.search),
-    count: field,
-    limit: opts.limit,
-  });
+  try {
+    return await api.get<CountResult>(`/${endpoint}.json`, {
+      search: normSearch(opts.search),
+      count: field,
+      limit: opts.limit,
+    });
+  } catch (e) {
+    if (/HTTP 404/.test(String(e)) && /NOT_FOUND|No matches found/i.test(String(e))) {
+      return { results: [] } as unknown as CountResult;
+    }
+    throw e;
+  }
 }
 
 /** Clear cached responses. */
