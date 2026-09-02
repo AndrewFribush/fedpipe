@@ -30,7 +30,7 @@ import { fileURLToPath } from "url";
 import { FastMCP, type Tool, type InputPrompt } from "fastmcp";
 import { z } from "zod";
 import { buildInstructions } from "./server/instructions.js";
-import { strictParams, normalizeArgs, capToolOutput } from "./server/hardening.js";
+import { strictParams, normalizeArgs, capToolOutput, editDistance } from "./server/hardening.js";
 import { buildAnalysisPrompts } from "./server/prompts.js";
 import { executeInSandbox } from "./shared/sandbox.js";
 import { DOMAINS, type ApiModule } from "./shared/types.js";
@@ -402,8 +402,17 @@ server.addTool({
     const resolvedName = TOOL_ALIASES[toolName] ?? toolName;
     const toolFn = allToolMap.get(resolvedName);
     if (!toolFn) {
-      const available = [...allToolMap.keys()].sort().join(", ");
-      return `Error: tool '${toolName}' not found. Available tools: ${available}`;
+      const names = [...allToolMap.keys()];
+      const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const closest = names
+        .map(n => ({ n, d: editDistance(norm(toolName), norm(n)) }))
+        .sort((a, b) => a.d - b.d)
+        .slice(0, 5)
+        .filter(x => x.d <= Math.max(3, toolName.length / 2))
+        .map(x => x.n);
+      return `Error: tool '${toolName}' not found.` +
+        (closest.length ? ` Did you mean: ${closest.join(", ")}?` : "") +
+        ` (${names.length} tools available — see tools/list.)`;
     }
 
     await reportProgress({ progress: 0, total: 2 });
