@@ -498,3 +498,22 @@ NetJets → 32 aircraft. Owner name is the join key to resolve_entity. Both bulk
 modules share `src/shared/bulk.ts` (cache dir, node:sqlite, ZIP, CSV) with unit
 tests, and both are excluded from the nightly smoke suite (a fresh CI runner
 would re-download tens of MB each night). 47 modules / 372 tools.
+
+**Two more bulk modules (2026-09-02):** after checking whether existing free query
+APIs could replace bulk ingest (none usable — the EFAST2/FAA "APIs" are
+undocumented SPA backends, paid incumbents, or third-party re-hosts), added two
+more bulk-shaped sources with no query API of their own.
+- ✅ **exempt-orgs** — IRS Exempt-Org Business Master File. Six regional CSV
+  extracts (identical headers), monthly. Verified live: indexed **1,962,246**
+  tax-exempt orgs; EIN 94-3242767 → Internet Archive, 501(c)(3), 2017 ruling,
+  $26.8M revenue. This is the full registry (all recognized orgs), joining the
+  `nonprofits` 990 module by EIN. Zero-dep CSV.
+- ✅ **ntsb** — NTSB aviation accident database (2008-present). The download is a
+  ~96MB ZIP wrapping a 558MB Microsoft Access `.mdb`; the pure-JS `mdb-reader`
+  (no native build) parses it in ~60ms. Verified live: 31,670 event-aircraft
+  records; Robinson R44 fatal accidents → 198; N530NA → its event. Joins `faa`
+  by N-number. ❌→✅ **Bug caught in review:** foreign registrations (e.g. Brazil's
+  "PP-MFS") were wrongly prefixed with "N" — normalization now only N-prefixes
+  U.S. numbers. Also added a 21-day TTL fallback since NTSB's endpoint omits
+  Last-Modified. This is the only source that justified a new dependency; every
+  other bulk module stays zero-dep. 49 modules / 375 tools.

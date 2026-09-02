@@ -14,12 +14,14 @@ Credits in the README). Everything below is on top of upstream v2026.6.10.
   that ignore the notification; `--modules a,b` registers exactly those,
   eagerly. `load_modules` waits for the session to register before adding
   tools, so the notification lands even on the first call of a session.
-- **5 new modules**: `gleif` (Global LEI registry — entity resolution + corporate
+- **7 new modules**: `gleif` (Global LEI registry — entity resolution + corporate
   ownership, keyless), `courtlistener` (federal/state court opinions + RECAP/PACER
   dockets; search keyless, detail needs a free token), `nonprofits` (IRS Form 990
-  financials via ProPublica Nonprofit Explorer, keyless), and two bulk-ingest
-  modules — `form5500` (DOL employee-benefit-plan filings) and `faa` (FAA aircraft
-  registry). 47 modules total.
+  financials via ProPublica Nonprofit Explorer, keyless), and four bulk-ingest
+  modules — `form5500` (DOL employee-benefit-plan filings), `faa` (FAA aircraft
+  registry), `exempt-orgs` (IRS Exempt-Org Business Master File — the full
+  registry of ~1.96M tax-exempt orgs), and `ntsb` (NTSB aviation accident
+  database). 49 modules total.
 - **Bulk-ingest modules**: a new module shape for datasets published as bulk
   downloads rather than live APIs (`src/shared/bulk.ts`). The module downloads the
   archive once on first use, extracts it (built-in `zlib`, no zip dep — a
@@ -31,6 +33,13 @@ Credits in the README). Everything below is on top of upstream v2026.6.10.
   - `faa` — every U.S.-registered aircraft (~316K) by tail number or owner/company,
     with make/model/year (an ~80MB FAA download, fetched with browser headers since
     the FAA CDN blocks bare/HEAD requests).
+  - `exempt-orgs` — the IRS registry of all ~1.96M recognized tax-exempt orgs (EIN,
+    subsection, NTEE, ruling year, basic financials) from the monthly EO BMF CSVs;
+    complements `nonprofits` (990 detail) by EIN.
+  - `ntsb` — the NTSB aviation accident database (2008-present) by tail number or
+    make/model/severity; joins `faa` by N-number. This one adds the pure-JS
+    `mdb-reader` dependency (no native build) to read NTSB's Microsoft Access
+    format — the only bulk source that isn't plain CSV.
 - **Cross-agency resolvers**: `resolve_entity` (SEC/FEC/lobbying/USAspending/
   Open Payments/FAERS), `resolve_person` (FEC identity + fundraising +
   principal committee + BioGuide), `resolve_place` (Census/ACS/QCEW/FEMA),
