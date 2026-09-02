@@ -58,6 +58,14 @@ jobs:
           npx vitest run --config vitest.live.config.ts --reporter=default --reporter=json --outputFile=live-results.json
           echo "exit=$?" >> "$GITHUB_OUTPUT"
 
+      # The live run just warmed the disk cache — replay everything offline
+      # to verify the replay machinery itself stays healthy.
+      - name: Offline replay check
+        continue-on-error: true
+        run: |
+          echo "### Offline replay" >> "$GITHUB_STEP_SUMMARY"
+          npm run test:offline 2>&1 | grep -E "Tests " | tail -1 >> "$GITHUB_STEP_SUMMARY" || echo "offline replay failed" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Summarize
         if: always()
         run: node scripts/live-summary.mjs live-results.json >> "$GITHUB_STEP_SUMMARY"
