@@ -472,7 +472,7 @@ export async function gapVariableAcrossJurisdictions(opts: {
  * Walk the text and escape any quote that does not terminate a string —
  * i.e. one not followed (after whitespace) by a structural character.
  */
-function parseNaepJson<T>(raw: string): T {
+export function parseNaepJson<T>(raw: string): T {
   try {
     return JSON.parse(raw) as T;
   } catch {
