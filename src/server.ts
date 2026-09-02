@@ -129,7 +129,15 @@ if (doctor) {
   }
 
   if (live) {
-    console.log("\nLive connectivity (one no-argument tool per reachable module):");
+    if (process.argv.includes("--fresh")) {
+      // True connectivity check: bypass the disk cache for these probes.
+      for (const m of MODULES) {
+        try { (await import(`./apis/${m.name}/sdk.js`) as { clearCache?: () => void }).clearCache?.(); } catch { /* no sdk cache */ }
+      }
+      console.log("\nLive connectivity — cache cleared, hitting the real APIs:");
+    } else {
+      console.log("\nLive connectivity (one no-argument tool per reachable module; may serve from cache — add --fresh to force network):");
+    }
     const ctx: any = { log: { debug() {}, error() {}, info() {}, warn() {} } };
     for (const m of MODULES) {
       const envVars = m.auth ? (Array.isArray(m.auth.envVar) ? m.auth.envVar : [m.auth.envVar]) : [];
