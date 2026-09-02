@@ -543,11 +543,15 @@ server.addTool({
     await reportProgress({ progress: 2, total: 2 });
 
     if (error) {
+      // The sandbox reports interruption as raw engine internals — translate.
+      const friendlyError = /"message":"interrupted"|InternalError.*interrupted/.test(String(error))
+        ? "Script exceeded the execution time limit (infinite loop or unbounded work?). Keep scripts to simple parse/filter/aggregate passes over DATA."
+        : error;
       const previewLen = Math.min(200, rawResult.length);
       const preview = rawResult.length > 200 ? rawResult.slice(0, 200) + "…" : rawResult;
       const argsJson = JSON.stringify(toolArgs ?? {});
       return (
-        `Script error: ${error}\n\n` +
+        `Script error: ${friendlyError}\n\n` +
         `Called '${toolName}' with args ${argsJson} — returned ${(beforeBytes / 1024).toFixed(1)}KB. ` +
         `Fix the script and try again. The DATA variable contains the tool's raw response as a string.\n\n` +
         `DATA preview (first ${previewLen} chars):\n${preview}`
