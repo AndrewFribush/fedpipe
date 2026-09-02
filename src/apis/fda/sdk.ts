@@ -70,7 +70,9 @@ interface SearchOpts { search?: string; limit?: number; skip?: number }
  */
 function normSearch(search?: string): string | undefined {
   if (!search) return search;
-  return search.replace(/\+AND\+/g, " AND ").replace(/\+OR\+/g, " OR ").replace(/\+NOT\+/g, " NOT ");
+  return search
+    .replace(/\+AND\+/g, " AND ").replace(/\+OR\+/g, " OR ").replace(/\+NOT\+/g, " NOT ")
+    .replace(/\+TO\+/g, " TO "); // range syntax [20200101+TO+20231231]
 }
 
 /** Generic search for any OpenFDA endpoint. */

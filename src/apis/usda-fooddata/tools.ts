@@ -7,9 +7,13 @@ import type { Tool } from "fastmcp";
 import { searchFoods, getFood, listFoods, DATA_TYPES } from "./sdk.js";
 import { listResponse, recordResponse, emptyResponse } from "../../shared/response.js";
 
-function formatNutrient(n: { nutrientName?: string; value?: number; amount?: number; unitName?: string }) {
+function formatNutrient(n: { nutrientName?: string; value?: number; amount?: number; unitName?: string; nutrient?: { name?: string; unitName?: string } }) {
+  // Search results flatten to nutrientName/value; the detail endpoint nests
+  // as nutrient.name/amount.
   const val = n.value ?? n.amount;
-  return val !== undefined ? `${n.nutrientName}: ${val} ${n.unitName || ""}`.trim() : null;
+  const name = n.nutrientName ?? n.nutrient?.name;
+  const unit = n.unitName ?? n.nutrient?.unitName ?? "";
+  return val !== undefined && name ? `${name}: ${val} ${unit}`.trim() : null;
 }
 
 export const tools: Tool<any, any>[] = [
