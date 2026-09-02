@@ -388,3 +388,19 @@ one call-style example embedded in a tool description was factually wrong
 (wrong FEC cycle — corrected and verified live); and all 24 FRED series / World
 Bank indicator IDs recommended by the routing guidance were validated against
 the live sources — all current.
+
+**Late shift (05:00–06:00 CDT) — shared-infrastructure hardening:**
+- Dependencies: 8 vulnerabilities patched (axios/form-data/fast-uri high) — npm audit now clean.
+- **The disk cache never persisted for short sessions** (flush timer died with
+  the process — desktop clients making a few calls warmed nothing, ever) and
+  concurrent clients clobbered each other's cache file. Now: synchronous
+  exit-flush, per-entry merge-on-write, atomic temp+rename writes.
+- **Stalled response bodies hung tool calls forever** (the fetch abort stops
+  at headers) — body reads now race a deadline; and bodies stream-read
+  against a 64MB budget so a runaway upstream can't exhaust memory. Both
+  proved with hostile mock servers and locked in as unit tests.
+- CLI: --version/--help added; keyless-capable modules no longer warned
+  "tools will fail"; doctor pipes plain text; code_mode timeouts read like
+  English. All 55 prompts render-tested (0 failures) + county_economy added
+  and its workflow executed end-to-end (Deschutes: 93,866 jobs, $66,229 avg
+  pay +6.1%). Nightly also now replays the offline suite on the warmed cache.
