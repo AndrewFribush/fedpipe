@@ -12,8 +12,11 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 
 - `bea` — [Developer Page](https://apps.bea.gov/developers/) — client-rendered
 - `bls` — [API v2](https://www.bls.gov/developers/api_signature_v2.htm) — HTTP 403 — kept previous snapshot
+- `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
+- `bts` — [BTS Open Data](https://data.bts.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
+- `cdc` — [Life Expectancy](https://data.cdc.gov/d/w9j2-ggv5) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
