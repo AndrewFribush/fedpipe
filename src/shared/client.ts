@@ -455,6 +455,23 @@ class DiskCache {
 
 // ─── Fetch with timeout ──────────────────────────────────────────────
 
+
+/** Read a response body with a deadline — the fetch abort timer stops at
+ * headers, so a stalled body would otherwise hang the call forever. */
+async function textWithTimeout(res: Response, timeoutMs: number, name: string): Promise<string> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      res.text(),
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`${name}: body read timed out after ${timeoutMs}ms`)), timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function fetchTimeout(url: string, init: RequestInit | undefined, timeoutMs: number): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -622,7 +639,7 @@ export function createClient(config: ClientConfig): ApiClient {
     const res = await fetchRetry(url, init, timeoutMs, limiter, name, configMaxRetries);
 
     if (!res.ok) {
-      const body = await res.text();
+      const body = await textWithTimeout(res, timeoutMs, name);
 
       // Friendly error for auth failures when no credentials are configured
       // 400 included: query-param-auth APIs (EPA AQS) report missing key/email as a 400.
@@ -638,13 +655,13 @@ export function createClient(config: ClientConfig): ApiClient {
     }
 
     if (responseType === "text") {
-      const text = await res.text();
+      const text = await textWithTimeout(res, timeoutMs, name);
       cache.set(cacheKey, text);
       return text as T;
     }
 
     let data: unknown;
-    const raw = await res.text();
+    const raw = await textWithTimeout(res, timeoutMs, name);
     if (emptyBodyAsNull && (res.status === 204 || raw.trim() === "")) {
       // DOL returns a bare 204 when a filter matches nothing. Treat that, or
       // any successful empty body, as no rows rather than a JSON parse error.
