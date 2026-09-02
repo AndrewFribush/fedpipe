@@ -31,6 +31,7 @@ export default {
     gdpIndustryTables,
     regionalTables,
     docs: {
+      "API User Guide (HTML)": "https://apps.bea.gov/api/bea_web_service_api_user_guide.htm",
       "User Guide": "https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf",
       "Developer Page": "https://apps.bea.gov/developers/",
       "Sign Up": "https://apps.bea.gov/API/signup/",

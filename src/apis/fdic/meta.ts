@@ -27,6 +27,8 @@ export default {
   reference: {
   datasets: DATASETS,
   docs: {
+    "OpenAPI Spec": "https://api.fdic.gov/banks/docs/swagger.yaml",
+    "API Docs": "https://api.fdic.gov/banks/docs",
     "BankFind Suite API": "https://banks.data.fdic.gov/docs/",
     "FDIC Bank Data": "https://www.fdic.gov/bank/statistical/",
   },

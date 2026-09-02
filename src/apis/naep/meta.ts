@@ -26,8 +26,8 @@ export default {
   statTypes: STAT_TYPES,
   jurisdictions: JURISDICTIONS,
   docs: {
-    "NAEP Data Explorer": "https://www.nationsreportcard.gov/ndecore/landing",
     "API Documentation": "https://www.nationsreportcard.gov/api_documentation.aspx",
+    "NAEP Data Explorer": "https://www.nationsreportcard.gov/ndecore/landing",
     "Assessment Schedule": "https://nces.ed.gov/nationsreportcard/about/assessmentsched.aspx",
   },
 },

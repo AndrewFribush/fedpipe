@@ -29,6 +29,8 @@ export default {
   products: PRODUCTS,
   aggregationFields: AGG_FIELDS,
   docs: {
+    "OpenAPI Spec": "https://raw.githubusercontent.com/cfpb/ccdb5-api/main/swagger-config.yaml",
+    "CCDB API (GitHub)": "https://raw.githubusercontent.com/cfpb/ccdb5-api/main/README.md",
     "API Documentation": "https://cfpb.github.io/api/ccdb/",
     "Complaint Database": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
   },

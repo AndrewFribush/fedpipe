@@ -168,13 +168,13 @@ Response format is xml. Mime-type is “application/xml”.
 All times use ISO8601 Date/Time format. Unless a timezone is specified, UTC
 is assumed. Examples:
 
-2026-09-01,
+2026-09-02,
 Implicit UTC timezone, and time at start of the day (00:00:00)
 
-2026-09-01T21:57:05,
+2026-09-02T02:50:05,
 Implicit UTC timezone.
 
-2026-09-01T21:57:05+00:00,
+2026-09-02T02:50:05+00:00,
 Explicit timezone.
 
 parameter

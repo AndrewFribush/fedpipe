@@ -18221,19 +18221,19 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "path",
+            "name": "committee_id",
+            "required": true,
+            "type": "string"
+          },
+          {
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
             "format": "int32",
             "in": "path",
             "name": "cycle",
             "required": true,
             "type": "integer"
-          },
-          {
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "path",
-            "name": "committee_id",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -18772,19 +18772,19 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "path",
+            "name": "committee_id",
+            "required": true,
+            "type": "string"
+          },
+          {
             "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
             "format": "int32",
             "in": "path",
             "name": "cycle",
             "required": true,
             "type": "integer"
-          },
-          {
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "path",
-            "name": "committee_id",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -22316,13 +22316,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "description": "\nDocument number to fetch\n",
-            "in": "path",
-            "name": "no",
-            "required": true,
-            "type": "string"
-          },
-          {
             "description": "\nChoose a legal document type: advisory_opinions, murs, admin_fines, statutes, or adrs\n",
             "enum": [
               "statutes",
@@ -22333,6 +22326,13 @@ Source: https://api.open.fec.gov/swagger/
             ],
             "in": "path",
             "name": "doc_type",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "\nDocument number to fetch\n",
+            "in": "path",
+            "name": "no",
             "required": true,
             "type": "string"
           }

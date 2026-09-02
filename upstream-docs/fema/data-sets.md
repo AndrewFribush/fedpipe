@@ -146,7 +146,7 @@ Hazard Mitigation Assistance Mitigated Properties | V4 | N/A
 Hazard Mitigation Assistance Projects | V4 | N/A
 Hazard Mitigation Assistance Projects by NFIP CRS Communities | V2 | N/A
 Hazard Mitigation Assistance Projects Financial Transactions | V1 | N/A
-Hazard Mitigation Grant Program - Disaster Summaries | V2 | N/A
+Hazard Mitigation Grant Program - Disaster Summaries | V2, V3 | N/A
 Hazard Mitigation Plan Statuses | V1 | N/A
 HMA Subapplications | V2 | N/A
 HMA Subapplications by NFIP CRS Communities | V1 | N/A
@@ -179,6 +179,6 @@ OpenFEMA Data Set Fields | V1 | N/A
 Training Course Catalog | V1 | N/A
 Training Class Schedule | V1 | N/A
 
-Last updated July 22, 2026
+Last updated August 28, 2026
 
 Return to top

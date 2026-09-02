@@ -23,6 +23,7 @@ export default {
   reference: {
   dataTypes: DATA_TYPES,
   docs: {
+    "OpenAPI Spec": "https://fdc.nal.usda.gov/api-spec/fdc_api.json",
     "API Guide": "https://fdc.nal.usda.gov/api-guide",
     "FoodData Central": "https://fdc.nal.usda.gov/",
     "Data Documentation": "https://fdc.nal.usda.gov/data-documentation",

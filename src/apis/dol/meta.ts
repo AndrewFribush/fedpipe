@@ -39,6 +39,7 @@ export default {
     violationTypes: VIOLATION_TYPES,
     datasets: DATASETS,
     docs: {
+      "Dataset Catalog (live)": "https://apiprod.dol.gov/v4/datasets",
       "DOL Open Data Portal": "https://data.dol.gov/",
       "DOL API User Guide": "https://data.dol.gov/user-guide",
       "OSHA Data": "https://www.osha.gov/data",

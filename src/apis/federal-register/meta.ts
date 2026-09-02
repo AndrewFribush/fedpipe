@@ -22,6 +22,7 @@ export default {
   ],
   reference: {
   docs: {
+    "OpenAPI Spec": "https://www.federalregister.gov/api/v1/documentation.json",
     "API Docs": "https://www.federalregister.gov/developers/documentation/api/v1",
     "Developer Hub": "https://www.federalregister.gov/developers",
   },

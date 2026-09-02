@@ -18,7 +18,7 @@ import { createClient, qp } from "../../shared/client.js";
 // ─── Client ──────────────────────────────────────────────────────────
 
 const client = createClient({
-  baseUrl: "https://banks.data.fdic.gov/api",
+  baseUrl: "https://api.fdic.gov/banks",
   name: "fdic",
   rateLimit: { perSecond: 5, burst: 10 },
   cacheTtlMs: 60 * 60 * 1000, // 1 hour
