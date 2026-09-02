@@ -178,10 +178,10 @@ export interface SecInsiderTransaction {
   owner: string;
   relationship: string;
   security: string;
-  transactionDate: string;
+  transactionDate: string | null;
   code: string;
   codeMeaning: string;
-  acquiredOrDisposed: "A" | "D" | string;
+  acquiredOrDisposed: "A" | "D" | string | null;
   shares: number | null;
   pricePerShare: number | null;
   value: number | null;
@@ -611,12 +611,12 @@ export function summarizeInsiderTransactions(txs: SecInsiderTransaction[], filin
   const buys = { count: 0, shares: 0, value: 0 }, sells = { count: 0, shares: 0, value: 0 };
   const owners = new Map<string, SecInsiderSummary["byOwner"][number]>();
   for (const t of txs) {
-    const o = owners.get(t.owner) ?? { owner: t.owner, relationship: t.relationship, bought: 0, sold: 0, netShares: 0, lastTransaction: t.transactionDate };
+    const o = owners.get(t.owner) ?? { owner: t.owner, relationship: t.relationship, bought: 0, sold: 0, netShares: 0, lastTransaction: t.transactionDate ?? "" };
     if (t.code === "P") { buys.count++; buys.shares += t.shares ?? 0; buys.value += t.value ?? 0; }
     if (t.code === "S") { sells.count++; sells.shares += t.shares ?? 0; sells.value += t.value ?? 0; }
     if (t.acquiredOrDisposed === "A") { o.bought += t.shares ?? 0; o.netShares += t.shares ?? 0; }
     if (t.acquiredOrDisposed === "D") { o.sold += t.shares ?? 0; o.netShares -= t.shares ?? 0; }
-    if (t.transactionDate > o.lastTransaction) o.lastTransaction = t.transactionDate;
+    if (t.transactionDate && t.transactionDate > o.lastTransaction) o.lastTransaction = t.transactionDate;
     owners.set(t.owner, o);
   }
   const round = (x: { count: number; shares: number; value: number }) => ({ ...x, value: Math.round(x.value) });
