@@ -8,6 +8,11 @@ on:
   schedule:
     - cron: "17 6 * * *"   # 06:17 UTC daily
   workflow_dispatch:
+    inputs:
+      refresh_docs:
+        description: "Also refresh the upstream doc mirror"
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # the doc-mirror step commits upstream doc changes
@@ -69,7 +74,7 @@ jobs:
       # its docs (or moved, like NREL->NLR and FDIC->api.fdic.gov did) —
       # committed so each change lands as a reviewable diff.
       - name: Refresh upstream doc mirror
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.refresh_docs)
         continue-on-error: true
         run: |
           sudo apt-get install -y -q poppler-utils >/dev/null  # pdftotext for BEA's PDF guide

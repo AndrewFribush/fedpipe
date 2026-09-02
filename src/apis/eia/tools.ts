@@ -80,15 +80,16 @@ export const tools: Tool<any, any>[] = [
     parameters: z.object({
       state: z.string().optional().describe("Two-letter state code (e.g., 'CA', 'TX'). Omit for national."),
       sector: z.enum(["RES", "COM", "IND", "ALL"]).optional().describe("Sector: RES=residential, COM=commercial, IND=industrial, ALL=default"),
-      data_type: z.enum(["price", "revenue", "sales", "customers"]).optional().describe("Data type (default: price in cents/kWh)"),
+      fuel_type: z.string().optional().describe("For data_type=generation: fuel code — ALL, COW (coal), NG (gas), NUC (nuclear), WND (wind), SUN (solar), HYC (hydro), WWW (wood), GEO (geothermal)"),
+      data_type: z.enum(["price", "revenue", "sales", "customers", "generation"]).optional().describe("Data type (default: price in cents/kWh)"),
       frequency: z.enum(["monthly", "annual"]).optional().describe("Frequency (default: monthly)"),
       start: z.string().optional().describe("Start date (YYYY-MM or YYYY). Default: 2 years ago"),
       end: z.string().optional().describe("End date (YYYY-MM or YYYY). Default: latest available"),
       length: z.number().int().max(5000).optional().describe("Max rows (API max: 5000). Omit to let date range control volume."),
       offset: z.number().int().optional().describe("Row offset for pagination"),
     }),
-    execute: async ({ state, sector, data_type, frequency, start, end, length, offset }) => {
-      const res = await getElectricity({ state, sector, dataType: data_type, frequency, start, end, length, offset });
+    execute: async ({ state, sector, data_type, fuel_type, frequency, start, end, length, offset }) => {
+      const res = await getElectricity({ state, sector, dataType: data_type, fuelType: fuel_type, frequency, start, end, length, offset });
       const data = res.response?.data || [];
 
       if (!data.length) return emptyResponse("No electricity data found.");

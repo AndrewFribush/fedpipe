@@ -173,26 +173,31 @@ export async function getElectricity(opts: {
   state?: string;
   sector?: string;
   dataType?: string;
+  fuelType?: string;
   frequency?: string;
   start?: string;
   end?: string;
   length?: number;
   offset?: number;
 } = {}): Promise<EiaResponse> {
+  // "generation" lives on the operational-data route (facets: location,
+  // fueltypeid); price/revenue/sales/customers on retail-sales (stateid).
+  const generation = opts.dataType === "generation";
   const params = qp({
     frequency: opts.frequency || "monthly",
-    "data[0]": opts.dataType || "price",
+    "data[0]": generation ? "generation" : (opts.dataType || "price"),
     start: opts.start || `${new Date().getFullYear() - 2}-01`,
     "sort[0][column]": "period",
     "sort[0][direction]": "desc",
     end: opts.end,
     length: opts.length,
     offset: opts.offset,
-    "facets[stateid][]": opts.state?.toUpperCase(),
-    "facets[sectorid][]": opts.sector?.toUpperCase(),
+    [generation ? "facets[location][]" : "facets[stateid][]"]: opts.state?.toUpperCase(),
+    "facets[sectorid][]": generation ? (opts.sector ?? "98") : opts.sector?.toUpperCase(), // 98 = electric power total
+    "facets[fueltypeid][]": generation ? opts.fuelType?.toUpperCase() : undefined,
   });
 
-  return queryEia("/electricity/retail-sales/data", params);
+  return queryEia(generation ? "/electricity/electric-power-operational-data/data" : "/electricity/retail-sales/data", params);
 }
 
 /** Get natural gas prices. */
