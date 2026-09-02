@@ -568,6 +568,22 @@ export async function getInsiderTransactions(cik: string, opts: { filings?: numb
     const owner = owners.map(o => str((o.reportingOwnerId as Record<string, unknown>)?.rptOwnerName)).filter(Boolean).join("; ");
     const relationship = owners.map(o => describeRelationship(o.reportingOwnerRelationship as Record<string, unknown>)).filter(Boolean).join("; ");
     const tables = [doc.nonDerivativeTable?.nonDerivativeTransaction, ...(opts.includeDerivatives ? [doc.derivativeTable?.derivativeTransaction] : [])];
+
+    // Forms 3 (and sometimes 4/5) report positions as *holdings* rather than
+    // transactions — emit them as code "H" rows so Form 3 parsing isn't empty.
+    const holdings = [doc.nonDerivativeTable?.nonDerivativeHolding, ...(opts.includeDerivatives ? [doc.derivativeTable?.derivativeHolding] : [])];
+    for (const h of holdings.flatMap(t => arr<Record<string, unknown>>(t as never))) {
+      const post = h.postTransactionAmounts as Record<string, unknown> | undefined;
+      transactions.push({
+        filingDate: f.filingDate, accessionNumber: f.accessionNumber, owner, relationship,
+        security: str(h.securityTitle), transactionDate: null,
+        code: "H", codeMeaning: "Holding (reported position, no transaction)",
+        acquiredOrDisposed: null, shares: null, pricePerShare: null, value: null,
+        sharesOwnedAfter: num(post?.sharesOwnedFollowingTransaction),
+        ownership: str((h.ownershipNature as Record<string, unknown>)?.directOrIndirectOwnership),
+        url: f.url,
+      });
+    }
     for (const tx of tables.flatMap(t => arr<Record<string, unknown>>(t as never))) {
       const amounts = tx.transactionAmounts as Record<string, unknown> | undefined;
       const post = tx.postTransactionAmounts as Record<string, unknown> | undefined;

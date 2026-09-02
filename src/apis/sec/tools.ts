@@ -263,13 +263,15 @@ export const tools: Tool<any, any>[] = [
       since: z.string().optional().describe("Only filings on/after this date (YYYY-MM-DD)"),
       include_derivatives: z.boolean().optional().describe("Also include derivative (option/RSU) transactions (default false)"),
       transaction_codes: z.string().optional().describe("Only these codes, comma-separated: 'P,S' for open-market trades"),
+      forms: z.string().optional().describe("Which ownership forms to parse, comma-separated: '4' (default), '3' (initial holdings), '5' (annual), or '3,4,5'"),
     }),
-    execute: async ({ cik: idOrTicker, filings, since, include_derivatives, transaction_codes }) => {
+    execute: async ({ cik: idOrTicker, filings, since, include_derivatives, transaction_codes, forms }) => {
       const cik = await toCik(idOrTicker);
-      const res = await getInsiderTransactions(cik, { filings, since, includeDerivatives: include_derivatives });
+      const formList = forms ? forms.split(",").map((f: string) => f.trim()) : undefined;
+      const res = await getInsiderTransactions(cik, { filings, since, includeDerivatives: include_derivatives, forms: formList });
       const codes = transaction_codes ? new Set(transaction_codes.split(",").map((s: string) => s.trim().toUpperCase())) : null;
       const txs = codes ? res.transactions.filter(t => codes.has(t.code)) : res.transactions;
-      if (!txs.length) return emptyResponse(`No insider transactions parsed for ${res.company} (${res.filingsParsed} Form 4 filings checked${codes ? `, codes ${transaction_codes}` : ""}).`);
+      if (!txs.length) return emptyResponse(`No insider transactions parsed for ${res.company} (${res.filingsParsed} Form ${forms ?? "4"} filings checked${codes ? `, codes ${transaction_codes}` : ""}).`);
       const summary = summarizeInsiderTransactions(txs, res.filingsParsed);
       return tableResponse(
         `${res.company}: ${txs.length} insider transaction(s) across ${res.filingsParsed} Form 4 filing(s) — ` +
