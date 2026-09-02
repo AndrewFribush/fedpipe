@@ -342,3 +342,18 @@ Work done after the initial audit, in roughly the order it landed:
 
 End state: 353 tools, 1055 unit tests, 480 live tests passing (+1 expected
 fail, 46 key-gated), doctor --live green on 32 modules.
+
+**Early-morning round (05:45–07:00):**
+- Exotic-input probes found an ugly bug class: input that normalizes to an
+  empty string makes `.includes("")` match everything. World Bank resolved
+  "США" (Cyrillic) to **Cuba** (shortest country name); census resolved
+  "北京" to "Parish village, New York". Both resolvers now bail to their
+  no-match hints; the class was swept across all resolvers (nhtsa's empty
+  model string also guarded).
+- Argument normalization now strips zero-width characters ("Harv\u200bard"
+  finds Harvard) and clamps negative pagination params.
+- All 55 MCP prompts verified to render via prompts/get with correct tool
+  references and argument interpolation.
+- 43 MCP resources (was 1): every module's reference data is browsable at
+  govdata://reference/<module>.
+- Final cold-cache verification: 480 live + 1 expected fail, 1057 unit.
