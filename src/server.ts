@@ -682,6 +682,23 @@ server.addTool({
     const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
     if (!tokens.length) return JSON.stringify({ summary: "Provide a search keyword.", dataType: "empty", data: null });
     const scored: Array<{ tool: string; module: string; description: string; score: number }> = [];
+    // Server-level meta tools live outside modules — index them too.
+    const metaTools = [
+      { name: "resolve_entity", description: "Resolve a company across agencies: SEC identity, FEC PACs, lobbying, federal awards, Open Payments, FDA adverse events" },
+      { name: "resolve_person", description: "Resolve a politician across agencies: FEC candidate identity and fundraising, congressional BioGuide identity" },
+      { name: "resolve_place", description: "Resolve a U.S. place: Census FIPS/ucgid, demographics, QCEW wage area, FEMA disaster history" },
+      { name: "code_mode", description: "Run a JavaScript processing script against any tool's output in a WASM sandbox to shrink large responses" },
+      { name: "clear_cache", description: "Clear cached API responses to force fresh data" },
+    ];
+    for (const t of metaTools) {
+      const hay = `${t.name} ${t.description}`.toLowerCase();
+      let score = 0;
+      for (const tok of tokens) {
+        if (t.name.includes(tok)) score += 5;
+        if (hay.includes(tok)) score += 1;
+      }
+      if (score > 0) scored.push({ tool: t.name, module: "(server)", description: t.description, score });
+    }
     for (const mod of activeModules) {
       for (const t of mod.tools) {
         const name = t.name.toLowerCase();
