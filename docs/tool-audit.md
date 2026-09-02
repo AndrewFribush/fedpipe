@@ -68,3 +68,27 @@ All 13 verified live. Fixes made during audit:
 - ⚠️ `cfpb_complaint_trends` / `cfpb_state_complaints` work but return the raw
   Elasticsearch aggregation payload (`_shards`, nested buckets) — usable, not pretty.
 - ✅ `cfpb_complaint_detail` (verified in smoke suite via derived id).
+## clinical-trials — ClinicalTrials.gov v2 (10 tools)
+
+All 10 verified live, no issues. Highlights: `clinical_trials_search` handles
+intervention+phase combos; `_stats` gives status breakdowns (ALS: 919 trials);
+`_by_location` does radius search; the metadata/enums/field tools make the API
+self-documenting. Database: 601k studies.
+
+## cms — CMS Provider Data (4 tools)
+
+- ❌→✅ **The whole module was broken**: every datastore query returned empty. The
+  DKAN metastore stopped honoring `show-reference-ids=` (empty value), so the
+  distribution-UUID resolution produced "" and every query short-circuited to [].
+  The smoke suite never caught it because empty responses aren't errors. Fixed by
+  querying `/datastore/query/{datasetId}/0` directly (no resolution step at all).
+- ✅ All 4 tools now verified with data: hospital infections by state, nursing home
+  quality, dialysis facilities via cms_query, cms_search.
+
+## college-scorecard — Dept. of Education (4 tools)
+
+- ✅ All 4 verified: search, compare (name→id resolution works), top rankings,
+  advanced query (range filters + sort verified: 34 sub-10%-admission schools).
+- ⚠️ `scorecard_query` filters are **semicolon**-separated; a comma-separated
+  string doesn't error — the API silently misparses it and returns wrong results.
+  The description documents the format; callers must heed it.

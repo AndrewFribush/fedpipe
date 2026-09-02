@@ -237,20 +237,11 @@ export async function queryDataset(opts: {
   limit?: number;
   offset?: number;
 }): Promise<CmsQueryResult> {
-  // Look up the dataset key in our catalog
-  const catalogEntry = Object.values(DATASETS).find((d) => d.id === opts.datasetId);
-  const datasetId = catalogEntry?.id ?? opts.datasetId;
-
-  // Get dataset details to find the distribution UUID
-  const detail = await getDatasetDetails(datasetId);
-  if (!detail) {
-    return { results: [], count: 0 };
-  }
-
-  const distId = extractDistributionId(detail as any);
-  if (!distId) {
-    return { results: [], count: 0 };
-  }
+  // The DKAN datastore accepts the dataset identifier directly as
+  // /datastore/query/{datasetId}/0 — no distribution-UUID resolution needed
+  // (the old metastore round-trip silently broke when DKAN stopped honoring
+  // "show-reference-ids=" with an empty value, making every query return []).
+  const distId = opts.datasetId;
 
   // Query the DKAN datastore
   const params: Record<string, string> = {
