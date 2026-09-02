@@ -26,6 +26,12 @@ const api = createClient({
 // ─── Types ───────────────────────────────────────────────────────────
 
 /** Transport Stats Record. */
+
+/** Escape a value for interpolation inside single quotes (SoQL doubles '). */
+function esc(v: string | number): string {
+  return String(v).replace(/'/g, "''");
+}
+
 export interface TransportStatsRecord {
   index?: string;
   date?: string;
@@ -154,8 +160,8 @@ export async function getTransportStats(opts?: {
   };
 
   const wheres: string[] = [];
-  if (opts?.startDate) wheres.push(`date >= '${opts.startDate}'`);
-  if (opts?.endDate) wheres.push(`date <= '${opts.endDate}'`);
+  if (opts?.startDate) wheres.push(`date >= '${esc(opts.startDate)}'`);
+  if (opts?.endDate) wheres.push(`date <= '${esc(opts.endDate)}'`);
   // Filter out empty placeholder rows
   wheres.push("general_economic_indicators IS NOT NULL");
   if (opts?.where) wheres.push(opts.where);
@@ -188,10 +194,10 @@ export async function getBorderCrossings(opts?: {
   };
 
   const wheres: string[] = [];
-  if (opts?.state) wheres.push(`state='${opts.state}'`);
-  if (opts?.border) wheres.push(`border='${opts.border}'`);
-  if (opts?.portName) wheres.push(`port_name='${opts.portName}'`);
-  if (opts?.measure) wheres.push(`measure='${opts.measure}'`);
+  if (opts?.state) wheres.push(`state='${esc(opts.state)}'`);
+  if (opts?.border) wheres.push(`border='${esc(opts.border)}'`);
+  if (opts?.portName) wheres.push(`port_name='${esc(opts.portName)}'`);
+  if (opts?.measure) wheres.push(`measure='${esc(opts.measure)}'`);
   if (opts?.where) wheres.push(opts.where);
   if (wheres.length) params.$where = wheres.join(" AND ");
 
