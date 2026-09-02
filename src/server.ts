@@ -97,6 +97,27 @@ function parseArgs() {
 
 const { transport, port, modulesFilter, listModules, doctor } = parseArgs();
 
+if (process.argv.includes("--version") || process.argv.includes("-v")) {
+  console.log(PKG_VERSION);
+  process.exit(0);
+}
+if (process.argv.includes("--help") || process.argv.includes("-h")) {
+  console.log(`fedpipe ${PKG_VERSION} — MCP server for U.S. government data APIs
+
+Usage:
+  fedpipe                          start the MCP server (stdio transport)
+  fedpipe --transport httpStream --port 8080
+  fedpipe --modules fred,census    load only the named modules
+  fedpipe --list-modules [--json]  list modules and their key requirements
+  fedpipe doctor [--live] [--fresh] [--json]
+                                   check key setup and API connectivity
+  fedpipe --version
+
+Env: API keys per module (see .env.example or 'fedpipe doctor').
+Docs: https://github.com/AndrewFribush/fedpipe`);
+  process.exit(0);
+}
+
 if (doctor) {
   const live = process.argv.includes("--live");
   const asJson = process.argv.includes("--json");
@@ -297,7 +318,9 @@ for (const mod of activeModules) {
       // IMPORTANT: for MCP stdio transport, stdout must be reserved for JSON-RPC only.
       // VS Code treats stderr output as warnings; keep it minimal and only log actionable issues.
       console.warn(
-        `\u26A0 ${mod.displayName}: ${missing.join(", ")} not set \u2014 tools will fail. Get key: ${mod.auth.signup}`,
+        mod.auth.optional
+          ? `\u26A0 ${mod.displayName}: works without ${missing.join(", ")}, but a free key raises the quota: ${mod.auth.signup}`
+          : `\u26A0 ${mod.displayName}: ${missing.join(", ")} not set \u2014 tools will fail. Get key: ${mod.auth.signup}`,
       );
     }
   }
