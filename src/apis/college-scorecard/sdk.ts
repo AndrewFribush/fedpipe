@@ -89,6 +89,34 @@ export const STATE_FIPS = {
 
 // ─── Public API ──────────────────────────────────────────────────────
 
+/**
+ * Well-known university acronyms → the school's full name as filed in the
+ * Scorecard. The name search is a substring match, and many acronyms aren't
+ * substrings of the official name ("MIT" isn't in "Massachusetts Institute of
+ * Technology"), so a bare acronym otherwise returns junk (e.g. "Paul Mitchell").
+ * Only unambiguous nationally-known acronyms belong here — ambiguous ones
+ * (UT, UW, OSU) are left to the plain substring search.
+ */
+const SCHOOL_ALIASES: Record<string, string> = {
+  MIT: "Massachusetts Institute of Technology",
+  CALTECH: "California Institute of Technology",
+  UCLA: "University of California-Los Angeles",
+  NYU: "New York University",
+  USC: "University of Southern California",
+  UPENN: "University of Pennsylvania",
+  CMU: "Carnegie Mellon University",
+  "GA TECH": "Georgia Institute of Technology",
+  GATECH: "Georgia Institute of Technology",
+  RPI: "Rensselaer Polytechnic Institute",
+  RIT: "Rochester Institute of Technology",
+  WPI: "Worcester Polytechnic Institute",
+  UVA: "University of Virginia",
+  VCU: "Virginia Commonwealth University",
+  SMU: "Southern Methodist University",
+  TCU: "Texas Christian University",
+  BYU: "Brigham Young University",
+};
+
 /** Search for schools by name, state, or other criteria. */
 export async function searchSchools(opts: {
   name?: string;
@@ -105,7 +133,7 @@ export async function searchSchools(opts: {
     per_page: opts.perPage || 20,
     page: opts.page || 0,
   };
-  if (opts.name) params["school.name"] = opts.name;
+  if (opts.name) params["school.name"] = SCHOOL_ALIASES[opts.name.trim().toUpperCase()] ?? opts.name;
   if (opts.state) params["school.state"] = opts.state;
   if (opts.ownership !== undefined) params["school.ownership"] = opts.ownership;
   if (opts.degreePredominant !== undefined) params["school.degrees_awarded.predominant"] = opts.degreePredominant;

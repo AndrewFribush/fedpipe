@@ -29,10 +29,11 @@ export const tools: Tool<any, any>[] = [
         "'CREC' (Congressional Record), 'BUDGET', 'FR' (Federal Register)",
       ),
       congress: z.number().int().optional().describe("Filter by Congress number (e.g., 119)"),
+      sort_by: z.enum(["relevance", "date"]).default("relevance").describe("Result ordering: 'relevance' (default) or 'date' (newest published first)"),
       page_size: z.number().int().default(10).describe("Results per page (default: 10, max: 100)"),
     }),
-    execute: async ({ query, collection, congress, page_size }) => {
-      const data = await searchPublications({ query, collection, congress, pageSize: page_size });
+    execute: async ({ query, collection, congress, sort_by, page_size }) => {
+      const data = await searchPublications({ query, collection, congress, sortBy: sort_by, pageSize: page_size });
       if (!data.results.length) return emptyResponse(`No results found for "${query}".`);
       return listResponse(
         `GovInfo search "${query}": ${data.total} total, showing ${data.results.length}`,

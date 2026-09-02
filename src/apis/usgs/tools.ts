@@ -162,6 +162,7 @@ export const tools: Tool<any, any>[] = [
       state_cd: z.string().optional().describe("Two-letter state code: 'CA', 'TX'"),
       county_cd: z.string().optional().describe("County FIPS code"),
       site_type: z.enum(["ST", "GW", "LK", "SP"]).optional().describe("Site type: ST (stream), GW (groundwater), LK (lake), SP (spring)"),
+      limit: z.number().int().max(500).default(50).describe("Max sites to return (default 50)"),
     }),
     execute: async (args) => {
       const data = await searchWaterSites({
@@ -174,16 +175,25 @@ export const tools: Tool<any, any>[] = [
       const lines = text.split("\n").filter((l: string) => !l.startsWith("#"));
       // First non-comment line is the header, second is dashes, rest are data
       const header = lines[0]?.split("\t") ?? [];
-      const dataLines = lines.slice(2); // skip header + dash line
-      const rows = dataLines.map((line: string) => {
+      const dataLines = lines.slice(2).filter((l: string) => l.trim()); // skip header + dash line
+      // The RDB row has ~30 columns, several cryptic (bitstring instrument
+      // flags, coord method codes). Project to the fields users actually want.
+      const idx = (name: string) => header.indexOf(name);
+      const cols: Array<[string, number]> = [
+        ["siteNo", idx("site_no")], ["name", idx("station_nm")], ["siteType", idx("site_tp_cd")],
+        ["latitude", idx("dec_lat_va")], ["longitude", idx("dec_long_va")],
+        ["drainageAreaSqMi", idx("drain_area_va")], ["altitudeFt", idx("alt_va")],
+        ["hucCode", idx("huc_cd")], ["stateCd", idx("state_cd")], ["countyCd", idx("county_cd")],
+      ];
+      const rows = dataLines.slice(0, args.limit).map((line: string) => {
         const vals = line.split("\t");
         const obj: Record<string, unknown> = {};
-        header.forEach((h: string, i: number) => { if (h) obj[h] = vals[i] ?? null; });
+        for (const [label, i] of cols) if (i >= 0) obj[label] = vals[i]?.trim() || null;
         return obj;
-      }).filter((r: Record<string, unknown>) => Object.values(r).some(v => v));
+      });
       if (!rows.length) return emptyResponse("No water monitoring sites found.");
       return tableResponse(
-        `Water monitoring sites: ${dataLines.length} total`,
+        `Water monitoring sites: ${dataLines.length} total, showing ${rows.length}`,
         { rows, total: dataLines.length },
       );
     },
