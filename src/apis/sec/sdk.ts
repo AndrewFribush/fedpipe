@@ -343,11 +343,15 @@ export async function searchEdgar(
   query: string,
   opts: { forms?: string; startDate?: string; endDate?: string } = {},
 ): Promise<SecSearchResult> {
+  // EFTS silently ignores a lone startdt/enddt — both bounds or neither.
+  let { startDate, endDate } = opts;
+  if (startDate && !endDate) endDate = new Date().toISOString().slice(0, 10);
+  if (endDate && !startDate) startDate = "2001-01-01"; // EDGAR full-text epoch
   const params: Record<string, string | undefined> = {
     q: query,
     forms: opts.forms,
-    startdt: opts.startDate,
-    enddt: opts.endDate,
+    startdt: startDate,
+    enddt: endDate,
   };
   const raw = await searchApi.get<Record<string, unknown>>("/search-index", params);
   const hits = raw.hits as Record<string, unknown> | undefined;
