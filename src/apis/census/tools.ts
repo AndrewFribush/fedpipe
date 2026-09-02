@@ -152,7 +152,7 @@ export const tools: Tool<any, any>[] = [
     annotations: { title: "Census: Resolve Geography", readOnlyHint: true },
     parameters: z.object({
       name: z.string().optional().describe("Place name, optionally with state: 'Philadelphia, PA', 'Cook County, Illinois', 'Vermont'"),
-      level: z.enum(["state", "county", "place"]).optional().describe("Restrict to one level (default: search all)"),
+      level: z.enum(["state", "county", "place", "county-subdivision", "zcta"]).optional().describe("Restrict to one level (default: search all)"),
       state: z.string().optional().describe("Restrict to a state (abbr, FIPS, or name) — inferred from ', XX' in name when omitted"),
       address: z.string().optional().describe("Street address to geocode instead of a name: '1600 Pennsylvania Ave NW, Washington, DC'"),
       limit: z.number().int().max(50).optional().describe("Max matches (default 10)"),

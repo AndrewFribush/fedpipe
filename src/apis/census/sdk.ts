@@ -54,11 +54,11 @@ export interface CensusQueryResult {
 
 /** A resolved geography — name → FIPS codes plus ready-to-use query parameters. */
 export interface CensusGeography {
-  level: "state" | "county" | "place";
+  level: "state" | "county" | "place" | "county-subdivision" | "zcta";
   name: string;
   /** Full GEOID (state+county or state+place FIPS concatenated). */
   geoid: string;
-  fips: { state: string; county?: string; place?: string };
+  fips: { state?: string; county?: string; place?: string; countySubdivision?: string; zcta?: string };
   /** Value for `for_geo` in census_query. */
   forGeo: string;
   /** Value for `in_geo` in census_query (undefined for states). */
@@ -253,7 +253,7 @@ function splitNameAndState(query: string): { name: string; state: ReturnType<typ
  * ```
  */
 export async function resolveGeography(query: string, opts: {
-  level?: "state" | "county" | "place";
+  level?: "state" | "county" | "place" | "county-subdivision" | "zcta";
   /** Restrict to a state (abbr, FIPS, or name). Inferred from ", XX" in the query when omitted. */
   state?: string;
   limit?: number;
@@ -263,6 +263,19 @@ export async function resolveGeography(query: string, opts: {
   const limit = opts.limit ?? 10;
   const q = normalize(name);
   const results: CensusGeography[] = [];
+
+  // ZIP codes → ZCTA (no lookup needed; ZCTAs are their own codes)
+  if (/^\d{5}$/.test(name.trim()) || opts.level === "zcta") {
+    const zip = name.trim();
+    if (/^\d{5}$/.test(zip)) {
+      return [{
+        level: "zcta", name: `ZCTA5 ${zip}`, geoid: zip, fips: { zcta: zip },
+        forGeo: `zip code tabulation area:${zip}`,
+        ucgid: `860Z200US${zip}`, match: "exact",
+      } as CensusGeography];
+    }
+    return [];
+  }
 
   // States — static table, no request
   if (!opts.level || opts.level === "state") {
@@ -306,6 +319,35 @@ export async function resolveGeography(query: string, opts: {
   };
   if (wantCounty) await scan("county");
   if (wantPlace) await scan("place");
+
+  // County subdivisions (townships, boroughs, NE towns) — needs a state to
+  // keep the scan bounded.
+  if ((!opts.level && state && results.every(r => r.match !== "exact")) || opts.level === "county-subdivision") {
+    if (state) {
+      const raw = await api.get<string[][]>(GEO_LOOKUP_DATASET, {
+        get: "NAME", for: "county subdivision:*", in: `state:${state.fips}`,
+      });
+      const [headers, ...rows] = raw;
+      const nameIdx = headers.indexOf("NAME"), stIdx = headers.indexOf("state"),
+        coIdx = headers.indexOf("county"), subIdx = headers.indexOf("county subdivision");
+      for (const row of rows) {
+        const local = row[nameIdx].split(",")[0];
+        const n = normalize(local);
+        const stripped = n.replace(/\b(town|township|borough|district|precinct|division|plantation|gore|grant|location|city|village)\b/g, "").trim();
+        let match: CensusGeography["match"] | null = null;
+        if (n === q || stripped === q) match = "exact";
+        else if (n.includes(q) || stripped.includes(q)) match = "partial";
+        if (!match) continue;
+        const st = row[stIdx], co = row[coIdx], code = row[subIdx];
+        results.push({
+          level: "county-subdivision", name: row[nameIdx], geoid: `${st}${co}${code}`,
+          fips: { state: st, county: co, countySubdivision: code },
+          forGeo: `county subdivision:${code}`, inGeo: `state:${st} county:${co}`,
+          ucgid: `0600000US${st}${co}${code}`, match,
+        } as CensusGeography);
+      }
+    }
+  }
 
   // Exact matches first; incorporated places before CDPs; then alphabetical
   results.sort((a, b) =>
