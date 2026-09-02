@@ -14,8 +14,8 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [API v2](https://www.bls.gov/developers/api_signature_v2.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
-- `bts` — [Border Crossing Data](https://data.bts.gov/d/keg4-3bc2) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
-- `cdc` — [Leading Causes of Death](https://data.cdc.gov/d/bi63-dtpu) — error: ECONNRESET — kept previous snapshot
+- `bts` — [BTS Open Data](https://data.bts.gov/) — error: TimeoutError — kept previous snapshot
+- `cdc` — [PLACES City Data](https://data.cdc.gov/d/dxpw-cm5u) — error: TimeoutError — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
