@@ -21,7 +21,7 @@ const dataApi = createClient({
   baseUrl: "https://data.sec.gov",
   name: "sec-data",
   defaultHeaders: { "User-Agent": USER_AGENT, Accept: "application/json" },
-  rateLimit: { perSecond: 10, burst: 10 },
+  rateLimit: { perSecond: 3, burst: 5 }, // SEC fair-access: 10 req/s TOTAL across sec.gov — three clients share that budget
   cacheTtlMs: 30 * 60 * 1000, // 30 min
 });
 
@@ -30,7 +30,7 @@ const wwwApi = createClient({
   baseUrl: "https://www.sec.gov",
   name: "sec-www",
   defaultHeaders: { "User-Agent": USER_AGENT },
-  rateLimit: { perSecond: 10, burst: 10 },
+  rateLimit: { perSecond: 3, burst: 5 }, // SEC fair-access: 10 req/s TOTAL across sec.gov — three clients share that budget
   cacheTtlMs: 24 * 60 * 60 * 1000, // filings are immutable once published
 });
 
@@ -38,7 +38,7 @@ const searchApi = createClient({
   baseUrl: "https://efts.sec.gov/LATEST",
   name: "sec-search",
   defaultHeaders: { "User-Agent": USER_AGENT, Accept: "application/json" },
-  rateLimit: { perSecond: 10, burst: 10 },
+  rateLimit: { perSecond: 3, burst: 5 }, // SEC fair-access: 10 req/s TOTAL across sec.gov — three clients share that budget
   cacheTtlMs: 30 * 60 * 1000,
 });
 
