@@ -291,3 +291,54 @@ returning wrong commodities, govinfo filter ignored, epa state filter ignored,
 openFDA 404s, NAEP invalid JSON, CDC state-name mismatches, cfpb suggest shape,
 census search, congress field mappings, nhtsa model names, regulations page
 minimum, silent unknown-parameter stripping, BEA keyless crash).
+
+---
+
+## Overnight battle-hardening addendum (2026-09-02, 01:30–08:00)
+
+Work done after the initial audit, in roughly the order it landed:
+
+**Suite hardening**
+- Silent-empty guard: every tool's canned args must return data unless on a
+  justified ALLOWED_EMPTY list. First run caught 10 silently-empty tools —
+  1 real bug (congress committee-report list endpoints use the key `reports`,
+  the sdk read the detail endpoint's `committeeReports`) and 9 stale canned
+  args (wrong congress number on the BILL constant, an NCT with no results, a
+  fake VIN, an expired GSA contract, an unindexed 2-minute FEC scan…).
+- Upstream-transient retries budgeted to fit the 90s test timeout (a slow-
+  walled FBI CDE was surfacing as a bare vitest timeout).
+
+**Input hardening (all 353 tools)**
+- Single quotes escaped in every SoQL/OData interpolation (cdc/fema/bts) —
+  "Coeur d'Alene" no longer 400s.
+- Argument normalization at the server: strings trimmed, numeric strings
+  coerced for number params, "true"/"false" for booleans.
+- Strict schemas' unknown-key rejections (from the previous session) now unit-tested.
+
+**Output hardening**
+- 120KB output cap wrapping every tool: string leaves truncate first, then
+  the largest arrays shrink — always valid JSON with a note saying what was
+  trimmed. cfpb trends/state tools digest raw Elasticsearch payloads
+  (231KB → 13KB). FBI CDE chart maps digest into sorted {period, value} series.
+- cdc_mortality_rates gained a state param projecting the ~50 rate_<state>
+  columns down to one.
+
+**Infrastructure**
+- Persisted-cache entries capped at 2MB (cache.json 81MB → 21MB, load 276ms → 77ms).
+- SEC's three clients now share the 10 req/s fair-access budget (was 30/s worst case).
+- `fedpipe doctor` / `doctor --live` health-check CLI.
+- Nightly CI refreshes the upstream doc mirror with auto-commit; after the
+  first run deleted 49 pages (runner IP bot-blocked SEC/BLS/NHTSA/FRED),
+  pruning is now conservative: only HTTP 404/410 or a removed link deletes.
+- Doc-rot unit test: tool names referenced in metadata/prompts must exist.
+
+**Features (parity still-open list closed)**
+- census_resolve_geography: ZIP→ZCTA and county-subdivision (township) levels.
+- sec_insider_transactions: Forms 3/5 (holdings parse as code "H" rows).
+- sec_concept_search: keyword search over a company's actual XBRL concepts.
+- sec_company_financials: CAGR over the annual series.
+- Census methodology tips (MOE variables, 1yr vs 5yr, overlapping windows).
+- SEC segment data documented as infeasible via public JSON APIs.
+
+End state: 353 tools, 1055 unit tests, 480 live tests passing (+1 expected
+fail, 46 key-gated), doctor --live green on 32 modules.
