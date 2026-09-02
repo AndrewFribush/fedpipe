@@ -250,6 +250,18 @@ if (modulesFilter) {
     process.exit(1);
   }
 
+  // A typo'd name silently loading a partial server is worse than an error.
+  const known = new Set(MODULES.map(m => m.name.toLowerCase()));
+  const unknown = [...wanted].filter(w => !known.has(w));
+  for (const u of unknown) {
+    const closest = MODULES
+      .map(m => ({ n: m.name, d: editDistance(u, m.name.toLowerCase()) }))
+      .sort((a, b) => a.d - b.d)[0];
+    console.error(
+      `WARNING: unknown module "${u}" in --modules ignored${closest && closest.d <= 3 ? ` (did you mean "${closest.n}"?)` : ""}`,
+    );
+  }
+
   console.error(
     `Loaded ${activeModules.length}/${MODULES.length} modules: ${activeModules.map(m => m.name).join(", ")}`,
   );
