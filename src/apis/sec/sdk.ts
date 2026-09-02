@@ -518,12 +518,15 @@ export async function getFrame(opts: {
 /** Look up companies by ticker or name fragment using SEC's official ticker table (~10k listed issuers). */
 export async function lookupTicker(query: string, limit = 10): Promise<SecTickerEntry[]> {
   const table = await wwwApi.get<Record<string, { cik_str: number; ticker: string; title: string }>>("/files/company_tickers.json");
-  const q = query.trim().toLowerCase();
+  // EDGAR's ticker table writes names without punctuation ("O REILLY
+  // AUTOMOTIVE") — normalize both sides so "O'Reilly" still matches.
+  const norm = (x: string) => x.toLowerCase().replace(/['’.,]/g, " ").replace(/\s+/g, " ").trim();
+  const q = norm(query);
   const rows = Object.values(table).map(r => ({ cik: String(r.cik_str).padStart(10, "0"), ticker: r.ticker, name: r.title }));
-  const exact = rows.filter(r => r.ticker.toLowerCase() === q);
+  const exact = rows.filter(r => r.ticker.toLowerCase() === query.trim().toLowerCase());
   if (exact.length) return exact;
-  const nameHits = rows.filter(r => r.name.toLowerCase().includes(q) || r.ticker.toLowerCase().startsWith(q));
-  nameHits.sort((a, b) => Number(!a.name.toLowerCase().startsWith(q)) - Number(!b.name.toLowerCase().startsWith(q)) || a.name.length - b.name.length);
+  const nameHits = rows.filter(r => norm(r.name).includes(q) || r.ticker.toLowerCase().startsWith(q));
+  nameHits.sort((a, b) => Number(!norm(a.name).startsWith(q)) - Number(!norm(b.name).startsWith(q)) || a.name.length - b.name.length);
   return nameHits.slice(0, limit);
 }
 
