@@ -22,6 +22,7 @@ import {
   EIGHT_K_ITEMS,
   xbrlConcepts,
   type SecFiling,
+  searchConcepts,
 } from "./sdk.js";
 
 /** Accept a ticker ("AAPL") or CIK; resolve tickers to CIKs. */
@@ -44,6 +45,27 @@ function withYoY(obs: { period: string | undefined; value: number; filed: string
 import { tableResponse, listResponse, recordResponse, emptyResponse } from "../../shared/response.js";
 
 export const tools: Tool<any, any>[] = [
+  {
+    name: "sec_concept_search",
+    description:
+      "Find the exact XBRL concept names a company reports, by keyword — use before " +
+      "sec_company_concept / sec_concept_across_companies when you don't know the precise tag. " +
+      "E.g. 'revenue' → Revenues, RevenueFromContractWithCustomerExcludingAssessedTax, … with each concept's label, unit, and latest value.",
+    annotations: { title: "SEC: XBRL Concept Search", readOnlyHint: true },
+    parameters: z.object({
+      cik: z.string().describe("CIK or ticker"),
+      keyword: z.string().describe("Keyword(s) to match against concept names and labels: 'revenue', 'segment', 'lease liability'"),
+      limit: z.number().int().max(100).default(25).describe("Max concepts (default 25)"),
+    }),
+    execute: async ({ cik: idOrTicker, keyword, limit }) => {
+      const cik = await toCik(idOrTicker);
+      const rows = await searchConcepts(cik, keyword, limit);
+      if (!rows.length) return emptyResponse(`No XBRL concepts matching "${keyword}" for that company.`);
+      return tableResponse(`XBRL concepts matching "${keyword}": ${rows.length}`, { rows: rows as unknown as Record<string, unknown>[] });
+    },
+  },
+
+
   {
     name: "sec_company_search",
     description:

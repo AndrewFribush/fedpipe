@@ -256,6 +256,7 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   regulations_docket_detail: { docketId: "EPA-HQ-OAR-2003-0129" },
 
   // ─── SEC ────────────────────────────────────────────────────────────
+  sec_concept_search: { cik: "AAPL", keyword: "revenue" },
   sec_company_search: { cik: "0000320193" },
   sec_company_financials: { cik: "0000320193" },
   sec_filing_search: { query: "Apple" },

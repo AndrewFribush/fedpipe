@@ -308,6 +308,32 @@ export async function getCompanyByCik(cik: string): Promise<SecCompany> {
 }
 
 /** Get company financial facts (XBRL data). */
+/**
+ * Search the XBRL concepts a company actually reports, by keyword — solves
+ * "what's the exact concept name?" before calling getCompanyConcept.
+ */
+export async function searchConcepts(cik: string, keyword: string, maxResults = 25): Promise<Array<{
+  taxonomy: string; concept: string; label: string | null; unit: string; latestValue: number | null; latestPeriod: string | null;
+}>> {
+  const facts = await getCompanyFacts(cik);
+  const tokens = keyword.toLowerCase().split(/\s+/).filter(Boolean);
+  const out: Array<{ taxonomy: string; concept: string; label: string | null; unit: string; latestValue: number | null; latestPeriod: string | null; hits: number }> = [];
+  for (const [taxonomy, concepts] of Object.entries((facts as unknown as { facts: Record<string, Record<string, { label?: string; units?: Record<string, Array<{ end?: string; val?: number; fy?: number }>> }>> }).facts ?? {})) {
+    for (const [concept, info] of Object.entries(concepts)) {
+      const hay = `${concept} ${info.label ?? ""}`.toLowerCase();
+      const hits = tokens.filter(t => hay.includes(t)).length;
+      if (hits === 0) continue;
+      const [unit, series] = Object.entries(info.units ?? {})[0] ?? ["", []];
+      const latest = [...(series ?? [])].sort((a, b) => (b.end ?? "").localeCompare(a.end ?? ""))[0];
+      out.push({ taxonomy, concept, label: info.label ?? null, unit, latestValue: latest?.val ?? null, latestPeriod: latest?.end ?? null, hits });
+    }
+  }
+  return out
+    .sort((a, b) => b.hits - a.hits || (a.concept.length - b.concept.length))
+    .slice(0, maxResults)
+    .map(({ hits: _h, ...r }) => r);
+}
+
 export async function getCompanyFacts(cik: string): Promise<SecCompanyFacts> {
   return dataApi.get<SecCompanyFacts>(`/api/xbrl/companyfacts/CIK${padCik(cik)}.json`);
 }
