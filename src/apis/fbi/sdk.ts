@@ -18,6 +18,7 @@ const api = createClient({
   baseUrl: "https://api.usa.gov/crime/fbi/cde",
   name: "fbi",
   auth: { type: "query", envParams: { API_KEY: "DATA_GOV_API_KEY" } },
+  timeoutMs: 75_000, // CDE slow-walls datacenter IPs — requests complete in 45-80s from CI runners; aborting at 30s guaranteed failure there
   rateLimit: { perSecond: 5, burst: 10 },
   cacheTtlMs: 60 * 60 * 1000, // 1 hour — crime data updates infrequently
   maxRetries: 4, // FBI CDE API is notoriously flaky — extra retries help
