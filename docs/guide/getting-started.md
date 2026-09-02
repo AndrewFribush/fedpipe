@@ -83,7 +83,7 @@ MODULES=fred,bls,treasury node dist/server.js
 node dist/server.js --modules fred,treasury --transport httpStream --port 8080
 ```
 
-With all 55 modules, the server sends ~16K tokens of instructions to the LLM. With 3 modules, this drops to ~3K. Use selective loading when you only need a few data sources and want to minimize context overhead.
+With all 57 modules, the server sends ~16K tokens of instructions to the LLM. With 3 modules, this drops to ~3K. Use selective loading when you only need a few data sources and want to minimize context overhead.
 
 ### Lazy Loading (the default)
 
@@ -127,7 +127,7 @@ Health
   cms    Centers for Medicare & Medicaid        4 tools
   ...
 
-55 modules total.
+57 modules total.
 ```
 
 ### Health check

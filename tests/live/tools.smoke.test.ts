@@ -55,7 +55,7 @@ const WORKS_WITHOUT_KEY = new Set(["fda", "bls"]);
  * per-request smoke suite — a fresh CI runner would re-download every night and
  * risk the per-test timeout. They're verified by hand / a dedicated path.
  */
-const BULK_INGEST = new Set(["form5500", "faa", "exempt-orgs", "ntsb", "ofac", "orange-book"]);
+const BULK_INGEST = new Set(["form5500", "faa", "exempt-orgs", "ntsb", "ofac", "orange-book", "opm"]);
 
 const noop = () => {};
 const ctx = { log: { info: noop, warn: noop, error: noop, debug: noop }, reportProgress: async () => {}, session: {} };

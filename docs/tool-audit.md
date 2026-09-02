@@ -530,12 +530,17 @@ targeted 8. All live-verified:
   (any Node). Rosneft → 3, Wagner → 1. Plugs into resolve_entity/resolve_person.
 - ✅ **orange-book** — FDA Orange Book drugs + patents. ~1MB tilde-delimited ZIP
   parsed in memory. Ozempic application 209637 → 92 listed patents (patent-cliff).
-- ⏸ **FEMA NFIP** — HELD. Every OpenFEMA NFIP endpoint (claims, policies) is
-  deprecated and frozen as of 2026-06-01, removed 2026-10-15, with no discoverable
-  successor. Building on it would ship a module that breaks in weeks — revisit when
-  FEMA publishes the replacement.
-- ⏸ **OPM salaries** — HELD. The only official source (FedScope) is anonymized,
-  binned microdata (salary in $10k bands, no names) across ~15 coded dimension
-  files — it doesn't deliver "federal salaries" as implied, is the most complex,
-  and joins nothing. Named-salary data exists only via third-party FOIA republishers.
-55 modules / 384 tools.
+Then both initially-held sources were reworked (the deprecated/complex framing
+was wrong):
+- ✅ **nfip** — FEMA NFIP flood-insurance claims. The deprecated `FimaNfipClaims`
+  v2 has a live successor I'd missed: `NfipClaims` v3 at `/api/open/v3/NfipClaims`
+  (they dropped the "Fima" prefix). Live OpenFEMA module — flood payouts by state /
+  year / flood zone. Verified: LA 2021 (Hurricane Ida) → 19,526 claims; paid claims
+  show real building payments ($80K, $104K). Note: OpenFEMA sorts NULLs first on
+  DESC, so ordering is by date, not payout.
+- ✅ **opm** — OPM federal workforce. Not the raw coded cube — OPM also ships
+  pre-aggregated, labeled, tab-delimited summary tables (agency × location,
+  occupation) with headcount AND average salary. Verified: Dept. of Veterans
+  Affairs → 473,261 employees, avg $110,764. Aggregated (no individual names), a
+  pinned FedScope snapshot (bump the URL for a new quarter). 8 of 8 delivered.
+57 modules / 387 tools.

@@ -320,6 +320,15 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   wb_search: { query: "gdp" },
   wb_reference: { type: "region" },
 
+  // ─── NSF / FARA / FCC / CFTC / NFIP (live-API additions) ────────────
+  nsf_search_awards: { keyword: "quantum computing", limit: 3 },
+  nsf_award: { award_id: "2138259" },
+  fara_search: { name: "Ballard" },
+  fcc_search_filings: { proceeding: "17-108", limit: 3 },
+  cftc_cot: { market: "gold", limit: 3 },
+  cftc_cot_history: { market: "GOLD - COMMODITY", weeks: 4 },
+  nfip_claims: { state: "LA", year: 2021, limit: 5 },
+
   // ─── GLEIF (Legal Entity Identifiers) ───────────────────────────────
   gleif_search: { query: "Boeing Company", country: "US", limit: 3 },
   gleif_record: { lei: "RVHJWBXLJ1RFUBSY1F30" }, // The Boeing Company
