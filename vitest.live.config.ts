@@ -8,6 +8,6 @@ export default defineConfig({
     hookTimeout: 90_000,
     // Upstream APIs are rate-limited; keep module files sequential and tools within a file sequential.
     fileParallelism: false,
-    retry: 1,
+    retry: 0, // upstream flakes retry in-test with backoff; vitest retry only doubled wall-clock timeouts
   },
 });
