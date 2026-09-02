@@ -233,6 +233,11 @@ export async function searchInstitutions(opts: {
   limit?: number;
   offset?: number;
 } = {}): Promise<FdicApiResponse<Institution>> {
+  // Lucene syntax uses FIELD:value — a '=' filter silently matches nothing.
+  if (opts.filters && /[A-Z_]+=/.test(opts.filters) && !opts.filters.includes(":")) {
+    throw new Error(`FDIC filters use Lucene FIELD:value syntax (e.g. 'STALP:"WY"', 'ASSET:[1000000 TO *]') — got "${opts.filters}"`);
+  }
+
   return queryEndpoint<Institution>("institutions", {
     ...opts,
     limit: opts.limit ?? 25,

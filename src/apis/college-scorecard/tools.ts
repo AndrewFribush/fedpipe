@@ -136,6 +136,14 @@ export const tools: Tool<any, any>[] = [
       per_page: z.number().int().max(100).default(20).describe("Results per page (default 20)"),
     }),
     execute: async ({ filters, sort, per_page }) => {
+      // Comma-joined filters aren't an error to the API — it silently
+      // misparses them and returns wrong results. Catch the common mistake.
+      if (/,[a-z_][a-z0-9_.]*=/i.test(filters)) {
+        throw new Error(
+          `Filters look comma-separated — use ';' between filters: ` +
+          `'school.state=CA;school.degrees_awarded.predominant=3'. Got: "${filters}"`,
+        );
+      }
       const params: Record<string, string | number | undefined> = {};
       for (const f of filters.split(";")) {
         const [key, ...rest] = f.split("=");
