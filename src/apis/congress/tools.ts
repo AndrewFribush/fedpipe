@@ -182,6 +182,18 @@ function summarizeSponsoredBill(b: CongressSponsoredBill) {
   };
 }
 
+
+/** CRS summaries arrive as HTML — strip to readable text. */
+function stripHtml(html: string | null | undefined): string | null {
+  if (!html) return null;
+  return html
+    .replace(/<\/(p|li|ul|ol|div|h[1-6])>/gi, "\n")
+    .replace(/<li[^>]*>/gi, "- ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#x2019;|&rsquo;/g, "\u2019").replace(/&quot;/g, '"')
+    .replace(/\n{3,}/g, "\n\n").trim();
+}
+
 export const tools: Tool<any, any>[] = [
   {
     name: "congress_search_bills",
@@ -564,7 +576,7 @@ export const tools: Tool<any, any>[] = [
             versionCode: s.versionCode ?? null,
             actionDate: s.actionDate ?? null,
             actionDesc: s.actionDesc ?? null,
-            text: s.text ?? null,
+            text: stripHtml(s.text),
             updateDate: s.updateDate ?? null,
           })),
         },
@@ -1199,7 +1211,7 @@ export const tools: Tool<any, any>[] = [
           items: data.summaries.map(s => ({
             actionDate: s.actionDate ?? null,
             actionDesc: s.actionDesc ?? null,
-            text: s.text ?? null,
+            text: stripHtml(s.text),
             updateDate: s.updateDate ?? null,
             bill: s.bill ? {
               congress: s.bill.congress ?? null,
@@ -2468,7 +2480,7 @@ export const tools: Tool<any, any>[] = [
           },
           summaries: data.summaries.map(s => ({
             version: s.actionDesc ?? null,
-            text: s.text ?? null,
+            text: stripHtml(s.text),
             date: s.actionDate ?? null,
           })),
           committees: data.committees.map(c => ({
