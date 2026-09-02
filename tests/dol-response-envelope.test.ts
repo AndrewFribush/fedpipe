@@ -75,14 +75,16 @@ describe("client: empty and 204 responses", () => {
     await expect(client.get("/d")).resolves.toBeNull();
   });
 
-  it("keeps the default client behavior for empty bodies", async () => {
+  it("explains empty bodies for clients without emptyBodyAsNull", async () => {
     stubFetch("", 200);
     const client = createClient({
       baseUrl: "https://example.test",
       name: "tdefault",
       cacheTtlMs: 0,
     });
-    await expect(client.get("/e")).rejects.toThrow("Unexpected end of JSON input");
+    // Still an error (only emptyBodyAsNull opts into null), but a described
+    // one — not a bare JSON.parse failure.
+    await expect(client.get("/e")).rejects.toThrow("body is not valid JSON (0 bytes)");
   });
 });
 

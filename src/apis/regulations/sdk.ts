@@ -142,7 +142,7 @@ export async function searchDocuments(opts: {
     "filter[postedDate][ge]": opts.postedDateGe,
     "filter[postedDate][le]": opts.postedDateLe,
     sort: opts.sort,
-    "page[size]": opts.pageSize,
+    "page[size]": opts.pageSize ? Math.max(5, opts.pageSize) : undefined, // API minimum is 5
     "page[number]": opts.pageNumber,
   });
 }
@@ -178,7 +178,7 @@ export async function searchComments(opts: {
     "filter[postedDate][ge]": opts.postedDateGe,
     "filter[postedDate][le]": opts.postedDateLe,
     sort: opts.sort,
-    "page[size]": opts.pageSize,
+    "page[size]": opts.pageSize ? Math.max(5, opts.pageSize) : undefined, // API minimum is 5
     "page[number]": opts.pageNumber,
   });
 }
@@ -206,7 +206,7 @@ export async function searchDockets(opts: {
     "filter[agencyId]": opts.agencyId,
     "filter[docketType]": opts.docketType,
     sort: opts.sort,
-    "page[size]": opts.pageSize,
+    "page[size]": opts.pageSize ? Math.max(5, opts.pageSize) : undefined, // API minimum is 5
     "page[number]": opts.pageNumber,
   });
 }

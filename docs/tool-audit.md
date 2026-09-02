@@ -216,3 +216,78 @@ Representative probe of every endpoint family (all 32 pass the smoke suite):
   non-terminating quotes.
 - ⚠️ Some subject/year/jurisdiction combos legitimately have no data (state-level
   science exists only for certain years); empties are accurate.
+## nhtsa (11 tools)
+
+- ❌→✅ `nhtsa_recalls`/`nhtsa_complaints` required NHTSA's exact registry model
+  spelling ("CYBERTRUCK (ALL VARIANTS)") — 400 with a success-shaped body for
+  anything else. Both now fuzzy-resolve model names via the official model list
+  (fixed earlier this audit). Rest verified in smoke suite.
+
+## nih — NIH RePORTER (4 tools)
+
+- ✅ All 4: project search with state/year filters, publications, spending by
+  category, projects by agency.
+- ⚠️ `nih_projects_by_agency` takes ~25s (aggregates 61k projects via paged calls).
+- ⚠️ `nih_spending_by_category` silently returns zeros for an unknown category_id —
+  find valid ids in the RCDC list (module reference).
+
+## noaa — NOAA Climate (4 tools) 🔑 / usda-nass (4 tools) 🔑 / uspto (10 tools) 🔑
+
+- 🔑 All blocked on their keys (`NOAA_API_KEY`, `USDA_NASS_API_KEY`, `USPTO_API_KEY`);
+  each verified to fail with the clean missing-key error.
+
+## nrel (3 tools)
+
+- ✅ All 3 verified live on the new developer.nlr.gov domain (agency rebrand,
+  migrated earlier this audit).
+
+## nws — National Weather Service (10 tools)
+
+- ✅ All verified (Juneau end-to-end: point → forecast → stations → latest obs).
+
+## open-payments — CMS Open Payments (10 tools)
+
+- ✅ Verified: top doctors by state/year aggregation, by-company rollups, national
+  summary. Unfiltered searches are guarded (the 14M-row dataset times out otherwise).
+
+## regulations — Regulations.gov (5 tools)
+
+- ❌→✅ The API rejects `pageSize < 5`; the schema allowed smaller values, so
+  callers got a raw HTTP 400. Now clamped to the API minimum.
+- ✅ Document/comment/docket search verified with filters.
+
+## sec — SEC EDGAR (9 tools)
+
+- ✅ Ticker→CIK works everywhere (COST revenue by concept verified).
+- ⚠️ `sec_filing_search` (EDGAR full-text) 500s intermittently on cold queries —
+  upstream flakiness; the client retries 5xx and the same query succeeds warm.
+  Totals cap at 10,000 (Elasticsearch limit).
+
+## senate-lobbying (5 tools)
+
+- ✅ Verified: filings by client (OpenAI), contributions by contributor,
+  lobbyist name search (12 Podestas).
+
+## treasury / usaspending / usda-fooddata / usgs / world-bank
+
+- ✅ treasury (4): dataset search, endpoint field discovery, filtered queries
+  (debt > $40T first crossed 2026-08-18).
+- ✅ usaspending (7+): keyword+award-type search, recipient rollups (awardType
+  mixing 422 fixed pre-audit).
+- ✅ usda-fooddata (3): search (branded+survey foods), nutrient detail.
+- ✅ usgs (7): earthquakes (params verified strict), realtime water data;
+  `usgs_water_statistics` hit an upstream 503 during audit (passes in the nightly).
+- ✅ world-bank (8+): country-name resolution incl. aggregates, indicator search
+  ranking, Argentina inflation spot-check (219.9% in 2024 — yikes).
+
+---
+
+**Audit outcome:** 352 tools across 42 modules. 305 verified live-good after
+fixes; 45 blocked on 7 missing API keys (bea 13, uspto 10, dol 7, hud 5, noaa 4,
+usda-nass 4, epa-aqs 3 — clean errors verified for all); 1 dead upstream
+(fbi_use_of_force); 1 upstream-flaky (sec_filing_search cold queries).
+**14 defects found and fixed during the audit** (cms module fully broken, eia
+returning wrong commodities, govinfo filter ignored, epa state filter ignored,
+openFDA 404s, NAEP invalid JSON, CDC state-name mismatches, cfpb suggest shape,
+census search, congress field mappings, nhtsa model names, regulations page
+minimum, silent unknown-parameter stripping, BEA keyless crash).
