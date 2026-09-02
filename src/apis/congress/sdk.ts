@@ -961,10 +961,10 @@ export async function getCommitteeReportsForCommittee(
   opts: { fromDateTime?: string; toDateTime?: string } = {},
 ): Promise<{ reports: CongressCommitteeReport[] }> {
   const params = qp({ limit, fromDateTime: opts.fromDateTime, toDateTime: opts.toDateTime });
-  const res = await api.get<{ "committee-reports"?: { committeeReports?: CongressCommitteeReport[] }; committeeReports?: CongressCommitteeReport[] }>(
+  const res = await api.get<{ reports?: CongressCommitteeReport[]; "committee-reports"?: { committeeReports?: CongressCommitteeReport[] }; committeeReports?: CongressCommitteeReport[] }>(
     `/committee/${chamber.toLowerCase()}/${committeeCode}/reports`, params,
   );
-  return { reports: res["committee-reports"]?.committeeReports ?? res.committeeReports ?? [] };
+  return { reports: res.reports ?? res["committee-reports"]?.committeeReports ?? res.committeeReports ?? [] };
 }
 
 /** Get nominations associated with a committee. */
@@ -1014,8 +1014,10 @@ export async function listCommitteeReports(opts: {
     if (opts.reportType) path += `/${opts.reportType.toLowerCase()}`;
   }
   const params = qp({ limit: opts.limit ?? 20, conference: opts.conference, fromDateTime: opts.fromDateTime, toDateTime: opts.toDateTime });
-  const res = await api.get<{ committeeReports?: CongressCommitteeReport[] }>(path, params);
-  return { reports: res.committeeReports ?? [] };
+  // List endpoint answers with "reports"; the detail endpoint uses
+  // "committeeReports" — read both.
+  const res = await api.get<{ reports?: CongressCommitteeReport[]; committeeReports?: CongressCommitteeReport[] }>(path, params);
+  return { reports: res.reports ?? res.committeeReports ?? [] };
 }
 
 /** Get details about a specific committee report. */

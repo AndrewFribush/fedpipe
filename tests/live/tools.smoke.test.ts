@@ -13,7 +13,7 @@
 
 import { describe, it, expect } from "vitest";
 import { moduleDirs, getModule, getTools, getAuth, type ModuleTool } from "../helpers.js";
-import { TOOL_ARGS, type Args, type DeriveCtx } from "./args.js";
+import { TOOL_ARGS, ALLOWED_EMPTY, type Args, type DeriveCtx } from "./args.js";
 import knownFailuresJson from "./known-upstream-failures.json" with { type: "json" };
 
 /** Tools currently broken upstream — run with it.fails so recovery shows up as a red test. */
@@ -131,6 +131,22 @@ describe.each(moduleDirs)("%s", (dir) => {
       const err = looksLikeError(res);
       expect(err, `${tool.name} returned an error payload: ${err}`).toBeNull();
       expect(res, `${tool.name} returned nothing`).toBeTruthy();
+
+      // Silent-empty guard: unless a tool is on the ALLOWED_EMPTY list, its
+      // canned args target data that exists — an empty result means the
+      // query pipeline broke somewhere, even though nothing errored.
+      if (!ALLOWED_EMPTY.has(tool.name) && res && typeof res === "object") {
+        const r: any = res;
+        const emptyBecause =
+          r.dataType === "empty" ? "dataType=empty"
+          : Array.isArray(r.data?.rows) && r.data.rows.length === 0 ? "0 rows"
+          : Array.isArray(r.data?.items) && r.data.items.length === 0 ? "0 items"
+          : null;
+        expect(emptyBecause,
+          `[SILENT EMPTY] ${tool.name} returned no data for its canned args (${emptyBecause}). ` +
+          `If this emptiness is legitimate, add the tool to ALLOWED_EMPTY in tests/live/args.ts with a reason.`,
+        ).toBeNull();
+      }
     });
   }
 });

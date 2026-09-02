@@ -19,7 +19,7 @@ export interface DeriveCtx {
 }
 export type ArgsEntry = Args | ((ctx: DeriveCtx) => Promise<Args>);
 
-const BILL = { congress: 118, bill_type: "hr", bill_number: 3684 } as const; // 118 HR 3684 (infrastructure)
+const BILL = { congress: 117, bill_type: "hr", bill_number: 3684 } as const; // 117 HR 3684 — the Infrastructure Investment and Jobs Act (roll-call votes, 50+ related bills, amendments)
 const AMDT = { congress: 118, amendment_type: "samdt", amendment_number: 1 } as const;
 const NOM = { congress: 118, nomination_number: 1 } as const;
 const TREATY = { congress: 117, treaty_number: 1 } as const;
@@ -56,7 +56,7 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
 
   // ─── ClinicalTrials.gov ─────────────────────────────────────────────
   clinical_trials_detail: { nct_id: "NCT00841061" },
-  clinical_trials_results: { nct_id: "NCT00841061" },
+  clinical_trials_results: { nct_id: "NCT04368728" }, // Pfizer COVID-19 vaccine trial — has posted results
   clinical_trials_stats: { condition: "semaglutide" },
   clinical_trials_by_location: { latitude: 38.9072, longitude: -77.0369, limit: 5 },
   clinical_trials_field_values: { fields: "Phase" },
@@ -112,8 +112,8 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   congress_law_details: { congress: 118, law_type: "pub", law_number: 274 },
   congress_committee_report_details: { congress: 118, report_type: "hrpt", report_number: 617 },
   congress_committee_report_text: { congress: 118, report_type: "hrpt", report_number: 617 },
-  congress_committee_print_details: { congress: 118, chamber: "house", jacket_number: 48144 },
-  congress_committee_print_text: { congress: 118, chamber: "house", jacket_number: 48144 },
+  congress_committee_print_details: { congress: 118, chamber: "house", jacket_number: 57586 },
+  congress_committee_print_text: { congress: 118, chamber: "house", jacket_number: 57586 }, // jacket with published text versions
   congress_committee_meeting_details: { congress: 118, chamber: "house", event_id: "115538" },
   congress_hearing_details: { congress: 118, chamber: "house", jacket_number: 56268 },
   congress_house_communication_details: { congress: 118, communication_type: "ec", communication_number: 1 },
@@ -154,6 +154,7 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   fda_count: { endpoint: "drug/ndc", count_field: "dosage_form.exact", limit: 5 },
 
   // ─── FEC ────────────────────────────────────────────────────────────
+  fec_individual_contributions: { committee_id: "C00401224", cycle: 2026, per_page: 5 }, // ActBlue — indexed lookup, always has rows (name search is an unindexed full scan)
   fec_candidate_financials: { candidate_id: "P80001571" },
   fec_committee_financials: { committee_id: "C00703975" },
   fec_top_candidates: { office: "P", election_year: 2024 },
@@ -181,8 +182,8 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   // ─── GSA CALC+ ──────────────────────────────────────────────────────
   calc_suggest: { field: "labor_category", prefix: "soft" },
   calc_contract_rates: async ({ run, first }) => {
-    const row = first(await run("calc_search_rates", { query: "software engineer", limit: 1 }));
-    return { contract_number: row?.idv_piid ?? row?.contract_number ?? "GS10F0303V" };
+    const row = first(await run("calc_search_rates", { keyword: "software engineer", page_size: 1 }));
+    return { contract_number: row?.contract ?? "47QREA22D000R" };
   },
 
   // ─── HUD ────────────────────────────────────────────────────────────
@@ -210,7 +211,7 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   nhtsa_model_years: { issue_type: "r" },
   nhtsa_makes: { model_year: 2020, issue_type: "r" },
   nhtsa_models: { make: "toyota", model_year: 2020 },
-  nhtsa_decode_vin: { vin: "1HGCM82633A004352" },
+  nhtsa_decode_vin: { vin: "1FTFW1ET5DFC10312" }, // real 2013 Ford F-150 (NHTSA docs example)
   nhtsa_safety_ratings: { make: "honda", model: "civic", model_year: 2020 },
   nhtsa_safety_rating_detail: async ({ run, first }) => {
     const row = first(await run("nhtsa_safety_ratings", { make: "honda", model: "civic", model_year: 2020 }));
@@ -310,3 +311,35 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   wb_search: { query: "gdp" },
   wb_reference: { type: "region" },
 };
+
+/**
+ * Tools allowed to return an empty result for their canned args without
+ * failing the suite. Everything else is expected to produce rows — a tool
+ * that "passes" by returning empty is how the CMS module stayed silently
+ * broken for months. Keep this list short and justified.
+ */
+export const ALLOWED_EMPTY = new Set<string>([
+  // Point-in-time weather alerts — the country can genuinely be quiet.
+  "nws_alerts_active", "nws_alert",
+  // Varies with real-world conditions.
+  "fda_drug_shortages",
+  // Empty on weekends/holidays (pre-publication queue).
+  "fr_public_inspection",
+  // Guarded by design: refuses unfiltered queries with guidance.
+  "fec_independent_expenditures",
+  "open_payments_search", "open_payments_research", "open_payments_ownership",
+  "open_payments_by_physician", "open_payments_by_hospital",
+  // Most amendments have zero cosponsors.
+  "congress_amendment_cosponsors",
+  // Congress: legitimately empty for many subjects (no amendments on the
+  // amendment, committee with no pending nominations, recess weeks, …).
+  "congress_bill_amendments", "congress_amendment_text", "congress_amendment_amendments",
+  "congress_nomination_hearings", "congress_treaty_committees",
+  "congress_committee_nominations_for_committee",
+  "congress_committee_house_communications", "congress_committee_senate_communications",
+  "congress_house_requirement_matching_communications",
+  "congress_committee_meetings", "congress_committee_meeting_details",
+  "congress_daily_congressional_record", "congress_bound_congressional_record",
+  // Dead upstream (also in known-upstream-failures).
+  "fbi_use_of_force",
+]);
