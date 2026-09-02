@@ -15,8 +15,24 @@ import { describe, it, expect } from "vitest";
 import { moduleDirs, getModule, getTools, getAuth, type ModuleTool } from "../helpers.js";
 import { TOOL_ARGS, ALLOWED_EMPTY, type Args, type DeriveCtx } from "./args.js";
 import knownFailuresJson from "./known-upstream-failures.json" with { type: "json" };
+import responseShapesJson from "./response-shapes.json" with { type: "json" };
+import { writeFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 /** Tools currently broken upstream — run with it.fails so recovery shows up as a red test. */
+const RECORD_SHAPES = !!process.env.RECORD_SHAPES;
+const SHAPES: Record<string, { dataType: string; columns?: string[] }> = responseShapesJson as never;
+const recordedShapes: Record<string, { dataType: string; columns?: string[] }> = {};
+
+/** Extract the comparable shape of a response envelope. */
+function shapeOf(res: any): { dataType: string; columns?: string[] } | null {
+  if (!res || typeof res !== "object" || !res.dataType) return null;
+  const shape: { dataType: string; columns?: string[] } = { dataType: res.dataType };
+  if (Array.isArray(res.data?.columns)) shape.columns = [...res.data.columns].sort();
+  return shape;
+}
+
 const KNOWN_UPSTREAM: Record<string, { since: string; reason: string }> = Object.fromEntries(
   Object.entries(knownFailuresJson).filter(([k]) => !k.startsWith("_")) as [string, { since: string; reason: string }][],
 );
@@ -150,6 +166,38 @@ describe.each(moduleDirs)("%s", (dir) => {
           `If this emptiness is legitimate, add the tool to ALLOWED_EMPTY in tests/live/args.ts with a reason.`,
         ).toBeNull();
       }
+
+      // Schema-drift guard: the response's dataType and column set must match
+      // the recorded baseline — agencies rename/add/remove fields without
+      // notice, and nothing else would surface it. Regenerate baselines with
+      // RECORD_SHAPES=1 npm run test:live.
+      const shape = shapeOf(res);
+      if (shape) {
+        if (RECORD_SHAPES) {
+          recordedShapes[tool.name] = shape;
+        } else {
+          const baseline = SHAPES[tool.name];
+          if (baseline?.columns && shape.columns) {
+            const missing = baseline.columns.filter(c => !shape.columns!.includes(c));
+            const added = shape.columns.filter(c => !baseline.columns!.includes(c));
+            expect(missing, `[SCHEMA DRIFT] ${tool.name}: upstream no longer returns column(s) ${missing.join(", ")}` +
+              (added.length ? ` (new: ${added.join(", ")})` : "") +
+              ` — verify and re-record with RECORD_SHAPES=1 npm run test:live`).toEqual([]);
+          }
+        }
+      }
     });
   }
 });
+
+
+if (RECORD_SHAPES) {
+  const { afterAll } = await import("vitest");
+  afterAll(() => {
+    const dir = dirname(fileURLToPath(import.meta.url));
+    const merged = { ...SHAPES, ...recordedShapes };
+    const sorted = Object.fromEntries(Object.keys(merged).sort().map(k => [k, merged[k]]));
+    writeFileSync(join(dir, "response-shapes.json"), JSON.stringify(sorted, null, 1) + "\n");
+    console.log(`Recorded response shapes for ${Object.keys(recordedShapes).length} tools.`);
+  });
+}

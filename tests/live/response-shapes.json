@@ -1,0 +1,3378 @@
+{
+ "bls_county_wages": {
+  "dataType": "table",
+  "columns": [
+   "area_fips",
+   "avg_pay",
+   "employment",
+   "industry_code",
+   "oty_avg_pay_pct_chg",
+   "oty_employment_pct_chg",
+   "own_code",
+   "pay_basis",
+   "qtrly_estabs",
+   "total_wages"
+  ]
+ },
+ "bls_cpi_breakdown": {
+  "dataType": "table",
+  "columns": [
+   "label",
+   "period",
+   "periodName",
+   "seriesId",
+   "value",
+   "year",
+   "yoyPercent"
+  ]
+ },
+ "bls_employment_by_industry": {
+  "dataType": "table",
+  "columns": [
+   "label",
+   "period",
+   "periodName",
+   "seriesId",
+   "valueThousands",
+   "year",
+   "yoyChangeThousands"
+  ]
+ },
+ "bls_industry_wages": {
+  "dataType": "table",
+  "columns": [
+   "agglvl_code",
+   "area_fips",
+   "avg_pay",
+   "employment",
+   "lq_avg_pay",
+   "oty_avg_pay_pct_chg",
+   "pay_basis",
+   "qtrly_estabs",
+   "total_wages"
+  ]
+ },
+ "bls_search_series": {
+  "dataType": "list"
+ },
+ "bls_series_data": {
+  "dataType": "table",
+  "columns": [
+   "period",
+   "periodName",
+   "seriesId",
+   "value",
+   "year"
+  ]
+ },
+ "bts_border_crossings": {
+  "dataType": "table",
+  "columns": [
+   "border",
+   "date",
+   "latitude",
+   "longitude",
+   "measure",
+   "point",
+   "port_code",
+   "port_name",
+   "state",
+   "value"
+  ]
+ },
+ "bts_transport_stats": {
+  "dataType": "table",
+  "columns": [
+   "air_safety_air_carrier_fatalities",
+   "air_safety_air_taxi_and_commuter_fatalities",
+   "amtrak_on_time_performance",
+   "auto_sales",
+   "auto_sales_saar_millions",
+   "capital_expenditures_state",
+   "capital_expenditures_state_1",
+   "capital_expenditures_state_10",
+   "capital_expenditures_state_11",
+   "capital_expenditures_state_12",
+   "capital_expenditures_state_13",
+   "capital_expenditures_state_14",
+   "capital_expenditures_state_15",
+   "capital_expenditures_state_16",
+   "capital_expenditures_state_17",
+   "capital_expenditures_state_18",
+   "capital_expenditures_state_19",
+   "capital_expenditures_state_2",
+   "capital_expenditures_state_20",
+   "capital_expenditures_state_21",
+   "capital_expenditures_state_22",
+   "capital_expenditures_state_23",
+   "capital_expenditures_state_24",
+   "capital_expenditures_state_25",
+   "capital_expenditures_state_26",
+   "capital_expenditures_state_27",
+   "capital_expenditures_state_28",
+   "capital_expenditures_state_29",
+   "capital_expenditures_state_3",
+   "capital_expenditures_state_30",
+   "capital_expenditures_state_31",
+   "capital_expenditures_state_32",
+   "capital_expenditures_state_33",
+   "capital_expenditures_state_34",
+   "capital_expenditures_state_35",
+   "capital_expenditures_state_36",
+   "capital_expenditures_state_37",
+   "capital_expenditures_state_38",
+   "capital_expenditures_state_39",
+   "capital_expenditures_state_4",
+   "capital_expenditures_state_40",
+   "capital_expenditures_state_41",
+   "capital_expenditures_state_42",
+   "capital_expenditures_state_43",
+   "capital_expenditures_state_44",
+   "capital_expenditures_state_45",
+   "capital_expenditures_state_46",
+   "capital_expenditures_state_47",
+   "capital_expenditures_state_48",
+   "capital_expenditures_state_49",
+   "capital_expenditures_state_5",
+   "capital_expenditures_state_50",
+   "capital_expenditures_state_51",
+   "capital_expenditures_state_52",
+   "capital_expenditures_state_53",
+   "capital_expenditures_state_54",
+   "capital_expenditures_state_55",
+   "capital_expenditures_state_56",
+   "capital_expenditures_state_57",
+   "capital_expenditures_state_58",
+   "capital_expenditures_state_59",
+   "capital_expenditures_state_6",
+   "capital_expenditures_state_60",
+   "capital_expenditures_state_61",
+   "capital_expenditures_state_62",
+   "capital_expenditures_state_63",
+   "capital_expenditures_state_64",
+   "capital_expenditures_state_65",
+   "capital_expenditures_state_7",
+   "capital_expenditures_state_8",
+   "capital_expenditures_state_9",
+   "date",
+   "general_economic_indicators",
+   "general_economic_indicators_1",
+   "general_economic_indicators_2",
+   "general_economic_indicators_3",
+   "heavy_truck_sales",
+   "heavy_truck_sales_saar_millions",
+   "highway_fuel_prices_on_highway",
+   "highway_fuel_prices_regular",
+   "index",
+   "light_truck_sales",
+   "light_truck_sales_saar_millions",
+   "passenger_rail_employee_hours_worked",
+   "passenger_rail_passenger_miles",
+   "passenger_rail_passengers",
+   "passenger_rail_total_train_miles",
+   "passenger_rail_yard_switching_miles",
+   "rail_fatalities",
+   "rail_fatalities_at_highway_rail_crossings",
+   "safety_general_aviation",
+   "safety_highway_fatalities",
+   "safety_highway_fatalities_1",
+   "system_use_freight_rail",
+   "system_use_freight_rail_1",
+   "system_use_highway_vehicle",
+   "system_use_highway_vehicle_1",
+   "system_use_highway_vehicle_2",
+   "system_use_highway_vehicle_3",
+   "system_use_highway_vehicle_4",
+   "system_use_transit_ridership",
+   "system_use_transit_ridership_1",
+   "system_use_transit_ridership_2",
+   "system_use_u_s_airline",
+   "system_use_u_s_airline_1",
+   "system_use_u_s_airline_2",
+   "transborder_total_north_american_freight",
+   "transborder_u_s_canada_freight",
+   "transborder_u_s_mexico_freight",
+   "transportation_economic",
+   "transportation_economic_1",
+   "transportation_economic_2",
+   "transportation_economic_3",
+   "transportation_economic_4",
+   "transportation_economic_5",
+   "transportation_economic_6",
+   "transportation_economic_7",
+   "transportation_economic_8",
+   "transportation_services_index_combined",
+   "transportation_services_index_freight",
+   "transportation_services_index_passenger",
+   "trespasser_fatalities_not_at_highwaya_rail_crossings",
+   "truck_tonnage_index",
+   "u_s_air_carrier_cargo_millions_of_revenue_ton_miles_domestic",
+   "u_s_air_carrier_cargo_millions_of_revenue_ton_miles_international",
+   "u_s_airline_traffic_domestic_non_seasonally_adjusted",
+   "u_s_airline_traffic_international_non_seasonally_adjusted",
+   "u_s_airline_traffic_total_non_seasonally_adjusted",
+   "u_s_canada_incoming_person_crossings",
+   "u_s_canada_incoming_truck_crossings",
+   "u_s_marketing_air_carriers_on_time_performance_percent",
+   "u_s_mexico_incoming_person_crossings",
+   "u_s_mexico_incoming_truck_crossings",
+   "u_s_waterway_tonnage"
+  ]
+ },
+ "calc_contract_rates": {
+  "dataType": "list"
+ },
+ "calc_search_rates": {
+  "dataType": "list"
+ },
+ "calc_suggest": {
+  "dataType": "record"
+ },
+ "cdc_birth_indicators": {
+  "dataType": "table",
+  "columns": [
+   "indicator",
+   "race_ethnicity",
+   "rate",
+   "significant",
+   "topic",
+   "topic_subgroup",
+   "unit",
+   "year_and_quarter"
+  ]
+ },
+ "cdc_causes_of_death": {
+  "dataType": "table",
+  "columns": [
+   "_113_cause_name",
+   "aadr",
+   "cause_name",
+   "deaths",
+   "state",
+   "year"
+  ]
+ },
+ "cdc_covid": {
+  "dataType": "table",
+  "columns": [
+   "date_updated",
+   "end_date",
+   "new_cases",
+   "new_deaths",
+   "new_historic_cases",
+   "new_historic_deaths",
+   "start_date",
+   "state",
+   "tot_cases",
+   "tot_deaths"
+  ]
+ },
+ "cdc_death_rates_historical": {
+  "dataType": "table",
+  "columns": [
+   "age_adjusted_death_rate",
+   "leading_causes",
+   "year"
+  ]
+ },
+ "cdc_disability": {
+  "dataType": "table",
+  "columns": [
+   "data_value",
+   "data_value_type",
+   "locationabbr",
+   "locationdesc",
+   "number",
+   "response",
+   "weightednumber",
+   "year"
+  ]
+ },
+ "cdc_drug_overdose": {
+  "dataType": "table",
+  "columns": [
+   "age_adjusted_rate",
+   "age_group",
+   "crude_death_rate",
+   "deaths",
+   "lower_confidence_limit_for_age_adjusted_rate",
+   "lower_confidence_limit_for_crude_rate",
+   "population",
+   "race_and_hispanic_origin",
+   "sex",
+   "standard_error_for_age_adjusted_rate",
+   "standard_error_for_crude_rate",
+   "state",
+   "state_crude_rate_in_range",
+   "unit",
+   "upper_confidence_limit_for_age_adjusted_rate",
+   "upper_confidence_limit_for_crude_rate",
+   "us_age_adjusted_rate",
+   "us_crude_rate",
+   "year"
+  ]
+ },
+ "cdc_life_expectancy": {
+  "dataType": "table",
+  "columns": [
+   "average_life_expectancy",
+   "mortality",
+   "race",
+   "sex",
+   "year"
+  ]
+ },
+ "cdc_mortality_rates": {
+  "dataType": "table",
+  "columns": [
+   "cause_of_death",
+   "rate_alabama",
+   "rate_alaska",
+   "rate_arizona",
+   "rate_arkansas",
+   "rate_california",
+   "rate_colorado",
+   "rate_connecticut",
+   "rate_delaware",
+   "rate_district_of_columbia",
+   "rate_florida",
+   "rate_georgia",
+   "rate_hawaii",
+   "rate_idaho",
+   "rate_illinois",
+   "rate_indiana",
+   "rate_iowa",
+   "rate_kansas",
+   "rate_kentucky",
+   "rate_louisiana",
+   "rate_maine",
+   "rate_maryland",
+   "rate_massachusetts",
+   "rate_michigan",
+   "rate_minnesota",
+   "rate_mississippi",
+   "rate_missouri",
+   "rate_montana",
+   "rate_nebraska",
+   "rate_nevada",
+   "rate_new_hampshire",
+   "rate_new_jersey",
+   "rate_new_mexico",
+   "rate_new_york",
+   "rate_north_carolina",
+   "rate_north_dakota",
+   "rate_ohio",
+   "rate_oklahoma",
+   "rate_oregon",
+   "rate_overall",
+   "rate_pennsylvania",
+   "rate_rhode_island",
+   "rate_sex_female",
+   "rate_sex_male",
+   "rate_south_carolina",
+   "rate_south_dakota",
+   "rate_tennessee",
+   "rate_texas",
+   "rate_type",
+   "rate_utah",
+   "rate_vermont",
+   "rate_virginia",
+   "rate_washington",
+   "rate_west_virginia",
+   "rate_wisconsin",
+   "rate_wyoming",
+   "time_period",
+   "unit",
+   "year_and_quarter"
+  ]
+ },
+ "cdc_nutrition_obesity": {
+  "dataType": "table",
+  "columns": [
+   "class",
+   "data_value",
+   "data_value_unit",
+   "locationabbr",
+   "locationdesc",
+   "question",
+   "stratification1",
+   "stratificationcategory1",
+   "topic",
+   "yearend",
+   "yearstart"
+  ]
+ },
+ "cdc_places_city": {
+  "dataType": "table",
+  "columns": [
+   "access2_adj95ci",
+   "access2_adjprev",
+   "access2_crude95ci",
+   "access2_crudeprev",
+   "arthritis_adj95ci",
+   "arthritis_adjprev",
+   "arthritis_crude95ci",
+   "arthritis_crudeprev",
+   "binge_adj95ci",
+   "binge_adjprev",
+   "binge_crude95ci",
+   "binge_crudeprev",
+   "bphigh_adj95ci",
+   "bphigh_adjprev",
+   "bphigh_crude95ci",
+   "bphigh_crudeprev",
+   "bpmed_adj95ci",
+   "bpmed_adjprev",
+   "bpmed_crude95ci",
+   "bpmed_crudeprev",
+   "cancer_adj95ci",
+   "cancer_adjprev",
+   "cancer_crude95ci",
+   "cancer_crudeprev",
+   "casthma_adj95ci",
+   "casthma_adjprev",
+   "casthma_crude95ci",
+   "casthma_crudeprev",
+   "chd_adj95ci",
+   "chd_adjprev",
+   "chd_crude95ci",
+   "chd_crudeprev",
+   "checkup_adj95ci",
+   "checkup_adjprev",
+   "checkup_crude95ci",
+   "checkup_crudeprev",
+   "cholscreen_adj95ci",
+   "cholscreen_adjprev",
+   "cholscreen_crude95ci",
+   "cholscreen_crudeprev",
+   "colon_screen_adj95ci",
+   "colon_screen_adjprev",
+   "colon_screen_crude95ci",
+   "colon_screen_crudeprev",
+   "copd_adj95ci",
+   "copd_adjprev",
+   "copd_crude95ci",
+   "copd_crudeprev",
+   "corem_adj95ci",
+   "corem_adjprev",
+   "corem_crude95ci",
+   "corem_crudeprev",
+   "corew_adj95ci",
+   "corew_adjprev",
+   "corew_crude95ci",
+   "corew_crudeprev",
+   "csmoking_adj95ci",
+   "csmoking_adjprev",
+   "csmoking_crude95ci",
+   "csmoking_crudeprev",
+   "dental_adj95ci",
+   "dental_adjprev",
+   "dental_crude95ci",
+   "dental_crudeprev",
+   "diabetes_adj95ci",
+   "diabetes_adjprev",
+   "diabetes_crude95ci",
+   "diabetes_crudeprev",
+   "geolocation",
+   "highchol_adj95ci",
+   "highchol_adjprev",
+   "highchol_crude95ci",
+   "highchol_crudeprev",
+   "kidney_adj95ci",
+   "kidney_adjprev",
+   "kidney_crude95ci",
+   "kidney_crudeprev",
+   "lpa_adj95ci",
+   "lpa_adjprev",
+   "lpa_crude95ci",
+   "lpa_crudeprev",
+   "mammouse_adj95ci",
+   "mammouse_adjprev",
+   "mammouse_crude95ci",
+   "mammouse_crudeprev",
+   "mhlth_adj95ci",
+   "mhlth_adjprev",
+   "mhlth_crude95ci",
+   "mhlth_crudeprev",
+   "obesity_adj95ci",
+   "obesity_adjprev",
+   "obesity_crude95ci",
+   "obesity_crudeprev",
+   "paptest_adj95ci",
+   "paptest_adjprev",
+   "paptest_crude95ci",
+   "paptest_crudeprev",
+   "phlth_adj95ci",
+   "phlth_adjprev",
+   "phlth_crude95ci",
+   "phlth_crudeprev",
+   "placefips",
+   "placename",
+   "population2010",
+   "sleep_adj95ci",
+   "sleep_adjprev",
+   "sleep_crude95ci",
+   "sleep_crudeprev",
+   "stateabbr",
+   "stroke_adj95ci",
+   "stroke_adjprev",
+   "stroke_crude95ci",
+   "stroke_crudeprev",
+   "teethlost_adj95ci",
+   "teethlost_adjprev",
+   "teethlost_crude95ci",
+   "teethlost_crudeprev"
+  ]
+ },
+ "cdc_places_health": {
+  "dataType": "table",
+  "columns": [
+   "category",
+   "data_value",
+   "data_value_type",
+   "locationname",
+   "measureid",
+   "short_question_text",
+   "stateabbr",
+   "statedesc",
+   "totalpopulation"
+  ]
+ },
+ "cdc_query": {
+  "dataType": "table",
+  "columns": [
+   "_113_cause_name",
+   "aadr",
+   "cause_name",
+   "deaths",
+   "state",
+   "year"
+  ]
+ },
+ "cdc_weekly_deaths": {
+  "dataType": "table",
+  "columns": [
+   "covid_19_deaths",
+   "data_as_of",
+   "end_date",
+   "footnote",
+   "group",
+   "influenza_deaths",
+   "mmwr_week",
+   "percent_of_expected_deaths",
+   "pneumonia_and_covid_19_deaths",
+   "pneumonia_deaths",
+   "pneumonia_influenza_or_covid_19_deaths",
+   "start_date",
+   "state",
+   "total_deaths",
+   "week_ending_date",
+   "year"
+  ]
+ },
+ "census_datasets": {
+  "dataType": "list"
+ },
+ "census_geography_levels": {
+  "dataType": "table",
+  "columns": [
+   "code",
+   "level",
+   "requires",
+   "wildcardOk"
+  ]
+ },
+ "census_population": {
+  "dataType": "table",
+  "columns": [
+   "medianAge",
+   "medianIncome",
+   "name",
+   "population"
+  ]
+ },
+ "census_query": {
+  "dataType": "table",
+  "columns": [
+   "B01001_001E",
+   "NAME",
+   "state"
+  ]
+ },
+ "census_resolve_geography": {
+  "dataType": "list"
+ },
+ "census_search_tables": {
+  "dataType": "list"
+ },
+ "census_search_variables": {
+  "dataType": "list"
+ },
+ "cfpb_complaint_aggregations": {
+  "dataType": "table",
+  "columns": [
+   "doc_count",
+   "key",
+   "sub_product.raw"
+  ]
+ },
+ "cfpb_complaint_detail": {
+  "dataType": "record"
+ },
+ "cfpb_complaint_trends": {
+  "dataType": "record"
+ },
+ "cfpb_search_complaints": {
+  "dataType": "list"
+ },
+ "cfpb_state_complaints": {
+  "dataType": "record"
+ },
+ "cfpb_suggest_company": {
+  "dataType": "list"
+ },
+ "clinical_trials_by_location": {
+  "dataType": "list"
+ },
+ "clinical_trials_detail": {
+  "dataType": "record"
+ },
+ "clinical_trials_enums": {
+  "dataType": "list"
+ },
+ "clinical_trials_field_sizes": {
+  "dataType": "list"
+ },
+ "clinical_trials_field_values": {
+  "dataType": "list"
+ },
+ "clinical_trials_metadata": {
+  "dataType": "list"
+ },
+ "clinical_trials_results": {
+  "dataType": "record"
+ },
+ "clinical_trials_search": {
+  "dataType": "list"
+ },
+ "clinical_trials_size_stats": {
+  "dataType": "record"
+ },
+ "clinical_trials_stats": {
+  "dataType": "record"
+ },
+ "cms_hospitals": {
+  "dataType": "table",
+  "columns": [
+   "address",
+   "citytown",
+   "count_of_facility_mort_measures",
+   "count_of_facility_pt_exp_measures",
+   "count_of_facility_readm_measures",
+   "count_of_facility_safety_measures",
+   "count_of_facility_te_measures",
+   "count_of_mort_measures_better",
+   "count_of_mort_measures_no_different",
+   "count_of_mort_measures_worse",
+   "count_of_readm_measures_better",
+   "count_of_readm_measures_no_different",
+   "count_of_readm_measures_worse",
+   "count_of_safety_measures_better",
+   "count_of_safety_measures_no_different",
+   "count_of_safety_measures_worse",
+   "countyparish",
+   "emergency_services",
+   "facility_id",
+   "facility_name",
+   "hospital_overall_rating",
+   "hospital_overall_rating_footnote",
+   "hospital_ownership",
+   "hospital_type",
+   "meets_criteria_for_birthing_friendly_designation",
+   "mort_group_footnote",
+   "mort_group_measure_count",
+   "pt_exp_group_footnote",
+   "pt_exp_group_measure_count",
+   "readm_group_footnote",
+   "readm_group_measure_count",
+   "safety_group_footnote",
+   "safety_group_measure_count",
+   "state",
+   "te_group_footnote",
+   "te_group_measure_count",
+   "telephone_number",
+   "zip_code"
+  ]
+ },
+ "cms_nursing_homes": {
+  "dataType": "table",
+  "columns": [
+   "abuse_icon",
+   "adjusted_lpn_staffing_hours_per_resident_per_day",
+   "adjusted_nurse_aide_staffing_hours_per_resident_per_day",
+   "adjusted_rn_staffing_hours_per_resident_per_day",
+   "adjusted_total_nurse_staffing_hours_per_resident_per_day",
+   "adjusted_weekend_total_nurse_staffing_hours_per_resident_per_day",
+   "administrator_turnover_footnote",
+   "automatic_sprinkler_systems_in_all_required_areas",
+   "average_number_of_residents_per_day",
+   "casemix_lpn_staffing_hours_per_resident_per_day",
+   "casemix_nurse_aide_staffing_hours_per_resident_per_day",
+   "casemix_rn_staffing_hours_per_resident_per_day",
+   "casemix_total_nurse_staffing_hours_per_resident_per_day",
+   "casemix_weekend_total_nurse_staffing_hours_per_resident_per_day",
+   "chain_average_health_inspection_rating",
+   "chain_average_overall_5star_rating",
+   "chain_average_qm_rating",
+   "chain_average_staffing_rating",
+   "chain_id",
+   "chain_name",
+   "citytown",
+   "cms_certification_number_ccn",
+   "continuing_care_retirement_community",
+   "countyparish",
+   "date_first_approved_to_provide_medicare_and_medicaid_services",
+   "geocoding_footnote",
+   "health_inspection_rating",
+   "latitude",
+   "legal_business_name",
+   "location",
+   "longitude",
+   "longstay_qm_rating",
+   "most_recent_health_inspection_more_than_2_years_ago",
+   "number_of_administrators_who_have_left_the_nursing_home",
+   "number_of_certified_beds",
+   "number_of_citations_from_infection_control_inspections",
+   "number_of_facilities_in_chain",
+   "number_of_fines",
+   "number_of_payment_denials",
+   "nursing_casemix_index",
+   "nursing_casemix_index_ratio",
+   "overall_rating",
+   "ownership_type",
+   "processing_date",
+   "provider_address",
+   "provider_changed_ownership_in_last_12_months",
+   "provider_name",
+   "provider_resides_in_hospital",
+   "provider_ssa_county_code",
+   "provider_type",
+   "qm_rating",
+   "rating_cycle_1_health_deficiency_score",
+   "rating_cycle_1_health_revisit_score",
+   "rating_cycle_1_number_of_complaint_health_deficiencies",
+   "rating_cycle_1_number_of_health_revisits",
+   "rating_cycle_1_number_of_standard_health_deficiencies",
+   "rating_cycle_1_standard_survey_health_date",
+   "rating_cycle_1_total_health_score",
+   "rating_cycle_1_total_number_of_health_deficiencies",
+   "rating_cycle_23_health_deficiency_score",
+   "rating_cycle_23_health_revisit_score",
+   "rating_cycle_23_number_of_complaint_health_deficiencies",
+   "rating_cycle_23_number_of_health_revisits",
+   "rating_cycle_23_total_health_score",
+   "rating_cycle_23_total_number_of_health_deficiencies",
+   "rating_cycle_2_number_of_standard_health_deficiencies",
+   "rating_cycle_2_standard_health_survey_date",
+   "registered_nurse_hours_per_resident_per_day_on_the_weekend",
+   "registered_nurse_turnover",
+   "registered_nurse_turnover_footnote",
+   "reported_licensed_staffing_hours_per_resident_per_day",
+   "reported_lpn_staffing_hours_per_resident_per_day",
+   "reported_nurse_aide_staffing_hours_per_resident_per_day",
+   "reported_physical_therapist_staffing_hours_per_resident_per_day",
+   "reported_rn_staffing_hours_per_resident_per_day",
+   "reported_total_nurse_staffing_hours_per_resident_per_day",
+   "shortstay_qm_rating",
+   "shortstay_qm_rating_footnote",
+   "special_focus_status",
+   "staffing_rating",
+   "state",
+   "telephone_number",
+   "total_amount_of_fines_in_dollars",
+   "total_number_of_nurse_staff_hours_per_resident_per_day_on_t_4a14",
+   "total_number_of_penalties",
+   "total_nursing_staff_turnover",
+   "total_nursing_staff_turnover_footnote",
+   "total_weighted_health_survey_score",
+   "urban",
+   "with_a_resident_and_family_council",
+   "zip_code"
+  ]
+ },
+ "cms_query": {
+  "dataType": "table",
+  "columns": [
+   "address",
+   "citytown",
+   "count_of_facility_mort_measures",
+   "count_of_facility_pt_exp_measures",
+   "count_of_facility_readm_measures",
+   "count_of_facility_safety_measures",
+   "count_of_facility_te_measures",
+   "count_of_mort_measures_better",
+   "count_of_mort_measures_no_different",
+   "count_of_mort_measures_worse",
+   "count_of_readm_measures_better",
+   "count_of_readm_measures_no_different",
+   "count_of_readm_measures_worse",
+   "count_of_safety_measures_better",
+   "count_of_safety_measures_no_different",
+   "count_of_safety_measures_worse",
+   "countyparish",
+   "emergency_services",
+   "facility_id",
+   "facility_name",
+   "hospital_overall_rating",
+   "hospital_overall_rating_footnote",
+   "hospital_ownership",
+   "hospital_type",
+   "meets_criteria_for_birthing_friendly_designation",
+   "mort_group_footnote",
+   "mort_group_measure_count",
+   "pt_exp_group_footnote",
+   "pt_exp_group_measure_count",
+   "readm_group_footnote",
+   "readm_group_measure_count",
+   "safety_group_footnote",
+   "safety_group_measure_count",
+   "state",
+   "te_group_footnote",
+   "te_group_measure_count",
+   "telephone_number",
+   "zip_code"
+  ]
+ },
+ "cms_search": {
+  "dataType": "list"
+ },
+ "congress_amendment_amendments": {
+  "dataType": "empty"
+ },
+ "congress_amendment_cosponsors": {
+  "dataType": "empty"
+ },
+ "congress_amendment_details": {
+  "dataType": "record"
+ },
+ "congress_amendment_text": {
+  "dataType": "list"
+ },
+ "congress_amendments": {
+  "dataType": "list"
+ },
+ "congress_bill_actions": {
+  "dataType": "list"
+ },
+ "congress_bill_amendments": {
+  "dataType": "list"
+ },
+ "congress_bill_committees": {
+  "dataType": "list"
+ },
+ "congress_bill_cosponsors": {
+  "dataType": "list"
+ },
+ "congress_bill_details": {
+  "dataType": "record"
+ },
+ "congress_bill_full_profile": {
+  "dataType": "record"
+ },
+ "congress_bill_related": {
+  "dataType": "list"
+ },
+ "congress_bill_subjects": {
+  "dataType": "record"
+ },
+ "congress_bill_summaries": {
+  "dataType": "list"
+ },
+ "congress_bill_text": {
+  "dataType": "list"
+ },
+ "congress_bill_titles": {
+  "dataType": "list"
+ },
+ "congress_bill_votes": {
+  "dataType": "record"
+ },
+ "congress_bound_congressional_record": {
+  "dataType": "list"
+ },
+ "congress_committee_bills": {
+  "dataType": "list"
+ },
+ "congress_committee_details": {
+  "dataType": "record"
+ },
+ "congress_committee_details_by_congress": {
+  "dataType": "record"
+ },
+ "congress_committee_full_profile": {
+  "dataType": "record"
+ },
+ "congress_committee_house_communications": {
+  "dataType": "list"
+ },
+ "congress_committee_meeting_details": {
+  "dataType": "record"
+ },
+ "congress_committee_meetings": {
+  "dataType": "list"
+ },
+ "congress_committee_nominations_for_committee": {
+  "dataType": "list"
+ },
+ "congress_committee_print_details": {
+  "dataType": "record"
+ },
+ "congress_committee_print_text": {
+  "dataType": "list"
+ },
+ "congress_committee_prints": {
+  "dataType": "list"
+ },
+ "congress_committee_report_details": {
+  "dataType": "record"
+ },
+ "congress_committee_report_text": {
+  "dataType": "list"
+ },
+ "congress_committee_reports": {
+  "dataType": "list"
+ },
+ "congress_committee_reports_for_committee": {
+  "dataType": "list"
+ },
+ "congress_committee_senate_communications": {
+  "dataType": "list"
+ },
+ "congress_committees": {
+  "dataType": "list"
+ },
+ "congress_congressional_record": {
+  "dataType": "list"
+ },
+ "congress_crs_report_details": {
+  "dataType": "record"
+ },
+ "congress_crs_reports": {
+  "dataType": "list"
+ },
+ "congress_daily_congressional_record": {
+  "dataType": "list"
+ },
+ "congress_hearing_details": {
+  "dataType": "record"
+ },
+ "congress_hearings": {
+  "dataType": "list"
+ },
+ "congress_house_communication_details": {
+  "dataType": "record"
+ },
+ "congress_house_communications": {
+  "dataType": "list"
+ },
+ "congress_house_requirement_details": {
+  "dataType": "record"
+ },
+ "congress_house_requirement_matching_communications": {
+  "dataType": "list"
+ },
+ "congress_house_requirements": {
+  "dataType": "list"
+ },
+ "congress_house_votes": {
+  "dataType": "list"
+ },
+ "congress_info": {
+  "dataType": "list"
+ },
+ "congress_law_details": {
+  "dataType": "record"
+ },
+ "congress_member_bills": {
+  "dataType": "list"
+ },
+ "congress_member_details": {
+  "dataType": "record"
+ },
+ "congress_member_full_profile": {
+  "dataType": "record"
+ },
+ "congress_nomination_committees": {
+  "dataType": "list"
+ },
+ "congress_nomination_details": {
+  "dataType": "record"
+ },
+ "congress_nomination_full_profile": {
+  "dataType": "record"
+ },
+ "congress_nomination_hearings": {
+  "dataType": "empty"
+ },
+ "congress_nomination_nominees": {
+  "dataType": "list"
+ },
+ "congress_nominations": {
+  "dataType": "list"
+ },
+ "congress_recent_laws": {
+  "dataType": "list"
+ },
+ "congress_search_bills": {
+  "dataType": "list"
+ },
+ "congress_search_members": {
+  "dataType": "list"
+ },
+ "congress_senate_communication_details": {
+  "dataType": "record"
+ },
+ "congress_senate_communications": {
+  "dataType": "list"
+ },
+ "congress_senate_votes": {
+  "dataType": "list"
+ },
+ "congress_summaries_search": {
+  "dataType": "list"
+ },
+ "congress_treaties": {
+  "dataType": "list"
+ },
+ "congress_treaty_committees": {
+  "dataType": "list"
+ },
+ "congress_treaty_details": {
+  "dataType": "record"
+ },
+ "congress_treaty_full_profile": {
+  "dataType": "record"
+ },
+ "congress_treaty_partitioned_actions": {
+  "dataType": "list"
+ },
+ "congress_treaty_partitioned_details": {
+  "dataType": "record"
+ },
+ "doj_blog_detail": {
+  "dataType": "record"
+ },
+ "doj_blog_entries": {
+  "dataType": "list"
+ },
+ "doj_press_release_detail": {
+  "dataType": "record"
+ },
+ "doj_press_releases": {
+  "dataType": "list"
+ },
+ "eia_electricity": {
+  "dataType": "timeseries",
+  "columns": [
+   "period",
+   "sector",
+   "state",
+   "units",
+   "value"
+  ]
+ },
+ "eia_natural_gas": {
+  "dataType": "timeseries",
+  "columns": [
+   "period",
+   "series",
+   "units",
+   "value"
+  ]
+ },
+ "eia_petroleum": {
+  "dataType": "timeseries",
+  "columns": [
+   "period",
+   "series",
+   "units",
+   "value"
+  ]
+ },
+ "eia_state_energy": {
+  "dataType": "timeseries",
+  "columns": [
+   "period",
+   "series",
+   "state",
+   "units",
+   "value"
+  ]
+ },
+ "eia_total_energy": {
+  "dataType": "timeseries",
+  "columns": [
+   "period",
+   "series",
+   "units",
+   "value"
+  ]
+ },
+ "epa_drinking_water": {
+  "dataType": "table",
+  "columns": [
+   "address_line1",
+   "address_line2",
+   "admin_name",
+   "alt_phone_number",
+   "city_name",
+   "country_code",
+   "dbpr_schedule_cat_code",
+   "email_addr",
+   "epa_region",
+   "fax_number",
+   "gw_sw_code",
+   "is_grant_eligible_ind",
+   "is_school_or_daycare_ind",
+   "is_wholesaler_ind",
+   "npm_candidate",
+   "org_name",
+   "outstanding_performer",
+   "owner_type_code",
+   "phone_number",
+   "pop_cat_11_code",
+   "pop_cat_2_code",
+   "pop_cat_3_code",
+   "pop_cat_4_code",
+   "pop_cat_5_code",
+   "population_served_count",
+   "primacy_agency_code",
+   "primacy_type",
+   "primary_source_code",
+   "pws_activity_code",
+   "pws_deactivation_date",
+   "pws_name",
+   "pws_type_code",
+   "pwsid",
+   "season_begin_date",
+   "season_end_date",
+   "service_connections_count",
+   "source_protection_begin_date",
+   "source_water_protection_code",
+   "state_code",
+   "submission_status_code",
+   "zip_code"
+  ]
+ },
+ "epa_enforcement": {
+  "dataType": "table",
+  "columns": [
+   "ActivityID",
+   "CaseCategoryCode",
+   "CaseCategoryDesc",
+   "CaseName",
+   "CaseNumber",
+   "CaseStatusCode",
+   "CaseStatusDesc",
+   "CivilCriminalIndicator",
+   "CostRecovery",
+   "CourtDocketNumber",
+   "DOJDocketNmbr",
+   "DateClosed",
+   "DateFiled",
+   "DateLodged",
+   "EnfOutcome",
+   "FedPenalty",
+   "Lead",
+   "PrimaryLaw",
+   "PrimarySection",
+   "SEPCost",
+   "SettlementCnt",
+   "SettlementDate",
+   "StateLocPenaltyAmt",
+   "TotalCompActionAmt"
+  ]
+ },
+ "epa_facilities": {
+  "dataType": "table",
+  "columns": [
+   "AIRCity",
+   "AIRClassification",
+   "AIRComplStatus",
+   "AIRCounty",
+   "AIRDaysLastEval",
+   "AIRDaysLastFce",
+   "AIREPARegion",
+   "AIREvalCnt",
+   "AIRHpvStatus",
+   "AIRIDs",
+   "AIRIndianCntryFlg",
+   "AIRLastEvalDate",
+   "AIRLastEvalDateEPA",
+   "AIRLastEvalDateState",
+   "AIRLastFceDate",
+   "AIRLastFceDateEPA",
+   "AIRMnthsWithHpv",
+   "AIRNAICS",
+   "AIRName",
+   "AIRPrograms",
+   "AIRQtrsWithHpv",
+   "AIRQtrsWithViol",
+   "AIRRecentViolCnt",
+   "AIRState",
+   "AIRStatus",
+   "AIRStreet",
+   "AIRUniverse",
+   "AIRZip",
+   "CWAIDs",
+   "EisIDs",
+   "FacDerivedHuc",
+   "FacDerivedWBD",
+   "FacDerivedWBDName",
+   "FacFIPSCode",
+   "FacIndianCntryFlg",
+   "FacLat",
+   "FacLong",
+   "FacSICCodes",
+   "GHGIDs",
+   "RCRAIDs",
+   "RegistryID",
+   "RmpIDs",
+   "SDWAIDs",
+   "SourceID",
+   "TRIIDs"
+  ]
+ },
+ "epa_facility_detail": {
+  "dataType": "record"
+ },
+ "epa_greenhouse_gas": {
+  "dataType": "table",
+  "columns": [
+   "address1",
+   "city",
+   "co2e_emission",
+   "county",
+   "county_fips",
+   "facility_id",
+   "facility_name",
+   "gas_code",
+   "gas_name",
+   "latitude",
+   "longitude",
+   "sector_name",
+   "sector_type",
+   "state",
+   "subsector_desc",
+   "subsector_name",
+   "upper",
+   "year",
+   "zip"
+  ]
+ },
+ "epa_rcra": {
+  "dataType": "table",
+  "columns": [
+   "FacDerivedHuc",
+   "FacDerivedWBD",
+   "FacDerivedWBDName",
+   "FacFIPSCode",
+   "FacIndianCntryFlg",
+   "FacLat",
+   "FacLong",
+   "RCRACity",
+   "RCRAComplStatus",
+   "RCRACounty",
+   "RCRAEPARegion",
+   "RCRAFeaCnt",
+   "RCRAIDs",
+   "RCRAIeaCnt",
+   "RCRAIndianCntryFlg",
+   "RCRAInspCnt",
+   "RCRALandTypeCode",
+   "RCRAName",
+   "RCRAQtrsWithNC",
+   "RCRAQtrsWithSNC",
+   "RCRASNC",
+   "RCRAState",
+   "RCRAStatus",
+   "RCRAStreet",
+   "RCRAUniverse",
+   "RCRAViolationTypes",
+   "RCRAZip",
+   "RegistryID",
+   "SourceID"
+  ]
+ },
+ "epa_superfund": {
+  "dataType": "table",
+  "columns": [
+   "archived_date",
+   "archived_ind",
+   "city_name",
+   "congressional_district_code",
+   "county_name",
+   "epa_id",
+   "federal_facility_ind",
+   "fips_code",
+   "fk_ref_region_code",
+   "fk_ref_state_code",
+   "name",
+   "non_npl_status_code",
+   "non_npl_status_date",
+   "non_npl_status_name",
+   "npl_status_code",
+   "npl_status_name",
+   "primary_latitude_decimal_val",
+   "primary_longitude_decimal_val",
+   "saa_agreement_site_ind",
+   "site_id",
+   "street_addr_txt",
+   "zip_code"
+  ]
+ },
+ "epa_toxic_releases": {
+  "dataType": "table",
+  "columns": [
+   "asgn_agency",
+   "asgn_federal_ind",
+   "asgn_partial_ind",
+   "asgn_public_contact",
+   "asgn_public_contact_email",
+   "asgn_public_phone",
+   "asgn_public_phone_ext",
+   "city_name",
+   "county_name",
+   "epa_registry_id",
+   "fac_closed_ind",
+   "fac_latitude",
+   "fac_longitude",
+   "facility_name",
+   "foreign_parent_co_db_num",
+   "foreign_parent_co_name",
+   "mail_city",
+   "mail_name",
+   "mail_state_abbr",
+   "mail_street_address",
+   "mail_zip_code",
+   "parent_co_db_num",
+   "parent_co_name",
+   "pref_accuracy",
+   "pref_collect_meth",
+   "pref_desc_category",
+   "pref_horizontal_datum",
+   "pref_latitude",
+   "pref_longitude",
+   "pref_qa_code",
+   "pref_source_scale",
+   "region",
+   "standardized_foreign_parent_company",
+   "standardized_parent_company",
+   "state_abbr",
+   "state_county_fips_code",
+   "street_address",
+   "tri_facility_id",
+   "zip_code"
+  ]
+ },
+ "epa_uv_index": {
+  "dataType": "list"
+ },
+ "fbi_agencies": {
+  "dataType": "table",
+  "columns": [
+   "agency_name",
+   "agency_type_name",
+   "county",
+   "latitude",
+   "longitude",
+   "nibrs_start_date",
+   "ori"
+  ]
+ },
+ "fbi_arrest_data": {
+  "dataType": "record"
+ },
+ "fbi_crime_summarized": {
+  "dataType": "record"
+ },
+ "fbi_expanded_homicide": {
+  "dataType": "record"
+ },
+ "fbi_expanded_property": {
+  "dataType": "record"
+ },
+ "fbi_hate_crime": {
+  "dataType": "record"
+ },
+ "fbi_law_enforcement_employees": {
+  "dataType": "record"
+ },
+ "fbi_lesdc": {
+  "dataType": "table",
+  "columns": [
+   "lesdc_chart"
+  ]
+ },
+ "fbi_nibrs": {
+  "dataType": "record"
+ },
+ "fda_animal_events": {
+  "dataType": "list"
+ },
+ "fda_approved_drugs": {
+  "dataType": "list"
+ },
+ "fda_count": {
+  "dataType": "table",
+  "columns": [
+   "count",
+   "term"
+  ]
+ },
+ "fda_covid_serology": {
+  "dataType": "list"
+ },
+ "fda_device_510k": {
+  "dataType": "list"
+ },
+ "fda_device_classification": {
+  "dataType": "list"
+ },
+ "fda_device_enforcement": {
+  "dataType": "list"
+ },
+ "fda_device_events": {
+  "dataType": "list"
+ },
+ "fda_device_pma": {
+  "dataType": "list"
+ },
+ "fda_device_recalls": {
+  "dataType": "list"
+ },
+ "fda_device_registrations": {
+  "dataType": "list"
+ },
+ "fda_device_udi": {
+  "dataType": "list"
+ },
+ "fda_drug_counts": {
+  "dataType": "table",
+  "columns": [
+   "count",
+   "term"
+  ]
+ },
+ "fda_drug_events": {
+  "dataType": "list"
+ },
+ "fda_drug_labels": {
+  "dataType": "list"
+ },
+ "fda_drug_ndc": {
+  "dataType": "list"
+ },
+ "fda_drug_recalls": {
+  "dataType": "list"
+ },
+ "fda_drug_shortages": {
+  "dataType": "list"
+ },
+ "fda_food_adverse_events": {
+  "dataType": "list"
+ },
+ "fda_food_recalls": {
+  "dataType": "list"
+ },
+ "fda_historical_docs": {
+  "dataType": "list"
+ },
+ "fda_nsde": {
+  "dataType": "list"
+ },
+ "fda_substance": {
+  "dataType": "list"
+ },
+ "fda_tobacco_problems": {
+  "dataType": "list"
+ },
+ "fda_unii": {
+  "dataType": "list"
+ },
+ "fdic_deposits": {
+  "dataType": "table",
+  "columns": [
+   "ADDRESBR",
+   "ADDRESS",
+   "ASSET",
+   "BKCLASS",
+   "BKMO",
+   "BRCENM",
+   "BRNUM",
+   "BRSERTYP",
+   "CALL",
+   "CERT",
+   "CHARTER",
+   "CHRTAGNN",
+   "CHRTAGNT",
+   "CITY",
+   "CITY2BR",
+   "CITYBR",
+   "CITYHCR",
+   "CLCODE",
+   "CNTRYNA",
+   "CNTRYNAB",
+   "CNTYNAMB",
+   "CNTYNUMB",
+   "CONSOLD",
+   "CSABR",
+   "CSANAMBR",
+   "DENOVO",
+   "DEPDOM",
+   "DEPSUM",
+   "DEPSUMBR",
+   "DIVISIONB",
+   "DOCKET",
+   "FDICDBS",
+   "FDICNAME",
+   "FED",
+   "FEDNAME",
+   "HCTMULT",
+   "ID",
+   "INSAGNT1",
+   "INSBRDD",
+   "INSBRTS",
+   "INSURED",
+   "METROBR",
+   "MICROBR",
+   "MSABR",
+   "MSANAMB",
+   "NAMEBR",
+   "NAMEFULL",
+   "NAMEHCR",
+   "NECTABR",
+   "OCCDIST",
+   "OCCNAME",
+   "PLACENUM",
+   "REGAGNT",
+   "RSSDHCR",
+   "RSSDID",
+   "SIMS_ACQUIRED_DATE",
+   "SIMS_DESCRIPTION",
+   "SIMS_ESTABLISHED_DATE",
+   "SIMS_LATITUDE",
+   "SIMS_LONGITUDE",
+   "SIMS_PROJECTION",
+   "SPECDESC",
+   "SPECGRP",
+   "STALP",
+   "STALPBR",
+   "STALPHCR",
+   "STCNTY",
+   "STCNTYBR",
+   "STNAME",
+   "STNAMEBR",
+   "STNUMBR",
+   "UNINUMBR",
+   "UNIT",
+   "USA",
+   "YEAR",
+   "ZIP",
+   "ZIPBR"
+  ]
+ },
+ "fdic_failures": {
+  "dataType": "table",
+  "columns": [
+   "BIDCITY",
+   "BIDNAME",
+   "BIDSTATE",
+   "BSTATUS",
+   "CERT",
+   "CHCLASS",
+   "CHCLASS1",
+   "CITY",
+   "CITYST",
+   "CLOSCD",
+   "COMMENTS",
+   "COST",
+   "COSTMOSTRECENTASOF",
+   "FAILDATE",
+   "FAILYR",
+   "FIN",
+   "FUND",
+   "ID",
+   "NAME",
+   "PSTALP",
+   "PTRDATE",
+   "QBFASSET",
+   "QBFDEP",
+   "RESDATE",
+   "RESTYPE",
+   "RESTYPE1",
+   "SAVR",
+   "TERMI",
+   "UNINSDEP",
+   "URL"
+  ]
+ },
+ "fdic_financials": {
+  "dataType": "table",
+  "columns": [
+   "ACTIVE",
+   "AOA",
+   "AOAR",
+   "ASDROTH",
+   "ASDRRES",
+   "ASSET",
+   "ASTEMPM",
+   "BKCLASS",
+   "BKPREM",
+   "CALLFORM",
+   "CB",
+   "CBLRIND",
+   "CBSA",
+   "CERT",
+   "CHBAL",
+   "CITY",
+   "COREDEP",
+   "DEP",
+   "DEPALLEX",
+   "DEPBEFEX",
+   "DEPCSBQ",
+   "DEPDASTR",
+   "DEPDOM",
+   "DEPIDOM",
+   "DEPINS",
+   "DEPNIDOM",
+   "DEPUNINS",
+   "EEFFR",
+   "EFFDATE",
+   "EINTEXP",
+   "ELNANTR",
+   "ELNATR",
+   "ELNATRY",
+   "ENDEFYMD",
+   "EQ",
+   "EQCDIV",
+   "EQCDIVNTINC",
+   "EQCSTKRX",
+   "EQTOT",
+   "EQV",
+   "ERNASTR",
+   "ESTYMD",
+   "EXTRA",
+   "FDICDBSDESC",
+   "FDICSUPVDESC",
+   "FEDDESC",
+   "FLDOFF",
+   "FREPO",
+   "HCTMULT",
+   "IBEFXTR",
+   "ID",
+   "IDERNCVR",
+   "IDLNCORR",
+   "IDNCCIR",
+   "IDNCCONR",
+   "IDNCGTPR",
+   "IDNCOTHR",
+   "IDNTCIR",
+   "IDNTCONR",
+   "IDT1CER",
+   "IDT1RWAJR",
+   "IGLSEC",
+   "INSAGNT1",
+   "INSDATE",
+   "INTAN",
+   "INTEXPY",
+   "INTINC",
+   "INTINCY",
+   "ITAX",
+   "LIAB",
+   "LNATRESR",
+   "LNLSDEPR",
+   "LNLSNET",
+   "LNLSNTV",
+   "LNNDEPD",
+   "LNRESNCR",
+   "MUTUAL",
+   "NAASSET",
+   "NAME",
+   "NAMEFULL",
+   "NAMEHCR",
+   "NCCOMRER",
+   "NCLNLSR",
+   "NCRECONR",
+   "NCREMULR",
+   "NCRENRER",
+   "NCRER",
+   "NCRERESR",
+   "NETINBM",
+   "NETINC",
+   "NFAA",
+   "NIM",
+   "NIMY",
+   "NOIJ",
+   "NOIJY",
+   "NONII",
+   "NONIIAY",
+   "NONIX",
+   "NONIXAY",
+   "NPERFV",
+   "NTALLOTHR",
+   "NTCOMRER",
+   "NTLNLS",
+   "NTLNLSR",
+   "NTRECOSR",
+   "NTREMULR",
+   "NTRENRSR",
+   "NTRER",
+   "NTRERESR",
+   "NUMEMP",
+   "OBSDIR",
+   "OCCDISTDESC",
+   "OFFDOM",
+   "OFFFOR",
+   "OFFOA",
+   "ORE",
+   "P3ASSET",
+   "P9ASSET",
+   "PARCERT",
+   "PTAXNETINC",
+   "QBPRCOMLDESC",
+   "RBC1AAJ",
+   "RBCRWAJ",
+   "REGAGNT",
+   "REPDTE",
+   "RISDATE",
+   "ROA",
+   "ROAPTX",
+   "ROE",
+   "ROEINJR",
+   "RSSDHCR",
+   "RSSDID",
+   "SC",
+   "SPECGRPDESC",
+   "STALP",
+   "STCNTY",
+   "STMULT",
+   "STNAME",
+   "SUBCHAPS",
+   "SZLNOTH",
+   "SZLNRES",
+   "TFRA",
+   "TRADE",
+   "TRUST",
+   "UC",
+   "ZIP"
+  ]
+ },
+ "fdic_history": {
+  "dataType": "table",
+  "columns": [
+   "ACQDATE",
+   "ACQYEAR",
+   "ACQ_UNINUM",
+   "ASSISTED_PAYOUT_FLAG",
+   "BANK_INSURED",
+   "CERT",
+   "CHANGECODE",
+   "CHANGECODE_DESC",
+   "CHARTAGENT",
+   "CHARTER_COM_TO_OTHER_FLAG",
+   "CHARTER_COM_TO_OTS_FLAG",
+   "CHARTER_OTHER_TO_COM_FLAG",
+   "CHARTER_OTS_TO_COM_FLAG",
+   "CLASS",
+   "CLASS_CHANGE_FLAG",
+   "CLASS_TYPE",
+   "CLASS_TYPE_DESC",
+   "CLCODE",
+   "CNTYNAME",
+   "CNTYNUM",
+   "EFFDATE",
+   "EFFYEAR",
+   "ENDDATE",
+   "ENDYEAR",
+   "ESTDATE",
+   "ESTYEAR",
+   "FAILED_COM_TO_COM_FLAG",
+   "FAILED_OTHER_TO_COM_FLAG",
+   "FAILED_OTS_TO_COM_FLAG",
+   "FAILED_OTS_TO_OTS_FLAG",
+   "FAILED_RTC_FLAG",
+   "FDICREGION",
+   "FDICREGION_DESC",
+   "FI_EFFDATE",
+   "FI_EFFYEAR",
+   "FI_UNINUM",
+   "FRM_CLASS",
+   "FRM_CLASS_TYPE",
+   "FRM_CLASS_TYPE_DESC",
+   "FRM_CLCODE",
+   "FRM_INSAGENT1",
+   "FRM_LATITUDE",
+   "FRM_LONGITUDE",
+   "FRM_OFF_CLCODE",
+   "FRM_OFF_CNTYNAME",
+   "FRM_OFF_CNTYNUM",
+   "FRM_OFF_LATITUDE",
+   "FRM_OFF_LONGITUDE",
+   "FRM_OFF_NAME",
+   "FRM_OFF_NUM",
+   "FRM_OFF_PADDR",
+   "FRM_OFF_PCITY",
+   "FRM_OFF_PSTALP",
+   "FRM_OFF_PSTNUM",
+   "FRM_OFF_PZIP5",
+   "FRM_OFF_PZIPREST",
+   "FRM_OFF_SERVTYPE",
+   "FRM_OFF_SERVTYPE_DESC",
+   "FRM_ORGTYPE_NUM",
+   "FRM_PSTALP",
+   "FRM_PSTNUM",
+   "FRM_REGAGENT",
+   "ID",
+   "INSAGENT1",
+   "INSAGENT1_CHANGE_FLAG",
+   "INSAGENT2",
+   "INSTNAME",
+   "INSURED_COM_FLAG",
+   "INSURED_OTS_FLAG",
+   "LATITUDE",
+   "LONGITUDE",
+   "MADDR",
+   "MADDR2",
+   "MCITY",
+   "MSTALP",
+   "MSTATE",
+   "MZIP5",
+   "MZIPREST",
+   "NEW_CHARTER_DENOVO_FLAG",
+   "NEW_CHARTER_FLAG",
+   "OFF_CNTYNAME",
+   "OFF_CNTYNUM",
+   "OFF_LATITUDE",
+   "OFF_LONGITUDE",
+   "OFF_NAME",
+   "OFF_NUM",
+   "OFF_PADDR",
+   "OFF_PADDR2",
+   "OFF_PCITY",
+   "OFF_PSTALP",
+   "OFF_PSTATE",
+   "OFF_PSTNUM",
+   "OFF_PZIP5",
+   "OFF_PZIPREST",
+   "OFF_SERVTYPE",
+   "OFF_SERVTYPE_DESC",
+   "ORGTYPE",
+   "ORGTYPE_NUM",
+   "ORG_ROLE_CDE",
+   "ORG_STAT_FLG",
+   "OUT_UNINUM",
+   "PADDR",
+   "PADDR2",
+   "PCITY",
+   "PROCDATE",
+   "PROCYEAR",
+   "PSTALP",
+   "PZIP5",
+   "PZIPREST",
+   "REGAGENT",
+   "REGAGENT_CHANGE_FLAG",
+   "RELOCATE_FLAG",
+   "REPORT_TYPE",
+   "STATE",
+   "STNUM",
+   "TRANSNUM",
+   "TRUST",
+   "UNASSIST_COM_TO_COM_FLAG",
+   "UNASSIST_COM_TO_OTS_FLAG",
+   "UNASSIST_OTHER_TO_COM_FLAG",
+   "UNASSIST_OTS_TO_COM_FLAG",
+   "UNASSIST_OTS_TO_OTS_FLAG",
+   "UNINUM",
+   "VOLUNTARY_LIQUIDATION_FLAG",
+   "WITHDRAW_INSURANCE_COM_FLAG"
+  ]
+ },
+ "fdic_search_institutions": {
+  "dataType": "table",
+  "columns": [
+   "ACTIVE",
+   "ADDRESS",
+   "ASSET",
+   "BKCLASS",
+   "CALLFORM",
+   "CB",
+   "CBSA",
+   "CBSA_DIV",
+   "CBSA_DIV_FLG",
+   "CBSA_DIV_NO",
+   "CBSA_METRO",
+   "CBSA_METRO_FLG",
+   "CBSA_METRO_NAME",
+   "CBSA_MICRO_FLG",
+   "CBSA_NO",
+   "CERT",
+   "CFPBEFFDTE",
+   "CFPBENDDTE",
+   "CFPBFLAG",
+   "CHANGEC1",
+   "CHARTER",
+   "CHRTAGNT",
+   "CITY",
+   "CITYHCR",
+   "CLCODE",
+   "CONSERVE",
+   "COUNTY",
+   "CSA",
+   "CSA_FLG",
+   "CSA_NO",
+   "DATEUPDT",
+   "DENOVO",
+   "DEP",
+   "DEPDOM",
+   "DOCKET",
+   "EFFDATE",
+   "ENDEFYMD",
+   "EQ",
+   "ESTYMD",
+   "FDICDBS",
+   "FDICREGN",
+   "FDICSUPV",
+   "FED",
+   "FEDCHRTR",
+   "FED_RSSD",
+   "FORM31",
+   "HCTMULT",
+   "IBA",
+   "ID",
+   "INACTIVE",
+   "INSAGNT1",
+   "INSAGNT2",
+   "INSBIF",
+   "INSCOML",
+   "INSDATE",
+   "INSDIF",
+   "INSFDIC",
+   "INSSAIF",
+   "INSSAVE",
+   "INSTAG",
+   "INSTCRCD",
+   "LATITUDE",
+   "LAW_SASSER_FLG",
+   "LEI",
+   "LONGITUDE",
+   "MDI_STATUS_DESC",
+   "MUTUAL",
+   "NAME",
+   "NAMEHCR",
+   "NETINC",
+   "NETINCQ",
+   "NEWCERT",
+   "OAKAR",
+   "OCCDIST",
+   "OCCDISTDESC",
+   "OFFDOM",
+   "OFFFOR",
+   "OFFICES",
+   "OFFOA",
+   "OI",
+   "PARCERT",
+   "PRIORNAME1",
+   "PRIORNAME2",
+   "PRIORNAME3",
+   "PRIORNAME4",
+   "PROCDATE",
+   "QBPRCOML",
+   "REGAGNT",
+   "REPDTE",
+   "RISDATE",
+   "ROA",
+   "ROAPTX",
+   "ROAPTXQ",
+   "ROAQ",
+   "ROE",
+   "ROEQ",
+   "RSSDHCR",
+   "RUNDATE",
+   "S10T250B",
+   "SASSER",
+   "SPECGRP",
+   "SPECGRPN",
+   "STALP",
+   "STALPHCR",
+   "STCHRTR",
+   "STCNTY",
+   "STNAME",
+   "STNUM",
+   "SUBCHAPS",
+   "SUPRV_FD",
+   "SZ100",
+   "SZ100T1B",
+   "SZ1BT10B",
+   "SZ250BP",
+   "TRACT",
+   "TRUST",
+   "ULTCERT",
+   "UNINUM",
+   "WEBADDR",
+   "ZIP"
+  ]
+ },
+ "fdic_summary": {
+  "dataType": "table",
+  "columns": [
+   "ACEPT",
+   "ADDITIONS",
+   "ALLOTHER",
+   "ASSET",
+   "BANKS",
+   "BRANCHES",
+   "BRANCHIN",
+   "BRO",
+   "BRWDMONY",
+   "CALLYM",
+   "CALLYMD",
+   "CB_SI",
+   "CONS",
+   "CORPBNDS",
+   "COUNT",
+   "CUSLI",
+   "DELETIONS",
+   "DEP",
+   "DEPDOM",
+   "DEPIPCCF",
+   "DEPIPCF",
+   "EEREPP",
+   "EFHLBADV",
+   "EMTGLS",
+   "EQ",
+   "EQCFCTA",
+   "EQDIV",
+   "EQNM",
+   "EQNWCERT",
+   "EQUP",
+   "ETTLOTBO",
+   "FD_BIF",
+   "FD_SAIF",
+   "ID",
+   "IFEE",
+   "ILNS",
+   "INSCOML",
+   "INSSAVE",
+   "INTBAST",
+   "INTBLIB",
+   "INVSUB",
+   "INVSUORE",
+   "IOTHFEE",
+   "IRAKEOGH",
+   "ITAXR",
+   "ITRADE",
+   "LIABEQ",
+   "LIPMTG",
+   "LIPNMTG",
+   "LIQASSTD",
+   "LIQUNASS",
+   "LNACOTH",
+   "LNALLOTH",
+   "LNCONOT1",
+   "LNCONOT2",
+   "LNLSNET",
+   "LNOTHER",
+   "LNRELOC",
+   "LNREPP",
+   "LNRESRE",
+   "MERGERS",
+   "MISSADJ",
+   "NCHGREC",
+   "NETIMIN",
+   "NETINC",
+   "NEW10_1",
+   "NEW11_1",
+   "NEW14_1",
+   "NEW14_2",
+   "NEW14_4",
+   "NEW15_1",
+   "NEW15_2",
+   "NEW15_3",
+   "NEW15_4",
+   "NEW15_6",
+   "NEW15_7",
+   "NEW16_1",
+   "NEW6_1",
+   "NEW9_1",
+   "NTRIPC",
+   "NTRMUNI",
+   "NTRTMLG",
+   "NTRUSGOV",
+   "OA",
+   "OEA",
+   "OFFICES",
+   "OINTBOR",
+   "OINTEXP",
+   "OINTINC",
+   "OLMIN",
+   "OONONII",
+   "OTHASST",
+   "OTHBOR",
+   "OTHBORR",
+   "OTHEQ",
+   "OTHER",
+   "OTHLIAB",
+   "OTHNBORR",
+   "OTLNCNTA",
+   "OT_BIF",
+   "OT_SAIF",
+   "PTXNOINC",
+   "REL_CO",
+   "REPDTE",
+   "SAVINGS",
+   "SCDEQ",
+   "SCDOMO",
+   "SCFDEQ",
+   "SCFORD",
+   "SCMTGBK",
+   "SCODPC",
+   "SCRES",
+   "SCUS",
+   "SCUSA",
+   "STALP",
+   "STNAME",
+   "STNUM",
+   "SUBLLPF",
+   "TINTINC",
+   "TOINTEXP",
+   "TOTAL",
+   "TOT_FDIC",
+   "TOT_OTS",
+   "TOT_SAVE",
+   "TPD",
+   "TRADE",
+   "TRADEL",
+   "TRNIPC",
+   "TRNIPCOC",
+   "TRNMUNI",
+   "TRNUSGOV",
+   "TS",
+   "TTLOTBOR",
+   "UNASSIST",
+   "UNIT",
+   "UYAMTG",
+   "UYANMTG",
+   "YEAR",
+   "alsonew"
+  ]
+ },
+ "fec_candidate_financials": {
+  "dataType": "table",
+  "columns": [
+   "cashOnHand",
+   "coverageEnd",
+   "coverageStart",
+   "cycle",
+   "debtOwed",
+   "disbursements",
+   "independentExpenditures",
+   "individualContributions",
+   "pacContributions",
+   "partyContributions",
+   "receipts"
+  ]
+ },
+ "fec_committee_disbursements": {
+  "dataType": "table",
+  "columns": [
+   "amount",
+   "date",
+   "description",
+   "recipient",
+   "recipientState"
+  ]
+ },
+ "fec_committee_financials": {
+  "dataType": "table",
+  "columns": [
+   "cashOnHand",
+   "coverageEnd",
+   "coverageStart",
+   "cycle",
+   "debtOwed",
+   "disbursements",
+   "independentExpenditures",
+   "individualContributions",
+   "pacContributions",
+   "partyContributions",
+   "receipts"
+  ]
+ },
+ "fec_independent_expenditures": {
+  "dataType": "empty"
+ },
+ "fec_individual_contributions": {
+  "dataType": "table",
+  "columns": [
+   "amount",
+   "contributor",
+   "date",
+   "recipient",
+   "state",
+   "type"
+  ]
+ },
+ "fec_outside_spending_by_candidate": {
+  "dataType": "table",
+  "columns": [
+   "cycle",
+   "supportOppose",
+   "total"
+  ]
+ },
+ "fec_search_candidates": {
+  "dataType": "list"
+ },
+ "fec_search_committees": {
+  "dataType": "list"
+ },
+ "fec_top_candidates": {
+  "dataType": "table",
+  "columns": [
+   "candidateId",
+   "cashOnHand",
+   "disbursements",
+   "name",
+   "party",
+   "receipts",
+   "state"
+  ]
+ },
+ "fema_disaster_declarations": {
+  "dataType": "table",
+  "columns": [
+   "declarationDate",
+   "declarationRequestDate",
+   "declarationRequestNumber",
+   "declarationTitle",
+   "declarationType",
+   "designatedArea",
+   "designatedIncidentTypes",
+   "disasterNumber",
+   "femaDeclarationString",
+   "fipsCountyCode",
+   "fipsStateCode",
+   "fyDeclared",
+   "hash",
+   "hmProgramDeclared",
+   "iaProgramDeclared",
+   "id",
+   "ihProgramDeclared",
+   "incidentBeginDate",
+   "incidentEndDate",
+   "incidentId",
+   "incidentType",
+   "lastIAFilingDate",
+   "lastRefresh",
+   "paProgramDeclared",
+   "placeCode",
+   "region",
+   "state",
+   "tribalRequest"
+  ]
+ },
+ "fema_housing_assistance": {
+  "dataType": "table",
+  "columns": [
+   "approvedBetween10001And25000",
+   "approvedBetween1And10000",
+   "approvedBetween25001AndMax",
+   "approvedForFemaAssistance",
+   "averageFemaInspectedDamage",
+   "city",
+   "county",
+   "disasterNumber",
+   "femaInspectedDamageBetween10001And20000",
+   "femaInspectedDamageBetween1And10000",
+   "femaInspectedDamageBetween20001And30000",
+   "femaInspectedDamageGreaterThan30000",
+   "id",
+   "noFemaInspectedDamage",
+   "otherNeedsAmount",
+   "rentalAmount",
+   "repairReplaceAmount",
+   "state",
+   "totalApprovedIhpAmount",
+   "totalDamage",
+   "totalInspected",
+   "totalMaxGrants",
+   "validRegistrations",
+   "zipCode"
+  ]
+ },
+ "fema_public_assistance": {
+  "dataType": "table",
+  "columns": [
+   "applicantId",
+   "applicantName",
+   "county",
+   "damageCategoryCode",
+   "dateObligated",
+   "declarationDate",
+   "declarationTitle",
+   "disasterNumber",
+   "disasterType",
+   "eligibilityStatus",
+   "federalShareObligated",
+   "fundingStatus",
+   "id",
+   "incidentType",
+   "paCloseoutStatus",
+   "pnpStatus",
+   "projectTitle",
+   "pwNumber",
+   "region",
+   "sriaDisaster",
+   "state",
+   "stateAbbreviation",
+   "versionNumber"
+  ]
+ },
+ "fema_query": {
+  "dataType": "table",
+  "columns": [
+   "declarationDate",
+   "declarationRequestDate",
+   "declarationRequestNumber",
+   "declarationTitle",
+   "declarationType",
+   "designatedArea",
+   "designatedIncidentTypes",
+   "disasterNumber",
+   "femaDeclarationString",
+   "fipsCountyCode",
+   "fipsStateCode",
+   "fyDeclared",
+   "hash",
+   "hmProgramDeclared",
+   "iaProgramDeclared",
+   "id",
+   "ihProgramDeclared",
+   "incidentBeginDate",
+   "incidentEndDate",
+   "incidentId",
+   "incidentType",
+   "lastRefresh",
+   "paProgramDeclared",
+   "placeCode",
+   "region",
+   "state",
+   "tribalRequest"
+  ]
+ },
+ "fema_regions": {
+  "dataType": "list"
+ },
+ "fooddata_detail": {
+  "dataType": "record"
+ },
+ "fooddata_list": {
+  "dataType": "list"
+ },
+ "fooddata_search": {
+  "dataType": "list"
+ },
+ "fr_agencies": {
+  "dataType": "list"
+ },
+ "fr_document_detail": {
+  "dataType": "record"
+ },
+ "fr_executive_orders": {
+  "dataType": "list"
+ },
+ "fr_presidential_documents": {
+  "dataType": "list"
+ },
+ "fr_public_inspection": {
+  "dataType": "table",
+  "columns": [
+   "agencies",
+   "documentNumber",
+   "filedAt",
+   "filing",
+   "publicationDate",
+   "title",
+   "type"
+  ]
+ },
+ "fr_search_rules": {
+  "dataType": "list"
+ },
+ "fr_suggested_searches": {
+  "dataType": "table",
+  "columns": [
+   "docsLastYear",
+   "openComments",
+   "section",
+   "slug",
+   "topic"
+  ]
+ },
+ "fred_browse": {
+  "dataType": "list"
+ },
+ "fred_release_data": {
+  "dataType": "list"
+ },
+ "fred_search": {
+  "dataType": "list"
+ },
+ "fred_series_data": {
+  "dataType": "timeseries",
+  "columns": [
+   "date",
+   "value"
+  ]
+ },
+ "fred_series_info": {
+  "dataType": "record"
+ },
+ "get_endpoint_fields": {
+  "dataType": "list"
+ },
+ "govinfo_bill_text": {
+  "dataType": "record"
+ },
+ "govinfo_cbo_reports": {
+  "dataType": "list"
+ },
+ "govinfo_search": {
+  "dataType": "list"
+ },
+ "list_datasets": {
+  "dataType": "list"
+ },
+ "lobbying_contributions": {
+  "dataType": "table",
+  "columns": [
+   "amount",
+   "contributor",
+   "date",
+   "filerType",
+   "honoree",
+   "lobbyist",
+   "recipient",
+   "registrant",
+   "type"
+  ]
+ },
+ "lobbying_detail": {
+  "dataType": "record"
+ },
+ "lobbying_lobbyists": {
+  "dataType": "list"
+ },
+ "lobbying_registrants": {
+  "dataType": "list"
+ },
+ "lobbying_search": {
+  "dataType": "list"
+ },
+ "naep_achievement_levels": {
+  "dataType": "table",
+  "columns": [
+   "category",
+   "jurisdiction",
+   "statType",
+   "value",
+   "variable",
+   "year"
+  ]
+ },
+ "naep_available_variables": {
+  "dataType": "list"
+ },
+ "naep_compare_groups": {
+  "dataType": "table",
+  "columns": [
+   "focalValue",
+   "gap",
+   "jurisdiction",
+   "significance",
+   "targetValue",
+   "year"
+  ]
+ },
+ "naep_compare_states": {
+  "dataType": "table",
+  "columns": [
+   "focalValue",
+   "gap",
+   "significance",
+   "targetValue",
+   "year"
+  ]
+ },
+ "naep_compare_years": {
+  "dataType": "table",
+  "columns": [
+   "focalValue",
+   "gap",
+   "jurisdiction",
+   "significance",
+   "targetValue"
+  ]
+ },
+ "naep_gap_variable_jurisdiction": {
+  "dataType": "table",
+  "columns": [
+   "Cohort",
+   "CohortLabel",
+   "errorFlag1",
+   "errorFlag2",
+   "errorFlag3",
+   "errorFlag4",
+   "focalJurisLabel",
+   "focalJurisdiction",
+   "gap",
+   "grade",
+   "innerDiff1",
+   "innerDiff2",
+   "isGapDisplayable",
+   "sample",
+   "scale",
+   "sig",
+   "stat1",
+   "stat2",
+   "stat3",
+   "stat4",
+   "statDisplayable1",
+   "statDisplayable2",
+   "statDisplayable3",
+   "statDisplayable4",
+   "stattype",
+   "subject",
+   "targetJurisLabel",
+   "targetJurisdiction",
+   "valLabel1",
+   "valLabel2",
+   "valValue1",
+   "valValue2",
+   "variable",
+   "variableLabel",
+   "year",
+   "yearSampleLabel"
+  ]
+ },
+ "naep_gap_variable_years": {
+  "dataType": "table",
+  "columns": [
+   "Cohort",
+   "CohortLabel",
+   "errorFlag1",
+   "errorFlag2",
+   "errorFlag3",
+   "errorFlag4",
+   "focalSample",
+   "focalYSLabel",
+   "focalYear",
+   "gap",
+   "grade",
+   "innerDiff1",
+   "innerDiff2",
+   "isGapDisplayable",
+   "jurisLabel",
+   "jurisdiction",
+   "scale",
+   "sig",
+   "stat1",
+   "stat2",
+   "stat3",
+   "stat4",
+   "statDisplayable1",
+   "statDisplayable2",
+   "statDisplayable3",
+   "statDisplayable4",
+   "statType",
+   "subject",
+   "targetSample",
+   "targetYSLabel",
+   "targetYear",
+   "valLabel1",
+   "valLabel2",
+   "valValue1",
+   "valValue2",
+   "variable",
+   "variableLabel"
+  ]
+ },
+ "naep_gap_year_jurisdiction": {
+  "dataType": "table",
+  "columns": [
+   "Cohort",
+   "CohortLabel",
+   "errorFlag1",
+   "errorFlag2",
+   "errorFlag3",
+   "errorFlag4",
+   "focalJurisLabel",
+   "focalJurisdiction",
+   "focalSample",
+   "focalYSLabel",
+   "focalYear",
+   "gap",
+   "grade",
+   "innerDiff1",
+   "innerDiff2",
+   "isGapDisplayable",
+   "scale",
+   "sig",
+   "stat1",
+   "stat2",
+   "stat3",
+   "stat4",
+   "statDisplayable1",
+   "statDisplayable2",
+   "statDisplayable3",
+   "statDisplayable4",
+   "statType",
+   "subject",
+   "targetJurisLabel",
+   "targetJurisdiction",
+   "targetSample",
+   "targetYSLabel",
+   "targetYear",
+   "valLabel",
+   "valValue",
+   "variable",
+   "variableLabel"
+  ]
+ },
+ "naep_scores": {
+  "dataType": "table",
+  "columns": [
+   "category",
+   "errorFlag",
+   "jurisdiction",
+   "value",
+   "variable",
+   "year"
+  ]
+ },
+ "nhtsa_car_seat_stations": {
+  "dataType": "list"
+ },
+ "nhtsa_complaint_detail": {
+  "dataType": "record"
+ },
+ "nhtsa_complaints": {
+  "dataType": "list"
+ },
+ "nhtsa_decode_vin": {
+  "dataType": "record"
+ },
+ "nhtsa_makes": {
+  "dataType": "table",
+  "columns": [
+   "make",
+   "modelYear"
+  ]
+ },
+ "nhtsa_model_years": {
+  "dataType": "table",
+  "columns": [
+   "modelYear"
+  ]
+ },
+ "nhtsa_models": {
+  "dataType": "table",
+  "columns": [
+   "Make_ID",
+   "Make_Name",
+   "Model_ID",
+   "Model_Name"
+  ]
+ },
+ "nhtsa_recall_detail": {
+  "dataType": "list"
+ },
+ "nhtsa_recalls": {
+  "dataType": "list"
+ },
+ "nhtsa_safety_rating_detail": {
+  "dataType": "record"
+ },
+ "nhtsa_safety_ratings": {
+  "dataType": "table",
+  "columns": [
+   "VehicleDescription",
+   "VehicleId"
+  ]
+ },
+ "nih_projects_by_agency": {
+  "dataType": "table",
+  "columns": [
+   "agency",
+   "name",
+   "projectCount"
+  ]
+ },
+ "nih_search_projects": {
+  "dataType": "list"
+ },
+ "nih_search_publications": {
+  "dataType": "list"
+ },
+ "nih_spending_by_category": {
+  "dataType": "record"
+ },
+ "nrel_fuel_stations": {
+  "dataType": "table",
+  "columns": [
+   "accessCode",
+   "address",
+   "city",
+   "fuelType",
+   "name",
+   "state",
+   "status",
+   "zip"
+  ]
+ },
+ "nrel_solar": {
+  "dataType": "record"
+ },
+ "nrel_utility_rates": {
+  "dataType": "record"
+ },
+ "nws_alert": {
+  "dataType": "record"
+ },
+ "nws_alert_types": {
+  "dataType": "list"
+ },
+ "nws_alerts_active": {
+  "dataType": "list"
+ },
+ "nws_forecast": {
+  "dataType": "list"
+ },
+ "nws_forecast_hourly": {
+  "dataType": "list"
+ },
+ "nws_glossary": {
+  "dataType": "list"
+ },
+ "nws_observation_latest": {
+  "dataType": "record"
+ },
+ "nws_point_info": {
+  "dataType": "record"
+ },
+ "nws_stations_near": {
+  "dataType": "list"
+ },
+ "nws_zone_forecast": {
+  "dataType": "list"
+ },
+ "open_payments_by_company": {
+  "dataType": "table",
+  "columns": [
+   "amgpo_making_payment_country",
+   "amgpo_making_payment_id",
+   "amgpo_making_payment_name",
+   "amgpo_making_payment_state",
+   "program_year",
+   "total_amount_general",
+   "total_amount_interest",
+   "total_amount_investment",
+   "total_amount_research",
+   "total_disputed_transactions",
+   "total_undisputed_transactions",
+   "trans_general",
+   "trans_general_non_physician_practitioner",
+   "trans_general_physician",
+   "trans_general_teachinghospital",
+   "trans_invested",
+   "trans_research",
+   "trans_research_non_physician_practitioner",
+   "trans_research_physician",
+   "trans_research_teachinghospital"
+  ]
+ },
+ "open_payments_by_hospital": {
+  "dataType": "table",
+  "columns": [
+   "general_total_payment",
+   "general_total_transactions",
+   "program_year",
+   "research_total_payment",
+   "research_total_transactions",
+   "teaching_hospital_address1",
+   "teaching_hospital_ccn",
+   "teaching_hospital_city",
+   "teaching_hospital_name",
+   "teaching_hospital_state",
+   "teaching_hospital_zip_code",
+   "total_disputed_transactions",
+   "total_undisputed_transactions"
+  ]
+ },
+ "open_payments_by_physician": {
+  "dataType": "table",
+  "columns": [
+   "covered_recipient_npi",
+   "covered_recipient_profile_address_line_1",
+   "covered_recipient_profile_alternate_first_name",
+   "covered_recipient_profile_alternate_last_name",
+   "covered_recipient_profile_alternate_middle_name",
+   "covered_recipient_profile_city",
+   "covered_recipient_profile_country_name",
+   "covered_recipient_profile_first_name",
+   "covered_recipient_profile_id",
+   "covered_recipient_profile_last_name",
+   "covered_recipient_profile_license_state_code_1",
+   "covered_recipient_profile_license_state_code_2",
+   "covered_recipient_profile_middle_name",
+   "covered_recipient_profile_primary_specialty",
+   "covered_recipient_profile_state",
+   "covered_recipient_profile_type",
+   "covered_recipient_profile_zipcode",
+   "general_total_payment",
+   "general_total_transactions",
+   "has_multiple_ids",
+   "interest_total_amount",
+   "interest_total_transactions",
+   "invested_total_amount",
+   "invested_total_transactions",
+   "program_year",
+   "research_total_payment",
+   "research_total_transactions",
+   "total_associated_research_payments",
+   "total_associated_research_transactions",
+   "total_disputed_transactions",
+   "total_undisputed_transactions"
+  ]
+ },
+ "open_payments_by_specialty": {
+  "dataType": "table",
+  "columns": [
+   "classification",
+   "mean_total_payment_amount_non_physician_practitioner",
+   "mean_total_payment_amount_physician",
+   "mean_total_payment_count_non_physician_practitioner",
+   "mean_total_payment_count_physician",
+   "median_total_payment_amount_non_physician_practitioner",
+   "median_total_payment_amount_physician",
+   "median_total_payment_count_non_physician_practitioner",
+   "median_total_payment_count_physician",
+   "payment_type",
+   "program_year",
+   "provider_type_description",
+   "recipient_type",
+   "specialization",
+   "taxonomy_code",
+   "total_number_of_non_physician_practitioners",
+   "total_number_of_physicians",
+   "total_payment_amount_non_physician_practitioner",
+   "total_payment_amount_physician",
+   "total_payment_count_non_physician_practitioner",
+   "total_payment_count_physician"
+  ]
+ },
+ "open_payments_ownership": {
+  "dataType": "table",
+  "columns": [
+   "applicable_manufacturer_or_applicable_gpo_making_payment_country",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_id",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_name",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_state",
+   "change_type",
+   "dispute_status_for_publication",
+   "interest_held_by_physician_or_an_immediate_family_member",
+   "payment_publication_date",
+   "physician_first_name",
+   "physician_last_name",
+   "physician_npi",
+   "physician_primary_type",
+   "physician_profile_id",
+   "physician_specialty",
+   "program_year",
+   "recipient_city",
+   "recipient_country",
+   "recipient_primary_business_street_address_line1",
+   "recipient_primary_business_street_address_line2",
+   "recipient_state",
+   "recipient_zip_code",
+   "record_id",
+   "submitting_applicable_manufacturer_or_applicable_gpo_name",
+   "terms_of_interest",
+   "total_amount_invested_usdollars",
+   "value_of_interest"
+  ]
+ },
+ "open_payments_research": {
+  "dataType": "table",
+  "columns": [
+   "applicable_manufacturer_or_applicable_gpo_making_payment_country",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_id",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_name",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_state",
+   "associated_device_or_medical_supply_pdi_1",
+   "change_type",
+   "covered_or_noncovered_indicator_1",
+   "covered_recipient_type",
+   "date_of_payment",
+   "delay_in_publication_indicator",
+   "dispute_status_for_publication",
+   "form_of_payment_or_transfer_of_value",
+   "indicate_drug_or_biological_or_device_or_medical_supply_1",
+   "name_of_drug_or_biological_or_device_or_medical_supply_1",
+   "name_of_study",
+   "noncovered_recipient_entity_name",
+   "payment_publication_date",
+   "preclinical_research_indicator",
+   "principal_investigator_1_business_street_address_line1",
+   "principal_investigator_1_business_street_address_line2",
+   "principal_investigator_1_city",
+   "principal_investigator_1_country",
+   "principal_investigator_1_covered_recipient_type",
+   "principal_investigator_1_first_name",
+   "principal_investigator_1_last_name",
+   "principal_investigator_1_license_state_code1",
+   "principal_investigator_1_middle_name",
+   "principal_investigator_1_npi",
+   "principal_investigator_1_primary_type_1",
+   "principal_investigator_1_profile_id",
+   "principal_investigator_1_specialty_1",
+   "principal_investigator_1_state",
+   "principal_investigator_1_zip_code",
+   "product_category_or_therapeutic_area_1",
+   "program_year",
+   "recipient_city",
+   "recipient_country",
+   "recipient_primary_business_street_address_line1",
+   "recipient_state",
+   "recipient_zip_code",
+   "record_id",
+   "related_product_indicator",
+   "submitting_applicable_manufacturer_or_applicable_gpo_name",
+   "teaching_hospital_ccn",
+   "teaching_hospital_id",
+   "teaching_hospital_name",
+   "total_amount_of_payment_usdollars"
+  ]
+ },
+ "open_payments_search": {
+  "dataType": "table",
+  "columns": [
+   "applicable_manufacturer_or_applicable_gpo_making_payment_country",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_id",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_name",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_state",
+   "associated_device_or_medical_supply_pdi_1",
+   "change_type",
+   "charity_indicator",
+   "covered_or_noncovered_indicator_1",
+   "covered_recipient_first_name",
+   "covered_recipient_last_name",
+   "covered_recipient_license_state_code1",
+   "covered_recipient_license_state_code2",
+   "covered_recipient_middle_name",
+   "covered_recipient_npi",
+   "covered_recipient_primary_type_1",
+   "covered_recipient_profile_id",
+   "covered_recipient_specialty_1",
+   "covered_recipient_type",
+   "date_of_payment",
+   "delay_in_publication_indicator",
+   "dispute_status_for_publication",
+   "form_of_payment_or_transfer_of_value",
+   "indicate_drug_or_biological_or_device_or_medical_supply_1",
+   "name_of_drug_or_biological_or_device_or_medical_supply_1",
+   "nature_of_payment_or_transfer_of_value",
+   "number_of_payments_included_in_total_amount",
+   "payment_publication_date",
+   "physician_ownership_indicator",
+   "product_category_or_therapeutic_area_1",
+   "program_year",
+   "recipient_city",
+   "recipient_country",
+   "recipient_primary_business_street_address_line1",
+   "recipient_primary_business_street_address_line2",
+   "recipient_state",
+   "recipient_zip_code",
+   "record_id",
+   "related_product_indicator",
+   "submitting_applicable_manufacturer_or_applicable_gpo_name",
+   "third_party_payment_recipient_indicator",
+   "total_amount_of_payment_usdollars"
+  ]
+ },
+ "open_payments_summary": {
+  "dataType": "list"
+ },
+ "open_payments_top": {
+  "dataType": "table",
+  "columns": [
+   "applicable_manufacturer_or_applicable_gpo_making_payment_country",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_id",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_name",
+   "applicable_manufacturer_or_applicable_gpo_making_payment_state",
+   "associated_device_or_medical_supply_pdi_1",
+   "associated_drug_or_biological_ndc_1",
+   "change_type",
+   "charity_indicator",
+   "covered_or_noncovered_indicator_1",
+   "covered_recipient_first_name",
+   "covered_recipient_last_name",
+   "covered_recipient_license_state_code1",
+   "covered_recipient_middle_name",
+   "covered_recipient_npi",
+   "covered_recipient_primary_type_1",
+   "covered_recipient_profile_id",
+   "covered_recipient_specialty_1",
+   "covered_recipient_type",
+   "date_of_payment",
+   "delay_in_publication_indicator",
+   "dispute_status_for_publication",
+   "form_of_payment_or_transfer_of_value",
+   "indicate_drug_or_biological_or_device_or_medical_supply_1",
+   "name_of_drug_or_biological_or_device_or_medical_supply_1",
+   "nature_of_payment_or_transfer_of_value",
+   "number_of_payments_included_in_total_amount",
+   "payment_publication_date",
+   "physician_ownership_indicator",
+   "product_category_or_therapeutic_area_1",
+   "program_year",
+   "recipient_city",
+   "recipient_country",
+   "recipient_primary_business_street_address_line1",
+   "recipient_primary_business_street_address_line2",
+   "recipient_state",
+   "recipient_zip_code",
+   "record_id",
+   "related_product_indicator",
+   "submitting_applicable_manufacturer_or_applicable_gpo_name",
+   "third_party_payment_recipient_indicator",
+   "total_amount_of_payment_usdollars"
+  ]
+ },
+ "open_payments_top_doctors": {
+  "dataType": "table",
+  "columns": [
+   "covered_recipient_first_name",
+   "covered_recipient_last_name",
+   "covered_recipient_specialty_1",
+   "payment_count",
+   "recipient_city",
+   "recipient_state",
+   "total_payments"
+  ]
+ },
+ "query_fiscal_data": {
+  "dataType": "table",
+  "columns": [
+   "debt_held_public_amt",
+   "intragov_hold_amt",
+   "record_calendar_day",
+   "record_calendar_month",
+   "record_calendar_quarter",
+   "record_calendar_year",
+   "record_date",
+   "record_fiscal_quarter",
+   "record_fiscal_year",
+   "src_line_nbr",
+   "tot_pub_debt_out_amt"
+  ]
+ },
+ "regulations_comment_detail": {
+  "dataType": "record"
+ },
+ "regulations_docket_detail": {
+  "dataType": "record"
+ },
+ "regulations_document_detail": {
+  "dataType": "record"
+ },
+ "regulations_search_comments": {
+  "dataType": "list"
+ },
+ "regulations_search_dockets": {
+  "dataType": "list"
+ },
+ "regulations_search_documents": {
+  "dataType": "list"
+ },
+ "scorecard_compare": {
+  "dataType": "table",
+  "columns": [
+   "admissionRate",
+   "avgNetPrice",
+   "city",
+   "graduationRate",
+   "id",
+   "medianDebt",
+   "medianEarnings10yr",
+   "medianEarnings6yr",
+   "name",
+   "ownership",
+   "pellGrantRate",
+   "state",
+   "studentSize",
+   "tuitionInState",
+   "tuitionOutOfState"
+  ]
+ },
+ "scorecard_query": {
+  "dataType": "table",
+  "columns": [
+   "admissionRate",
+   "avgNetPrice",
+   "city",
+   "graduationRate",
+   "id",
+   "medianDebt",
+   "medianEarnings10yr",
+   "medianEarnings6yr",
+   "name",
+   "ownership",
+   "pellGrantRate",
+   "state",
+   "studentSize",
+   "tuitionInState",
+   "tuitionOutOfState"
+  ]
+ },
+ "scorecard_search": {
+  "dataType": "table",
+  "columns": [
+   "admissionRate",
+   "avgNetPrice",
+   "city",
+   "graduationRate",
+   "id",
+   "medianDebt",
+   "medianEarnings10yr",
+   "medianEarnings6yr",
+   "name",
+   "ownership",
+   "pellGrantRate",
+   "state",
+   "studentSize",
+   "tuitionInState",
+   "tuitionOutOfState"
+  ]
+ },
+ "scorecard_top": {
+  "dataType": "table",
+  "columns": [
+   "admissionRate",
+   "avgNetPrice",
+   "city",
+   "graduationRate",
+   "id",
+   "medianDebt",
+   "medianEarnings10yr",
+   "medianEarnings6yr",
+   "name",
+   "ownership",
+   "pellGrantRate",
+   "state",
+   "studentSize",
+   "tuitionInState",
+   "tuitionOutOfState"
+  ]
+ },
+ "search_datasets": {
+  "dataType": "list"
+ },
+ "sec_company_concept": {
+  "dataType": "record"
+ },
+ "sec_company_financials": {
+  "dataType": "record"
+ },
+ "sec_company_search": {
+  "dataType": "record"
+ },
+ "sec_concept_across_companies": {
+  "dataType": "table",
+  "columns": [
+   "cik",
+   "company",
+   "location",
+   "periodEnd",
+   "value"
+  ]
+ },
+ "sec_concept_search": {
+  "dataType": "table",
+  "columns": [
+   "concept",
+   "label",
+   "latestPeriod",
+   "latestValue",
+   "taxonomy",
+   "unit"
+  ]
+ },
+ "sec_filing_search": {
+  "dataType": "list"
+ },
+ "sec_filing_text": {
+  "dataType": "record"
+ },
+ "sec_insider_transactions": {
+  "dataType": "table",
+  "columns": [
+   "acquiredOrDisposed",
+   "code",
+   "filingDate",
+   "owner",
+   "ownership",
+   "pricePerShare",
+   "relationship",
+   "security",
+   "shares",
+   "sharesOwnedAfter",
+   "transactionDate",
+   "url",
+   "value"
+  ]
+ },
+ "sec_recent_filings": {
+  "dataType": "list"
+ },
+ "sec_ticker_lookup": {
+  "dataType": "list"
+ },
+ "usa_agency_overview": {
+  "dataType": "record"
+ },
+ "usa_spending_by_agency": {
+  "dataType": "table",
+  "columns": [
+   "amount",
+   "name"
+  ]
+ },
+ "usa_spending_by_award": {
+  "dataType": "list"
+ },
+ "usa_spending_by_recipient": {
+  "dataType": "table",
+  "columns": [
+   "amount",
+   "name"
+  ]
+ },
+ "usa_spending_by_state": {
+  "dataType": "table",
+  "columns": [
+   "amount",
+   "name",
+   "perCapita",
+   "population"
+  ]
+ },
+ "usa_spending_over_time": {
+  "dataType": "timeseries",
+  "columns": []
+ },
+ "usgs_daily_water_data": {
+  "dataType": "list"
+ },
+ "usgs_earthquake_count": {
+  "dataType": "record"
+ },
+ "usgs_earthquakes": {
+  "dataType": "list"
+ },
+ "usgs_significant": {
+  "dataType": "list"
+ },
+ "usgs_water_data": {
+  "dataType": "list"
+ },
+ "usgs_water_sites": {
+  "dataType": "table",
+  "columns": [
+   "agency_cd",
+   "alt_acy_va",
+   "alt_datum_cd",
+   "alt_meth_cd",
+   "alt_va",
+   "coord_acy_cd",
+   "coord_datum_cd",
+   "coord_meth_cd",
+   "country_cd",
+   "county_cd",
+   "dec_coord_datum_cd",
+   "dec_lat_va",
+   "dec_long_va",
+   "district_cd",
+   "drain_area_va",
+   "gw_file_cd",
+   "huc_cd",
+   "instruments_cd",
+   "inventory_dt",
+   "lat_va",
+   "local_time_fg",
+   "long_va",
+   "map_nm",
+   "map_scale_fc",
+   "project_no",
+   "reliability_cd",
+   "site_no",
+   "site_tp_cd",
+   "state_cd",
+   "station_nm",
+   "topo_cd",
+   "tz_cd"
+  ]
+ },
+ "usgs_water_statistics": {
+  "dataType": "table",
+  "columns": [
+   "mean",
+   "month",
+   "yearsOfRecord"
+  ]
+ },
+ "wb_compare": {
+  "dataType": "record"
+ },
+ "wb_countries": {
+  "dataType": "table",
+  "columns": [
+   "capital",
+   "code",
+   "income",
+   "iso3",
+   "name",
+   "region"
+  ]
+ },
+ "wb_indicator": {
+  "dataType": "timeseries",
+  "columns": [
+   "value",
+   "year"
+  ]
+ },
+ "wb_reference": {
+  "dataType": "list"
+ },
+ "wb_search": {
+  "dataType": "list"
+ },
+ "wb_sources": {
+  "dataType": "list"
+ },
+ "wb_topics": {
+  "dataType": "list"
+ }
+}
