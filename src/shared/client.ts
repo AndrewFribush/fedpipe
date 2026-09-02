@@ -303,21 +303,39 @@ let _exitFlushRegistered = false;
 /** Synchronous flush for process exit — the debounced timer is unref'd and
  * dies with the process, which silently lost every response cached in a
  * session's final 2 seconds (short MCP sessions never warmed the cache). */
-function flushGlobalSync(): void {
-  if (!_globalDirty) return;
-  _globalDirty = false;
-  const now = Date.now();
-  const obj: Record<string, Record<string, CacheEntry>> = {};
+
+/** Merge our in-memory entries over what's currently on disk — two concurrent
+ * server processes (Claude Desktop + VS Code) otherwise clobber each other's
+ * cache with last-writer-wins over the whole file. */
+function mergedCacheObject(now: number): Record<string, Record<string, CacheEntry>> {
+  let base: Record<string, Record<string, CacheEntry>> = {};
+  try {
+    if (existsSync(CACHE_FILE)) {
+      const disk = JSON.parse(readFileSync(CACHE_FILE, "utf-8")) as Record<string, Record<string, CacheEntry>>;
+      for (const [ns, entries] of Object.entries(disk)) {
+        const keep: Record<string, CacheEntry> = {};
+        for (const [k, e] of Object.entries(entries)) if (e.expires > now) keep[k] = e;
+        if (Object.keys(keep).length) base[ns] = keep;
+      }
+    }
+  } catch { base = {}; }
   for (const [ns, map] of _globalStore) {
-    const entries: Record<string, CacheEntry> = {};
+    const entries: Record<string, CacheEntry> = base[ns] ?? {};
     for (const [key, entry] of map) {
       if (entry.expires > now && !entry.volatile) entries[key] = entry;
     }
-    if (Object.keys(entries).length > 0) obj[ns] = entries;
+    if (Object.keys(entries).length > 0) base[ns] = entries;
+    else delete base[ns];
   }
+  return base;
+}
+
+function flushGlobalSync(): void {
+  if (!_globalDirty) return;
+  _globalDirty = false;
   try {
     mkdirSync(dirname(CACHE_FILE), { recursive: true });
-    writeFileSync(CACHE_FILE, JSON.stringify(obj), "utf-8");
+    writeFileSync(CACHE_FILE, JSON.stringify(mergedCacheObject(Date.now())), "utf-8");
   } catch { /* best effort */ }
 }
 
@@ -334,17 +352,9 @@ function scheduleGlobalWrite(): void {
     _globalWriteTimer = undefined;
     if (!_globalDirty) return;
     _globalDirty = false;
-    const now = Date.now();
-    const obj: Record<string, Record<string, CacheEntry>> = {};
-    for (const [ns, map] of _globalStore) {
-      const entries: Record<string, CacheEntry> = {};
-      for (const [key, entry] of map) {
-        if (entry.expires > now && !entry.volatile) entries[key] = entry;
-      }
-      if (Object.keys(entries).length > 0) obj[ns] = entries;
-    }
-    // Async write — non-blocking
-    writeFile(CACHE_FILE, JSON.stringify(obj), "utf-8").catch(() => {});
+    // Async write — non-blocking; merged over the on-disk state so
+    // concurrent server processes don't clobber each other.
+    writeFile(CACHE_FILE, JSON.stringify(mergedCacheObject(Date.now())), "utf-8").catch(() => {});
   }, 2000);
   if (typeof _globalWriteTimer === "object" && "unref" in _globalWriteTimer) {
     _globalWriteTimer.unref();
@@ -503,6 +513,9 @@ async function fetchRetry(
       return res;
     } catch (e) {
       lastErr = e instanceof Error ? e : new Error(String(e));
+      // Offline replay stubs fetch with this sentinel — retrying it just
+      // burns backoff sleeps.
+      if (lastErr.message.includes("OFFLINE_REPLAY_MISS")) throw lastErr;
       if (attempt < maxRetries) {
         const delay = backoffDelay(attempt);
         console.error(`${name}: ${lastErr.message}, retry in ${delay}ms (${attempt + 1}/${maxRetries})`);
