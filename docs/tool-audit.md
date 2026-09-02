@@ -410,3 +410,15 @@ bound — "filings since X" without an end date returned the entire corpus back
 to 2018. Missing bounds now default (endDate→today, startDate→2001 FTS epoch);
 verified congress/cfpb handle lone bounds correctly, so the quirk was
 EFTS-specific.
+
+**Quota-burn sprint (post-8am):** shipped the step-4 roadmap layer — three
+cross-agency resolvers (`resolve_entity`: 6 sources incl. Open Payments +
+FAERS for pharma; `resolve_person`: FEC identity/fundraising joined to
+BioGuide via state-delegation matching; `resolve_place`: Census + ACS
+demographics + QCEW area + FEMA history), each returning ready-to-run
+follow-up calls, each verified live incl. absence/garbage cases, plus
+nightly join tests. Building them surfaced and fixed a real FEC bug: the
+financials tools could report a stale cycle as "latest" (rows aren't
+date-ordered and several filing entities share coverage windows — summaries
+now sort explicitly and disclose multi-filing coverage). find_tools indexes
+the server-level tools; company_full_profile prompt added. 358 tools.
