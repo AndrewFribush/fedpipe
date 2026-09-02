@@ -11,6 +11,12 @@ No fetch timestamps are embedded — `git log upstream-docs/` is the history.
 Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — read in a browser):
 
 - `bea` — [Developer Page](https://apps.bea.gov/developers/) — client-rendered
+- `bls` — [API v2](https://www.bls.gov/developers/api_signature_v2.htm) — HTTP 403 — kept previous snapshot
+- `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
+- `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
+- `bts` — [Border Crossing Data](https://data.bts.gov/d/keg4-3bc2) — error: TimeoutError — kept previous snapshot
+- `cdc` — [CDC Open Data](https://data.cdc.gov/) — error: TimeoutError — kept previous snapshot
+- `cdc` — [Life Expectancy](https://data.cdc.gov/d/w9j2-ggv5) — error: TimeoutError — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -18,7 +24,9 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `clinical-trials` — [Study Data Structure](https://clinicaltrials.gov/data-api/about-api/study-data-structure) — client-rendered
 - `cms` — [Provider Data API](https://data.cms.gov/provider-data/docs) — client-rendered
 - `cms` — [Provider Data Catalog](https://data.cms.gov/provider-data/) — client-rendered
-- `college-scorecard` — [Data Dictionary](https://collegescorecard.ed.gov/assets/CollegeScorecardDataDictionary.xlsx) — binary (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+- `college-scorecard` — [API Documentation](https://collegescorecard.ed.gov/data/api-documentation/) — HTTP 403 — kept previous snapshot
+- `college-scorecard` — [College Scorecard](https://collegescorecard.ed.gov/) — HTTP 403 — kept previous snapshot
+- `college-scorecard` — [Data Dictionary](https://collegescorecard.ed.gov/assets/CollegeScorecardDataDictionary.xlsx) — HTTP 403
 - `congress` — [API Docs](https://api.congress.gov/) — client-rendered
 - `congress` — [Interactive Docs](https://api.congress.gov/#/) — client-rendered
 - `congress` — [Sign Up](https://api.congress.gov/sign-up/) — client-rendered
@@ -33,10 +41,14 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
+- `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
 - `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — client-rendered
 - `open-payments` — [Open Payments](https://openpaymentsdata.cms.gov/) — client-rendered
 - `regulations` — [Regulations.gov](https://www.regulations.gov/) — client-rendered
+- `sec` — [Developer Resources](https://www.sec.gov/about/developer-resources) — HTTP 403 — kept previous snapshot
+- `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot
+- `sec` — [Fair Access Policy](https://www.sec.gov/privacy.htm#security) — HTTP 403 — kept previous snapshot
 - `sec` — [Full-Text Search](https://efts.sec.gov/LATEST/) — HTTP 403
 - `uspto` — [API docs](https://data.uspto.gov/apis/getting-started) — client-rendered
 - `uspto` — [Rate limits](https://data.uspto.gov/apis/api-rate-limits) — client-rendered
