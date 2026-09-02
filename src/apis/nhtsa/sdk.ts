@@ -133,15 +133,55 @@ export interface ProductItem {
  * Example:
  *   await getRecalls({ make: "tesla", model: "model 3", modelYear: 2024 });
  */
+/**
+ * NHTSA's by-vehicle endpoints 400 unless the model string exactly matches
+ * the registry (e.g. "CYBERTRUCK (ALL VARIANTS)", not "Cybertruck"). Run the
+ * query as given; on failure or empty, resolve the model against the official
+ * model list for that make/year and retry with the registry spelling.
+ */
+async function withModelResolution<T>(
+  opts: { make: string; model: string; modelYear: number },
+  issueType: "r" | "c",
+  query: (model: string) => Promise<T[]>,
+): Promise<T[]> {
+  try {
+    const out = await query(opts.model);
+    if (out.length > 0) return out;
+  } catch {
+    // fall through to resolution
+  }
+  let models: ProductItem[];
+  try {
+    models = await getProductModels({ modelYear: opts.modelYear, make: opts.make, issueType });
+  } catch {
+    return query(opts.model); // resolution unavailable — surface the original behavior
+  }
+  const names = [...new Set(models.map(m => m.model).filter(Boolean))] as string[];
+  const want = opts.model.toUpperCase();
+  const match = names.find(n => n.toUpperCase() === want)
+    ?? names.find(n => n.toUpperCase().startsWith(want))
+    ?? names.find(n => n.toUpperCase().includes(want));
+  if (!match) {
+    throw new Error(
+      `No ${opts.modelYear} ${opts.make} model matches "${opts.model}". ` +
+      (names.length ? `Registered models: ${names.join(", ")}` : `No models registered for that make/year — check both with nhtsa_makes / nhtsa_models.`),
+    );
+  }
+  if (match.toUpperCase() === want) return []; // exact name, genuinely no records
+  return query(match);
+}
+
 export async function getRecalls(opts: {
   make: string;
   model: string;
   modelYear: number;
 }): Promise<Recall[]> {
-  const res = await api.get<NhtsaResponse<Recall>>("/recalls/recallsByVehicle", {
-    make: opts.make, model: opts.model, modelYear: String(opts.modelYear),
+  return withModelResolution(opts, "r", async model => {
+    const res = await api.get<NhtsaResponse<Recall>>("/recalls/recallsByVehicle", {
+      make: opts.make, model, modelYear: String(opts.modelYear),
+    });
+    return extractResults(res);
   });
-  return extractResults(res);
 }
 
 /**
@@ -171,10 +211,12 @@ export async function getComplaints(opts: {
   model: string;
   modelYear: number;
 }): Promise<Complaint[]> {
-  const res = await api.get<NhtsaResponse<Complaint>>("/complaints/complaintsByVehicle", {
-    make: opts.make, model: opts.model, modelYear: String(opts.modelYear),
+  return withModelResolution(opts, "c", async model => {
+    const res = await api.get<NhtsaResponse<Complaint>>("/complaints/complaintsByVehicle", {
+      make: opts.make, model, modelYear: String(opts.modelYear),
+    });
+    return extractResults(res);
   });
-  return extractResults(res);
 }
 
 /**

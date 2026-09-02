@@ -448,7 +448,7 @@ export async function searchEnforcementCases(opts: {
 }): Promise<EnforcementCaseResult> {
   const params: Record<string, string | number | undefined> = {
     output: "JSON",
-    p_st: opts.state.toUpperCase(),
+    p_state: opts.state.toUpperCase(), // ECHO's case service ignores p_st (facility-service name) — p_state is the filter here
     responseset: opts.responseset ?? 20,
   };
   if (opts.law) params.p_law = opts.law;

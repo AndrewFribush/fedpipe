@@ -93,13 +93,13 @@ export const tools: Tool<any, any>[] = [
     description:
       "Get complaint trends over time using the CFPB Trends API.\n" +
       "Uses dedicated /trends endpoint with lens-based aggregation.\n" +
-      "REQUIRED: trend_interval ('month', 'quarter', or 'year') — the API rejects requests without it.\n" +
+      "trend_interval defaults to 'month' ('quarter' and 'year' also accepted).\n" +
       "Lens options: 'overview' (total counts), 'product' (by product), 'issue' (by issue), 'tags' (by tag).\n" +
       "Sub-lens allows drilling into sub-categories within the lens.",
     annotations: { title: "CFPB: Complaint Trends", readOnlyHint: true },
     parameters: z.object({
       lens: z.enum(["overview", "product", "issue", "tags"]).optional().describe("Trend lens (default: overview)"),
-      trend_interval: z.enum(["month", "quarter", "year"]).describe("Time bucket size for trend aggregation: 'month', 'quarter', or 'year'"),
+      trend_interval: z.enum(["month", "quarter", "year"]).default("month").describe("Time bucket size for trend aggregation (default 'month')"),
       sub_lens: z.enum(["issue", "product", "sub_product", "sub_issue", "tags"]).optional().describe("Sub-lens drill-down"),
       sub_lens_depth: z.number().int().optional().describe("Top N sub-aggregations to return (default 10)"),
       focus: z.string().optional().describe("Focus charts on a specific product or company name"),

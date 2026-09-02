@@ -202,6 +202,10 @@ const DEFAULT_TOOL_ANNOTATIONS = {
 for (const mod of activeModules) {
   const annotated = mod.tools.map(t => ({
     ...t,
+    // Reject unknown parameters instead of zod's default silent stripping —
+    // a misspelled filter (min_magnitude vs minmagnitude) must error loudly,
+    // not quietly return unfiltered data.
+    parameters: t.parameters instanceof z.ZodObject ? t.parameters.strict() : t.parameters,
     annotations: { ...DEFAULT_TOOL_ANNOTATIONS, ...(t.annotations ?? {}) },
   }));
   server.addTools(annotated as any);
