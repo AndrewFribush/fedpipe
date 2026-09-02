@@ -153,9 +153,16 @@ export const tools: Tool<any, any>[] = [
         agency, awardType: award_type, state, keyword,
       });
       if (!periods.length) return emptyResponse("No spending data found for the given period.");
+      // Build a sortable period label from the sdk's normalized fields.
+      const rows = periods.map(pd => ({
+        period: pd.month != null ? `FY${pd.fiscalYear}-M${String(pd.month).padStart(2, "0")}`
+          : pd.quarter != null ? `FY${pd.fiscalYear}-Q${pd.quarter}`
+          : `FY${pd.fiscalYear}`,
+        amount: pd.amount,
+      }));
       return timeseriesResponse(
-        `Federal spending over time: ${periods.length} periods, grouped by ${group || "month"}`,
-        { rows: periods, dateKey: "time_period", valueKey: "aggregated_amount", meta: { group: group || "month" } },
+        `Federal spending over time: ${rows.length} periods, grouped by ${group || "month"}`,
+        { rows, dateKey: "period", valueKey: "amount", meta: { group: group || "month" } },
       );
     },
   },

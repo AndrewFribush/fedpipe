@@ -194,12 +194,22 @@ export const tools: Tool<any, any>[] = [
 
   {
     name: "nws_glossary",
-    description: "Get the full NWS weather glossary (term → definition). Useful for explaining technical terms in forecasts.",
+    description: "NWS weather glossary (term → definition). Pass term to look up specific words ('derecho', 'graupel'); omit for the full 3,000+ entry glossary.",
     annotations: { title: "NWS: Glossary", readOnlyHint: true },
-    parameters: z.object({}),
-    execute: async () => {
+    parameters: z.object({
+      term: z.string().optional().describe("Filter to entries whose term or definition contains this text (case-insensitive)"),
+    }),
+    execute: async ({ term }) => {
       const entries = await getGlossary();
-      return listResponse(`${entries.length} NWS glossary entries`, { items: entries });
+      if (!term) return listResponse(`${entries.length} NWS glossary entries`, { items: entries });
+      const q = term.toLowerCase();
+      const hits = entries.filter((e: any) =>
+        String(e.term ?? "").toLowerCase().includes(q) || String(e.definition ?? "").toLowerCase().includes(q));
+      // Exact/term matches first
+      hits.sort((a: any, b: any) =>
+        Number(String(b.term ?? "").toLowerCase().includes(q)) - Number(String(a.term ?? "").toLowerCase().includes(q)));
+      if (!hits.length) return emptyResponse(`No glossary entries mention "${term}".`);
+      return listResponse(`${hits.length} glossary entries matching "${term}"`, { items: hits });
     },
   },
 ];

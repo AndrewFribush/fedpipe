@@ -156,10 +156,14 @@ describe.each(moduleDirs)("%s", (dir) => {
       // query pipeline broke somewhere, even though nothing errored.
       if (!ALLOWED_EMPTY.has(tool.name) && res && typeof res === "object") {
         const r: any = res;
+        const allRowsEmpty = (arr: unknown[]) =>
+          arr.length > 0 && arr.every(x => Array.isArray(x) ? x.length === 0 : (x && typeof x === "object" ? Object.keys(x).length === 0 : false));
         const emptyBecause =
           r.dataType === "empty" ? "dataType=empty"
           : Array.isArray(r.data?.rows) && r.data.rows.length === 0 ? "0 rows"
           : Array.isArray(r.data?.items) && r.data.items.length === 0 ? "0 items"
+          : Array.isArray(r.data?.rows) && allRowsEmpty(r.data.rows) ? `${r.data.rows.length} rows, all empty (field-mapping bug?)`
+          : Array.isArray(r.data?.items) && allRowsEmpty(r.data.items) ? `${r.data.items.length} items, all empty (field-mapping bug?)`
           : null;
         expect(emptyBecause,
           `[SILENT EMPTY] ${tool.name} returned no data for its canned args (${emptyBecause}). ` +
