@@ -120,7 +120,10 @@ describe.each(moduleDirs)("%s", (dir) => {
             : /abort|timeout/i.test(msg) ? "UPSTREAM (timeout)"
             : /fetch failed|ENOTFOUND|ECONNRE|EAI_AGAIN/i.test(msg) ? "UPSTREAM (network/DNS)"
             : "THREW";
-          if (kind.startsWith("UPSTREAM") && attempt < 2) {
+          // Timeouts are slow-fails: one extra attempt fits the test budget;
+          // fast 5xx blips get two.
+          const maxExtra = kind === "UPSTREAM (timeout)" ? 1 : 2;
+          if (kind.startsWith("UPSTREAM") && attempt < maxExtra) {
             await new Promise(r => setTimeout(r, (attempt + 1) * 3000));
             continue;
           }
