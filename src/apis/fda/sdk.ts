@@ -162,7 +162,7 @@ export async function searchApprovedDrugs(opts: SearchOpts = {}): Promise<FdaRes
  * Search drug shortages. 1.7K records — tracks which drugs are in shortage and why.
  *
  * Example:
- *   await searchDrugShortages({ search: 'status:"Currently in Shortage"', limit: 10 });
+ *   await searchDrugShortages({ search: 'status:"Current"', limit: 10 });
  *   await searchDrugShortages({ search: 'dosage_form:"Capsule"', limit: 5 });
  *   await searchDrugShortages({ search: 'therapeutic_category:"Antiviral"' });
  */
