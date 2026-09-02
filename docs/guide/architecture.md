@@ -146,6 +146,17 @@ Defined in `server/prompts.ts`. These span multiple modules — e.g. `follow_the
 
 Cross-cutting prompts are **module-aware**: when modules are selectively loaded (`MODULES=fred,bls`), prompt steps that reference unloaded tools are silently removed. The prompt reads naturally with only the available tools.
 
+## Cross-Agency Resolvers
+
+Three server-level tools join identities across modules in one call, each
+returning the identifiers plus ready-to-run follow-up calls: `resolve_entity`
+(companies — SEC, FEC, lobbying, USAspending, and for pharma Open Payments +
+FAERS), `resolve_person` (politicians — FEC candidate/fundraising/principal
+committee joined to the BioGuide ID), and `resolve_place` (Census FIPS/ucgid,
+ACS demographics, QCEW wage area, FEMA history). They orchestrate the module
+tools through the same execute path as `code_mode`, so hardening and caching
+apply; nightly join tests keep the cross-agency seams honest.
+
 ## The Hardening Layer
 
 Every tool passes through `src/server/hardening.ts` at registration:
