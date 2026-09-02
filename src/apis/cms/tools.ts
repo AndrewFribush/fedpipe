@@ -58,7 +58,7 @@ export const tools: Tool<any, any>[] = [
       const result = await queryByKey(args.dataset, conditions, args.limit);
       if (!result.results.length) return emptyResponse("No hospital records found.");
       return tableResponse(
-        `CMS hospital data: ${(result.count ?? result.results.length).toLocaleString()} record(s)`,
+        `CMS hospital data: ${(result.count ?? result.results.length).toLocaleString()} total, showing ${result.results.length}`,
         { rows: result.results, total: result.count },
       );
     },
@@ -83,7 +83,7 @@ export const tools: Tool<any, any>[] = [
       const result = await queryByKey(args.dataset, conditions, args.limit);
       if (!result.results.length) return emptyResponse("No nursing home records found.");
       return tableResponse(
-        `CMS nursing home data: ${(result.count ?? result.results.length).toLocaleString()} record(s)`,
+        `CMS nursing home data: ${(result.count ?? result.results.length).toLocaleString()} total, showing ${result.results.length}`,
         { rows: result.results, total: result.count },
       );
     },
