@@ -577,17 +577,23 @@ export function createClient(config: ClientConfig): ApiClient {
     }
 
     let data: unknown;
-    if (emptyBodyAsNull) {
+    const raw = await res.text();
+    if (emptyBodyAsNull && (res.status === 204 || raw.trim() === "")) {
       // DOL returns a bare 204 when a filter matches nothing. Treat that, or
       // any successful empty body, as no rows rather than a JSON parse error.
-      const raw = await res.text();
-      if (res.status === 204 || raw.trim() === "") {
-        cache.set(cacheKey, null);
-        return null as T;
-      }
+      cache.set(cacheKey, null);
+      return null as T;
+    }
+    try {
       data = JSON.parse(raw);
-    } else {
-      data = await res.json();
+    } catch {
+      // Some APIs (BEA) answer HTTP 200 with an empty or non-JSON body when
+      // the key is missing — surface what happened instead of a bare
+      // "Unexpected end of JSON input".
+      const keyHint = auth && !hasAuth()
+        ? ` Note: ${Object.values(auth.envParams).join(", ")} is not set in env — this API likely requires it.`
+        : "";
+      throw new Error(`${name}: HTTP ${res.status} but the body is not valid JSON (${raw.length} bytes).${keyHint} Body: ${truncateBody(raw) || "(empty)"}`);
     }
 
     // Check for API-level errors in body

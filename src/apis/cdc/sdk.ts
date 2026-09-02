@@ -22,6 +22,37 @@ const api = createClient({
 // ─── Dataset IDs ─────────────────────────────────────────────────────
 
 /** Available datasets with Socrata endpoint IDs. */
+
+// ── State matching ──────────────────────────────────────────────────────
+// CDC datasets are inconsistent: some store "OH", others "Ohio". Match both
+// forms regardless of which the caller passed.
+
+const STATE_NAMES: Record<string, string> = {
+  AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
+  CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia",
+  FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois",
+  IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana",
+  ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan",
+  MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana",
+  NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey",
+  NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota",
+  OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania",
+  RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee",
+  TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington",
+  WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming", PR: "Puerto Rico",
+};
+
+/** SoQL clause matching a state whether the column stores "OH" or "Ohio". */
+function stateClause(column: string, input: string): string {
+  const up = input.trim().toUpperCase();
+  const abbr = STATE_NAMES[up]
+    ? up
+    : Object.keys(STATE_NAMES).find(a => STATE_NAMES[a].toUpperCase() === up);
+  const forms = new Set([input.trim()]);
+  if (abbr) { forms.add(abbr); forms.add(STATE_NAMES[abbr]); }
+  return `${column} in (${[...forms].map(f => `'${f.replace(/'/g, "''")}'`).join(", ")})`;
+}
+
 export const DATASETS = {
   leading_death: { id: "bi63-dtpu", name: "Leading Causes of Death", description: "U.S. leading causes of death by state and year (1999–present)" },
   life_expectancy: { id: "w9j2-ggv5", name: "Life Expectancy", description: "Life expectancy at birth by race (All Races, Black, White) and sex (1900–2018)" },
@@ -68,7 +99,7 @@ export async function getLeadingCausesOfDeath(opts?: {
   state?: string; year?: number; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  if (opts?.state) clauses.push(`state = '${opts.state}'`);
+  if (opts?.state) clauses.push(stateClause("state", opts.state));
   if (opts?.year) clauses.push(`year = '${opts.year}'`);
   return queryDataset(DATASETS.leading_death.id, {
     where: clauses.length ? clauses.join(" AND ") : undefined,
@@ -114,7 +145,7 @@ export async function getPlacesHealth(opts?: {
   state?: string; measure?: string; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  if (opts?.state) clauses.push(`stateabbr = '${opts.state.toUpperCase()}'`);
+  if (opts?.state) clauses.push(stateClause("stateabbr", opts.state));
   if (opts?.measure) clauses.push(`measureid = '${opts.measure.toUpperCase()}'`);
   return queryDataset(DATASETS.places_county.id, {
     where: clauses.length ? clauses.join(" AND ") : undefined,
@@ -129,7 +160,7 @@ export async function getPlacesCityHealth(opts?: {
   state?: string; measure?: string; city?: string; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  if (opts?.state) clauses.push(`stateabbr = '${opts.state.toUpperCase()}'`);
+  if (opts?.state) clauses.push(stateClause("stateabbr", opts.state));
   if (opts?.measure) clauses.push(`${opts.measure.toLowerCase()}_crudeprev IS NOT NULL`);
   if (opts?.city) clauses.push(`upper(placename) LIKE '%${opts.city.toUpperCase()}%'`);
   return queryDataset(DATASETS.places_city.id, {
@@ -144,7 +175,7 @@ export async function getCovidData(opts?: {
   state?: string; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  if (opts?.state) clauses.push(`state = '${opts.state.toUpperCase()}'`);
+  if (opts?.state) clauses.push(stateClause("state", opts.state));
   return queryDataset(DATASETS.covid_cases.id, {
     where: clauses.length ? clauses.join(" AND ") : undefined,
     order: "date_updated DESC",
@@ -158,7 +189,7 @@ export async function getWeeklyDeaths(opts?: {
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
   clauses.push("`group` = 'By Week'"); // `group` is a SoQL reserved word — must be backticked
-  if (opts?.state) clauses.push(`state = '${opts.state}'`);
+  if (opts?.state) clauses.push(stateClause("state", opts.state));
   if (opts?.year) clauses.push(`year = '${opts.year}'`);
   return queryDataset(DATASETS.weekly_deaths.id, {
     where: clauses.join(" AND "),
@@ -173,7 +204,7 @@ export async function getDisabilityData(opts?: {
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
   clauses.push(`stratificationcategoryid1 = 'CAT1'`); // Overall (not by age/race subgroup)
-  if (opts?.state) clauses.push(`locationabbr = '${opts.state.toUpperCase()}'`);
+  if (opts?.state) clauses.push(stateClause("locationabbr", opts.state));
   if (opts?.disabilityType) clauses.push(`response = '${opts.disabilityType}'`);
   return queryDataset(DATASETS.disability.id, {
     where: clauses.join(" AND "),
@@ -195,7 +226,7 @@ export async function getDrugOverdoseData(opts?: {
   state?: string; year?: number; sex?: string; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  if (opts?.state) clauses.push(`state = '${opts.state}'`);
+  if (opts?.state) clauses.push(stateClause("state", opts.state));
   if (opts?.year) clauses.push(`year = '${opts.year}'`);
   if (opts?.sex) clauses.push(`sex = '${opts.sex}'`);
   return queryDataset(DATASETS.drug_overdose_state.id, {
@@ -211,8 +242,8 @@ export async function getNutritionObesityData(opts?: {
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
   clauses.push(`data_value IS NOT NULL`);
-  if (opts?.state) clauses.push(`locationabbr = '${opts.state.toUpperCase()}'`);
-  if (opts?.topic) clauses.push(`class LIKE '%${opts.topic}%'`);
+  if (opts?.state) clauses.push(stateClause("locationabbr", opts.state));
+  if (opts?.topic) clauses.push(`upper(class) LIKE '%${opts.topic.toUpperCase()}%'`);
   return queryDataset(DATASETS.nutrition_obesity.id, {
     where: clauses.join(" AND "),
     select: "yearstart, yearend, locationabbr, locationdesc, class, topic, question, data_value, data_value_unit, stratificationcategory1, stratification1",
@@ -241,7 +272,7 @@ export async function getBirthIndicators(opts?: {
   topic?: string; raceEthnicity?: string; limit?: number;
 }): Promise<CdcRecord[]> {
   const clauses: string[] = [];
-  if (opts?.topic) clauses.push(`topic_subgroup LIKE '%${opts.topic}%'`);
+  if (opts?.topic) clauses.push(`upper(topic_subgroup) LIKE '%${opts.topic.toUpperCase()}%'`);
   if (opts?.raceEthnicity) clauses.push(`race_ethnicity = '${opts.raceEthnicity}'`);
   return queryDataset(DATASETS.birth_indicators.id, {
     where: clauses.length ? clauses.join(" AND ") : undefined,

@@ -178,7 +178,7 @@ export const tools: Tool<any, any>[] = [
     }),
     execute: async ({ text, size }) => {
       const data = await suggestCompany(text, size);
-      const suggestions = data.suggest?.[0]?.options?.map(o => o.text) ?? [];
+      const suggestions = Array.isArray(data) ? data : [];
       if (!suggestions.length) return emptyResponse(`No company name suggestions for "${text}".`);
       return listResponse(
         `Company suggestions for "${text}": ${suggestions.length} matches`,

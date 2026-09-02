@@ -78,14 +78,8 @@ export interface AggregationBucket {
 }
 
 /** Suggest Result. */
-export interface SuggestResult {
-  suggest: Array<{
-    text: string;
-    options: Array<{ text: string; [key: string]: unknown }>;
-    [key: string]: unknown;
-  }>;
-  [key: string]: unknown;
-}
+/** The suggest endpoints return a bare JSON array of strings. */
+export type SuggestResult = string[];
 
 // ─── Reference Data ──────────────────────────────────────────────────
 

@@ -404,21 +404,29 @@ export async function searchVariables(
   const norm = dataset.startsWith("/") ? dataset : `/${dataset}`;
   const data = await api.get<{ variables: Record<string, CensusVariable> }>(`${norm}/variables.json`);
 
-  const kw = keyword.toLowerCase();
-  const matches: CensusVariableMatch[] = [];
+  // Match per token so "travel time work" finds "TRAVEL TIME TO WORK" —
+  // a whole-phrase substring test misses labels with intervening words.
+  const tokens = keyword.toLowerCase().split(/\s+/).filter(Boolean);
+  const all: CensusVariableMatch[] = [];
+  const partial: Array<CensusVariableMatch & { hits: number }> = [];
   for (const [id, info] of Object.entries(data.variables)) {
     const label = info.label || "";
     const concept = info.concept || "";
-    if (
-      label.toLowerCase().includes(kw) ||
-      concept.toLowerCase().includes(kw) ||
-      id.toLowerCase().includes(kw)
-    ) {
-      matches.push({ id, label, concept });
-      if (matches.length >= maxResults) break;
+    const hay = `${id} ${label} ${concept}`.toLowerCase();
+    const hits = tokens.filter(t => hay.includes(t)).length;
+    if (hits === tokens.length) {
+      all.push({ id, label, concept });
+      if (all.length >= maxResults) break;
+    } else if (hits > 0 && partial.length < 500) {
+      partial.push({ id, label, concept, hits });
     }
   }
-  return matches;
+  if (all.length) return all;
+  // Nothing matched every token — fall back to best partial matches.
+  return partial
+    .sort((a, b) => b.hits - a.hits)
+    .slice(0, maxResults)
+    .map(({ hits: _hits, ...m }) => m);
 }
 
 /** Clear cached responses. */

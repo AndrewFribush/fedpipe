@@ -158,7 +158,8 @@ export const tools: Tool<any, any>[] = [
   {
     name: "cdc_drug_overdose",
     description: "Get drug poisoning/overdose mortality by state (1999\u20132016).\\n" +
-      "Includes death rates by state, sex, race, and age group. Critical for opioid crisis analysis.",
+      "Includes death rates by state, sex, race, and age group. Critical for opioid crisis analysis.\n" +
+      "Note: sex/race/age breakdowns exist only for national rows (state='United States'); state rows are all-persons totals.",
     annotations: { title: "CDC: Drug Overdose Mortality", readOnlyHint: true },
     parameters: z.object({
       state: z.string().optional().describe("Full state name: 'West Virginia', 'Ohio', 'New Hampshire'. Omit for all."),
