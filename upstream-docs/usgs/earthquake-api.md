@@ -57,16 +57,16 @@ geojson, and xml.
 
 https://earthquake.usgs.gov/fdsnws/event/1/count?format=geojson
 
-https://earthquake.usgs.gov/fdsnws/event/1/count?starttime=2014-01-01&endtime=2014-01-02
+https://earthquake.usgs.gov/fdsnws/event/1/count?starttime=<time>&endtime=<time>
 
 **query**:
 
 to submit a data request. See the parameters
 section for supported url parameters.
 
-https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02
+https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=<time>&endtime=<time>
 
-https://earthquake.usgs.gov/fdsnws/event/1/query?format=xml&starttime=2014-01-01&endtime=2014-01-02&minmagnitude=5
+https://earthquake.usgs.gov/fdsnws/event/1/query?format=xml&starttime=<time>&endtime=<time>&minmagnitude=5
 
 **version**:
 request full service version number
@@ -168,13 +168,13 @@ Response format is xml. Mime-type is “application/xml”.
 All times use ISO8601 Date/Time format. Unless a timezone is specified, UTC
 is assumed. Examples:
 
-2026-09-02,
+<time>,
 Implicit UTC timezone, and time at start of the day (00:00:00)
 
-2026-09-02T02:50:05,
+<time>,
 Implicit UTC timezone.
 
-2026-09-02T02:50:05+00:00,
+<time>+00:00,
 Explicit timezone.
 
 parameter

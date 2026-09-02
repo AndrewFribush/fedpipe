@@ -14757,20 +14757,86 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint contains Final Audit Reports approved by the Commission since inception.\nThe search can be based on information about the audited committee (Name, FEC ID Number, Type, \nElection Cycle) or the issues covered in the report.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-cycle",
+              "committee_name"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
-            "name": "per_page",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
             "required": false,
-            "type": "integer"
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nPrimary/foreign key for audit tables\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "audit_case_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThe audit issue. Each subcategory has an unique ID\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "audit_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Name of candidate running for office",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "qq",
+            "required": false,
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -14785,12 +14851,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of candidate running for office",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "qq",
+            "name": "committee_type",
             "required": false,
             "type": "array"
           },
@@ -14811,107 +14877,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nPrimary/foreign key for audit tables\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "audit_case_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Type of committee:\n        - H or S - Congressional\n        - P - Presidential\n        - X or Y or Z - Party\n        - N or Q - PAC\n        - I - Independent expenditure\n        - O - Super PAC \n",
-            "in": "query",
-            "name": "committee_designation",
+            "name": "api_key",
             "required": false,
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nThe audit issue. Each subcategory has an unique ID\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "audit_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
-            "in": "query",
-            "name": "min_election_cycle",
+            "name": "page",
             "required": false,
             "type": "integer"
           },
           {
-            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
             "in": "query",
-            "name": "max_election_cycle",
+            "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "default": [
-              "-cycle",
-              "committee_name"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
-            "required": false,
-            "type": "array",
-            "x-nullable": true
           },
           {
             "default": false,
@@ -14938,10 +14925,23 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_election_cycle",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
+            "in": "query",
+            "name": "min_election_cycle",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Type of committee:\n        - H or S - Congressional\n        - P - Presidential\n        - X or Y or Z - Party\n        - N or Q - PAC\n        - I - Independent expenditure\n        - O - Super PAC \n",
+            "in": "query",
+            "name": "committee_designation",
             "required": false,
             "type": "string"
           }
@@ -14964,22 +14964,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis lists the options for the categories and subcategories available in the /audit-search/ endpoint.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nAudit category ID (table PK)\n",
             "in": "query",
@@ -15002,12 +14986,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": "primary_category_name",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -15032,14 +15040,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -15060,22 +15060,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis lists the options for the primary categories available in the /audit-search/ endpoint.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nAudit category ID (table PK)\n",
             "in": "query",
@@ -15098,12 +15082,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": "primary_category_name",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -15128,14 +15136,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -15155,22 +15155,6 @@ Source: https://api.open.fec.gov/swagger/
       "get": {
         "description": "\nCombines the election and reporting dates with Commission meetings, conferences, outreach, Advisory Opinions, rules, litigation dates and other\nevents into one calendar.\n\nState and report type filtering is no longer available.\n",
         "parameters": [
-          {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
           {
             "collectionFormat": "multi",
             "description": "\nEach type of event has a calendar category with an integer id. Options are: Open Meetings: 32, Executive Sessions: 39, Public Hearings: 40,\nConferences: 33, Roundtables: 34, Election Dates: 36, Federal Holidays: 37, FEA Periods: 38, Commission Meetings: 20,\nReporting Deadlines: 21, Conferences and Outreach: 22, AOs and Rules: 23, Other: 24, Quarterly: 25, Monthly: 26,\nPre and Post-Elections: 27, EC Periods:28, and IE Periods: 29\n",
@@ -15205,47 +15189,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nThe minimum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_start_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe minimum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_end_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_start_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_end_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "An unique ID for an event. Useful for downloading a single event to your calendar. This ID is not a permanent, persistent ID.",
-            "in": "query",
-            "name": "event_id",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "default": "-start_date",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -15272,12 +15245,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe maximum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_end_date",
             "required": false,
             "type": "string"
+          },
+          {
+            "description": "\nThe maximum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_start_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_end_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_start_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "An unique ID for an event. Useful for downloading a single event to your calendar. This ID is not a permanent, persistent ID.",
+            "in": "query",
+            "name": "event_id",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -15297,6 +15297,55 @@ Source: https://api.open.fec.gov/swagger/
       "get": {
         "description": "\nReturns CSV or ICS for downloading directly into calendar applications like Google, Outlook or other applications.\n\nCombines the election and reporting dates with Commission meetings, conferences, outreach, Advisory Opinions, rules, litigation dates and other\nevents into one calendar.\n\nState filtering now applies to elections, reports and reporting periods.\n\nPresidential pre-primary report due dates are not shown on even years.\nFilers generally opt to file monthly rather than submit over 50 pre-primary election\nreports. All reporting deadlines are available at /reporting-dates/ for reference.\n\nThis is [the sql function](https://github.com/fecgov/openFEC/blob/develop/data/migrations/V40__omnibus_dates.sql)\nthat creates the calendar.\n\n",
         "parameters": [
+          {
+            "collectionFormat": "multi",
+            "description": "\nEach type of event has a calendar category with an integer id. Options are: Open Meetings: 32, Executive Sessions: 39, Public Hearings: 40,\nConferences: 33, Roundtables: 34, Election Dates: 36, Federal Holidays: 37, FEA Periods: 38, Commission Meetings: 20,\nReporting Deadlines: 21, Conferences and Outreach: 22, AOs and Rules: 23, Other: 24, Quarterly: 25, Monthly: 26,\nPre and Post-Elections: 27, EC Periods:28, and IE Periods: 29\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "calendar_category_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Brief description of event",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "description",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Longer description of event",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "summary",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-start_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
           {
             "default": "ics",
             "enum": [
@@ -15325,82 +15374,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "integer"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nEach type of event has a calendar category with an integer id. Options are: Open Meetings: 32, Executive Sessions: 39, Public Hearings: 40,\nConferences: 33, Roundtables: 34, Election Dates: 36, Federal Holidays: 37, FEA Periods: 38, Commission Meetings: 20,\nReporting Deadlines: 21, Conferences and Outreach: 22, AOs and Rules: 23, Other: 24, Quarterly: 25, Monthly: 26,\nPre and Post-Elections: 27, EC Periods:28, and IE Periods: 29\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "calendar_category_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Brief description of event",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "description",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Longer description of event",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "summary",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nThe minimum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_start_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe minimum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_end_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_start_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_end_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "An unique ID for an event. Useful for downloading a single event to your calendar. This ID is not a permanent, persistent ID.",
-            "in": "query",
-            "name": "event_id",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": "-start_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
-          },
-          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -15425,12 +15398,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe maximum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_end_date",
             "required": false,
             "type": "string"
+          },
+          {
+            "description": "\nThe maximum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_start_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum end date.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_end_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum start date.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_start_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "An unique ID for an event. Useful for downloading a single event to your calendar. This ID is not a permanent, persistent ID.",
+            "in": "query",
+            "name": "event_id",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -15451,22 +15451,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint is useful for finding detailed information about a particular candidate. Use the\n`candidate_id` to find the most recent information about that candidate.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
             "in": "query",
@@ -15474,17 +15458,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
             "required": false,
             "type": "array"
           },
@@ -15507,41 +15480,29 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
+            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "state",
+            "name": "name",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
+            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
             "in": "query",
             "items": {
+              "enum": [
+                "",
+                "I",
+                "C",
+                "O"
+              ],
               "type": "string"
             },
-            "name": "party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
-            "in": "query",
-            "name": "year",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "district",
+            "name": "incumbent_challenge",
             "required": false,
             "type": "array"
           },
@@ -15565,45 +15526,55 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "I",
-                "C",
-                "O"
-              ],
               "type": "string"
             },
-            "name": "incumbent_challenge",
+            "name": "party",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
-            "in": "query",
-            "name": "federal_funds_flag",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
-            "in": "query",
-            "name": "has_raised_funds",
-            "required": false,
-            "type": "boolean"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "name",
+            "name": "district",
             "required": false,
             "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": "name",
@@ -15612,6 +15583,22 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -15638,18 +15625,31 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
-          },
-          {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "path",
             "name": "candidate_id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
+            "in": "query",
+            "name": "has_raised_funds",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
+            "in": "query",
+            "name": "federal_funds_flag",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
+            "in": "query",
+            "name": "year",
+            "required": false,
             "type": "string"
           }
         ],
@@ -15671,20 +15671,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint is useful for finding detailed information about a particular committee or\nfiler. Use the `committee_id` to find the most recent information about the committee.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -15694,17 +15689,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
             "required": false,
             "type": "array"
           },
@@ -15732,26 +15716,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
-            "in": "query",
-            "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
-              "type": "string"
-            },
-            "name": "designation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "The one-letter code for the kind for organization:\n        - C corporation\n        - L labor organization\n        - M membership organization\n        - T trade association\n        - V cooperative\n        - W corporation without capital stock\n        - H host committee\n        - I inaugural committee\n",
             "in": "query",
             "items": {
@@ -15769,6 +15733,26 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "organization_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "designation",
             "required": false,
             "type": "array"
           },
@@ -15803,12 +15787,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": "name",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -15833,14 +15841,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           },
           {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
@@ -15868,30 +15868,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nExplore a filer's characteristics over time. This can be particularly useful if the committees change treasurers, designation, or `committee_type`.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
             "in": "query",
@@ -15920,6 +15896,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -15944,12 +15944,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
@@ -15977,30 +15977,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nExplore a filer's characteristics over time. This can be particularly useful if the committees change treasurers, designation, or `committee_type`.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
             "in": "query",
@@ -16029,6 +16005,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -16053,19 +16053,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "path",
-            "name": "candidate_id",
-            "required": true,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
@@ -16074,6 +16067,13 @@ Source: https://api.open.fec.gov/swagger/
             "name": "cycle",
             "required": true,
             "type": "integer"
+          },
+          {
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "path",
+            "name": "candidate_id",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -16094,27 +16094,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nAll official records and reports filed by or delivered to the FEC.\n\nNote: because the filings data includes many records, counts for large\nresult sets are approximate; you will want to page through the records until no records are returned.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-receipt_date"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
-            "in": "query",
-            "name": "committee_type",
-            "required": false,
-            "type": "string"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -16128,27 +16120,35 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
             "in": "query",
-            "name": "is_amended",
+            "items": {
+              "type": "integer"
+            },
+            "name": "report_year",
             "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nReport is either new or is the most-recently filed amendment\n",
-            "in": "query",
-            "name": "most_recent",
-            "required": false,
-            "type": "boolean"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
+            "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "report_type",
+            "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nPrimary, general or special election indicator.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "primary_general_indicator",
             "required": false,
             "type": "array"
           },
@@ -16160,6 +16160,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "request_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThe forms filed are categorized based on the nature of the filing:\n    - REPORT F3, F3X, F3P, F3L, F4, F5, F7, F13, F24\n    - NOTICE F6, F9, F10, F11\n    - STATEMENT F1, F2\n    - OTHER F1M, F8, F99, F12, FRQ\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_category",
             "required": false,
             "type": "array"
           },
@@ -16187,59 +16198,21 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
             "in": "query",
             "items": {
-              "type": "integer"
-            },
-            "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
+              "enum": [
+                "",
+                "N",
+                "A",
+                "T",
+                "C",
+                "M",
+                "S"
+              ],
               "type": "string"
             },
-            "name": "form_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "district",
+            "name": "amendment_indicator",
             "required": false,
             "type": "array"
           },
@@ -16262,28 +16235,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "The method used to file with the FEC, either electronic or on paper.",
-            "enum": [
-              "e-file",
-              "paper"
-            ],
-            "in": "query",
-            "name": "filer_type",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Filing ID number",
             "in": "query",
             "items": {
@@ -16295,71 +16246,82 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nPrimary, general or special election indicator.\n",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "primary_general_indicator",
+            "name": "report_type",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "N",
-                "A",
-                "T",
-                "C",
-                "M",
-                "S"
-              ],
               "type": "string"
             },
-            "name": "amendment_indicator",
+            "name": "form_type",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nThe forms filed are categorized based on the nature of the filing:\n    - REPORT F3, F3X, F3P, F3L, F4, F5, F7, F13, F24\n    - NOTICE F6, F9, F10, F11\n    - STATEMENT F1, F2\n    - OTHER F1M, F8, F99, F12, FRQ\n",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "form_category",
+            "name": "party",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nKeyword search for filer name or ID\n",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "q_filer",
+            "name": "district",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "default": [
-              "-receipt_date"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "sort",
+            "name": "state",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -16386,18 +16348,56 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
-          },
-          {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "path",
             "name": "candidate_id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
+            "in": "query",
+            "name": "is_amended",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nReport is either new or is the most-recently filed amendment\n",
+            "in": "query",
+            "name": "most_recent",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The method used to file with the FEC, either electronic or on paper.",
+            "enum": [
+              "e-file",
+              "paper"
+            ],
+            "in": "query",
+            "name": "filer_type",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "in": "query",
+            "name": "committee_type",
+            "required": false,
             "type": "string"
           }
         ],
@@ -16419,6 +16419,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFind out a candidate's characteristics over time. This is particularly useful if the\ncandidate runs for the same office in different districts or you want to know more about a candidate's\nprevious races.\n\nThis information is organized by `candidate_id`, so it won't help you find a candidate\nwho ran for different offices over time; candidates get a new ID for each office.\n",
         "parameters": [
           {
+            "default": "-two_year_period",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -16433,22 +16449,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "-two_year_period",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -16475,12 +16475,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
@@ -16508,6 +16508,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFind out a candidate's characteristics over time. This is particularly useful if the\ncandidate runs for the same office in different districts or you want to know more about a candidate's\nprevious races.\n\nThis information is organized by `candidate_id`, so it won't help you find a candidate\nwho ran for different offices over time; candidates get a new ID for each office.\n",
         "parameters": [
           {
+            "default": "-two_year_period",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -16522,22 +16538,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "-two_year_period",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -16564,12 +16564,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
@@ -16605,29 +16605,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides information about a committee's Form 3, Form 3X, or Form 3P financial reports,\nwhich are aggregated by two-year period. We refer to two-year periods as a `cycle`.\n\nThe cycle is named after the even-numbered year and includes the year before it. To obtain\ntotals from 2013 and 2014, you would use 2014. In odd-numbered years, the current cycle\nis the next year — for example, in 2015, the current cycle is 2016.\n\nFor presidential and Senate candidates, multiple two-year cycles exist between elections.\n\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
@@ -16645,6 +16622,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -16671,19 +16672,18 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
-          },
-          {
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "path",
             "name": "candidate_id",
             "required": true,
             "type": "string"
+          },
+          {
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "in": "query",
+            "name": "election_full",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -16704,33 +16704,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFetch basic information about candidates, and use parameters to filter results to the\ncandidates you're looking for.\n\nEach result reflects a unique FEC candidate ID. That ID is particular to the candidate for a\nparticular office sought. If a candidate runs for the same office multiple times, the ID\nstays the same. If the same person runs for another office — for example, a House\ncandidate runs for a Senate office — that candidate will get a unique ID for each office.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of candidate running for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
@@ -16742,27 +16715,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Selects all candidates whose first filing was received by the FEC after this date.",
-            "in": "query",
-            "name": "min_first_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Selects all candidates whose first filing was received by the FEC before this date.",
-            "in": "query",
-            "name": "max_first_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
-            "in": "query",
-            "name": "is_active_candidate",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
             "in": "query",
@@ -16770,17 +16722,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
             "required": false,
             "type": "array"
           },
@@ -16803,41 +16744,40 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
+            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "state",
+            "name": "name",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
+            "description": "Name of candidate running for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "party",
+            "name": "q",
             "required": false,
             "type": "array"
           },
           {
-            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
-            "in": "query",
-            "name": "year",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
             "in": "query",
             "items": {
+              "enum": [
+                "",
+                "I",
+                "C",
+                "O"
+              ],
               "type": "string"
             },
-            "name": "district",
+            "name": "incumbent_challenge",
             "required": false,
             "type": "array"
           },
@@ -16861,45 +16801,55 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "I",
-                "C",
-                "O"
-              ],
               "type": "string"
             },
-            "name": "incumbent_challenge",
+            "name": "party",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
-            "in": "query",
-            "name": "federal_funds_flag",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
-            "in": "query",
-            "name": "has_raised_funds",
-            "required": false,
-            "type": "boolean"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "name",
+            "name": "district",
             "required": false,
             "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": "name",
@@ -16908,6 +16858,22 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -16934,10 +16900,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "is_active_candidate",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
+            "in": "query",
+            "name": "has_raised_funds",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
+            "in": "query",
+            "name": "federal_funds_flag",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all candidates whose first filing was received by the FEC after this date.",
+            "in": "query",
+            "name": "min_first_file_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all candidates whose first filing was received by the FEC before this date.",
+            "in": "query",
+            "name": "max_first_file_date",
             "required": false,
             "type": "string"
           }
@@ -16960,33 +16960,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFetch basic information about candidates and their principal committees.\n\nEach result reflects a unique FEC candidate ID. That ID is assigned to the candidate for a\nparticular office sought. If a candidate runs for the same office over time, that ID\nstays the same. If the same person runs for multiple offices — for example, a House\ncandidate runs for a Senate office — that candidate will get a unique ID for each office.\n\nThe candidate endpoints primarily use data from FEC registration\n[Form 1](https://www.fec.gov/pdf/forms/fecfrm1.pdf) for committee information and\n[Form 2](https://www.fec.gov/pdf/forms/fecfrm2.pdf) for candidate information.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of candidate running for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
@@ -16998,27 +16971,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Selects all candidates whose first filing was received by the FEC after this date.",
-            "in": "query",
-            "name": "min_first_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Selects all candidates whose first filing was received by the FEC before this date.",
-            "in": "query",
-            "name": "max_first_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
-            "in": "query",
-            "name": "is_active_candidate",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
             "in": "query",
@@ -17026,17 +16978,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
             "required": false,
             "type": "array"
           },
@@ -17059,41 +17000,40 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
+            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "state",
+            "name": "name",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
+            "description": "Name of candidate running for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "party",
+            "name": "q",
             "required": false,
             "type": "array"
           },
           {
-            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
-            "in": "query",
-            "name": "year",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
             "in": "query",
             "items": {
+              "enum": [
+                "",
+                "I",
+                "C",
+                "O"
+              ],
               "type": "string"
             },
-            "name": "district",
+            "name": "incumbent_challenge",
             "required": false,
             "type": "array"
           },
@@ -17117,45 +17057,55 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "I",
-                "C",
-                "O"
-              ],
               "type": "string"
             },
-            "name": "incumbent_challenge",
+            "name": "party",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
-            "in": "query",
-            "name": "federal_funds_flag",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
-            "in": "query",
-            "name": "has_raised_funds",
-            "required": false,
-            "type": "boolean"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "name",
+            "name": "district",
             "required": false,
             "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": "name",
@@ -17164,6 +17114,22 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -17190,10 +17156,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "is_active_candidate",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
+            "in": "query",
+            "name": "has_raised_funds",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
+            "in": "query",
+            "name": "federal_funds_flag",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all candidates whose first filing was received by the FEC after this date.",
+            "in": "query",
+            "name": "min_first_file_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all candidates whose first filing was received by the FEC before this date.",
+            "in": "query",
+            "name": "max_first_file_date",
             "required": false,
             "type": "string"
           }
@@ -17216,33 +17216,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nAggregated candidate receipts and disbursements grouped by cycle.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of candidate running for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
@@ -17260,7 +17233,7 @@ Source: https://api.open.fec.gov/swagger/
             "items": {
               "type": "integer"
             },
-            "name": "election_year",
+            "name": "cycle",
             "required": false,
             "type": "array"
           },
@@ -17271,7 +17244,7 @@ Source: https://api.open.fec.gov/swagger/
             "items": {
               "type": "integer"
             },
-            "name": "cycle",
+            "name": "election_year",
             "required": false,
             "type": "array"
           },
@@ -17293,21 +17266,24 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
+            "description": "Name of candidate running for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "state",
+            "name": "q",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Three-letter party code",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "party",
             "required": false,
             "type": "array"
           },
@@ -17324,91 +17300,14 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter party code",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "party",
+            "name": "state",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "Minimum aggregated receipts",
-            "in": "query",
-            "name": "min_receipts",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Maximum aggregated receipts",
-            "in": "query",
-            "name": "max_receipts",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Minimum aggregated disbursements",
-            "in": "query",
-            "name": "min_disbursements",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Maximum aggregated disbursements",
-            "in": "query",
-            "name": "max_disbursements",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Minimum cash on hand",
-            "in": "query",
-            "name": "min_cash_on_hand_end_period",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Maximum cash on hand",
-            "in": "query",
-            "name": "max_cash_on_hand_end_period",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Minimum debt",
-            "in": "query",
-            "name": "min_debts_owed_by_committee",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Maximum debt",
-            "in": "query",
-            "name": "max_debts_owed_by_committee",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
-            "in": "query",
-            "name": "federal_funds_flag",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
-            "in": "query",
-            "name": "has_raised_funds",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
-            "in": "query",
-            "name": "is_active_candidate",
-            "required": false,
-            "type": "boolean"
           },
           {
             "default": "-election_year",
@@ -17417,6 +17316,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -17443,12 +17366,89 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
+          },
+          {
+            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
+            "in": "query",
+            "name": "is_active_candidate",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
+            "in": "query",
+            "name": "has_raised_funds",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
+            "in": "query",
+            "name": "federal_funds_flag",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Maximum aggregated disbursements",
+            "in": "query",
+            "name": "max_disbursements",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maximum aggregated receipts",
+            "in": "query",
+            "name": "max_receipts",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maximum cash on hand",
+            "in": "query",
+            "name": "max_cash_on_hand_end_period",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maximum debt",
+            "in": "query",
+            "name": "max_debts_owed_by_committee",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Minimum aggregated disbursements",
+            "in": "query",
+            "name": "min_disbursements",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Minimum aggregated receipts",
+            "in": "query",
+            "name": "min_receipts",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Minimum cash on hand",
+            "in": "query",
+            "name": "min_cash_on_hand_end_period",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Minimum debt",
+            "in": "query",
+            "name": "min_debts_owed_by_committee",
+            "required": false,
+            "type": "number"
           }
         ],
         "responses": {
@@ -17469,20 +17469,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": " Candidate total receipts and disbursements aggregated by `aggregate_by`.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-election_year"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -17492,59 +17491,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "election_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Federal office candidate runs for: H, S or P",
-            "enum": [
-              "",
-              "H",
-              "S",
-              "P"
-            ],
-            "in": "query",
-            "name": "office",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
-            "in": "query",
-            "name": "is_active_candidate",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
-            "in": "query",
-            "name": "min_election_cycle",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
-            "in": "query",
-            "name": "max_election_cycle",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "state",
             "required": false,
             "type": "array"
           },
@@ -17560,45 +17506,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
-            "enum": [
-              "",
-              "DEM",
-              "REP",
-              "OTHER"
-            ],
-            "in": "query",
-            "name": "party",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Candidate totals aggregate_by (Chose one of dropdown options):\n        - ' ' grouped by election year\n        - office grouped by election year, by office\n        - office-state grouped by election year, by office, by state\n        - office-state-district grouped by election year, by office, by state, by district\n        - office-party grouped by election year, by office, by party\n",
-            "enum": [
-              "office",
-              "office-state",
-              "office-state-district",
-              "office-party"
-            ],
-            "in": "query",
-            "name": "aggregate_by",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
-            "default": [
-              "-election_year"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "sort",
+            "name": "state",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -17625,10 +17565,70 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": " Candidates who are actively seeking office. If no value is specified, all candidates\nare returned. When True is specified, only active candidates are returned. When False is\nspecified, only inactive candidates are returned.\n",
+            "in": "query",
+            "name": "is_active_candidate",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
+            "in": "query",
+            "name": "max_election_cycle",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nFilter records to only those that are applicable to a given two-year\nperiod. This cycle follows the traditional House election cycle and\nsubdivides the presidential and Senate elections into comparable\ntwo-year blocks. The cycle begins with an odd year and is named for its\nending, even year.\n",
+            "in": "query",
+            "name": "min_election_cycle",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Candidate totals aggregate_by (Chose one of dropdown options):\n        - ' ' grouped by election year\n        - office grouped by election year, by office\n        - office-state grouped by election year, by office, by state\n        - office-state-district grouped by election year, by office, by state, by district\n        - office-party grouped by election year, by office, by party\n",
+            "enum": [
+              "office",
+              "office-state",
+              "office-state-district",
+              "office-party"
+            ],
+            "in": "query",
+            "name": "aggregate_by",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Federal office candidate runs for: H, S or P",
+            "enum": [
+              "",
+              "H",
+              "S",
+              "P"
+            ],
+            "in": "query",
+            "name": "office",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
+            "enum": [
+              "",
+              "DEM",
+              "REP",
+              "OTHER"
+            ],
+            "in": "query",
+            "name": "party",
             "required": false,
             "type": "string"
           }
@@ -17651,20 +17651,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint is useful for finding detailed information about a particular committee or\nfiler. Use the `committee_id` to find the most recent information about the committee.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -17674,17 +17669,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
             "required": false,
             "type": "array"
           },
@@ -17712,26 +17696,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
-            "in": "query",
-            "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
-              "type": "string"
-            },
-            "name": "designation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "The one-letter code for the kind for organization:\n        - C corporation\n        - L labor organization\n        - M membership organization\n        - T trade association\n        - V cooperative\n        - W corporation without capital stock\n        - H host committee\n        - I inaugural committee\n",
             "in": "query",
             "items": {
@@ -17749,6 +17713,26 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "organization_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "designation",
             "required": false,
             "type": "array"
           },
@@ -17783,12 +17767,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": "name",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -17813,14 +17821,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           },
           {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
@@ -17848,22 +17848,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint is useful for finding detailed information about a particular candidate. Use the\n`candidate_id` to find the most recent information about that candidate.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
             "in": "query",
@@ -17871,17 +17855,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
             "required": false,
             "type": "array"
           },
@@ -17904,41 +17877,29 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
+            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "state",
+            "name": "name",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
+            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
             "in": "query",
             "items": {
+              "enum": [
+                "",
+                "I",
+                "C",
+                "O"
+              ],
               "type": "string"
             },
-            "name": "party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
-            "in": "query",
-            "name": "year",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "district",
+            "name": "incumbent_challenge",
             "required": false,
             "type": "array"
           },
@@ -17962,45 +17923,55 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "One-letter code ('I', 'C', 'O') explaining if the candidate is an incumbent, a challenger, or if the seat is open.",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "I",
-                "C",
-                "O"
-              ],
               "type": "string"
             },
-            "name": "incumbent_challenge",
+            "name": "party",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
-            "in": "query",
-            "name": "federal_funds_flag",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
-            "in": "query",
-            "name": "has_raised_funds",
-            "required": false,
-            "type": "boolean"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name (candidate or committee) to search for. Alias for 'q'.",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "name",
+            "name": "district",
             "required": false,
             "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": "name",
@@ -18009,6 +17980,22 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -18035,18 +18022,31 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
-          },
-          {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "path",
             "name": "committee_id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "A boolean that describes if a candidate's committee has ever received any receipts for their campaign for this particular office. (Candidates have separate candidate IDs for each office.)",
+            "in": "query",
+            "name": "has_raised_funds",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "A boolean the describes if a presidential candidate has accepted federal funds. The flag will be false for House and Senate candidates.",
+            "in": "query",
+            "name": "federal_funds_flag",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Retrieve records pertaining to a particular election year. The list of election years is based on a candidate filing a statement of candidacy (F2) for that year.",
+            "in": "query",
+            "name": "year",
+            "required": false,
             "type": "string"
           }
         ],
@@ -18068,6 +18068,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFind out a candidate's characteristics over time. This is particularly useful if the\ncandidate runs for the same office in different districts or you want to know more about a candidate's\nprevious races.\n\nThis information is organized by `candidate_id`, so it won't help you find a candidate\nwho ran for different offices over time; candidates get a new ID for each office.\n",
         "parameters": [
           {
+            "default": "-two_year_period",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -18082,22 +18098,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "-two_year_period",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -18124,12 +18124,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
@@ -18157,6 +18157,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFind out a candidate's characteristics over time. This is particularly useful if the\ncandidate runs for the same office in different districts or you want to know more about a candidate's\nprevious races.\n\nThis information is organized by `candidate_id`, so it won't help you find a candidate\nwho ran for different offices over time; candidates get a new ID for each office.\n",
         "parameters": [
           {
+            "default": "-two_year_period",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -18171,22 +18187,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "-two_year_period",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -18213,12 +18213,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
@@ -18254,27 +18254,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nAll official records and reports filed by or delivered to the FEC.\n\nNote: because the filings data includes many records, counts for large\nresult sets are approximate; you will want to page through the records until no records are returned.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-receipt_date"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
-            "in": "query",
-            "name": "committee_type",
-            "required": false,
-            "type": "string"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -18288,27 +18280,35 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
             "in": "query",
-            "name": "is_amended",
+            "items": {
+              "type": "integer"
+            },
+            "name": "report_year",
             "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nReport is either new or is the most-recently filed amendment\n",
-            "in": "query",
-            "name": "most_recent",
-            "required": false,
-            "type": "boolean"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
+            "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "report_type",
+            "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nPrimary, general or special election indicator.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "primary_general_indicator",
             "required": false,
             "type": "array"
           },
@@ -18320,6 +18320,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "request_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThe forms filed are categorized based on the nature of the filing:\n    - REPORT F3, F3X, F3P, F3L, F4, F5, F7, F13, F24\n    - NOTICE F6, F9, F10, F11\n    - STATEMENT F1, F2\n    - OTHER F1M, F8, F99, F12, FRQ\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_category",
             "required": false,
             "type": "array"
           },
@@ -18347,59 +18358,21 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
             "in": "query",
             "items": {
-              "type": "integer"
-            },
-            "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
+              "enum": [
+                "",
+                "N",
+                "A",
+                "T",
+                "C",
+                "M",
+                "S"
+              ],
               "type": "string"
             },
-            "name": "form_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "district",
+            "name": "amendment_indicator",
             "required": false,
             "type": "array"
           },
@@ -18422,28 +18395,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "The method used to file with the FEC, either electronic or on paper.",
-            "enum": [
-              "e-file",
-              "paper"
-            ],
-            "in": "query",
-            "name": "filer_type",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Filing ID number",
             "in": "query",
             "items": {
@@ -18455,71 +18406,82 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nPrimary, general or special election indicator.\n",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "primary_general_indicator",
+            "name": "report_type",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "N",
-                "A",
-                "T",
-                "C",
-                "M",
-                "S"
-              ],
               "type": "string"
             },
-            "name": "amendment_indicator",
+            "name": "form_type",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nThe forms filed are categorized based on the nature of the filing:\n    - REPORT F3, F3X, F3P, F3L, F4, F5, F7, F13, F24\n    - NOTICE F6, F9, F10, F11\n    - STATEMENT F1, F2\n    - OTHER F1M, F8, F99, F12, FRQ\n",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "form_category",
+            "name": "party",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nKeyword search for filer name or ID\n",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "q_filer",
+            "name": "district",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "default": [
-              "-receipt_date"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "sort",
+            "name": "state",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -18546,18 +18508,56 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
-          },
-          {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "path",
             "name": "committee_id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
+            "in": "query",
+            "name": "is_amended",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nReport is either new or is the most-recently filed amendment\n",
+            "in": "query",
+            "name": "most_recent",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The method used to file with the FEC, either electronic or on paper.",
+            "enum": [
+              "e-file",
+              "paper"
+            ],
+            "in": "query",
+            "name": "filer_type",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "in": "query",
+            "name": "committee_type",
+            "required": false,
             "type": "string"
           }
         ],
@@ -18578,30 +18578,6 @@ Source: https://api.open.fec.gov/swagger/
       "get": {
         "description": "\nExplore a filer's characteristics over time. This can be particularly useful if the committees change treasurers, designation, or `committee_type`.\n",
         "parameters": [
-          {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
           {
             "collectionFormat": "multi",
             "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
@@ -18631,6 +18607,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -18655,12 +18655,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
@@ -18688,30 +18688,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nExplore a filer's characteristics over time. This can be particularly useful if the committees change treasurers, designation, or `committee_type`.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
             "in": "query",
@@ -18740,6 +18716,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -18764,19 +18764,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "path",
-            "name": "committee_id",
-            "required": true,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
@@ -18785,6 +18778,13 @@ Source: https://api.open.fec.gov/swagger/
             "name": "cycle",
             "required": true,
             "type": "integer"
+          },
+          {
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "path",
+            "name": "committee_id",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -18805,31 +18805,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nEach report represents the summary information from Form 3, Form 3X and Form 3P.\nThese reports have key statistics that illuminate the financial status of a given committee.\nThings like cash on hand, debts owed by committee, total receipts, and total disbursements\nare especially helpful for understanding a committee's financial dealings.\n\nBy default, this endpoint includes both amended and final versions of each report. To restrict\nto only the final versions of each report, use `is_amended=false`; to retrieve only reports that\nhave been amended, use `is_amended=true`.\n\nSeveral different reporting structures exist, depending on the type of organization that\nsubmits financial information. To see an example of these reporting requirements,\nlook at the summary and detailed summary pages of Form 3, Form 3X, and Form 3P.\n\nDISCLAIMER: The field labels contained within this resource are subject to change.  We are attempting to succinctly\nlabel these fields while conveying clear meaning to ensure accessibility for all users.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "default": [
+              "-coverage_end_date"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "year",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -18839,6 +18827,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "year",
             "required": false,
             "type": "array"
           },
@@ -18865,111 +18864,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
-            "in": "query",
-            "name": "is_amended",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_disbursements_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_disbursements_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_receipts_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_receipts_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_cash_on_hand_end_period_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_cash_on_hand_end_period_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_debts_owed_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_debts_owed_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_independent_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_independent_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_party_coordinated_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_party_coordinated_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_total_contributions",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_total_contributions",
-            "required": false,
-            "type": "number"
-          },
-          {
             "collectionFormat": "multi",
             "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
             "in": "query",
@@ -18981,19 +18875,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "-coverage_end_date"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "api_key",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -19020,19 +18923,116 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
-          },
-          {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "path",
             "name": "committee_id",
             "required": true,
             "type": "string"
+          },
+          {
+            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
+            "in": "query",
+            "name": "is_amended",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_cash_on_hand_end_period_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_debts_owed_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_disbursements_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_independent_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_party_coordinated_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_receipts_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_total_contributions",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_cash_on_hand_end_period_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_debts_owed_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_disbursements_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_independent_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_party_coordinated_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_receipts_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_total_contributions",
+            "required": false,
+            "type": "number"
           }
         ],
         "responses": {
@@ -19053,22 +19053,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides information about a committee's Form 3, Form 3X, or Form 3P financial reports,\nwhich are aggregated by two-year period. We refer to two-year periods as a `cycle`.\n\nThe cycle is named after the even-numbered year and includes the year before it. To obtain\ntotals from 2013 and 2014, you would use 2014. In odd-numbered years, the current cycle\nis the next year — for example, in 2015, the current cycle is 2016.\n\nFor presidential and Senate candidates, multiple two-year cycles exist between elections.\n\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
@@ -19086,6 +19070,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -19110,14 +19118,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           },
           {
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
@@ -19145,20 +19145,59 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFetch basic information about committees and filers. Use parameters to filter for\nparticular characteristics.\n\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC. If a person runs for several offices, that person will have separate candidate IDs for each office. This is a filter for Leadership PAC sponsor.\n",
             "in": "query",
-            "name": "per_page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sponsor_candidate_id",
             "required": false,
-            "type": "integer"
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "required": false,
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -19173,12 +19212,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
+            "description": "Name of the Committee's treasurer. If multiple treasurers for the committee, the most recent treasurer will be shown.",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "cycle",
+            "name": "treasurer_name",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The name of the committee. If a committee changes its name,     the most recent name will be shown. Committee names are not unique. Use committee_id     for looking up records.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "q",
             "required": false,
             "type": "array"
           },
@@ -19206,26 +19256,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
-            "in": "query",
-            "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
-              "type": "string"
-            },
-            "name": "designation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "The one-letter code for the kind for organization:\n        - C corporation\n        - L labor organization\n        - M membership organization\n        - T trade association\n        - V cooperative\n        - W corporation without capital stock\n        - H host committee\n        - I inaugural committee\n",
             "in": "query",
             "items": {
@@ -19243,6 +19273,26 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "organization_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "designation",
             "required": false,
             "type": "array"
           },
@@ -19278,50 +19328,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The name of the committee. If a committee changes its name,     the most recent name will be shown. Committee names are not unique. Use committee_id     for looking up records.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
@@ -19332,82 +19338,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Filter for committees whose first filing was received on or after this date.",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "min_first_file_date",
+            "name": "api_key",
             "required": false,
             "type": "string"
-          },
-          {
-            "description": "Filter for committees whose first filing was received on or before this date.",
-            "in": "query",
-            "name": "max_first_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for committees whose last filing was received on or after this date.",
-            "in": "query",
-            "name": "min_last_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for committees whose last filing was received on or before this date.",
-            "in": "query",
-            "name": "max_last_file_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for committees whose first Form 1 was received on or after this date.",
-            "in": "query",
-            "name": "min_first_f1_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for committees whose first Form 1 was received on or before this date.",
-            "in": "query",
-            "name": "max_first_f1_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for committees whose latest Form 1 was received on or after this date.",
-            "in": "query",
-            "name": "min_last_f1_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for committees whose latest Form 1 was received on or before this date.",
-            "in": "query",
-            "name": "max_last_f1_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of the Committee's treasurer. If multiple treasurers for the committee, the most recent treasurer will be shown.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "treasurer_name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC. If a person runs for several offices, that person will have separate candidate IDs for each office. This is a filter for Leadership PAC sponsor.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sponsor_candidate_id",
-            "required": false,
-            "type": "array"
           },
           {
             "default": "name",
@@ -19416,6 +19352,22 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -19442,10 +19394,58 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "Filter for committees whose first filing was received on or after this date.",
             "in": "query",
-            "name": "api_key",
+            "name": "min_first_file_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose first filing was received on or before this date.",
+            "in": "query",
+            "name": "max_first_file_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose first Form 1 was received on or after this date.",
+            "in": "query",
+            "name": "min_first_f1_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose first Form 1 was received on or before this date.",
+            "in": "query",
+            "name": "max_first_f1_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose last filing was received on or after this date.",
+            "in": "query",
+            "name": "min_last_file_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose last filing was received on or before this date.",
+            "in": "query",
+            "name": "max_last_file_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose latest Form 1 was received on or after this date.",
+            "in": "query",
+            "name": "min_last_f1_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose latest Form 1 was received on or before this date.",
+            "in": "query",
+            "name": "max_last_f1_date",
             "required": false,
             "type": "string"
           }
@@ -19468,73 +19468,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\n52 U.S.C. 30118 allows \"communications by a corporation to its stockholders and executive or administrative personnel and their families or by a labor organization to its members and their families on any subject,\" including the express advocacy of the election or defeat of any Federal candidate.  The costs of such communications must be reported to the Federal Election Commission under certain circumstances.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "image_number",
+            "name": "candidate_id",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
           },
           {
             "collectionFormat": "multi",
@@ -19549,12 +19491,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "candidate_id",
+            "name": "image_number",
             "required": false,
             "type": "array"
           },
@@ -19574,13 +19516,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "sort",
+            "name": "api_key",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -19607,10 +19564,53 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -19633,33 +19633,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Communication cost aggregated by candidate ID and committee ID.",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
@@ -19682,27 +19655,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "Support or opposition",
-            "enum": [
-              "S",
-              "O",
-              null
-            ],
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
-            "name": "support_oppose_indicator",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "array"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "sort",
+            "name": "api_key",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -19729,12 +19714,27 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Support or opposition",
+            "enum": [
+              "S",
+              "O",
+              null
+            ],
+            "in": "query",
+            "name": "support_oppose_indicator",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -19755,6 +19755,36 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Communication cost aggregated by candidate ID and committee ID.",
         "parameters": [
           {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -19769,85 +19799,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "name": "state",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "name": "district",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Federal office candidate runs for: H, S or P",
-            "enum": [
-              "house",
-              "senate",
-              "president"
-            ],
-            "in": "query",
-            "name": "office",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "Support or opposition",
-            "enum": [
-              "S",
-              "O",
-              null
-            ],
-            "in": "query",
-            "name": "support_oppose",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
           },
           {
             "default": false,
@@ -19874,10 +19825,59 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Support or opposition",
+            "enum": [
+              "S",
+              "O",
+              null
+            ],
+            "in": "query",
+            "name": "support_oppose",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "in": "query",
+            "name": "election_full",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Federal office candidate runs for: H, S or P",
+            "enum": [
+              "house",
+              "senate",
+              "president"
+            ],
+            "in": "query",
+            "name": "office",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "in": "query",
+            "name": "district",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "name": "state",
             "required": false,
             "type": "string"
           }
@@ -19900,52 +19900,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nTotal communications costs aggregated across committees on supported or opposed candidates by cycle or candidate election year.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "default": [
               "-cycle",
@@ -19960,6 +19914,52 @@ Source: https://api.open.fec.gov/swagger/
             "required": false,
             "type": "array",
             "x-nullable": true
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -19986,12 +19986,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -20012,33 +20012,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Basic information about electronic files coming into the FEC, posted as they are received.",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Filing ID number",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "file_number",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -20050,20 +20023,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
@@ -20071,6 +20030,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Filing ID number",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "file_number",
             "required": false,
             "type": "array"
           },
@@ -20094,6 +20064,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -20118,10 +20112,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
             "required": false,
             "type": "string"
           }
@@ -20144,29 +20144,13 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Basic information about electronic files coming into the FEC, posted as they are received.",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "Filing ID number",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "file_number",
+            "name": "candidate_id",
             "required": false,
             "type": "array"
           },
@@ -20183,12 +20167,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "candidate_id",
+            "name": "image_number",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nHouse district of the office sought, if applicable.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_district",
             "required": false,
             "type": "array"
           },
@@ -20200,6 +20195,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "election_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Box checked on Form 1 Line 5\n        - A principal campaign committee\n        - B other authorized committee\n        - C single candidate independent expenditure-only committee\n        - D party committee\n        - E PAC - seperate segregated fund\n        - F PAC - nonconnected \n        - G independent expenditure-only (super PACs)\n        - H PAC with non-contribution account (hybrid PACs)\n        - I joint fundraising representative (at least one authorized)\n        - J joint fundraising representative (no authorized committees)\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_type",
             "required": false,
             "type": "array"
           },
@@ -20222,59 +20228,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nHouse district of the office sought, if applicable.\n",
+            "description": "Filing ID number",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "candidate_district",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
-            "in": "query",
-            "name": "min_load_timestamp",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
-            "in": "query",
-            "name": "max_load_timestamp",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Box checked on Form 1 Line 5\n        - A principal campaign committee\n        - B other authorized committee\n        - C single candidate independent expenditure-only committee\n        - D party committee\n        - E PAC - seperate segregated fund\n        - F PAC - nonconnected \n        - G independent expenditure-only (super PACs)\n        - H PAC with non-contribution account (hybrid PACs)\n        - I joint fundraising representative (at least one authorized)\n        - J joint fundraising representative (no authorized committees)\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_type",
+            "name": "file_number",
             "required": false,
             "type": "array"
           },
@@ -20301,12 +20260,47 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_party",
+            "required": false,
+            "type": "array"
+          },
+          {
             "default": "-load_timestamp",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -20333,10 +20327,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
             "in": "query",
-            "name": "api_key",
+            "name": "max_load_timestamp",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
+            "in": "query",
+            "name": "min_load_timestamp",
             "required": false,
             "type": "string"
           }
@@ -20359,29 +20359,13 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Basic information about electronic files coming into the FEC, posted as they are received.",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "Filing ID number",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "file_number",
+            "name": "candidate_id",
             "required": false,
             "type": "array"
           },
@@ -20398,12 +20382,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "candidate_id",
+            "name": "image_number",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nHouse district of the office sought, if applicable.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_district",
             "required": false,
             "type": "array"
           },
@@ -20437,12 +20432,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nHouse district of the office sought, if applicable.\n",
+            "description": "Filing ID number",
             "in": "query",
             "items": {
-              "type": "string"
+              "type": "integer"
             },
-            "name": "candidate_district",
+            "name": "file_number",
             "required": false,
             "type": "array"
           },
@@ -20458,37 +20453,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
-            "in": "query",
-            "name": "min_load_timestamp",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
-            "in": "query",
-            "name": "max_load_timestamp",
-            "required": false,
-            "type": "string"
-          },
-          {
             "default": "-load_timestamp",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -20515,10 +20509,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
             "in": "query",
-            "name": "api_key",
+            "name": "max_load_timestamp",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Date the information was loaded into the FEC systems. This can be affected by reseting systems and other factors, refer to receipt_date for the day that the FEC received the paper or electronic document. Keep in mind that paper filings take more time to process and there can be a lag between load_date and receipt_date. This field can be helpful to identify paper records that have been processed recently.",
+            "in": "query",
+            "name": "min_load_timestamp",
             "required": false,
             "type": "string"
           }
@@ -20541,33 +20541,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nKey financial data reported periodically by committees as they are reported. This feed includes summary\ninformation from the the House F3 reports, the presidential F3p reports and the PAC and party\nF3x reports.\n\nGenerally, committees file reports on a quarterly or monthly basis, but\nsome must also submit a report 12 days before primary elections. Therefore, during the primary\nseason, the period covered by this file may be different for different committees. These totals\nalso incorporate any changes made by committees, if any report covering the period is amended.\n\nDISCLAIMER: The field labels contained within this resource are subject to change.  We are attempting to succinctly\nlabel these fields while conveying clear meaning to ensure accessibility for all users.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Filing ID number",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "file_number",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -20579,20 +20552,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
@@ -20600,6 +20559,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Filing ID number",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "file_number",
             "required": false,
             "type": "array"
           },
@@ -20621,6 +20591,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -20647,10 +20641,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
             "required": false,
             "type": "string"
           }
@@ -20673,33 +20673,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nKey financial data reported periodically by committees as they are reported. This feed includes summary\ninformation from the the House F3 reports, the presidential F3p reports and the PAC and party\nF3x reports.\n\nGenerally, committees file reports on a quarterly or monthly basis, but\nsome must also submit a report 12 days before primary elections. Therefore, during the primary\nseason, the period covered by this file may be different for different committees. These totals\nalso incorporate any changes made by committees, if any report covering the period is amended.\n\nDISCLAIMER: The field labels contained within this resource are subject to change.  We are attempting to succinctly\nlabel these fields while conveying clear meaning to ensure accessibility for all users.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Filing ID number",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "file_number",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -20711,20 +20684,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
@@ -20732,6 +20691,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Filing ID number",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "file_number",
             "required": false,
             "type": "array"
           },
@@ -20753,6 +20723,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -20779,10 +20773,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
             "required": false,
             "type": "string"
           }
@@ -20805,33 +20805,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nKey financial data reported periodically by committees as they are reported. This feed includes summary\ninformation from the the House F3 reports, the presidential F3p reports and the PAC and party\nF3x reports.\n\nGenerally, committees file reports on a quarterly or monthly basis, but\nsome must also submit a report 12 days before primary elections. Therefore, during the primary\nseason, the period covered by this file may be different for different committees. These totals\nalso incorporate any changes made by committees, if any report covering the period is amended.\n\nDISCLAIMER: The field labels contained within this resource are subject to change.  We are attempting to succinctly\nlabel these fields while conveying clear meaning to ensure accessibility for all users.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Filing ID number",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "file_number",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -20843,20 +20816,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
@@ -20864,6 +20823,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Filing ID number",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "file_number",
             "required": false,
             "type": "array"
           },
@@ -20887,6 +20857,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -20911,10 +20905,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
             "required": false,
             "type": "string"
           }
@@ -20937,29 +20937,13 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFEC election dates since 1995.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nState or territory of the office sought.\n",
+            "description": "\nElection type id\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "election_state",
+            "name": "election_type_id",
             "required": false,
             "type": "array"
           },
@@ -20971,17 +20955,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "election_district",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nParty, if applicable.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "election_party",
             "required": false,
             "type": "array"
           },
@@ -21002,57 +20975,26 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nThe minimum date of election.\n",
-            "in": "query",
-            "name": "min_election_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date of election.\n",
-            "in": "query",
-            "name": "max_election_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nElection type id\n",
+            "description": "\nParty, if applicable.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "election_type_id",
+            "name": "election_party",
             "required": false,
             "type": "array"
           },
           {
-            "description": "\nThe minimum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "collectionFormat": "multi",
+            "description": "\nState or territory of the office sought.\n",
             "in": "query",
-            "name": "min_create_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "election_state",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_create_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe minimum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_update_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_update_date",
-            "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -21066,26 +21008,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nThe minimum date of primary or general election.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_primary_general_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date of primary or general election.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_primary_general_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "default": "-election_date",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -21112,10 +21064,58 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe maximum date of election.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_election_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe maximum date of primary or general election.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_primary_general_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe maximum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_create_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe maximum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_update_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date of election.\n",
+            "in": "query",
+            "name": "min_election_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date of primary or general election.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_primary_general_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_create_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_update_date",
             "required": false,
             "type": "string"
           }
@@ -21138,20 +21138,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nAn electioneering communication is any broadcast, cable or satellite communication that fulfills each of the following conditions:\n\n_The communication refers to a clearly identified federal candidate._\n\n_The communication is publicly distributed by a television station, radio station, cable television system or satellite system for a fee._\n\n_The communication is distributed within 60 days prior to a general election or 30 days prior to a primary election to federal office._\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -21161,17 +21156,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
             "required": false,
             "type": "array"
           },
@@ -21187,34 +21171,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Filter for all amounts greater than a value",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Minimum disbursement date",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maximum disbursement date",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "Description of disbursement",
             "in": "query",
@@ -21226,22 +21182,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "Index of last result from previous page",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "last_index",
+            "name": "api_key",
             "required": false,
-            "type": "integer",
-            "x-nullable": true
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -21268,10 +21230,48 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "Filter for all amounts greater than a value",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maximum disbursement date",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minimum disbursement date",
+            "in": "query",
+            "name": "min_date",
             "required": false,
             "type": "string"
           }
@@ -21294,33 +21294,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Electioneering communications costs aggregates",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
@@ -21343,13 +21316,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
-            "name": "sort",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -21376,12 +21375,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -21402,6 +21402,36 @@ Source: https://api.open.fec.gov/swagger/
         "description": "Electioneering costs aggregated by candidate",
         "parameters": [
           {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -21416,71 +21446,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "name": "state",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "name": "district",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Federal office candidate runs for: H, S or P",
-            "enum": [
-              "house",
-              "senate",
-              "president"
-            ],
-            "in": "query",
-            "name": "office",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
           },
           {
             "default": false,
@@ -21507,10 +21472,45 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "in": "query",
+            "name": "election_full",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Federal office candidate runs for: H, S or P",
+            "enum": [
+              "house",
+              "senate",
+              "president"
+            ],
+            "in": "query",
+            "name": "office",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "in": "query",
+            "name": "district",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "name": "state",
             "required": false,
             "type": "string"
           }
@@ -21533,52 +21533,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nTotal electioneering communications spent on candidates by cycle\nor candidate election year\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "default": [
               "-cycle",
@@ -21593,6 +21547,52 @@ Source: https://api.open.fec.gov/swagger/
             "required": false,
             "type": "array",
             "x-nullable": true
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -21619,12 +21619,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -21645,6 +21645,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nLook at the top-level financial information for all candidates running for the same\noffice.\n\nChoose a 2-year cycle, and `house`, `senate` or `presidential`.\n\nIf you are looking for a Senate seat, you will need to select the state using a two-letter\nabbreviation.\n\nHouse races require state and a two-digit district number.\n\nSince this endpoint reflects financial information, it will only have candidates once they file\nfinancial reporting forms. Query the `/candidates` endpoint to retrieve an-up-to-date list of all the\ncandidates that filed to run for a particular seat.\n",
         "parameters": [
           {
+            "default": "-total_receipts",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -21661,18 +21677,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "integer"
           },
           {
-            "description": "US state or territory where a candidate runs for office",
+            "default": false,
+            "description": "Hide null values on sorted column(s).",
             "in": "query",
-            "name": "state",
+            "name": "sort_hide_null",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "default": false,
+            "description": "Toggle that filters out all rows having sort column that is non-null",
             "in": "query",
-            "name": "district",
+            "name": "sort_null_only",
             "required": false,
-            "type": "string"
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle that sorts null values last",
+            "in": "query",
+            "name": "sort_nulls_last",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "in": "query",
+            "name": "election_full",
+            "required": false,
+            "type": "boolean"
           },
           {
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
@@ -21694,50 +21728,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "-total_receipts",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
+            "name": "district",
             "required": false,
             "type": "string"
           },
           {
-            "default": false,
-            "description": "Hide null values on sorted column(s).",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
-            "name": "sort_hide_null",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
-            "in": "query",
-            "name": "sort_null_only",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": false,
-            "description": "Toggle that sorts null values last",
-            "in": "query",
-            "name": "sort_nulls_last",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
+            "name": "state",
             "required": false,
             "type": "string"
           }
@@ -21760,29 +21760,29 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nList elections by cycle, office, state, and district.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
+            "default": [
+              "sort_order",
+              "district"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "state",
+            "name": "sort",
+            "required": false,
+            "type": "array",
+            "x-nullable": true
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
             "type": "array"
           },
@@ -21799,12 +21799,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "cycle",
+            "name": "state",
             "required": false,
             "type": "array"
           },
@@ -21835,20 +21835,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "sort_order",
-              "district"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "api_key",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -21873,14 +21881,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -21901,18 +21901,20 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nList elections by cycle, office, state, and district.\n",
         "parameters": [
           {
-            "description": "US state or territory where a candidate runs for office",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "state",
+            "name": "api_key",
             "required": false,
             "type": "string"
           },
           {
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "district",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
             "description": "\nTwo-year election cycle in which a candidate runs for office.\nCalculated from Form 2. The cycle begins with\nan odd year and is named for its ending, even year. This cycle follows\nthe traditional house election cycle and subdivides the presidential\nand Senate elections into comparable two-year blocks. To retrieve data for\nthe entire four years of a presidential term or six years of a senatorial term,\nyou will need the `election_full` flag.\n",
@@ -21934,18 +21936,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
-            "name": "election_full",
+            "name": "district",
             "required": false,
-            "type": "boolean"
+            "type": "string"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
-            "name": "api_key",
+            "name": "state",
             "required": false,
             "type": "string"
           }
@@ -21968,27 +21968,41 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nAll official records and reports filed by or delivered to the FEC.\n\nNote: because the filings data includes many records, counts for large\nresult sets are approximate; you will want to page through the records until no records are returned.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-receipt_date"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
-            "name": "per_page",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
             "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "committee_type",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -22002,27 +22016,35 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
             "in": "query",
-            "name": "is_amended",
+            "items": {
+              "type": "integer"
+            },
+            "name": "report_year",
             "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nReport is either new or is the most-recently filed amendment\n",
-            "in": "query",
-            "name": "most_recent",
-            "required": false,
-            "type": "boolean"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
+            "description": "\nKeyword search for filer name or ID\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "report_type",
+            "name": "q_filer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nPrimary, general or special election indicator.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "primary_general_indicator",
             "required": false,
             "type": "array"
           },
@@ -22034,6 +22056,17 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "request_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThe forms filed are categorized based on the nature of the filing:\n    - REPORT F3, F3X, F3P, F3L, F4, F5, F7, F13, F24\n    - NOTICE F6, F9, F10, F11\n    - STATEMENT F1, F2\n    - OTHER F1M, F8, F99, F12, FRQ\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_category",
             "required": false,
             "type": "array"
           },
@@ -22061,59 +22094,21 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
             "in": "query",
             "items": {
-              "type": "integer"
-            },
-            "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
+              "enum": [
+                "",
+                "N",
+                "A",
+                "T",
+                "C",
+                "M",
+                "S"
+              ],
               "type": "string"
             },
-            "name": "form_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "district",
+            "name": "amendment_indicator",
             "required": false,
             "type": "array"
           },
@@ -22136,28 +22131,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "The method used to file with the FEC, either electronic or on paper.",
-            "enum": [
-              "e-file",
-              "paper"
-            ],
-            "in": "query",
-            "name": "filer_type",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Filing ID number",
             "in": "query",
             "items": {
@@ -22169,71 +22142,82 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nPrimary, general or special election indicator.\n",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "primary_general_indicator",
+            "name": "report_type",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "N",
-                "A",
-                "T",
-                "C",
-                "M",
-                "S"
-              ],
               "type": "string"
             },
-            "name": "amendment_indicator",
+            "name": "form_type",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nThe forms filed are categorized based on the nature of the filing:\n    - REPORT F3, F3X, F3P, F3L, F4, F5, F7, F13, F24\n    - NOTICE F6, F9, F10, F11\n    - STATEMENT F1, F2\n    - OTHER F1M, F8, F99, F12, FRQ\n",
+            "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "form_category",
+            "name": "party",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nKeyword search for filer name or ID\n",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "q_filer",
+            "name": "district",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "default": [
-              "-receipt_date"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "description": "US state or territory where a candidate runs for office",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "sort",
+            "name": "state",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -22260,32 +22244,48 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "is_amended",
             "required": false,
-            "type": "array"
+            "type": "boolean"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "description": "\nReport is either new or is the most-recently filed amendment\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
+            "name": "most_recent",
             "required": false,
-            "type": "array"
+            "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The method used to file with the FEC, either electronic or on paper.",
+            "enum": [
+              "e-file",
+              "paper"
+            ],
+            "in": "query",
+            "name": "filer_type",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "in": "query",
+            "name": "committee_type",
             "required": false,
             "type": "string"
           }
@@ -22493,59 +22493,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSearch legal documents by document type, or across all document types using keywords, parameter values and ranges.\nThis endpoint uses opensearch-dsl pagination.For pagination, use both `from_hit` and `hits_returned` parameters. `from_hit` defines the offset from the first result you want to fetch. `hits_returned` allows you to configure the maximum results to be returned.\nBy default `from_hit` = 0 and `hits_returned` = 20, endpoint will return the first 20 documents (i.e. 0 to 19).\nif set `from_hit` = 20 and `hits_returned` = 20, endpoint will return documents range from 21 to 40 (i.e. 20 to 39).\nThe maximum value of `hits_returned` is 200.\n\n",
         "parameters": [
           {
-            "description": "\nSearch field to find documents containing a word or phrase in their text.\n",
-            "in": "query",
-            "maxLength": 500,
-            "name": "q",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nGet results starting from this index\n",
-            "in": "query",
-            "name": "from_hit",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nNumber of results to return. The default value is 20, with a maximum limit of 200 results per page\n",
-            "in": "query",
-            "name": "hits_returned",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nChoose a legal document type: advisory_opinions, murs, admin_fines, statutes, or adrs\n",
-            "enum": [
-              "",
-              "admin_fines",
-              "adrs",
-              "advisory_opinions",
-              "murs",
-              "statutes"
-            ],
-            "in": "query",
-            "name": "type",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nAdvisory opinion number\n",
+            "description": "\nAdmin fine committee name\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "ao_no",
+            "name": "af_name",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "\nAdvisory opinion year\n",
-            "in": "query",
-            "name": "ao_year",
-            "required": false,
-            "type": "integer"
           },
           {
             "collectionFormat": "multi",
@@ -22559,46 +22515,15 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nEarliest issue date of advisory opinion\n",
+            "collectionFormat": "multi",
+            "description": "\nAdvisory opinion number\n",
             "in": "query",
-            "name": "ao_min_issue_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "ao_no",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nLatest issue date of advisory opinion\n",
-            "in": "query",
-            "name": "ao_max_issue_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nEarliest request date of advisory opinion\n",
-            "in": "query",
-            "name": "ao_min_request_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nLatest request date of advisory opinion\n",
-            "in": "query",
-            "name": "ao_max_request_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all advisory opinion documents dated on or after this date. Date must be formatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
-            "in": "query",
-            "name": "ao_min_document_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all advisory opinion documents dated on or before this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
-            "in": "query",
-            "name": "ao_max_document_date",
-            "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -22620,27 +22545,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "ao_doc_category_id",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "\nAO is pending\n",
-            "in": "query",
-            "name": "ao_is_pending",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nStatus of AO (pending, withdrawn, or final)\n",
-            "in": "query",
-            "name": "ao_status",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe requestor of the advisory opinion\n",
-            "in": "query",
-            "name": "ao_requestor",
-            "required": false,
-            "type": "string"
           },
           {
             "collectionFormat": "multi",
@@ -22674,49 +22578,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nRegulatory citations\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "ao_regulatory_citation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nStatutory citations\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "ao_statutory_citation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nRequire all citations to be in document (default behavior is any)\n",
-            "in": "query",
-            "name": "ao_citation_require_all",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nName of commenter\n",
-            "in": "query",
-            "name": "ao_commenter",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nName of representative\n",
-            "in": "query",
-            "name": "ao_representative",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "\nEnforcement matter case number\n",
             "in": "query",
             "items": {
@@ -22725,27 +22586,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "case_no",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "\nCases respondents\n",
-            "in": "query",
-            "name": "case_respondents",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nCases election cycles\n",
-            "in": "query",
-            "name": "case_election_cycles",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nThe earliest date opened of case\n",
-            "in": "query",
-            "name": "case_min_open_date",
-            "required": false,
-            "type": "string"
           },
           {
             "collectionFormat": "multi",
@@ -22783,6 +22623,28 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
+            "description": "\nRegulatory citations\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "ao_regulatory_citation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nRegulatory citations\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "case_regulatory_citation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "\nSecondary Subject Description:\n    - 1 - Candidate\n    - 2 - Multi-candidate\n    - 3 - Non-party\n    - 4 - PAC\n    - 5 - Party\n    - 6 - Political\n    - 7 - Presidential\n    - 8 - Corporations\n    - 9 - Excessive\n    - 10 - Exemptions\n    - 11 - In the name of another\n    - 12 - Labor unions\n    - 13 - Limitations\n    - 14 - National bank\n    - 15 - Prohibited\n    - 16 - Coordinated\n    - 17 - Limits\n    - 18 - Prohibitions\n",
             "in": "query",
             "items": {
@@ -22814,78 +22676,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nThe latest date opened of case\n",
-            "in": "query",
-            "name": "case_max_open_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe earliest date closed of case\n",
-            "in": "query",
-            "name": "case_min_close_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date closed of case\n",
-            "in": "query",
-            "name": "case_max_close_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all case documents dated on or after this date. Date must be formatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
-            "in": "query",
-            "name": "case_min_document_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all case documents dated on or before this date. Date must be formatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
-            "in": "query",
-            "name": "case_max_document_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nRegulatory citations\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "case_regulatory_citation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nStatutory citations\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "case_statutory_citation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nRequire all citations to be in document (default behavior is any)\n",
-            "in": "query",
-            "name": "case_citation_require_all",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nExclude documents containing this term\n",
-            "in": "query",
-            "maxLength": 500,
-            "name": "q_exclude",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nSelect one or more case document category id to filter by corresponding case document category:\n        - 1 - Conciliation and Settlement Agreements\n        - 2 - Complaint, Responses, Designation of Counsel and Extensions of Time\n        - 3 - General Counsel Reports, Briefs, Notifications and Responses\n        - 4 - Certifications\n        - 5 - Civil Penalties, Disgorgements, Other Payments and Letters of Compliance\n        - 6 - Statement of Reasons \n        - 1001 - ADR Settlement Agreements\n        - 1002 - Complaint, Responses, Designation of Counsel and Extensions of Time\n        - 1003 - ADR Memoranda, Notifications and Responses\n        - 1004 - Certifications\n        - 1005 - Civil Penalties, Disgorgements, Other Payments and Letters of Compliance\n        - 1006 - Statement of Reasons \n        - 2001 - Administrative Fine Case\n",
             "in": "query",
@@ -22911,18 +22701,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "case_doc_category_id",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "\nType of MUR : current or archived\n",
-            "enum": [
-              "",
-              "archived",
-              "current"
-            ],
-            "in": "query",
-            "name": "mur_type",
-            "required": false,
-            "type": "string"
           },
           {
             "collectionFormat": "multi",
@@ -22956,14 +22734,63 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nAdmin fine committee name\n",
+            "description": "\nStatutory citations\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "af_name",
+            "name": "ao_statutory_citation",
             "required": false,
             "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nStatutory citations\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "case_statutory_citation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThis search identifies documents where the specified phrases appear near each other. The field supports both a single phrase or multiple phrases. For a single phrase, the maximum gap is applied between the words in the phrase. For multiple phrases, the maximum gap is applied between the phrases themselves.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 500,
+            "name": "q_proximity",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\n   Final Determination fine amount\n",
+            "in": "query",
+            "name": "af_fd_fine_amount",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nAdds additional filters to the proximity search that provides options to specify positional constraints\n",
+            "enum": [
+              "after",
+              "before"
+            ],
+            "in": "query",
+            "name": "proximity_filter",
+            "required": false,
+            "type": "string"
           },
           {
             "description": "\nAdmin fine committee ID\n",
@@ -22980,18 +22807,111 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "description": "\nThe earliest Reason to Believe date\n",
+            "description": "\nAdvisory opinion year\n",
             "in": "query",
-            "name": "af_min_rtb_date",
+            "name": "ao_year",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nAO is pending\n",
+            "in": "query",
+            "name": "ao_is_pending",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nCases election cycles\n",
+            "in": "query",
+            "name": "case_election_cycles",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nCases respondents\n",
+            "in": "query",
+            "name": "case_respondents",
             "required": false,
             "type": "string"
           },
           {
-            "description": "\nThe latest Reason to Believe date\n",
+            "description": "\nChoose a legal document type: advisory_opinions, murs, admin_fines, statutes, or adrs\n",
+            "enum": [
+              "",
+              "admin_fines",
+              "adrs",
+              "advisory_opinions",
+              "murs",
+              "statutes"
+            ],
             "in": "query",
-            "name": "af_max_rtb_date",
+            "name": "type",
             "required": false,
             "type": "string"
+          },
+          {
+            "description": "\nEarliest issue date of advisory opinion\n",
+            "in": "query",
+            "name": "ao_min_issue_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nEarliest request date of advisory opinion\n",
+            "in": "query",
+            "name": "ao_min_request_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nExclude documents containing this term\n",
+            "in": "query",
+            "maxLength": 500,
+            "name": "q_exclude",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nGet results starting from this index\n",
+            "in": "query",
+            "name": "from_hit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nLatest issue date of advisory opinion\n",
+            "in": "query",
+            "name": "ao_max_issue_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nLatest request date of advisory opinion\n",
+            "in": "query",
+            "name": "ao_max_request_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nName of commenter\n",
+            "in": "query",
+            "name": "ao_commenter",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nName of representative\n",
+            "in": "query",
+            "name": "ao_representative",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nNumber of results to return. The default value is 20, with a maximum limit of 200 results per page\n",
+            "in": "query",
+            "name": "hits_returned",
+            "required": false,
+            "type": "integer"
           },
           {
             "description": "\nReason to Believe fine amount\n",
@@ -23001,30 +22921,59 @@ Source: https://api.open.fec.gov/swagger/
             "type": "integer"
           },
           {
-            "description": "\nThe earliest Final Determination date\n",
+            "description": "\nRequire all citations to be in document (default behavior is any)\n",
             "in": "query",
-            "name": "af_min_fd_date",
+            "name": "ao_citation_require_all",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nRequire all citations to be in document (default behavior is any)\n",
+            "in": "query",
+            "name": "case_citation_require_all",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nSearch documents by file name\n",
+            "in": "query",
+            "name": "filename",
             "required": false,
             "type": "string"
           },
           {
-            "description": "\nThe latest Final Determination date\n",
+            "description": "\nSearch field to find documents containing a word or phrase in their text.\n",
             "in": "query",
-            "name": "af_max_fd_date",
+            "maxLength": 500,
+            "name": "q",
             "required": false,
             "type": "string"
           },
           {
-            "description": "\n   Final Determination fine amount\n",
+            "description": "\nSelects all advisory opinion documents dated on or after this date. Date must be formatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
             "in": "query",
-            "name": "af_fd_fine_amount",
+            "name": "ao_min_document_date",
             "required": false,
-            "type": "integer"
+            "type": "string"
           },
           {
-            "description": "\nSort `cases` (MUR, ADR, and AF) by `case_no`. Sort `advisory opinions` by `ao_no` or `issue_date`.\nUse `-` before a parameter name to sort in descending order.\nex: `-case_no` or `-ao_no`\n",
+            "description": "\nSelects all advisory opinion documents dated on or before this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
             "in": "query",
-            "name": "sort",
+            "name": "ao_max_document_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all case documents dated on or after this date. Date must be formatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
+            "in": "query",
+            "name": "case_min_document_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all case documents dated on or before this date. Date must be formatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
+            "in": "query",
+            "name": "case_max_document_date",
             "required": false,
             "type": "string"
           },
@@ -23043,39 +22992,9 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nThis search identifies documents where the specified phrases appear near each other. The field supports both a single phrase or multiple phrases. For a single phrase, the maximum gap is applied between the words in the phrase. For multiple phrases, the maximum gap is applied between the phrases themselves.\n",
+            "description": "\nSort `cases` (MUR, ADR, and AF) by `case_no`. Sort `advisory opinions` by `ao_no` or `issue_date`.\nUse `-` before a parameter name to sort in descending order.\nex: `-case_no` or `-ao_no`\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "maxItems": 500,
-            "name": "q_proximity",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nThe maximum number of positions allowed between terms specified in `q_proximity`\n",
-            "in": "query",
-            "name": "max_gaps",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nWhen set to true, maintains the original order of phrases in `q_proximity`.\n",
-            "in": "query",
-            "name": "proximity_preserve_order",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nAdds additional filters to the proximity search that provides options to specify positional constraints\n",
-            "enum": [
-              "after",
-              "before"
-            ],
-            "in": "query",
-            "name": "proximity_filter",
+            "name": "sort",
             "required": false,
             "type": "string"
           },
@@ -23087,19 +23006,100 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "description": "\nSearch documents by file name\n",
+            "description": "\nStatus of AO (pending, withdrawn, or final)\n",
             "in": "query",
-            "name": "filename",
+            "name": "ao_status",
             "required": false,
             "type": "string"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe earliest date closed of case\n",
             "in": "query",
-            "name": "api_key",
+            "name": "case_min_close_date",
             "required": false,
             "type": "string"
+          },
+          {
+            "description": "\nThe earliest date opened of case\n",
+            "in": "query",
+            "name": "case_min_open_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest Final Determination date\n",
+            "in": "query",
+            "name": "af_min_fd_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest Reason to Believe date\n",
+            "in": "query",
+            "name": "af_min_rtb_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date closed of case\n",
+            "in": "query",
+            "name": "case_max_close_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date opened of case\n",
+            "in": "query",
+            "name": "case_max_open_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest Final Determination date\n",
+            "in": "query",
+            "name": "af_max_fd_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest Reason to Believe date\n",
+            "in": "query",
+            "name": "af_max_rtb_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe maximum number of positions allowed between terms specified in `q_proximity`\n",
+            "in": "query",
+            "name": "max_gaps",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nThe requestor of the advisory opinion\n",
+            "in": "query",
+            "name": "ao_requestor",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nType of MUR : current or archived\n",
+            "enum": [
+              "",
+              "archived",
+              "current"
+            ],
+            "in": "query",
+            "name": "mur_type",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nWhen set to true, maintains the original order of phrases in `q_proximity`.\n",
+            "in": "query",
+            "name": "proximity_preserve_order",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -23211,16 +23211,16 @@ Source: https://api.open.fec.gov/swagger/
                       {
                         "citations": [
                           {
-                            "text": "30102(b)(3)",
-                            "title": "52",
-                            "type": "statute",
-                            "url": "https://www.govinfo.gov/link/uscode/52/30102"
-                          },
-                          {
                             "text": "102.15",
                             "title": "11",
                             "type": "regulation",
                             "url": "/regulations/102-15/CURRENT"
+                          },
+                          {
+                            "text": "30102(b)(3)",
+                            "title": "52",
+                            "type": "statute",
+                            "url": "https://www.govinfo.gov/link/uscode/52/30102"
                           }
                         ],
                         "disposition": "Approved by Commission",
@@ -23230,16 +23230,16 @@ Source: https://api.open.fec.gov/swagger/
                       {
                         "citations": [
                           {
-                            "text": "30102(b)(3)",
-                            "title": "52",
-                            "type": "statute",
-                            "url": "https://www.govinfo.gov/link/uscode/52/30102"
-                          },
-                          {
                             "text": "102.15",
                             "title": "11",
                             "type": "regulation",
                             "url": "/regulations/102-15/CURRENT"
+                          },
+                          {
+                            "text": "30102(b)(3)",
+                            "title": "52",
+                            "type": "statute",
+                            "url": "https://www.govinfo.gov/link/uscode/52/30102"
                           }
                         ],
                         "disposition": "Approved Recs.",
@@ -23251,20 +23251,20 @@ Source: https://api.open.fec.gov/swagger/
                     "document_highlights": {},
                     "documents": [
                       {
-                        "category": "Conciliation Agreements",
-                        "description": "Michael David Pitts",
-                        "document_date": "2018-03-19T00:00:00",
-                        "document_id": 100488383,
-                        "length": 181804,
-                        "url": "/files/legal/murs/7132/18044440286.pdf"
-                      },
-                      {
                         "category": "Complaint, Responses, Designation of Counsel and Extensions of Time",
                         "description": "Consent to Extend the Time to Institute a Civil Law Enforcement Suit",
                         "document_date": "2017-06-12T00:00:00",
                         "document_id": 100488382,
                         "length": 36491,
                         "url": "/files/legal/murs/7132/18044440271.pdf"
+                      },
+                      {
+                        "category": "Conciliation Agreements",
+                        "description": "Michael David Pitts",
+                        "document_date": "2018-03-19T00:00:00",
+                        "document_id": 100488383,
+                        "length": 181804,
+                        "url": "/files/legal/murs/7132/18044440286.pdf"
                       }
                     ],
                     "election_cycles": [
@@ -23284,13 +23284,13 @@ Source: https://api.open.fec.gov/swagger/
                     "participants": [
                       {
                         "citations": {},
-                        "name": "Pitts, Michael David",
-                        "role": "Primary Respondent"
+                        "name": "AMEDISYS, INC.",
+                        "role": "Complainant"
                       },
                       {
                         "citations": {},
-                        "name": "AMEDISYS, INC.",
-                        "role": "Complainant"
+                        "name": "Pitts, Michael David",
+                        "role": "Primary Respondent"
                       }
                     ],
                     "respondents": [
@@ -24121,22 +24121,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint includes national party committee account receipts for presidential nominating conventions,\nnational party headquarters buildings, and election recounts and contests and other legal proceedings accounts.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -24144,94 +24128,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "two_year_transaction_period",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "City of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_city",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "State of contributor. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Zip code of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_zip",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Occupation of contributor, filers need to make an effort to gather this information",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_occupation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Employer of contributor, filers need to make an effort to gather this information",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_employer",
             "required": false,
             "type": "array"
           },
@@ -24245,29 +24141,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "image_number",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_contribution_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_contribution_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "default": null,
-            "description": "Restrict to non-earmarked individual contributions where memo code is true. Filtering individuals is useful to make sure contributions are not double reported and in creating breakdowns of the amount of money coming from individuals.",
-            "in": "query",
-            "name": "is_individual",
-            "required": false,
-            "type": "boolean",
-            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -24286,82 +24159,45 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "C",
-                "D",
-                "E",
-                "H",
-                "I",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "S",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z"
-              ],
-              "type": "string"
+              "type": "integer"
             },
-            "name": "contributor_committee_type",
+            "name": "two_year_transaction_period",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "description": "City of contributor",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
               "type": "string"
             },
-            "name": "contributor_committee_designation",
+            "name": "contributor_city",
             "required": false,
             "type": "array"
           },
           {
-            "description": "\nMinimum receipts amount\n",
+            "collectionFormat": "multi",
+            "description": "Employer of contributor, filers need to make an effort to gather this information",
             "in": "query",
-            "name": "min_contribution_receipt_amount",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_employer",
             "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nMaximum receipts amount\n",
-            "in": "query",
-            "name": "max_contribution_receipt_amount",
-            "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Type of national party account:\n        - CONVENTION\n        - HEADQUARTERS\n        - RECOUNT\n",
+            "description": "Name of contributor",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "CONVENTION",
-                "HEADQUARTERS",
-                "RECOUNT"
-              ],
               "type": "string"
             },
-            "name": "party_account_type",
+            "name": "contributor_name",
             "required": false,
             "type": "array"
           },
@@ -24400,12 +24236,147 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "Occupation of contributor, filers need to make an effort to gather this information",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_occupation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "State of contributor. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "contributor_committee_designation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "C",
+                "D",
+                "E",
+                "H",
+                "I",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "S",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z"
+              ],
+              "type": "string"
+            },
+            "name": "contributor_committee_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Type of national party account:\n        - CONVENTION\n        - HEADQUARTERS\n        - RECOUNT\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "CONVENTION",
+                "HEADQUARTERS",
+                "RECOUNT"
+              ],
+              "type": "string"
+            },
+            "name": "party_account_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Zip code of contributor",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_zip",
+            "required": false,
+            "type": "array"
+          },
+          {
             "default": "-contribution_receipt_date",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -24424,10 +24395,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Restrict to non-earmarked individual contributions where memo code is true. Filtering individuals is useful to make sure contributions are not double reported and in creating breakdowns of the amount of money coming from individuals.",
             "in": "query",
-            "name": "api_key",
+            "name": "is_individual",
+            "required": false,
+            "type": "boolean",
+            "x-nullable": true
+          },
+          {
+            "description": "\nMaximum receipts amount\n",
+            "in": "query",
+            "name": "max_contribution_receipt_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nMinimum receipts amount\n",
+            "in": "query",
+            "name": "min_contribution_receipt_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_contribution_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_contribution_receipt_date",
             "required": false,
             "type": "string"
           }
@@ -24450,22 +24450,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint includes national party committee account disbursements for presidential nominating conventions,\nnational party headquarters buildings, and election recounts and contests and other legal proceedings accounts\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -24478,26 +24462,45 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "National party account disbursement types:\n    -40\t CONVENTION ACCOUNT DISBURSEMENT\n    -40T CONVENTION ACCOUNT REFUND - TRIBAL\n    -40Y CONVENTION ACCOUNT REFUND - INDIVIDUAL\n    -40Z CONVENTION ACCOUNT REFUND - REGISTERED FILER\n    -41  HEADQUARTERS ACCOUNT DISBURSEMENT\n    -41T HEADQUARTERS  ACCOUNT REFUND - TRIBAL\n    -41Y HEADQUARTERS  ACCOUNT REFUND - INDIVIDUAL\n    -41Z HEADQUARTERS  ACCOUNT REFUND - REGISTERED FILER\n    -42\t RECOUNT ACCOUNT DISBURSEMENT\n    -42T RECOUNT ACCOUNT REFUND  - TRIBAL\n    -42Y RECOUNT ACCOUNT REFUND - INDIVIDUAL\n    -42Z RECOUNT ACCOUNT REFUND - REGISTERED FILER\n",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
-              "enum": [
-                "40",
-                "40T",
-                "40Y",
-                "40Z",
-                "41",
-                "41T",
-                "41Y",
-                "41Z",
-                "42",
-                "42T",
-                "42Y",
-                "42Z"
-              ],
               "type": "string"
             },
-            "name": "disbursement_type",
+            "name": "image_number",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "two_year_transaction_period",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nZipcode of recipient\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "recipient_zip",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "City of recipient",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "recipient_city",
             "required": false,
             "type": "array"
           },
@@ -24539,80 +24542,37 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Filter for form and line number using the following format:\n`<form_number-line_number>`. For example F3X-21b or F3X-29 would filter\ndown to all entries from form `F3X` and line number `21b` or form `F3X` and line number `29`.\n",
-            "in": "query",
-            "name": "line_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nMinimum disbursement amount\n",
-            "in": "query",
-            "name": "min_disbursement_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nMaximum disbursement amount\n",
-            "in": "query",
-            "name": "max_disbursement_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nSelects all disbursements received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_disbursement_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all disbursements received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_disbursement_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "City of recipient",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "recipient_city",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "recipient_committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Name of the entity receiving the disbursement",
             "in": "query",
             "items": {
               "type": "string"
             },
             "name": "recipient_name",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "National party account disbursement types:\n    -40\t CONVENTION ACCOUNT DISBURSEMENT\n    -40T CONVENTION ACCOUNT REFUND - TRIBAL\n    -40Y CONVENTION ACCOUNT REFUND - INDIVIDUAL\n    -40Z CONVENTION ACCOUNT REFUND - REGISTERED FILER\n    -41  HEADQUARTERS ACCOUNT DISBURSEMENT\n    -41T HEADQUARTERS  ACCOUNT REFUND - TRIBAL\n    -41Y HEADQUARTERS  ACCOUNT REFUND - INDIVIDUAL\n    -41Z HEADQUARTERS  ACCOUNT REFUND - REGISTERED FILER\n    -42\t RECOUNT ACCOUNT DISBURSEMENT\n    -42T RECOUNT ACCOUNT REFUND  - TRIBAL\n    -42Y RECOUNT ACCOUNT REFUND - INDIVIDUAL\n    -42Z RECOUNT ACCOUNT REFUND - REGISTERED FILER\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "40",
+                "40T",
+                "40Y",
+                "40Z",
+                "41",
+                "41T",
+                "41Y",
+                "41Z",
+                "42",
+                "42T",
+                "42Y",
+                "42Z"
+              ],
+              "type": "string"
+            },
+            "name": "disbursement_type",
             "required": false,
             "type": "array"
           },
@@ -24629,12 +24589,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nZipcode of recipient\n",
+            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "recipient_zip",
+            "name": "recipient_committee_id",
             "required": false,
             "type": "array"
           },
@@ -24690,17 +24650,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "two_year_transaction_period",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Type of national party account:\n        - CONVENTION\n        - HEADQUARTERS\n        - RECOUNT\n",
             "in": "query",
             "items": {
@@ -24725,6 +24674,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -24741,10 +24714,37 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nMaximum disbursement amount\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_disbursement_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nMinimum disbursement amount\n",
+            "in": "query",
+            "name": "min_disbursement_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nSelects all disbursements received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_disbursement_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all disbursements received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_disbursement_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for form and line number using the following format:\n`<form_number-line_number>`. For example F3X-21b or F3X-29 would filter\ndown to all entries from form `F3X` and line number `21b` or form `F3X` and line number `29`.\n",
+            "in": "query",
+            "name": "line_number",
             "required": false,
             "type": "string"
           }
@@ -24766,22 +24766,6 @@ Source: https://api.open.fec.gov/swagger/
       "get": {
         "description": "\nThis endpoint includes national party committee account total receipts and total disbursements for \n\npresidential nominating conventions, national party headquarters buildings, and election recounts \n\nand contests and other legal proceedings accounts for a given two year cycle.\n",
         "parameters": [
-          {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
           {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
@@ -24813,6 +24797,30 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -24827,14 +24835,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_null_only",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -24855,20 +24855,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThe Operations log contains details of each report loaded into the database. It is primarily\nused as status check to determine when all of the data processes, from initial entry through\nreview are complete.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-report_year"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -24883,56 +24882,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "report_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nUnique identifier for the electronic or paper report. This number is used to construct\nPDF URLs to the original document.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "beginning_image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
             "in": "query",
             "items": {
               "type": "integer"
             },
             "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "form_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "amendment_indicator",
             "required": false,
             "type": "array"
           },
@@ -24952,18 +24907,96 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "collectionFormat": "multi",
+            "description": "\nUnique identifier for the electronic or paper report. This number is used to construct\nPDF URLs to the original document.\n",
             "in": "query",
-            "name": "min_receipt_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "beginning_image_number",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "amendment_indicator",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "report_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
             "required": false,
             "type": "string"
           },
           {
-            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "max_receipt_date",
+            "name": "page",
             "required": false,
-            "type": "string"
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": false,
+            "description": "Hide null values on sorted column(s).",
+            "in": "query",
+            "name": "sort_hide_null",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "in": "query",
+            "name": "sort_null_only",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle that sorts null values last",
+            "in": "query",
+            "name": "sort_nulls_last",
+            "required": false,
+            "type": "boolean"
           },
           {
             "description": "\nEnding date of the reporting period after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
@@ -24994,49 +25027,16 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "-report_year"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "description": "\nSelects all filings received after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "min_receipt_date",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "string"
           },
           {
-            "default": false,
-            "description": "Hide null values on sorted column(s).",
+            "description": "\nSelects all filings received before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "sort_hide_null",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
-            "in": "query",
-            "name": "sort_null_only",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": false,
-            "description": "Toggle that sorts null values last",
-            "in": "query",
-            "name": "sort_nulls_last",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
+            "name": "max_receipt_date",
             "required": false,
             "type": "string"
           }
@@ -25059,6 +25059,44 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nNet receipts per candidate.\n\nFilter with `contributor_state='US'` for national totals\n",
         "parameters": [
           {
+            "collectionFormat": "multi",
+            "description": "State of contributor",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-net_receipts",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -25073,36 +25111,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "State of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": "-net_receipts",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -25127,14 +25135,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -25154,33 +25154,6 @@ Source: https://api.open.fec.gov/swagger/
       "get": {
         "description": "\nContribution receipts by size per candidate.\n\nFilter by candidate_id, election_year and/or size\n",
         "parameters": [
-          {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
-            "required": false,
-            "type": "array"
-          },
           {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
@@ -25211,12 +25184,47 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": "size",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -25241,14 +25249,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -25269,6 +25269,44 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nContribution receipts by state per candidate.\n\nFilter by candidate_id and/or election_year\n",
         "parameters": [
           {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-contribution_receipt_amount",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -25283,36 +25321,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": "-contribution_receipt_amount",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -25337,14 +25345,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -25365,6 +25365,44 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nCoverage end date per candidate.\n\nFilter by candidate_id and/or election_year\n",
         "parameters": [
           {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "candidate_id",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -25379,36 +25417,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": "candidate_id",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -25433,14 +25441,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -25461,6 +25461,44 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nFinancial summary per candidate.\n\nFilter by candidate_id and/or election_year\n",
         "parameters": [
           {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Year of election",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "election_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-net_receipts",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -25475,36 +25513,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Year of election",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "election_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n  -P00000001    All candidates\n  -P00000002    Democrats\n  -P00000003    Republicans\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": "-net_receipts",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -25529,14 +25537,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -25557,22 +25557,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nUse this endpoint to look up the RAD Analyst for a committee.\n\nThe mission of the Reports Analysis Division (RAD) is to ensure that\ncampaigns and political committees file timely and accurate reports that fully disclose\ntheir financial activities.  RAD is responsible for reviewing statements and financial\nreports filed by political committees participating in federal elections, providing\nassistance and guidance to the committees to properly file their reports, and for taking\nappropriate action to ensure compliance with the Federal Election Campaign Act (FECA).\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -25585,12 +25569,34 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
+            "description": "Email of RAD analyst",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "email",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "ID of RAD analyst",
             "in": "query",
             "items": {
               "type": "integer"
             },
             "name": "analyst_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Name of RAD analyst",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "name",
             "required": false,
             "type": "array"
           },
@@ -25618,28 +25624,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of RAD analyst",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Email of RAD analyst",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "email",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Title of RAD analyst",
             "in": "query",
             "items": {
@@ -25650,27 +25634,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Filter results for assignment updates made after this date",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "min_assignment_update_date",
+            "name": "api_key",
             "required": false,
             "type": "string"
           },
           {
-            "description": "Filter results for assignment updates made before this date",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "max_assignment_update_date",
+            "name": "page",
             "required": false,
-            "type": "string"
+            "type": "integer"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
             "in": "query",
-            "name": "sort",
+            "name": "per_page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
           },
           {
             "default": false,
@@ -25697,10 +25682,25 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "Filter results for assignment updates made after this date",
+            "in": "query",
+            "name": "min_assignment_update_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter results for assignment updates made before this date",
+            "in": "query",
+            "name": "max_assignment_update_date",
             "required": false,
             "type": "string"
           }
@@ -25722,36 +25722,6 @@ Source: https://api.open.fec.gov/swagger/
       "get": {
         "description": "\nFEC election dates since 1995.\n",
         "parameters": [
-          {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nThe minimum date the report is due.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_due_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date the report is due.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_due_date",
-            "required": false,
-            "type": "string"
-          },
           {
             "collectionFormat": "multi",
             "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
@@ -25775,40 +25745,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nThe minimum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_create_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_create_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe minimum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_update_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe maximum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_update_date",
-            "required": false,
-            "type": "string"
-          },
-          {
             "default": "-due_date",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -25835,10 +25801,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe maximum date the report is due.(MM/DD/YYYY or YYYY-MM-DD)\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_due_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe maximum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_create_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe maximum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_update_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date the report is due.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_due_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date this record was added to the system.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_create_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe minimum date this record was last updated.(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_update_date",
             "required": false,
             "type": "string"
           }
@@ -25861,212 +25861,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nEach report represents the summary information from Form 3, Form 3X and Form 3P.\nThese reports have key statistics that illuminate the financial status of a given committee.\nThings like cash on hand, debts owed by committee, total receipts, and total disbursements\nare especially helpful for understanding a committee's financial dealings.\n\nBy default, this endpoint includes both amended and final versions of each report. To restrict\nto only the final versions of each report, use `is_amended=false`; to retrieve only reports that\nhave been amended, use `is_amended=true`.\n\nSeveral different reporting structures exist, depending on the type of organization that\nsubmits financial information. To see an example of these reporting requirements,\nlook at the summary and detailed summary pages of Form 3, Form 3X, and Form 3P.\n\nDISCLAIMER: The field labels contained within this resource are subject to change.  We are attempting to succinctly\nlabel these fields while conveying clear meaning to ensure accessibility for all users.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nUnique identifier for the electronic or paper report. This number is used to construct\nPDF URLs to the original document.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "beginning_image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Report type; prefix with \"-\" to exclude. Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "report_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
-            "in": "query",
-            "name": "is_amended",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nReport is either new or is the most-recently filed amendment\n",
-            "in": "query",
-            "name": "most_recent",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "The method used to file with the FEC, either electronic or on paper.",
-            "enum": [
-              "e-file",
-              "paper"
+            "default": [
+              "-coverage_end_date"
             ],
-            "in": "query",
-            "name": "filer_type",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_disbursements_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_disbursements_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_receipts_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_receipts_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nSelects all items received by FEC before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "max_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all items received by FEC after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
-            "in": "query",
-            "name": "min_receipt_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_cash_on_hand_end_period_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_cash_on_hand_end_period_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_debts_owed_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_debts_owed_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_independent_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_independent_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_party_coordinated_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_party_coordinated_expenditures",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_total_contributions",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_total_contributions",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_type",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -26092,21 +25899,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "N",
-                "A",
-                "T",
-                "C",
-                "M",
-                "S"
-              ],
-              "type": "string"
+              "type": "integer"
             },
-            "name": "amendment_indicator",
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "year",
             "required": false,
             "type": "array"
           },
@@ -26134,18 +25943,80 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "default": [
-              "-coverage_end_date"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "description": "\nUnique identifier for the electronic or paper report. This number is used to construct\nPDF URLs to the original document.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "sort",
+            "name": "beginning_image_number",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Amendent types:\n    -N   new\n    -A   amendment\n    -T   terminated\n    -C   consolidated\n    -M   multi-candidate\n    -S   secondary\n\nNULL might be new or amendment. If amendment indicator is null and the filings is the first or first in a chain treat it as if it was a new. If it is not the first or first in a chain then treat the filing as an amendment.\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "N",
+                "A",
+                "T",
+                "C",
+                "M",
+                "S"
+              ],
+              "type": "string"
+            },
+            "name": "amendment_indicator",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Report type; prefix with \"-\" to exclude. Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "report_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -26172,10 +26043,128 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nFalse indicates that a report is the most recent. True indicates that the report has been superseded by an amendment.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "is_amended",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_cash_on_hand_end_period_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_debts_owed_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_disbursements_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_independent_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_party_coordinated_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_receipts_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_total_contributions",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_cash_on_hand_end_period_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_debts_owed_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_disbursements_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_independent_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_party_coordinated_expenditures",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_receipts_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_total_contributions",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nReport is either new or is the most-recently filed amendment\n",
+            "in": "query",
+            "name": "most_recent",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nSelects all items received by FEC after this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "min_receipt_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all items received by FEC before this date(MM/DD/YYYY or YYYY-MM-DD)\n",
+            "in": "query",
+            "name": "max_receipt_date",
             "required": false,
             "type": "string"
           },
@@ -26190,6 +26179,17 @@ Source: https://api.open.fec.gov/swagger/
             "in": "path",
             "name": "entity_type",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "The method used to file with the FEC, either electronic or on paper.",
+            "enum": [
+              "e-file",
+              "paper"
+            ],
+            "in": "query",
+            "name": "filer_type",
+            "required": false,
             "type": "string"
           }
         ],
@@ -26211,61 +26211,23 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThe Searchable Electronic Rulemaking System (SERS) lets you search all public documents associated\nwith Federal Election Commission rulemakings (REGs), including draft Federal Register publications,\n open meeting agendas, comments submitted by the public, and hearing transcripts.\n",
         "parameters": [
           {
-            "description": "\nSearch field to find documents containing a word or phrase in their text.\n",
-            "in": "query",
-            "name": "q",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nExclude documents containing this term\n",
-            "in": "query",
-            "name": "q_exclude",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nGet results starting from this index\n",
-            "in": "query",
-            "name": "from_hit",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "\nNumber of results to return. The default value is 30, with a maximum limit of 200 results per page\n",
-            "in": "query",
-            "name": "hits_returned",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nSearch a REG number to go directly to  the REG and all associated documents.\nREG numbers are listed in a YYYY-PP format\n",
+            "description": "\nAn \"entity\" is any individual or group that plays one of the following roles\nwith respect to a REG.  The different entity roles are:\n- 1 - Petitioner\n- 2 - Witness\n- 3 - Counsel\n- 4 - Officer/Representative\n- 5 - Commenter\n",
             "in": "query",
             "items": {
+              "enum": [
+                "",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+              ],
               "type": "string"
             },
-            "name": "rm_no",
+            "name": "entity_role_type",
             "required": false,
             "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nSearch REG Name field to retrieve REG documents\nwith specific words in their names.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "rm_name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nSearch by REG documents by the year in which a rulemaking began\n",
-            "in": "query",
-            "name": "rm_year",
-            "required": false,
-            "type": "integer"
           },
           {
             "collectionFormat": "multi",
@@ -26290,6 +26252,65 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "\nSearch a REG number to go directly to  the REG and all associated documents.\nREG numbers are listed in a YYYY-PP format\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "rm_no",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nSearch REG Name field to retrieve REG documents\nwith specific words in their names.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "rm_name",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nThis search identifies documents where the specified phrases appear near each other. The field supports both a single phrase or multiple phrases. For a single phrase, the maximum gap is applied between the words in the phrase. For multiple phrases, the maximum gap is applied between the phrases themselves.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "q_proximity",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nAdds additional filters to the proximity search that provides options to specify positional constraints\n",
+            "enum": [
+              "after",
+              "before"
+            ],
+            "in": "query",
+            "name": "proximity_filter",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nExclude documents containing this term\n",
+            "in": "query",
+            "name": "q_exclude",
+            "required": false,
+            "type": "string"
+          },
+          {
             "description": "\nFilter rulemakings by a specific document ID (`doc_id`).\nReturns only rulemakings that contain a document matching the given ID.\n",
             "in": "query",
             "name": "doc_id",
@@ -26297,16 +26318,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "integer"
           },
           {
-            "description": "\nSearch for documents associated with a REG where the Federal Register\npublished a REG document approved by the Commission on or after this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
+            "description": "\nGet results starting from this index\n",
             "in": "query",
-            "name": "min_federal_registry_publish_date",
+            "name": "from_hit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nName of the entity related a specific rulemaking\n",
+            "in": "query",
+            "name": "entity_name",
             "required": false,
             "type": "string"
           },
           {
-            "description": "\nSearch for documents associated with a REG where the Federal Register\npublished a REG document approved by the Commission on or before this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
+            "description": "\nNumber of results to return. The default value is 30, with a maximum limit of 200 results per page\n",
             "in": "query",
-            "name": "max_federal_registry_publish_date",
+            "name": "hits_returned",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nSearch by REG documents by the year in which a rulemaking began\n",
+            "in": "query",
+            "name": "rm_year",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nSearch documents by file name\n",
+            "in": "query",
+            "name": "filename",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSearch field to find documents containing a word or phrase in their text.\n",
+            "in": "query",
+            "name": "q",
             "required": false,
             "type": "string"
           },
@@ -26327,61 +26376,28 @@ Source: https://api.open.fec.gov/swagger/
           {
             "description": "\nSearch for documents associated with a REG where the Commission\nvoted on an agenda document on or after this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
             "in": "query",
-            "name": "min_vote_date",
+            "name": "max_vote_date",
             "required": false,
             "type": "string"
           },
           {
             "description": "\nSearch for documents associated with a REG where the Commission\nvoted on an agenda document on or after this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
             "in": "query",
-            "name": "max_vote_date",
+            "name": "min_vote_date",
             "required": false,
             "type": "string"
           },
           {
-            "description": "\nWhen set to true, only rulemakings with at least one key document are returned\n",
+            "description": "\nSearch for documents associated with a REG where the Federal Register\npublished a REG document approved by the Commission on or after this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
             "in": "query",
-            "name": "is_key_document",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nWhen set to true, this flag returns rulemakings that are currently open for comment.\n",
-            "in": "query",
-            "name": "is_open_for_comment",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "\nName of the entity related a specific rulemaking\n",
-            "in": "query",
-            "name": "entity_name",
+            "name": "min_federal_registry_publish_date",
             "required": false,
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nAn \"entity\" is any individual or group that plays one of the following roles\nwith respect to a REG.  The different entity roles are:\n- 1 - Petitioner\n- 2 - Witness\n- 3 - Counsel\n- 4 - Officer/Representative\n- 5 - Commenter\n",
+            "description": "\nSearch for documents associated with a REG where the Federal Register\npublished a REG document approved by the Commission on or before this date. Date must be\nformatted as MM/DD/YYYY or YYYY-MM-DD.\"\n",
             "in": "query",
-            "items": {
-              "enum": [
-                "",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5"
-              ],
-              "type": "string"
-            },
-            "name": "entity_role_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nSearch documents by file name\n",
-            "in": "query",
-            "name": "filename",
+            "name": "max_federal_registry_publish_date",
             "required": false,
             "type": "string"
           },
@@ -26393,15 +26409,11 @@ Source: https://api.open.fec.gov/swagger/
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nThis search identifies documents where the specified phrases appear near each other. The field supports both a single phrase or multiple phrases. For a single phrase, the maximum gap is applied between the words in the phrase. For multiple phrases, the maximum gap is applied between the phrases themselves.\n",
+            "description": "\nSpecifies the term to which the `proximity_filter` option applies to and defines what must appear in relation to the `q_proximity` phrase\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q_proximity",
+            "name": "proximity_filter_term",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "description": "\nThe maximum number of positions allowed between terms specified in `q_proximity`\n",
@@ -26418,30 +26430,18 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "description": "\nAdds additional filters to the proximity search that provides options to specify positional constraints\n",
-            "enum": [
-              "after",
-              "before"
-            ],
+            "description": "\nWhen set to true, only rulemakings with at least one key document are returned\n",
             "in": "query",
-            "name": "proximity_filter",
+            "name": "is_key_document",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           },
           {
-            "description": "\nSpecifies the term to which the `proximity_filter` option applies to and defines what must appear in relation to the `q_proximity` phrase\n",
+            "description": "\nWhen set to true, this flag returns rulemakings that are currently open for comment.\n",
             "in": "query",
-            "name": "proximity_filter_term",
+            "name": "is_open_for_comment",
             "required": false,
-            "type": "string"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -26758,59 +26758,6 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
             "items": {
@@ -26822,23 +26769,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "contributor_id",
+            "name": "image_number",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of contributor",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
             "in": "query",
             "items": {
-              "type": "string"
+              "type": "integer"
             },
-            "name": "contributor_name",
+            "name": "two_year_transaction_period",
             "required": false,
             "type": "array"
           },
@@ -26855,28 +26802,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "State of contributor. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Zip code of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_zip",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Employer of contributor, filers need to make an effort to gather this information",
             "in": "query",
             "items": {
@@ -26885,51 +26810,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "contributor_employer",
             "required": false,
             "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Occupation of contributor, filers need to make an effort to gather this information",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_occupation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "When sorting by `contribution_receipt_date`, this is populated with the contribution_receipt_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_contribution_receipt_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `contribution_receipt_amount`, this is populated with the contribution_receipt_amount` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_contribution_receipt_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "name": "line_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "default": null,
-            "description": "Restrict to non-earmarked individual contributions where memo code is true. Filtering individuals is useful to make sure contributions are not double reported and in creating breakdowns of the amount of money coming from individuals.",
-            "in": "query",
-            "name": "is_individual",
-            "required": false,
-            "type": "boolean",
-            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -26948,42 +26828,45 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
+            "description": "Name of contributor",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "two_year_transaction_period",
+            "name": "contributor_name",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "description": "Occupation of contributor, filers need to make an effort to gather this information",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "C",
-                "D",
-                "E",
-                "H",
-                "I",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "S",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z"
-              ],
               "type": "string"
             },
-            "name": "recipient_committee_type",
+            "name": "contributor_occupation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "State of contributor. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_id",
             "required": false,
             "type": "array"
           },
@@ -27030,16 +26913,59 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minimum load date",
+            "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
             "in": "query",
-            "name": "min_load_date",
+            "items": {
+              "enum": [
+                "",
+                "C",
+                "D",
+                "E",
+                "H",
+                "I",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "S",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z"
+              ],
+              "type": "string"
+            },
+            "name": "recipient_committee_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Zip code of contributor",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_zip",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-contribution_receipt_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
             "required": false,
             "type": "string"
           },
           {
-            "description": "Maximum load date",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "max_load_date",
+            "name": "api_key",
             "required": false,
             "type": "string"
           },
@@ -27050,23 +26976,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-contribution_receipt_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -27093,10 +27002,101 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Restrict to non-earmarked individual contributions where memo code is true. Filtering individuals is useful to make sure contributions are not double reported and in creating breakdowns of the amount of money coming from individuals.",
+            "in": "query",
+            "name": "is_individual",
+            "required": false,
+            "type": "boolean",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `contribution_receipt_amount`, this is populated with the contribution_receipt_amount` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_contribution_receipt_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `contribution_receipt_date`, this is populated with the contribution_receipt_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_contribution_receipt_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
+            "in": "query",
+            "name": "line_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maximum load date",
+            "in": "query",
+            "name": "max_load_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minimum load date",
+            "in": "query",
+            "name": "min_load_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -27119,20 +27119,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides itemized individual contributions received by a committee, aggregated by the contributor’s employer name. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -27157,24 +27152,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27201,12 +27200,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -27227,20 +27227,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides itemized individual contributions received by a committee, aggregated by the contributor’s occupation. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -27265,24 +27260,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27309,12 +27308,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -27335,20 +27335,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides individual contributions received by a committee, aggregated by size:\n\n```\n - $200 and under\n - $200.01 - $499.99\n - $500 - $999.99\n - $1000 - $1999.99\n - $2000 +\n```\n\nThe $200.00 and under category includes contributions of $200 or less combined with unitemized individual contributions.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -27380,24 +27375,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27424,12 +27423,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -27450,20 +27450,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides itemized individual contributions received by a committee, aggregated by size of contribution and candidate. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "size"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -27488,27 +27487,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "election_full",
+            "name": "api_key",
             "required": false,
-            "type": "boolean"
+            "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "size"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27535,12 +27535,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -27561,20 +27561,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides itemized individual contributions received by a committee, aggregated by the contributor’s state. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -27599,15 +27594,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "-total",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27616,14 +27632,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "hide_null",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "-total",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -27648,14 +27656,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -27676,20 +27676,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides itemized individual contributions received by a committee, aggregated by contributor’s state and candidate. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "state"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -27714,27 +27713,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "election_full",
+            "name": "api_key",
             "required": false,
-            "type": "boolean"
+            "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "state"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27761,12 +27761,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -27787,20 +27787,19 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nItemized individual contributions aggregated by contributor’s state, candidate, committee type and cycle. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "total"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -27825,27 +27824,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "election_full",
+            "name": "api_key",
             "required": false,
-            "type": "boolean"
+            "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "total"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -27872,12 +27872,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -27910,6 +27910,17 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n        - all All Committee Types\n        - all_candidates All Candidate Committee Types (H, S, P)\n        - all_pacs All PAC Committee Types (N, O, Q, V, W)\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "US state or territory",
             "in": "query",
             "items": {
@@ -27920,15 +27931,20 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n        - all All Committee Types\n        - all_candidates All Candidate Committee Types (H, S, P)\n        - all_pacs All PAC Committee Types (N, O, Q, V, W)\n",
+            "default": "cycle",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_type",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": 1,
@@ -27945,14 +27961,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": "cycle",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -27977,14 +27985,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -28005,20 +28005,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides itemized individual contributions received by a committee, aggregated by the contributor’s ZIP code. If you are interested in our “is_individual” methodology, review the [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology). Unitemized individual contributions are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -28028,17 +28023,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "integer"
             },
             "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Zip code of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "zip",
             "required": false,
             "type": "array"
           },
@@ -28055,23 +28039,38 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "description": "Zip code of contributor",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_id",
+            "name": "zip",
             "required": false,
             "type": "array"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "sort",
+            "name": "api_key",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -28098,12 +28097,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -28124,22 +28124,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nEfiling endpoints provide real-time campaign finance data received from electronic filers. Efiling endpoints only contain the most recent four months of data and don't contain the processed and coded data that you can find on other endpoints.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -28152,12 +28136,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of contributor",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "contributor_name",
+            "name": "image_number",
             "required": false,
             "type": "array"
           },
@@ -28174,23 +28158,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "State of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Employer of contributor, filers need to make an effort to gather this information",
             "in": "query",
             "items": {
               "type": "string"
             },
             "name": "contributor_employer",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Name of contributor",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_name",
             "required": false,
             "type": "array"
           },
@@ -28207,56 +28191,14 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
+            "description": "State of contributor",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "image_number",
+            "name": "contributor_state",
             "required": false,
             "type": "array"
-          },
-          {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
           },
           {
             "default": "-contribution_receipt_date",
@@ -28265,6 +28207,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -28291,10 +28257,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -28318,59 +28318,6 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
             "items": {
@@ -28382,23 +28329,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "contributor_id",
+            "name": "image_number",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of contributor",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
             "in": "query",
             "items": {
-              "type": "string"
+              "type": "integer"
             },
-            "name": "contributor_name",
+            "name": "two_year_transaction_period",
             "required": false,
             "type": "array"
           },
@@ -28415,28 +28362,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "State of contributor. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Zip code of contributor",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_zip",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "Employer of contributor, filers need to make an effort to gather this information",
             "in": "query",
             "items": {
@@ -28445,51 +28370,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "contributor_employer",
             "required": false,
             "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Occupation of contributor, filers need to make an effort to gather this information",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_occupation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "When sorting by `contribution_receipt_date`, this is populated with the contribution_receipt_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_contribution_receipt_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `contribution_receipt_amount`, this is populated with the contribution_receipt_amount` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_contribution_receipt_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "name": "line_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "default": null,
-            "description": "Restrict to non-earmarked individual contributions where memo code is true. Filtering individuals is useful to make sure contributions are not double reported and in creating breakdowns of the amount of money coming from individuals.",
-            "in": "query",
-            "name": "is_individual",
-            "required": false,
-            "type": "boolean",
-            "x-nullable": true
           },
           {
             "collectionFormat": "multi",
@@ -28508,42 +28388,45 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
+            "description": "Name of contributor",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "two_year_transaction_period",
+            "name": "contributor_name",
             "required": false,
             "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
+            "description": "Occupation of contributor, filers need to make an effort to gather this information",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "C",
-                "D",
-                "E",
-                "H",
-                "I",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "S",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z"
-              ],
               "type": "string"
             },
-            "name": "recipient_committee_type",
+            "name": "contributor_occupation",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "State of contributor. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_id",
             "required": false,
             "type": "array"
           },
@@ -28590,16 +28473,59 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minimum load date",
+            "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
             "in": "query",
-            "name": "min_load_date",
+            "items": {
+              "enum": [
+                "",
+                "C",
+                "D",
+                "E",
+                "H",
+                "I",
+                "N",
+                "O",
+                "P",
+                "Q",
+                "S",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "Z"
+              ],
+              "type": "string"
+            },
+            "name": "recipient_committee_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Zip code of contributor",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_zip",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-contribution_receipt_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
             "required": false,
             "type": "string"
           },
           {
-            "description": "Maximum load date",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "max_load_date",
+            "name": "api_key",
             "required": false,
             "type": "string"
           },
@@ -28610,23 +28536,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-contribution_receipt_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -28653,10 +28562,101 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Restrict to non-earmarked individual contributions where memo code is true. Filtering individuals is useful to make sure contributions are not double reported and in creating breakdowns of the amount of money coming from individuals.",
+            "in": "query",
+            "name": "is_individual",
+            "required": false,
+            "type": "boolean",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `contribution_receipt_amount`, this is populated with the contribution_receipt_amount` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_contribution_receipt_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `contribution_receipt_date`, this is populated with the contribution_receipt_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_contribution_receipt_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
+            "in": "query",
+            "name": "line_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maximum load date",
+            "in": "query",
+            "name": "max_load_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minimum load date",
+            "in": "query",
+            "name": "min_load_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           },
@@ -28696,46 +28696,63 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nFilters individual or committee contributions based on line number\n",
             "in": "query",
-            "name": "min_image_number",
+            "items": {
+              "enum": [
+                "individual",
+                "committee"
+              ],
+              "type": "string"
+            },
+            "name": "contributor_type",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "Maxium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
             "in": "query",
-            "name": "max_image_number",
+            "items": {
+              "type": "integer"
+            },
+            "name": "report_year",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "Filter for all amounts greater than a value.",
+            "collectionFormat": "multi",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
             "in": "query",
-            "name": "min_amount",
+            "items": {
+              "type": "integer"
+            },
+            "name": "two_year_transaction_period",
             "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
-            "description": "Filter for all amounts less than a value.",
+            "collectionFormat": "multi",
+            "description": "City of contributor",
             "in": "query",
-            "name": "max_amount",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_city",
             "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "collectionFormat": "multi",
+            "description": "Employer of contributor, filers need to make an effort to gather this information",
             "in": "query",
-            "name": "min_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_employer",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -28750,12 +28767,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "City of contributor",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "contributor_city",
+            "name": "report_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Occupation of contributor, filers need to make an effort to gather this information",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "contributor_occupation",
             "required": false,
             "type": "array"
           },
@@ -28782,92 +28810,20 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "Employer of contributor, filers need to make an effort to gather this information",
+            "default": "-contribution_receipt_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_employer",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "Occupation of contributor, filers need to make an effort to gather this information",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "contributor_occupation",
+            "name": "api_key",
             "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "When sorting by `contribution_receipt_date`, this is populated with the contribution_receipt_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_contribution_receipt_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `contribution_amount`, this is populated with the contribution_amount` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_contribution_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "report_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilters individual or committee contributions based on line number\n",
-            "in": "query",
-            "items": {
-              "enum": [
-                "individual",
-                "committee"
-              ],
-              "type": "string"
-            },
-            "name": "contributor_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "two_year_transaction_period",
-            "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "default": 20,
@@ -28876,23 +28832,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-contribution_receipt_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -28911,10 +28850,71 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `contribution_amount`, this is populated with the contribution_amount` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_contribution_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `contribution_receipt_date`, this is populated with the contribution_receipt_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_contribution_receipt_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -28938,6 +28938,17 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
@@ -28948,55 +28959,24 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
             "in": "query",
-            "name": "min_image_number",
+            "items": {
+              "type": "integer"
+            },
+            "name": "two_year_transaction_period",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "description": "City of recipient",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_id",
+            "name": "recipient_city",
             "required": false,
             "type": "array"
           },
@@ -29037,53 +29017,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_disbursement_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `disbursement_date`, this is populated with the `disbursement_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_disbursement_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "name": "line_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "City of recipient",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "recipient_city",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "recipient_committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "Name of the entity receiving the disbursement",
             "in": "query",
@@ -29107,21 +29040,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
               "type": "string"
             },
-            "name": "spender_committee_designation",
+            "name": "recipient_committee_id",
             "required": false,
             "type": "array"
           },
@@ -29144,6 +29068,26 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "spender_committee_org_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "spender_committee_designation",
             "required": false,
             "type": "array"
           },
@@ -29178,15 +29122,20 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
+            "default": "-disbursement_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "two_year_transaction_period",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": 20,
@@ -29195,23 +29144,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-disbursement_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -29230,10 +29162,78 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_disbursement_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_date`, this is populated with the `disbursement_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_disbursement_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
+            "in": "query",
+            "name": "line_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -29256,20 +29256,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule B disbursements aggregated by disbursement purpose category. To avoid double counting,\nmemoed items are not included.\nPurpose is a combination of transaction codes, category codes and disbursement description.\nInspect the `disbursement_purpose` sql function within the migrations for more details.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -29308,24 +29303,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -29352,12 +29351,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -29378,20 +29378,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule B disbursements aggregated by recipient name. To avoid double counting,\nmemoed items are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -29416,24 +29411,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -29460,12 +29459,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -29486,20 +29486,15 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule B disbursements aggregated by recipient committee ID, if applicable.\nTo avoid double counting, memoed items are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -29524,24 +29519,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -29568,12 +29567,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -29594,22 +29594,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nEfiling endpoints provide real-time campaign finance data received from electronic filers. Efiling endpoints only contain the most recent four months of data and don't contain the processed and coded data that you can find on other endpoints.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
@@ -29617,17 +29601,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Description of disbursement",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "disbursement_description",
             "required": false,
             "type": "array"
           },
@@ -29655,6 +29628,17 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
+            "description": "Description of disbursement",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "disbursement_description",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "State of recipient",
             "in": "query",
             "items": {
@@ -29665,44 +29649,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "When sorting by `disbursement_date`, this is populated with the         `disbursement_date` of the last result. However, you will need to pass the index         of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `disbursement_date`, this is populated with the         `disbursement_date` of the last result. However, you will need to pass the index         of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
             "default": "-disbursement_date",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -29729,12 +29705,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "When sorting by `disbursement_date`, this is populated with the         `disbursement_date` of the last result. However, you will need to pass the index         of that last result to `last_index` to get the next page.",
             "in": "query",
-            "name": "api_key",
+            "name": "max_date",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_date`, this is populated with the         `disbursement_date` of the last result. However, you will need to pass the index         of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
           }
         ],
         "responses": {
@@ -29756,6 +29756,17 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
@@ -29766,55 +29777,24 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
             "in": "query",
-            "name": "min_image_number",
+            "items": {
+              "type": "integer"
+            },
+            "name": "two_year_transaction_period",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "description": "City of recipient",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_id",
+            "name": "recipient_city",
             "required": false,
             "type": "array"
           },
@@ -29855,53 +29835,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_disbursement_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `disbursement_date`, this is populated with the `disbursement_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_disbursement_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "name": "line_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "City of recipient",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "recipient_city",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "recipient_committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
             "collectionFormat": "multi",
             "description": "Name of the entity receiving the disbursement",
             "in": "query",
@@ -29925,21 +29858,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "description": "The FEC identifier should be represented here if the contributor is registered with the FEC.",
             "in": "query",
             "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
               "type": "string"
             },
-            "name": "spender_committee_designation",
+            "name": "recipient_committee_id",
             "required": false,
             "type": "array"
           },
@@ -29962,6 +29886,26 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "spender_committee_org_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "spender_committee_designation",
             "required": false,
             "type": "array"
           },
@@ -29996,15 +29940,20 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nThis is a two-year period that is derived from the year a transaction took place in the\nItemized Schedule A and Schedule B tables. In cases where we have the date of the transaction\n(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)\nthe two_year_transaction_period is named after the ending, even-numbered year. If we do not\nhave the date  of the transaction, we fall back to using the report year (report_year in both\ntables) instead,  making the same cycle adjustment as necessary. If no transaction year is\nspecified, the results default to the most current cycle.\n",
+            "default": "-disbursement_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "two_year_transaction_period",
+            "name": "sort",
             "required": false,
-            "type": "array"
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
           },
           {
             "default": 20,
@@ -30013,23 +29962,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-disbursement_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -30048,10 +29980,78 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_disbursement_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_date`, this is populated with the `disbursement_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_disbursement_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
+            "in": "query",
+            "name": "line_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           },
@@ -30081,6 +30081,17 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
@@ -30091,41 +30102,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_id",
+            "name": "form_line_number",
             "required": false,
             "type": "array"
           },
@@ -30152,47 +30135,20 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "\nMinimum payment to date\n",
+            "default": "-incurred_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "min_payment_to_date",
+            "name": "sort",
             "required": false,
-            "type": "integer"
+            "type": "string"
           },
           {
-            "description": "\nMaximum payment to date\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "max_payment_to_date",
+            "name": "api_key",
             "required": false,
-            "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "\nMinimum incurred date\n",
-            "in": "query",
-            "name": "min_incurred_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "\nMaximum incurred date\n",
-            "in": "query",
-            "name": "max_incurred_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "form_line_number",
-            "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "default": 1,
@@ -30211,23 +30167,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "integer"
           },
           {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-incurred_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
-          },
-          {
             "default": false,
             "description": "Hide null values on sorted column(s).",
             "in": "query",
@@ -30244,6 +30183,33 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
+            "default": null,
+            "description": "\nMaximum incurred date\n",
+            "in": "query",
+            "name": "max_incurred_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "\nMinimum incurred date\n",
+            "in": "query",
+            "name": "min_incurred_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Index of last result from previous page",
+            "in": "query",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
             "default": true,
             "description": "Toggle that sorts null values last",
             "in": "query",
@@ -30252,10 +30218,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nFilter for all amounts greater than a value.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nMaximum payment to date\n",
+            "in": "query",
+            "name": "max_payment_to_date",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "\nMinimum payment to date\n",
+            "in": "query",
+            "name": "min_payment_to_date",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -30278,6 +30278,14 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule C shows all loans, endorsements and loan guarantees a committee\nreceives or makes.\n\nThe committee continues to report the loan until it is repaid.\n",
         "parameters": [
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -30292,15 +30300,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
           },
           {
             "default": false,
@@ -30327,12 +30326,13 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "x-nullable": true
           },
           {
             "in": "path",
@@ -30360,6 +30360,17 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
@@ -30370,66 +30381,59 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
             "in": "query",
-            "name": "min_image_number",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_line_number",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "Maxium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
             "in": "query",
-            "name": "max_image_number",
+            "items": {
+              "type": "integer"
+            },
+            "name": "report_year",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
             "in": "query",
-            "name": "min_payment_period",
+            "items": {
+              "type": "string"
+            },
+            "name": "report_type",
             "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
             "in": "query",
-            "name": "max_payment_period",
+            "items": {
+              "type": "string"
+            },
+            "name": "filing_form",
             "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
+            "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
             "in": "query",
-            "name": "min_amount_incurred",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_type",
             "required": false,
-            "type": "number"
-          },
-          {
-            "in": "query",
-            "name": "max_amount_incurred",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "in": "query",
-            "name": "min_amount_outstanding_beginning",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "in": "query",
-            "name": "max_amount_outstanding_beginning",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "in": "query",
-            "name": "min_amount_outstanding_close",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "in": "query",
-            "name": "max_amount_outstanding_close",
-            "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -30442,21 +30446,60 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
+            "default": "-coverage_end_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "nature_of_debt",
+            "name": "sort",
             "required": false,
             "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": false,
+            "description": "Hide null values on sorted column(s).",
+            "in": "query",
+            "name": "sort_hide_null",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "in": "query",
+            "name": "sort_null_only",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle that sorts null values last",
+            "in": "query",
+            "name": "sort_nulls_last",
+            "required": false,
+            "type": "boolean"
           },
           {
             "default": null,
@@ -30495,113 +30538,70 @@ Source: https://api.open.fec.gov/swagger/
             "x-nullable": true
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "description": "Maxium image number of the page where the schedule item is reported",
             "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "report_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "form_line_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "filing_form",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": "-coverage_end_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
+            "name": "max_image_number",
             "required": false,
             "type": "string"
           },
           {
-            "default": false,
-            "description": "Hide null values on sorted column(s).",
+            "description": "Minium image number of the page where the schedule item is reported",
             "in": "query",
-            "name": "sort_hide_null",
+            "name": "min_image_number",
             "required": false,
-            "type": "boolean"
+            "type": "string"
           },
           {
-            "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
             "in": "query",
-            "name": "sort_null_only",
+            "name": "max_amount_incurred",
             "required": false,
-            "type": "boolean"
+            "type": "number"
           },
           {
-            "default": false,
-            "description": "Toggle that sorts null values last",
             "in": "query",
-            "name": "sort_nulls_last",
+            "name": "max_amount_outstanding_beginning",
             "required": false,
-            "type": "boolean"
+            "type": "number"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "max_amount_outstanding_close",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "max_payment_period",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "min_amount_incurred",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "min_amount_outstanding_beginning",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "min_amount_outstanding_close",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "min_payment_period",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "nature_of_debt",
             "required": false,
             "type": "string"
           }
@@ -30624,6 +30624,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule D, it shows debts and obligations owed to or by the committee that are\nrequired to be disclosed.\n\n\n",
         "parameters": [
           {
+            "default": "-coverage_end_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -30638,14 +30654,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": "-coverage_end_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -30670,14 +30678,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           },
           {
             "in": "path",
@@ -30705,6 +30705,39 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_office_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
@@ -30715,46 +30748,74 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
             "in": "query",
-            "name": "min_image_number",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_line_number",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "Maxium image number of the page where the schedule item is reported",
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
-            "name": "max_image_number",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "Filter for all amounts greater than a value.",
+            "collectionFormat": "multi",
+            "description": "\nKeyword search for spender name or ID\n",
             "in": "query",
-            "name": "min_amount",
+            "items": {
+              "type": "string"
+            },
+            "name": "q_spender",
             "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
-            "description": "Filter for all amounts less than a value.",
+            "collectionFormat": "multi",
+            "description": "\nName of the entity that received the payment.\n",
             "in": "query",
-            "name": "max_amount",
+            "items": {
+              "type": "string"
+            },
+            "name": "payee_name",
             "required": false,
-            "type": "number"
+            "type": "array"
           },
           {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "collectionFormat": "multi",
+            "description": "\nRecord filed as 24- or 48-hour notice.\n",
             "in": "query",
-            "name": "min_date",
+            "items": {
+              "type": "boolean"
+            },
+            "name": "is_notice",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "collectionFormat": "multi",
+            "description": "Explains if the money was spent in order to support or oppose a candidate or candidates. (Coded S or O for support or oppose.) This indicator applies to independent expenditures and communication costs.",
             "in": "query",
-            "name": "max_date",
+            "items": {
+              "enum": [
+                "S",
+                "O"
+              ],
+              "type": "string"
+            },
+            "name": "support_oppose_indicator",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -30775,23 +30836,23 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "filing_form",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "Three-letter code for the party affiliated with a candidate or committee. For example, DEM for Democratic Party and REP for Republican Party.",
             "in": "query",
             "items": {
               "type": "string"
             },
             "name": "candidate_party",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_office_state",
             "required": false,
             "type": "array"
           },
@@ -30807,178 +30868,20 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "default": "-expenditure_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "filing_form",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "\nWhen sorting by `expenditure_date`,\nthis is populated with the `expenditure_date` of the last result.\nHowever, you will need to pass the index of that last result to\n`last_index` to get the next page.\n",
-            "in": "query",
-            "name": "last_expenditure_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "\nWhen sorting by `expenditure_amount`,\nthis is populated with the `expenditure_amount` of the last result.\nHowever, you will need to pass the index of that last result to\n`last_index` to get the next page.\n",
-            "in": "query",
-            "name": "last_expenditure_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "\nWhen sorting by `office_total_ytd`,\nthis is populated with the `office_total_ytd` of the last result.\nHowever, you will need to pass the index of that last result to\n`last_index` to get the next page.'\n",
-            "in": "query",
-            "name": "last_office_total_ytd",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nName of the entity that received the payment.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "payee_name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Explains if the money was spent in order to support or oppose a candidate or candidates. (Coded S or O for support or oppose.) This indicator applies to independent expenditures and communication costs.",
-            "in": "query",
-            "items": {
-              "enum": [
-                "S",
-                "O"
-              ],
-              "type": "string"
-            },
-            "name": "support_oppose_indicator",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": null,
-            "description": "\nWhen sorting by `support_oppose_indicator`,\nthis is populated with the `support_oppose_indicator` of the last result.\nHowever, you will need to pass the index of that last result to `last_index`\nto get the next page.'\n",
-            "in": "query",
-            "name": "last_support_oppose_indicator",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nRecord filed as 24- or 48-hour notice.\n",
-            "in": "query",
-            "items": {
-              "type": "boolean"
-            },
-            "name": "is_notice",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Selects all items distributed by this committee after this date",
-            "in": "query",
-            "name": "min_dissemination_date",
+            "name": "sort",
             "required": false,
             "type": "string"
           },
           {
-            "description": "Selects all items distributed by this committee before this date",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "max_dissemination_date",
+            "name": "api_key",
             "required": false,
             "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received after this date\n",
-            "in": "query",
-            "name": "min_filing_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nSelects all filings received before this date\n",
-            "in": "query",
-            "name": "max_filing_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe report associated with the transaction is either new or is the most-recently filed amendment. Undetermined version (`null`) is always included.\n",
-            "in": "query",
-            "name": "most_recent",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nKeyword search for spender name or ID\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q_spender",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "form_line_number",
-            "required": false,
-            "type": "array"
           },
           {
             "default": 20,
@@ -30987,23 +30890,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
-          },
-          {
-            "default": "-expenditure_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -31030,10 +30916,124 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "\nWhen sorting by `expenditure_amount`,\nthis is populated with the `expenditure_amount` of the last result.\nHowever, you will need to pass the index of that last result to\n`last_index` to get the next page.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "last_expenditure_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "\nWhen sorting by `expenditure_date`,\nthis is populated with the `expenditure_date` of the last result.\nHowever, you will need to pass the index of that last result to\n`last_index` to get the next page.\n",
+            "in": "query",
+            "name": "last_expenditure_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "\nWhen sorting by `office_total_ytd`,\nthis is populated with the `office_total_ytd` of the last result.\nHowever, you will need to pass the index of that last result to\n`last_index` to get the next page.'\n",
+            "in": "query",
+            "name": "last_office_total_ytd",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "\nWhen sorting by `support_oppose_indicator`,\nthis is populated with the `support_oppose_indicator` of the last result.\nHowever, you will need to pass the index of that last result to `last_index`\nto get the next page.'\n",
+            "in": "query",
+            "name": "last_support_oppose_indicator",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Index of last result from previous page",
+            "in": "query",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "description": "\nSelects all filings received after this date\n",
+            "in": "query",
+            "name": "min_filing_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nSelects all filings received before this date\n",
+            "in": "query",
+            "name": "max_filing_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe report associated with the transaction is either new or is the most-recently filed amendment. Undetermined version (`null`) is always included.\n",
+            "in": "query",
+            "name": "most_recent",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items distributed by this committee after this date",
+            "in": "query",
+            "name": "min_dissemination_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items distributed by this committee before this date",
+            "in": "query",
+            "name": "max_dissemination_date",
             "required": false,
             "type": "string"
           }
@@ -31056,67 +31056,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule E receipts aggregated by recipient candidate. To avoid double\ncounting, memoed items are not included.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "US state or territory where a candidate runs for office",
-            "in": "query",
-            "name": "state",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "name": "district",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Federal office candidate runs for: H, S or P",
-            "enum": [
-              "house",
-              "senate",
-              "president"
-            ],
-            "in": "query",
-            "name": "office",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
@@ -31139,27 +31078,39 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "default": null,
-            "description": "Support or opposition",
-            "enum": [
-              "S",
-              "O",
-              null
-            ],
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
-            "name": "support_oppose",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "array"
           },
           {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "name": "sort",
+            "name": "api_key",
             "required": false,
-            "type": "string",
-            "x-nullable": true
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -31186,10 +31137,59 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Support or opposition",
+            "enum": [
+              "S",
+              "O",
+              null
+            ],
+            "in": "query",
+            "name": "support_oppose",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
+            "in": "query",
+            "name": "election_full",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Federal office candidate runs for: H, S or P",
+            "enum": [
+              "house",
+              "senate",
+              "president"
+            ],
+            "in": "query",
+            "name": "office",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "in": "query",
+            "name": "district",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "name": "state",
             "required": false,
             "type": "string"
           }
@@ -31212,29 +31212,13 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nEfiling endpoints provide real-time campaign finance data received from electronic filers. Efiling endpoints only contain the most recent four months of data and don't contain the processed and coded data that you can find on other endpoints.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nSearch for candidates by candiate id or candidate first or last name\n",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "candidate_search",
+            "name": "candidate_id",
             "required": false,
             "type": "array"
           },
@@ -31251,12 +31235,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "candidate_id",
+            "name": "image_number",
             "required": false,
             "type": "array"
           },
@@ -31273,12 +31257,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
+            "description": "\nSearch for candidates by candiate id or candidate first or last name\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "image_number",
+            "name": "candidate_search",
             "required": false,
             "type": "array"
           },
@@ -31298,46 +31282,15 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Selects all items expended by this committee after this date",
+            "collectionFormat": "multi",
+            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
             "in": "query",
-            "name": "min_expenditure_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "filing_form",
             "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Selects all items expended by this committee before this date",
-            "in": "query",
-            "name": "max_expenditure_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Selects all items distributed by this committee after this date",
-            "in": "query",
-            "name": "min_dissemination_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Selects all items distributed by this committee before this date",
-            "in": "query",
-            "name": "max_dissemination_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Selects all items expended by this committee greater than this amount",
-            "in": "query",
-            "name": "min_expenditure_amount",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "description": "Selects all items expended by this committee less than this amount",
-            "in": "query",
-            "name": "max_expenditure_amount",
-            "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -31362,17 +31315,15 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Federal office candidate runs for: H, S or P",
-            "enum": [
-              "",
-              "H",
-              "S",
-              "P"
-            ],
+            "collectionFormat": "multi",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
             "in": "query",
-            "name": "candidate_office",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_office_district",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -31386,62 +31337,36 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_office_district",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nThe report associated with the transaction is either new or is the most-recently filed amendment. Undetermined version (`null`) is always included.\n",
-            "in": "query",
-            "name": "most_recent",
-            "required": false,
-            "type": "boolean"
-          },
-          {
-            "description": "Timestamp of electronic or paper record that FEC received",
-            "in": "query",
-            "name": "min_filed_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Timestamp of electronic or paper record that FEC received",
-            "in": "query",
-            "name": "max_filed_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The form where the underlying data comes from, for example, Form 1 would appear as F1:\n    - F1   Statement of Organization\n    - F1M  Notification of Multicandidate Status\n    - F2   Statement of Candidacy\n    - F24  24/48 Hour Report of Independent Expenditures\n    - F3   Report of Receipts and Disbursements for an Authorized Committee\n    - F3P  Report of Receipts and Disbursements by an Authorized Committee of a Candidate for     The Office of President or Vice President\n    - F3L  Report of Contributions Bundled by Lobbyists/Registrants and Lobbyist/Registrant PACs\n    - F3X  Report of Receipts and Disbursements for other than an Authorized Committee\n    - F4   Report of Receipts and Disbursements for a Committee or Organization Supporting a Nomination Convention\n    - F5   Report of Independent Expenditures Made and Contributions Received\n    - F6   48 Hour Notice of Contributions/Loans Received\n    - F7   Report of Communication Costs by Corporations and Membership Organizations\n    - F8   Debt Settlement Plan\n    - F9   24 Hour Notice of Disbursements for Electioneering Communications\n    - F13  Report of Donations Accepted for Inaugural Committee\n    - F99  Miscellaneous Text\n    - FRQ  Request for Additional Information\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "filing_form",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nRecord filed as 24- or 48-hour notice.\n",
-            "in": "query",
-            "name": "is_notice",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "default": "-expenditure_date",
             "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -31468,10 +31393,85 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nRecord filed as 24- or 48-hour notice.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "is_notice",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "\nThe report associated with the transaction is either new or is the most-recently filed amendment. Undetermined version (`null`) is always included.\n",
+            "in": "query",
+            "name": "most_recent",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Federal office candidate runs for: H, S or P",
+            "enum": [
+              "",
+              "H",
+              "S",
+              "P"
+            ],
+            "in": "query",
+            "name": "candidate_office",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items distributed by this committee after this date",
+            "in": "query",
+            "name": "min_dissemination_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items distributed by this committee before this date",
+            "in": "query",
+            "name": "max_dissemination_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items expended by this committee after this date",
+            "in": "query",
+            "name": "min_expenditure_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items expended by this committee before this date",
+            "in": "query",
+            "name": "max_expenditure_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Selects all items expended by this committee greater than this amount",
+            "in": "query",
+            "name": "min_expenditure_amount",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Selects all items expended by this committee less than this amount",
+            "in": "query",
+            "name": "max_expenditure_amount",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Timestamp of electronic or paper record that FEC received",
+            "in": "query",
+            "name": "max_filed_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Timestamp of electronic or paper record that FEC received",
+            "in": "query",
+            "name": "min_filed_date",
             "required": false,
             "type": "string"
           }
@@ -31494,52 +31494,6 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nTotal independent expenditure on supported or opposed candidates by cycle or candidate election year.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "default": true,
-            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
-            "in": "query",
-            "name": "election_full",
-            "required": false,
-            "type": "boolean"
-          },
-          {
             "collectionFormat": "multi",
             "default": [
               "-cycle",
@@ -31554,6 +31508,52 @@ Source: https://api.open.fec.gov/swagger/
             "required": false,
             "type": "array",
             "x-nullable": true
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "candidate_id",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -31580,12 +31580,12 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": true,
+            "description": "`True` indicates that full election period of a candidate.\n`False` indicates that two year election cycle.",
             "in": "query",
-            "name": "api_key",
+            "name": "election_full",
             "required": false,
-            "type": "string"
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -31607,76 +31607,12 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Filter for all amounts greater than a value.",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "Filter for all amounts less than a value.",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "\nA unique identifier assigned to each candidate registered with the FEC.\nIf a person runs for several offices, that person will have separate candidate IDs for each office.\nFirst character indicates office - [P]residential, [H]ouse, [S]enate].\nSecond character is the last digit of the two-year period the ID was created.\nThird and fourth is the candidate state. Presidential IDs don't have state.\nFifth and sixth is the district when the candidate first ran. This does not change if the\ncandidate/member's district changes during re-districting. Presidential IDs don't have districts.\nThe rest is sequence.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
             "name": "candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nName of the entity that received the payment.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "payee_name",
             "required": false,
             "type": "array"
           },
@@ -31693,12 +31629,12 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
             "in": "query",
             "items": {
-              "type": "integer"
+              "type": "string"
             },
-            "name": "cycle",
+            "name": "image_number",
             "required": false,
             "type": "array"
           },
@@ -31712,6 +31648,44 @@ Source: https://api.open.fec.gov/swagger/
             "name": "form_line_number",
             "required": false,
             "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nName of the entity that received the payment.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "payee_name",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "expenditure_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
           },
           {
             "default": 1,
@@ -31728,14 +31702,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": "expenditure_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -31762,10 +31728,44 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nThe earliest date used to filter reported activity. Only records with an applicable\nreporting date after this date are returned.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "\nThe latest date used to filter reported activity. Only records with an applicable reporting date\nbefore this date are returned.\n",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for all amounts greater than a value.",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Filter for all amounts less than a value.",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -31788,6 +31788,14 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nSchedule F, it shows all special expenditures a national or state party committee\nmakes in connection with the general election campaigns of federal candidates.\n\nThese coordinated party expenditures do not count against the contribution limits but are subject to other limits,\nthese limits are detailed in Chapter 7 of the FEC Campaign Guide for Political Party Committees.\n",
         "parameters": [
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -31802,14 +31810,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           },
           {
             "in": "path",
@@ -31837,170 +31837,16 @@ Source: https://api.open.fec.gov/swagger/
         "parameters": [
           {
             "collectionFormat": "multi",
-            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "image_number",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
             "default": null,
-            "description": "Minimum event_purpose_date",
+            "description": "When sorting by `disbursement_purpose`, this is populated with the `disbursement_purpose`of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
             "in": "query",
-            "name": "min_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "last_disbursement_purpose",
             "required": false,
-            "type": "string",
+            "type": "array",
             "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "Maximum event_purpose_date",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "report_year",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "report_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Additional description of activity_or_event",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "activity_or_event",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nName of the entity that received the payment.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q_payee_name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "City of the entity that received the payment",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "payee_city",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Zip of the entity that received the payment",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "payee_zip",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "State of the entity that received the payment. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "payee_state",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Purpose of the allocated disbursement",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "q_disbursement_purpose",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_id",
-            "required": false,
-            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -32018,28 +31864,6 @@ Source: https://api.open.fec.gov/swagger/
           {
             "collectionFormat": "multi",
             "default": null,
-            "description": "When sorting by `disbursement_purpose`, this is populated with the `disbursement_purpose`of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "last_disbursement_purpose",
-            "required": false,
-            "type": "array",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `event_purpose_date`, this is populated with the `event_purpose_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_event_purpose_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "collectionFormat": "multi",
-            "default": null,
             "description": "When sorting by `spender_committee_name`, this is populated with the `spender_committee_name` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
             "in": "query",
             "items": {
@@ -32051,13 +31875,70 @@ Source: https://api.open.fec.gov/swagger/
             "x-nullable": true
           },
           {
-            "default": null,
-            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "last_disbursement_amount",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "number",
-            "x-nullable": true
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nAn unique identifier for each page where the electronic or paper filing is reported.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "image_number",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "form_line_number",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nForms with coverage date - \n    year from the coverage ending date.\nForms without coverage date - \n    year from the receipt date.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "report_year",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nName of the entity that received the payment.\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "q_payee_name",
+            "required": false,
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -32067,39 +31948,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "administrative_voter_drive_activity_indicator",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Activity or event: Fundraising checkbox",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "fundraising_activity_indicator",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Activity or event: Exempt checkbox",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "exempt_activity_indicator",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Activity or event: Direct Candidate checkbox",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "direct_candidate_support_activity_indicator",
             "required": false,
             "type": "array"
           },
@@ -32116,12 +31964,34 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Activity or event: Voter Drive checkbox",
+            "description": "Activity or event: Direct Candidate checkbox",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "general_voter_drive_activity_indicator",
+            "name": "direct_candidate_support_activity_indicator",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Activity or event: Exempt checkbox",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "exempt_activity_indicator",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Activity or event: Fundraising checkbox",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "fundraising_activity_indicator",
             "required": false,
             "type": "array"
           },
@@ -32138,12 +32008,98 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
+            "description": "Activity or event: Voter Drive checkbox",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "general_voter_drive_activity_indicator",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Additional description of activity_or_event",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "activity_or_event",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "City of the entity that received the payment",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "payee_city",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Name of report where the underlying data comes from:\n    - 10D Pre-Election\n    - 10G Pre-General\n    - 10P Pre-Primary\n    - 10R Pre-Run-Off\n    - 10S Pre-Special\n    - 12C Pre-Convention\n    - 12G Pre-General\n    - 12P Pre-Primary\n    - 12R Pre-Run-Off\n    - 12S Pre-Special\n    - 30D Post-Election\n    - 30G Post-General\n    - 30P Post-Primary\n    - 30R Post-Run-Off\n    - 30S Post-Special\n    - 60D Post-Convention\n    - M1  January Monthly\n    - M10 October Monthly\n    - M11 November Monthly\n    - M12 December Monthly\n    - M2  February Monthly\n    - M3  March Monthly\n    - M4  April Monthly\n    - M5  May Monthly\n    - M6  June Monthly\n    - M7  July Monthly\n    - M8  August Monthly\n    - M9  September Monthly\n    - MY  Mid-Year Report\n    - Q1  April Quarterly\n    - Q2  July Quarterly\n    - Q3  October Quarterly\n    - TER Termination Report\n    - YE  Year-End\n    - ADJ COMP ADJUST AMEND\n    - CA  COMPREHENSIVE AMEND\n    - 90S Post Inaugural Supplement\n    - 90D Post Inaugural\n    - 24  24 Hour Notification (F6, F9)\n    - 24  24 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - 48  48 Hour Report of Independent Expenditures (F5, F24/F3X)\n    - M7S July Monthly/Semi-Annual\n    - MSA Monthly Semi-Annual (MY)\n    - MYS Monthly Year End/Semi-Annual\n    - Q2S July Quarterly/Semi-Annual\n    - QSA Quarterly Semi-Annual (MY)\n    - QYS Quarterly Year End/Semi-Annual\n    - QYE Quarterly Semi-Annual (YE)\n    - QMS Quarterly Mid-Year/ Semi-Annual\n    - MSY Monthly Semi-Annual (YE)\n",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "report_type",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Purpose of the allocated disbursement",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "q_disbursement_purpose",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "State of the entity that received the payment. \nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "payee_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
             "description": "The name of the committee. If a committee changes its name,     the most recent name will be shown. Committee names are not unique. Use committee_id     for looking up records.",
             "in": "query",
             "items": {
               "type": "string"
             },
             "name": "spender_committee_name",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "in": "query",
+            "items": {
+              "enum": [
+                "",
+                "A",
+                "J",
+                "P",
+                "U",
+                "B",
+                "D"
+              ],
+              "type": "string"
+            },
+            "name": "spender_committee_designation",
             "required": false,
             "type": "array"
           },
@@ -32179,51 +32135,14 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
-            "in": "query",
-            "items": {
-              "enum": [
-                "",
-                "A",
-                "J",
-                "P",
-                "U",
-                "B",
-                "D"
-              ],
-              "type": "string"
-            },
-            "name": "spender_committee_designation",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nFilter for form and line number using the following format:\n`FORM-LINENUMBER`.  For example an argument such as `F3X-16` would filter\ndown to all entries from form `F3X` line number `16`.\n",
+            "description": "Zip of the entity that received the payment",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "form_line_number",
+            "name": "payee_zip",
             "required": false,
             "type": "array"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": null,
-            "description": "Index of last result from previous page",
-            "in": "query",
-            "name": "last_index",
-            "required": false,
-            "type": "integer",
-            "x-nullable": true
           },
           {
             "default": "-event_purpose_date",
@@ -32232,6 +32151,22 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -32250,10 +32185,75 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Index of last result from previous page",
             "in": "query",
-            "name": "api_key",
+            "name": "last_index",
+            "required": false,
+            "type": "integer",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Maximum event_purpose_date",
+            "in": "query",
+            "name": "max_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Minimum event_purpose_date",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_disbursement_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `event_purpose_date`, this is populated with the `event_purpose_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_event_purpose_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -32276,20 +32276,28 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nEfiling endpoints provide real-time campaign finance data received from electronic filers. Efiling endpoints only contain the most recent four months of data and don't contain the processed and coded data that you can find on other endpoints.\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": null,
+            "description": "When sorting by `disbursement_purpose`, this is populated with the `disbursement_purpose`of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "last_disbursement_purpose",
             "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
+            "collectionFormat": "multi",
+            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
             "in": "query",
-            "name": "per_page",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_id",
             "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -32303,20 +32311,6 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Minium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "min_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "description": "Maxium image number of the page where the schedule item is reported",
-            "in": "query",
-            "name": "max_image_number",
-            "required": false,
-            "type": "string"
-          },
-          {
             "collectionFormat": "multi",
             "description": "City of the entity that received the payment",
             "in": "query",
@@ -32324,17 +32318,6 @@ Source: https://api.open.fec.gov/swagger/
               "type": "string"
             },
             "name": "payee_city",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "Zip of the entity that received the payment",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "payee_zip",
             "required": false,
             "type": "array"
           },
@@ -32351,77 +32334,14 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each committee or filer registered with the FEC. In general a committee id begins with the letter C which is followed by eight digits.\n",
+            "description": "Zip of the entity that received the payment",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_id",
+            "name": "payee_zip",
             "required": false,
             "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "default": null,
-            "description": "When sorting by `disbursement_purpose`, this is populated with the `disbursement_purpose`of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "last_disbursement_purpose",
-            "required": false,
-            "type": "array",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `event_purpose_date`, this is populated with the `event_purpose_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_event_purpose_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "Minimum event_purpose_date",
-            "in": "query",
-            "name": "min_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "Maximum event_purpose_date",
-            "in": "query",
-            "name": "max_date",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
-          },
-          {
-            "default": null,
-            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
-            "in": "query",
-            "name": "last_disbursement_amount",
-            "required": false,
-            "type": "number",
-            "x-nullable": true
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_amount",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_amount",
-            "required": false,
-            "type": "number"
           },
           {
             "default": "-event_purpose_date",
@@ -32430,6 +32350,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -32456,10 +32400,66 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Maximum event_purpose_date",
             "in": "query",
-            "name": "api_key",
+            "name": "max_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "Minimum event_purpose_date",
+            "in": "query",
+            "name": "min_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_disbursement_amount",
+            "required": false,
+            "type": "number",
+            "x-nullable": true
+          },
+          {
+            "default": null,
+            "description": "When sorting by `event_purpose_date`, this is populated with the `event_purpose_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.",
+            "in": "query",
+            "name": "last_event_purpose_date",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_amount",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "Maxium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "max_image_number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Minium image number of the page where the schedule item is reported",
+            "in": "query",
+            "name": "min_image_number",
             "required": false,
             "type": "string"
           }
@@ -32482,6 +32482,14 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nState laws and procedures govern elections for state or local offices as well as\nhow candidates appear on election ballots.\nContact the appropriate state election office for more information.\n",
         "parameters": [
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -32496,22 +32504,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "description": "\nEnter a state (Ex: AK, TX, VA etc..) to find the local election offices contact\ninformation.\n\n",
-            "in": "query",
-            "name": "state",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "default": null,
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string",
-            "x-nullable": true
           },
           {
             "default": false,
@@ -32538,11 +32530,19 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "default": null,
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "sort",
             "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "description": "\nEnter a state (Ex: AK, TX, VA etc..) to find the local election offices contact\ninformation.\n\n",
+            "in": "query",
+            "name": "state",
+            "required": true,
             "type": "string"
           }
         ],
@@ -32564,6 +32564,22 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nProvides cumulative receipt totals by entity type, over a two year cycle. Totals are adjusted to avoid double counting.\n\nThis is [the sql](https://github.com/fecgov/openFEC/blob/develop/data/migrations/V41__large_aggregates.sql) that creates these calculations.\n",
         "parameters": [
           {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "end_date",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
             "default": 1,
             "description": "For paginating through results, starting at page 1",
             "in": "query",
@@ -32578,21 +32594,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "per_page",
             "required": false,
             "type": "integer"
-          },
-          {
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "name": "cycle",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "default": "end_date",
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "type": "string"
           },
           {
             "default": false,
@@ -32619,12 +32620,11 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
             "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
+            "name": "cycle",
+            "required": true,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -32645,20 +32645,30 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides information about an inaugural committee's Form 13 report of donations accepted.\nThe data is aggregated by the contributor and the two-year period. We refer to two-year periods as a `cycle`.\n\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
+            "collectionFormat": "multi",
+            "default": [
+              "-total_donation"
+            ],
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
             "in": "query",
-            "name": "page",
+            "items": {
+              "type": "string"
+            },
+            "name": "sort",
             "required": false,
-            "type": "integer"
+            "type": "array",
+            "x-nullable": true
           },
           {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
+            "collectionFormat": "multi",
+            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
             "in": "query",
-            "name": "per_page",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
             "required": false,
-            "type": "integer"
+            "type": "array"
           },
           {
             "collectionFormat": "multi",
@@ -32683,30 +32693,28 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "collectionFormat": "multi",
-            "description": "\nA two year election cycle that the committee was active- (after original registration\ndate but before expiration date in Form 1s) The cycle begins with\nan odd year and is named for its ending, even year.\n",
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
             "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
+            "name": "api_key",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
-            "collectionFormat": "multi",
-            "default": [
-              "-total_donation"
-            ],
-            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
             "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sort",
+            "name": "page",
             "required": false,
-            "type": "array",
-            "x-nullable": true
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -32731,14 +32739,6 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort_nulls_last",
             "required": false,
             "type": "boolean"
-          },
-          {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
-            "in": "query",
-            "name": "api_key",
-            "required": false,
-            "type": "string"
           }
         ],
         "responses": {
@@ -32759,40 +32759,13 @@ Source: https://api.open.fec.gov/swagger/
         "description": "\nThis endpoint provides information about a committee's Form 3, Form 3X, or Form 3P financial reports,\nwhich are aggregated by two-year period. We refer to two-year periods as a `cycle`.\n\nThe cycle is named after the even-numbered year and includes the year before it. To obtain\ntotals from 2013 and 2014, you would use 2014. In odd-numbered years, the current cycle\nis the next year — for example, in 2015, the current cycle is 2016.\n\nFor presidential and Senate candidates, multiple two-year cycles exist between elections.\n\n",
         "parameters": [
           {
-            "default": 1,
-            "description": "For paginating through results, starting at page 1",
-            "in": "query",
-            "name": "page",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "default": 20,
-            "description": "The number of results returned per page. Defaults to 20.",
-            "in": "query",
-            "name": "per_page",
-            "required": false,
-            "type": "integer"
-          },
-          {
             "collectionFormat": "multi",
-            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
-            "in": "query",
-            "items": {
-              "type": "integer"
-            },
-            "name": "cycle",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
+            "description": "\nA unique identifier assigned to each candidate registered with the FEC. If a person runs for several offices, that person will have separate candidate IDs for each office. This is a filter for Leadership PAC sponsor.\n",
             "in": "query",
             "items": {
               "type": "string"
             },
-            "name": "committee_designation",
+            "name": "sponsor_candidate_id",
             "required": false,
             "type": "array"
           },
@@ -32809,23 +32782,34 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "committee_type",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "\nA valid two-letter U.S. state or territory code. Use `ZZ` for foreign countries, or `other` for\nforeign countries and any invalid or missing values.",
             "in": "query",
             "items": {
               "type": "string"
             },
             "name": "committee_state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Name of the Committee's treasurer. If multiple treasurers for the committee, the most recent treasurer will be shown.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "treasurer_name",
             "required": false,
             "type": "array"
           },
@@ -32853,84 +32837,6 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "collectionFormat": "multi",
-            "description": "Name of the Committee's treasurer. If multiple treasurers for the committee, the most recent treasurer will be shown.",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "treasurer_name",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_disbursements",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_disbursements",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_receipts",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_receipts",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_last_cash_on_hand_end_period",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_last_cash_on_hand_end_period",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts greater than a value.\n",
-            "in": "query",
-            "name": "min_last_debts_owed_by_committee",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "description": "\nFilter for all amounts less than a value.\n",
-            "in": "query",
-            "name": "max_last_debts_owed_by_committee",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "collectionFormat": "multi",
-            "description": "\nA unique identifier assigned to each candidate registered with the FEC. If a person runs for several offices, that person will have separate candidate IDs for each office. This is a filter for Leadership PAC sponsor.\n",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "sponsor_candidate_id",
-            "required": false,
-            "type": "array"
-          },
-          {
-            "collectionFormat": "multi",
             "description": "The one-letter code for the kind for organization:\n        - C corporation\n        - L labor organization\n        - M membership organization\n        - T trade association\n        - V cooperative\n        - W corporation without capital stock\n        - H host committee\n        - I inaugural committee\n",
             "in": "query",
             "items": {
@@ -32952,18 +32858,26 @@ Source: https://api.open.fec.gov/swagger/
             "type": "array"
           },
           {
-            "description": "Filter for committees whose first Form 1 was received on or after this date.",
+            "collectionFormat": "multi",
+            "description": "The one-letter designation code of the organization:\n         - A authorized by a candidate\n         - J joint fundraising committee\n         - P principal campaign committee of a candidate\n         - U unauthorized\n         - B lobbyist/registrant PAC\n         - D leadership PAC\n",
             "in": "query",
-            "name": "min_first_f1_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_designation",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
-            "description": "Filter for committees whose first Form 1 was received on or before this date.",
+            "collectionFormat": "multi",
+            "description": "The one-letter type code of the organization:\n        - C communication cost\n        - D delegate\n        - E electioneering communication\n        - H house\n        - I independent expenditure filer (not a committee)\n        - N PAC - nonqualified\n        - O independent expenditure-only (super PACs)\n        - P presidential\n        - Q PAC - qualified\n        - S senate\n        - U single candidate independent expenditure\n        - V PAC with non-contribution account, nonqualified\n        - W PAC with non-contribution account, qualified\n        - X party, nonqualified\n        - Y party, qualified\n        - Z national party non-federal account\n",
             "in": "query",
-            "name": "max_first_f1_date",
+            "items": {
+              "type": "string"
+            },
+            "name": "committee_type",
             "required": false,
-            "type": "string"
+            "type": "array"
           },
           {
             "default": "-cycle",
@@ -32972,6 +32886,30 @@ Source: https://api.open.fec.gov/swagger/
             "name": "sort",
             "required": false,
             "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
           },
           {
             "default": false,
@@ -32998,12 +32936,60 @@ Source: https://api.open.fec.gov/swagger/
             "type": "boolean"
           },
           {
-            "default": "DEMO_KEY",
-            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "description": "\nFilter for all amounts greater than a value.\n",
             "in": "query",
-            "name": "api_key",
+            "name": "min_disbursements",
             "required": false,
-            "type": "string"
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_last_cash_on_hand_end_period",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_last_debts_owed_by_committee",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts greater than a value.\n",
+            "in": "query",
+            "name": "min_receipts",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_disbursements",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_last_cash_on_hand_end_period",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_last_debts_owed_by_committee",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "description": "\nFilter for all amounts less than a value.\n",
+            "in": "query",
+            "name": "max_receipts",
+            "required": false,
+            "type": "number"
           },
           {
             "description": "Committee groupings based on FEC filing form.                 Choose one of: `presidential`, `pac`, `party`, `pac-party`,                 `house-senate`, or `ie-only`",
@@ -33018,6 +33004,20 @@ Source: https://api.open.fec.gov/swagger/
             "in": "path",
             "name": "entity_type",
             "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose first Form 1 was received on or after this date.",
+            "in": "query",
+            "name": "min_first_f1_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Filter for committees whose first Form 1 was received on or before this date.",
+            "in": "query",
+            "name": "max_first_f1_date",
+            "required": false,
             "type": "string"
           }
         ],
@@ -33065,32 +33065,48 @@ Source: https://api.open.fec.gov/swagger/
   "swagger": "2.0",
   "tags": [
     {
+      "description": "All official records and reports filed by or delivered to the FEC. \n\n Note: because the filings data includes many records, counts for large result sets are approximate; you will want to page through the records until no records are returned.",
+      "name": "filings"
+    },
+    {
+      "description": "An electioneering communication is any broadcast, cable or satellite communication that fulfills each of the following conditions: \n\n _The communication refers to a clearly identified federal candidate._ \n\n _The communication is publicly distributed by a television station, radio station, cable television system or satellite system for a fee._ \n\n _The communication is distributed within 60 days prior to a general election or 30 days prior to a primary election to federal office._",
+      "name": "electioneering"
+    },
+    {
       "description": "Candidate endpoints give you access to information about the people running for office. This information is organized by `candidate_id`. If you're unfamiliar with candidate IDs, using `/candidates/search/` will help you locate a particular candidate. \n\n Officially, a candidate is an individual seeking nomination for election to a federal office. People become candidates when they (or agents working on their behalf) raise contributions or make expenditures that exceed $5,000. \n\n The candidate endpoints primarily use data from FEC registration [Form 1](https://www.fec.gov/resources/cms-content/documents/fecfrm1.pdf) for committee information and [Form 2](https://www.fec.gov/resources/cms-content/documents/fecfrm2.pdf) for candidate information.",
       "name": "candidate"
+    },
+    {
+      "description": "Collection of endpoints that provide information about national party committee accounts including presidential nominating conventions, national party headquarters buildings, and election recounts and contests and other legal proceedings accounts.",
+      "name": "national party accounts"
     },
     {
       "description": "Committees are entities that spend and raise money in an election. Their characteristics and relationships with candidates can change over time. \n\n You might want to use filters or search endpoints to find the committee you're looking for. Then you can use other committee endpoints to explore information about the committee that interests you. \n\n Financial information is organized by `committee_id`, so finding the committee you're interested in will lead you to more granular financial information. \n\n The committee endpoints include all FEC filers, even if they aren't registered as a committee. \n\n Officially, committees include the committees and organizations that file with the FEC. Several different types of organizations file financial reports with the FEC: \n\n *Campaign committees authorized by particular candidates to raise and spend funds in their campaigns. Non-party committees (e.g., PACs), some of which may be sponsored by corporations, unions, trade or membership groups, etc. Political party committees at the national, state, and local levels. Groups and individuals making only independent expenditures Corporations, unions, and other organizations making internal communications* \n\n The committee endpoints primarily use data from FEC registration Form 1 and Form 2.",
       "name": "committee"
     },
     {
-      "description": "Reporting deadlines, election dates FEC meetings, events etc.",
-      "name": "dates"
+      "description": "Data supporting fec.gov's presidential map. \n\n For more information about the presidential map data available to download from fec.gov, please visit: https://www.fec.gov/campaign-finance-data/presidential-map-data/",
+      "name": "presidential"
+    },
+    {
+      "description": "Efiling endpoints provide real-time campaign finance data received from electronic filers. Efiling endpoints only contain the most recent four months of data and don't contain the processed and coded data that you can find on other endpoints.",
+      "name": "efiling"
+    },
+    {
+      "description": "Explore relevant statutes, regulations and Commission actions.",
+      "name": "legal"
     },
     {
       "description": "Fetch key information about a committee's Form 3, Form 3X, Form 13, or Form 3P financial reports. \n\n Most committees are required to summarize their financial activity in each filing; those summaries are included in these files. Generally, committees file reports on a quarterly or monthly basis, but some must also submit a report 12 days before primary elections. Therefore, during the primary season, the period covered by this file may be different for different committees. These totals also incorporate any changes made by committees, if any report covering the period is amended. \n\n Information is made available on the API as soon as it's processed. Keep in mind, complex paper filings take longer to process. \n\n The financial endpoints use data from FEC [form 5](https://www.fec.gov/pdf/forms/fecfrm5.pdf), for independent expenditors; or the summary and detailed summary pages of the FEC [Form 3](https://www.fec.gov/pdf/forms/fecfrm3.pdf), for House and Senate committees; [Form 3X](https://www.fec.gov/pdf/forms/fecfrm3x.pdf), for PACs and parties; [Form 13](https://www.fec.gov/pdf/forms/fecfrm13.pdf) for inaugural committees; and [Form 3P](https://www.fec.gov/pdf/forms/fecfrm3p.pdf), for presidential committees.",
       "name": "financial"
     },
     {
-      "description": "Search for candidates, committees by name.",
-      "name": "search"
+      "description": "Reporting deadlines, election dates FEC meetings, events etc.",
+      "name": "dates"
     },
     {
-      "description": "All official records and reports filed by or delivered to the FEC. \n\n Note: because the filings data includes many records, counts for large result sets are approximate; you will want to page through the records until no records are returned.",
-      "name": "filings"
-    },
-    {
-      "description": "This collection of endpoints includes Schedule A records reported by a committee. Schedule A records describe itemized receipts, including contributions from individuals. If you are interested in contributions from individuals, use the /schedules/schedule_a/ endpoint. For a more complete description of all Schedule A records visit [About receipts data](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/about-receipts-data/). If you are interested in our \"is_individual\" methodology visit our [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology/). \n\n \n\n \n\n Schedule A is also available as a database dump file that is updated weekly on Sunday. The database dump files are here: https://www.fec.gov/files/bulk-downloads/index.html?prefix=bulk-downloads/data-dump/schedules/. The instructions are here: https://www.fec.gov/files//bulk-downloads/data-dump/schedules/README.txt. We cannot provide help with restoring the database dump files, but you can refer to this community led [group](https://groups.google.com/forum/#!forum/fec-data) for discussion.",
-      "name": "receipts"
+      "description": "Reports of communication costs by corporations and membership organizations from the FEC [F7 forms](https://www.fec.gov/pdf/forms/fecform7.pdf).",
+      "name": "communication cost"
     },
     {
       "description": "Schedule B filings describe itemized disbursements. This data explains how committees and other filers spend their money. These figures are reported as part of forms F3, F3X and F3P.",
@@ -33113,36 +33129,20 @@ Source: https://api.open.fec.gov/swagger/
       "name": "party-coordinated expenditures"
     },
     {
-      "description": "Reports of communication costs by corporations and membership organizations from the FEC [F7 forms](https://www.fec.gov/pdf/forms/fecform7.pdf).",
-      "name": "communication cost"
-    },
-    {
-      "description": "An electioneering communication is any broadcast, cable or satellite communication that fulfills each of the following conditions: \n\n _The communication refers to a clearly identified federal candidate._ \n\n _The communication is publicly distributed by a television station, radio station, cable television system or satellite system for a fee._ \n\n _The communication is distributed within 60 days prior to a general election or 30 days prior to a primary election to federal office._",
-      "name": "electioneering"
-    },
-    {
-      "description": "Data supporting fec.gov's presidential map. \n\n For more information about the presidential map data available to download from fec.gov, please visit: https://www.fec.gov/campaign-finance-data/presidential-map-data/",
-      "name": "presidential"
-    },
-    {
-      "description": "Useful tools for those who file with the FEC. \n\n Look up RAD analyst with telephone extension by committee_id.",
-      "name": "filer resources"
-    },
-    {
-      "description": "Collection of endpoints that provide information about national party committee accounts including presidential nominating conventions, national party headquarters buildings, and election recounts and contests and other legal proceedings accounts.",
-      "name": "national party accounts"
-    },
-    {
-      "description": "Efiling endpoints provide real-time campaign finance data received from electronic filers. Efiling endpoints only contain the most recent four months of data and don't contain the processed and coded data that you can find on other endpoints.",
-      "name": "efiling"
+      "description": "Search for candidates, committees by name.",
+      "name": "search"
     },
     {
       "description": "The agency’s monitoring process may detect potential violations through a review of a committee’s reports or through a Commission audit. By law, all enforcement cases must remain confidential until they’re closed. \n\n The Commission is required by law to audit Presidential campaigns that accept public funds. In addition, the Commission audits a committee when it appears not to have met the threshold requirements for substantial compliance with the Federal Election Campaign Act. The audit determines whether the committee complied with limitations, prohibitions and disclosure requirements. \n\n These endpoints contain Final Audit Reports approved by the Commission since inception.",
       "name": "audit"
     },
     {
-      "description": "Explore relevant statutes, regulations and Commission actions.",
-      "name": "legal"
+      "description": "This collection of endpoints includes Schedule A records reported by a committee. Schedule A records describe itemized receipts, including contributions from individuals. If you are interested in contributions from individuals, use the /schedules/schedule_a/ endpoint. For a more complete description of all Schedule A records visit [About receipts data](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/about-receipts-data/). If you are interested in our \"is_individual\" methodology visit our [methodology page](https://www.fec.gov/campaign-finance-data/about-campaign-finance-data/methodology/). \n\n \n\n \n\n Schedule A is also available as a database dump file that is updated weekly on Sunday. The database dump files are here: https://www.fec.gov/files/bulk-downloads/index.html?prefix=bulk-downloads/data-dump/schedules/. The instructions are here: https://www.fec.gov/files//bulk-downloads/data-dump/schedules/README.txt. We cannot provide help with restoring the database dump files, but you can refer to this community led [group](https://groups.google.com/forum/#!forum/fec-data) for discussion.",
+      "name": "receipts"
+    },
+    {
+      "description": "Useful tools for those who file with the FEC. \n\n Look up RAD analyst with telephone extension by committee_id.",
+      "name": "filer resources"
     }
   ]
 }

@@ -115,6 +115,33 @@ function htmlToText(html) {
     .trim();
 }
 
+// Stable form for JSON specs: sorted object keys, and arrays of objects
+// stable-sorted by their serialized form — some servers (FEC swagger) shuffle
+// array order per request, which would churn the mirror diff every pull.
+function canonicalJson(v) {
+  if (Array.isArray(v)) {
+    const mapped = v.map(canonicalJson);
+    return mapped.every(x => x && typeof x === "object" && !Array.isArray(x))
+      ? mapped.sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))
+      : mapped;
+  }
+  if (v && typeof v === "object") {
+    return Object.fromEntries(Object.keys(v).sort().map(k => [k, canonicalJson(v[k])]));
+  }
+  return v;
+}
+
+// Pages that embed the current time in generated examples — scrub so the
+// mirror only diffs on real content changes.
+const VOLATILE = [
+  { hostRe: /earthquake\.usgs\.gov/, re: /\b20\d{2}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?\b/g, sub: "<time>" },
+];
+
+function scrubVolatile(url, body) {
+  for (const v of VOLATILE) if (v.hostRe.test(new URL(url).host)) body = body.replace(v.re, v.sub);
+  return body;
+}
+
 function slugify(label) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
@@ -153,7 +180,7 @@ async function fetchDoc({ module: mod, label, url }) {
       const raw = await res.text();
       let body;
       if (type.includes("json") || (textExt && /\.json$/i.test(new URL(url).pathname) && !/^</.test(raw.trim()))) {
-        try { body = "```json\n" + JSON.stringify(JSON.parse(raw), null, 2) + "\n```"; }
+        try { body = "```json\n" + JSON.stringify(canonicalJson(JSON.parse(raw)), null, 2) + "\n```"; }
         catch { body = raw; }
       } else if (type.includes("html") && !textExt) {
         body = htmlToText(raw);
@@ -170,7 +197,7 @@ async function fetchDoc({ module: mod, label, url }) {
           return { mod, label, url, status: "html challenge page", body: null };
         }
       }
-      return { mod, label, url, status: "ok", body };
+      return { mod, label, url, status: "ok", body: scrubVolatile(url, body) };
     } catch (err) {
       if (attempt === 0) continue;
       return { mod, label, url, status: `error: ${err.cause?.code ?? err.name}`, body: null, transient: true };

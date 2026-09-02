@@ -6,95 +6,1392 @@ Source: https://fdc.nal.usda.gov/api-spec/fdc_api.json
 
 ```json
 {
-  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "AbridgedFoodItem": {
+        "properties": {
+          "brandOwner": {
+            "description": "only applies to Branded Foods",
+            "example": "Kar Nut Products Company",
+            "type": "string"
+          },
+          "dataType": {
+            "example": "Branded",
+            "type": "string"
+          },
+          "description": {
+            "example": "NUT 'N BERRY MIX",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 534358,
+            "type": "integer"
+          },
+          "foodCode": {
+            "description": "only applies to Survey Foods",
+            "example": "27415110",
+            "type": "string"
+          },
+          "foodNutrients": {
+            "items": {
+              "$ref": "#/components/schemas/AbridgedFoodNutrient"
+            },
+            "type": "array"
+          },
+          "gtinUpc": {
+            "description": "only applies to Branded Foods",
+            "example": "077034085228",
+            "type": "string"
+          },
+          "ndbNumber": {
+            "description": "only applies to Foundation and SRLegacy Foods",
+            "example": "7954",
+            "type": "string"
+          },
+          "publicationDate": {
+            "example": "4/1/2019",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fdcId",
+          "dataType",
+          "description"
+        ],
+        "type": "object"
+      },
+      "AbridgedFoodNutrient": {
+        "properties": {
+          "amount": {
+            "example": 0.53,
+            "format": "float",
+            "type": "number"
+          },
+          "derivationCode": {
+            "example": "LCCD",
+            "type": "string"
+          },
+          "derivationDescription": {
+            "example": "Calculated from a daily value percentage per serving size measure",
+            "type": "string"
+          },
+          "name": {
+            "example": "Iron, Fe",
+            "type": "string"
+          },
+          "number": {
+            "example": 303,
+            "format": "uint",
+            "type": "integer"
+          },
+          "unitName": {
+            "example": "mg",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "nutrientNumber",
+          "unit"
+        ]
+      },
+      "BrandedFoodItem": {
+        "properties": {
+          "availableDate": {
+            "example": "8/18/2018",
+            "type": "string"
+          },
+          "brandOwner": {
+            "example": "Kar Nut Products Company",
+            "type": "string"
+          },
+          "brandedFoodCategory": {
+            "example": "Popcorn, Peanuts, Seeds & Related Snacks",
+            "type": "string"
+          },
+          "dataSource": {
+            "example": "LI",
+            "type": "string"
+          },
+          "dataType": {
+            "example": "Branded",
+            "type": "string"
+          },
+          "description": {
+            "example": "NUT 'N BERRY MIX",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 534358,
+            "type": "integer"
+          },
+          "foodClass": {
+            "example": "Branded",
+            "type": "string"
+          },
+          "foodNutrients": {
+            "items": {
+              "$ref": "#/components/schemas/FoodNutrient"
+            },
+            "type": "array"
+          },
+          "foodUpdateLog": {
+            "items": {
+              "$ref": "#/components/schemas/FoodUpdateLog"
+            },
+            "type": "array"
+          },
+          "gtinUpc": {
+            "example": "077034085228",
+            "type": "string"
+          },
+          "householdServingFullText": {
+            "example": "1 ONZ",
+            "type": "string"
+          },
+          "ingredients": {
+            "example": "PEANUTS (PEANUTS, PEANUT AND/OR SUNFLOWER OIL). RAISINS. DRIED CRANBERRIES (CRANBERRIES, SUGAR, SUNFLOWER OIL). SUNFLOWER KERNELS AND ALMONDS (SUNFLOWER KERNELS AND ALMONDS, PEANUT AND/OR SUNFLOWER OIL).",
+            "type": "string"
+          },
+          "labelNutrients": {
+            "properties": {
+              "calcium": {
+                "properties": {
+                  "value": {
+                    "example": 19.88,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "calories": {
+                "properties": {
+                  "value": {
+                    "example": 140,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "carbohydrates": {
+                "properties": {
+                  "value": {
+                    "example": 12.0008,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "cholesterol": {
+                "properties": {
+                  "value": {
+                    "example": 0,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "fat": {
+                "properties": {
+                  "value": {
+                    "example": 8.9992,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "fiber": {
+                "properties": {
+                  "value": {
+                    "example": 1.988,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "iron": {
+                "properties": {
+                  "value": {
+                    "example": 0.7196,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "postassium": {
+                "properties": {
+                  "value": {
+                    "example": 159.88,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "protein": {
+                "properties": {
+                  "value": {
+                    "example": 4.0012,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "saturatedFat": {
+                "properties": {
+                  "value": {
+                    "example": 0.9996,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "sodium": {
+                "properties": {
+                  "value": {
+                    "example": 0,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "sugars": {
+                "properties": {
+                  "value": {
+                    "example": 7.9996,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "transFat": {
+                "properties": {
+                  "value": {
+                    "example": 0,
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "modifiedDate": {
+            "example": "8/18/2018",
+            "type": "string"
+          },
+          "publicationDate": {
+            "example": "4/1/2019",
+            "type": "string"
+          },
+          "servingSize": {
+            "example": 28,
+            "format": "float32",
+            "type": "integer"
+          },
+          "servingSizeUnit": {
+            "example": "g",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fdcId",
+          "dataType",
+          "description"
+        ],
+        "type": "object"
+      },
+      "FoodAttribute": {
+        "properties": {
+          "FoodAttributeType": {
+            "properties": {
+              "description": {
+                "example": "Adjustments made to foods, including moisture and fat changes.",
+                "type": "string"
+              },
+              "id": {
+                "example": 1002,
+                "type": "integer"
+              },
+              "name": {
+                "example": "Adjustments",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "id": {
+            "example": 25117,
+            "type": "integer"
+          },
+          "sequenceNumber": {
+            "example": 1,
+            "type": "integer"
+          },
+          "value": {
+            "example": "Moisture change: -5.0%",
+            "type": "string"
+          }
+        }
+      },
+      "FoodCategory": {
+        "properties": {
+          "code": {
+            "example": "1100",
+            "type": "string"
+          },
+          "description": {
+            "example": "Vegetables and Vegetable Products",
+            "type": "string"
+          },
+          "id": {
+            "example": 11,
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "FoodComponent": {
+        "properties": {
+          "dataPoints": {
+            "example": 24,
+            "type": "integer"
+          },
+          "gramWeight": {
+            "example": 2.1,
+            "type": "number"
+          },
+          "id": {
+            "example": 59929,
+            "format": "int32",
+            "type": "integer"
+          },
+          "isRefuse": {
+            "example": true,
+            "type": "boolean"
+          },
+          "minYearAcquired": {
+            "example": 2011,
+            "type": "integer"
+          },
+          "name": {
+            "example": "External fat",
+            "type": "string"
+          },
+          "percentWeight": {
+            "example": 0.5,
+            "type": "number"
+          }
+        }
+      },
+      "FoodListCriteria": {
+        "description": "JSON for request body of 'list' POST request",
+        "properties": {
+          "dataType": {
+            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
+            "example": [
+              "Foundation",
+              "SR Legacy"
+            ],
+            "items": {
+              "enum": [
+                "Branded",
+                "Foundation",
+                "Survey (FNDDS)",
+                "SR Legacy"
+              ],
+              "type": "string"
+            },
+            "maxItems": 4,
+            "minItems": 1,
+            "type": "array"
+          },
+          "pageNumber": {
+            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
+            "example": 2,
+            "type": "integer"
+          },
+          "pageSize": {
+            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
+            "example": 25,
+            "maximum": 200,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "sortBy": {
+            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
+            "enum": [
+              "dataType.keyword",
+              "lowercaseDescription.keyword",
+              "fdcId",
+              "publishedDate"
+            ],
+            "type": "string"
+          },
+          "sortOrder": {
+            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "FoodNutrient": {
+        "properties": {
+          "amount": {
+            "example": 0,
+            "format": "float",
+            "type": "number"
+          },
+          "dataPoints": {
+            "example": 49,
+            "format": "int32",
+            "type": "integer"
+          },
+          "foodNutrientDerivation": {
+            "$ref": "#/components/schemas/FoodNutrientDerivation"
+          },
+          "id": {
+            "example": 167514,
+            "format": "uint",
+            "type": "integer"
+          },
+          "max": {
+            "example": 91.8,
+            "format": "float",
+            "type": "number"
+          },
+          "median": {
+            "example": 90.3,
+            "format": "float",
+            "type": "number"
+          },
+          "min": {
+            "example": 73.73,
+            "format": "float",
+            "type": "number"
+          },
+          "nutrient": {
+            "$ref": "#/components/schemas/Nutrient"
+          },
+          "nutrientAnalysisDetails": {
+            "$ref": "#/components/schemas/NutrientAnalysisDetails"
+          },
+          "type": {
+            "example": "FoodNutrient",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "nutrientNumber",
+          "unit"
+        ]
+      },
+      "FoodNutrientDerivation": {
+        "properties": {
+          "code": {
+            "example": "LCCD",
+            "type": "string"
+          },
+          "description": {
+            "example": "Calculated from a daily value percentage per serving size measure",
+            "type": "string"
+          },
+          "foodNutrientSource": {
+            "$ref": "#/components/schemas/FoodNutrientSource"
+          },
+          "id": {
+            "example": 75,
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "FoodNutrientSource": {
+        "properties": {
+          "code": {
+            "example": "12",
+            "type": "string"
+          },
+          "description": {
+            "example": "Manufacturer's analytical; partial documentation",
+            "type": "string"
+          },
+          "id": {
+            "example": 9,
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "FoodPortion": {
+        "properties": {
+          "amount": {
+            "example": 1,
+            "format": "float",
+            "type": "number"
+          },
+          "dataPoints": {
+            "example": 9,
+            "format": "int32",
+            "type": "integer"
+          },
+          "gramWeight": {
+            "example": 91,
+            "format": "float",
+            "type": "number"
+          },
+          "id": {
+            "example": 135806,
+            "format": "int32",
+            "type": "integer"
+          },
+          "measureUnit": {
+            "$ref": "#/components/schemas/MeasureUnit"
+          },
+          "minYearAcquired": {
+            "example": 2011,
+            "type": "integer"
+          },
+          "modifier": {
+            "example": "10205",
+            "type": "string"
+          },
+          "portionDescription": {
+            "example": "1 cup",
+            "type": "string"
+          },
+          "sequenceNumber": {
+            "example": 1,
+            "type": "integer"
+          }
+        }
+      },
+      "FoodSearchCriteria": {
+        "description": "JSON for request body of 'search' POST request",
+        "properties": {
+          "brandOwner": {
+            "description": "Optional. Filter results based on the brand owner of the food. Only applies to Branded Foods.",
+            "example": "Kar Nut Products Company",
+            "type": "string"
+          },
+          "dataType": {
+            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
+            "example": [
+              "Foundation",
+              "SR Legacy"
+            ],
+            "items": {
+              "enum": [
+                "Branded",
+                "Foundation",
+                "Survey (FNDDS)",
+                "SR Legacy"
+              ],
+              "type": "string"
+            },
+            "maxItems": 4,
+            "minItems": 1,
+            "type": "array"
+          },
+          "pageNumber": {
+            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
+            "example": 2,
+            "type": "integer"
+          },
+          "pageSize": {
+            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
+            "example": 25,
+            "maximum": 200,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "query": {
+            "description": "Search terms to use in the search. The string may also include standard [search operators](https://fdc.nal.usda.gov/help.html#bkmk-2)",
+            "example": "Cheddar cheese",
+            "type": "string"
+          },
+          "sortBy": {
+            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
+            "enum": [
+              "dataType.keyword",
+              "lowercaseDescription.keyword",
+              "fdcId",
+              "publishedDate"
+            ],
+            "type": "string"
+          },
+          "sortOrder": {
+            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "FoodUpdateLog": {
+        "properties": {
+          "availableDate": {
+            "example": "8/18/2018",
+            "type": "string"
+          },
+          "brandOwner": {
+            "example": "Kar Nut Products Company",
+            "type": "string"
+          },
+          "brandedFoodCategory": {
+            "example": "Popcorn, Peanuts, Seeds & Related Snacks",
+            "type": "string"
+          },
+          "changes": {
+            "example": "Nutrient Added, Nutrient Updated",
+            "type": "string"
+          },
+          "dataSource": {
+            "example": "LI",
+            "type": "string"
+          },
+          "dataType": {
+            "example": "Branded",
+            "type": "string"
+          },
+          "description": {
+            "example": "NUT 'N BERRY MIX",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 534358,
+            "type": "integer"
+          },
+          "foodAttributes": {
+            "items": {
+              "$ref": "#/components/schemas/FoodAttribute"
+            },
+            "type": "array"
+          },
+          "foodClass": {
+            "example": "Branded",
+            "type": "string"
+          },
+          "gtinUpc": {
+            "example": "077034085228",
+            "type": "string"
+          },
+          "householdServingFullText": {
+            "example": "1 ONZ",
+            "type": "string"
+          },
+          "ingredients": {
+            "example": "PEANUTS (PEANUTS, PEANUT AND/OR SUNFLOWER OIL). RAISINS. DRIED CRANBERRIES (CRANBERRIES, SUGAR, SUNFLOWER OIL). SUNFLOWER KERNELS AND ALMONDS (SUNFLOWER KERNELS AND ALMONDS, PEANUT AND/OR SUNFLOWER OIL).",
+            "type": "string"
+          },
+          "modifiedDate": {
+            "example": "8/18/2018",
+            "type": "string"
+          },
+          "publicationDate": {
+            "example": "4/1/2019",
+            "type": "string"
+          },
+          "servingSize": {
+            "example": 28,
+            "format": "float32",
+            "type": "integer"
+          },
+          "servingSizeUnit": {
+            "example": "g",
+            "type": "string"
+          }
+        }
+      },
+      "FoodsCriteria": {
+        "description": "JSON for request body of 'foods' POST request. Retrieves a list of food items by a list of up to 20 FDC IDs. Optional format and nutrients can be specified. Invalid FDC ID's or ones that are not found are omitted and an empty set is returned if there are no matches.",
+        "properties": {
+          "fdcIds": {
+            "description": "List of multiple FDC ID's",
+            "example": [
+              534358,
+              373052,
+              616350
+            ],
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "type": "array"
+          },
+          "format": {
+            "description": "Optional. 'abridged' for an abridged set of elements, 'full' for all elements (default).",
+            "enum": [
+              "abridged",
+              "full"
+            ],
+            "type": "string"
+          },
+          "nutrients": {
+            "description": "Optional. List of up to 25 nutrient numbers. Only the nutrient information for the specified nutrients will be returned.  If a food does not have any matching nutrients, the food will be returned with an empty foodNutrients element.",
+            "example": [
+              203,
+              204,
+              205
+            ],
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 25,
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "FoundationFoodItem": {
+        "properties": {
+          "dataType": {
+            "example": "Foundation",
+            "type": "string"
+          },
+          "description": {
+            "example": "Strawberries, raw",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 747448,
+            "type": "integer"
+          },
+          "foodCategory": {
+            "$ref": "#/components/schemas/FoodCategory"
+          },
+          "foodClass": {
+            "example": "FinalFood",
+            "type": "string"
+          },
+          "foodComponents": {
+            "items": {
+              "$ref": "#/components/schemas/FoodComponent"
+            },
+            "type": "array"
+          },
+          "foodNutrients": {
+            "items": {
+              "$ref": "#/components/schemas/FoodNutrient"
+            },
+            "type": "array"
+          },
+          "foodPortions": {
+            "items": {
+              "$ref": "#/components/schemas/FoodPortion"
+            },
+            "type": "array"
+          },
+          "footNote": {
+            "example": "Source number reflects the actual number of samples analyzed for a nutrient. Repeat nutrient analyses may have been done on the same sample with the values shown.",
+            "type": "string"
+          },
+          "inputFoods": {
+            "items": {
+              "$ref": "#/components/schemas/InputFoodFoundation"
+            },
+            "type": "array"
+          },
+          "isHistoricalReference": {
+            "example": false,
+            "type": "boolean"
+          },
+          "ndbNumber": {
+            "example": "9316",
+            "type": "string"
+          },
+          "nutrientConversionFactors": {
+            "items": {
+              "$ref": "#/components/schemas/NutrientConversionFactors"
+            },
+            "type": "array"
+          },
+          "publicationDate": {
+            "example": "12/16/2019",
+            "type": "string"
+          },
+          "scientificName": {
+            "example": "Fragaria X ananassa",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fdcId",
+          "dataType",
+          "description"
+        ]
+      },
+      "InputFoodFoundation": {
+        "description": "applies to Foundation foods. Not all inputFoods will have all fields.",
+        "properties": {
+          "foodDescription": {
+            "example": "Beef, Tenderloin Roast, select, roasted, comp5, lean (34BLTR)",
+            "type": "string"
+          },
+          "id": {
+            "example": 45551,
+            "type": "integer"
+          },
+          "inputFood": {
+            "$ref": "#/components/schemas/SampleFoodItem"
+          }
+        }
+      },
+      "InputFoodSurvey": {
+        "description": "applies to Survey (FNDDS). Not all inputFoods will have all fields.",
+        "properties": {
+          "amount": {
+            "example": 1.5,
+            "format": "float",
+            "type": "number"
+          },
+          "foodDescription": {
+            "example": "Spices, curry powder",
+            "type": "string"
+          },
+          "id": {
+            "example": 18146,
+            "type": "integer"
+          },
+          "ingredientCode": {
+            "example": 2015,
+            "type": "integer"
+          },
+          "ingredientDescription": {
+            "example": "Spices, curry powder",
+            "type": "string"
+          },
+          "ingredientWeight": {
+            "example": 9.45,
+            "format": "float",
+            "type": "number"
+          },
+          "inputFood": {
+            "$ref": "#/components/schemas/SurveyFoodItem"
+          },
+          "portionCode": {
+            "example": "21000",
+            "type": "string"
+          },
+          "portionDescription": {
+            "example": "1 tablespoon",
+            "type": "string"
+          },
+          "retentionFactor": {
+            "$ref": "#/components/schemas/RetentionFactor"
+          },
+          "sequenceNumber": {
+            "example": 6,
+            "type": "integer"
+          },
+          "surveyFlag": {
+            "example": 0,
+            "type": "integer"
+          },
+          "unit": {
+            "example": "TB",
+            "type": "string"
+          }
+        }
+      },
+      "MeasureUnit": {
+        "properties": {
+          "abbreviation": {
+            "example": "undetermined",
+            "type": "string"
+          },
+          "id": {
+            "example": 999,
+            "format": "int32",
+            "type": "integer"
+          },
+          "name": {
+            "example": "undetermined",
+            "type": "string"
+          }
+        }
+      },
+      "Nutrient": {
+        "description": "a food nutrient",
+        "properties": {
+          "id": {
+            "example": 1005,
+            "format": "uint",
+            "type": "integer"
+          },
+          "name": {
+            "example": "Carbohydrate, by difference",
+            "type": "string"
+          },
+          "number": {
+            "example": "305",
+            "type": "string"
+          },
+          "rank": {
+            "example": 1110,
+            "format": "uint",
+            "type": "integer"
+          },
+          "unitName": {
+            "example": "g",
+            "type": "string"
+          }
+        }
+      },
+      "NutrientAcquisitionDetails": {
+        "properties": {
+          "purchaseDate": {
+            "example": "12/2/2005",
+            "type": "string"
+          },
+          "sampleUnitId": {
+            "example": 321632,
+            "type": "integer"
+          },
+          "storeCity": {
+            "example": "TRUSSVILLE",
+            "type": "string"
+          },
+          "storeState": {
+            "example": "AL",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "NutrientAnalysisDetails": {
+        "properties": {
+          "amount": {
+            "example": 0,
+            "format": "float",
+            "type": "number"
+          },
+          "labMethodDescription": {
+            "example": "10.2135/cropsci2017.04.0244",
+            "type": "string"
+          },
+          "labMethodLink": {
+            "example": "https://doi.org/10.2135/cropsci2017.04.0244",
+            "format": "url",
+            "type": "string"
+          },
+          "labMethodOriginalDescription": {
+            "type": "string"
+          },
+          "labMethodTechnique": {
+            "example": "DOI for Beans",
+            "type": "string"
+          },
+          "nutrientAcquisitionDetails": {
+            "items": {
+              "$ref": "#/components/schemas/NutrientAcquisitionDetails"
+            },
+            "type": "array"
+          },
+          "nutrientId": {
+            "example": 1005,
+            "type": "integer"
+          },
+          "subSampleId": {
+            "example": 343866,
+            "type": "integer"
+          }
+        }
+      },
+      "NutrientConversionFactors": {
+        "properties": {
+          "type": {
+            "example": ".ProteinConversionFactor",
+            "type": "string"
+          },
+          "value": {
+            "example": 6.25,
+            "format": "float",
+            "type": "number"
+          }
+        }
+      },
+      "RetentionFactor": {
+        "properties": {
+          "code": {
+            "example": 3460,
+            "type": "integer"
+          },
+          "description": {
+            "example": "VEG, ROOTS, ETC, SAUTEED",
+            "type": "string"
+          },
+          "id": {
+            "example": 235,
+            "type": "integer"
+          }
+        }
+      },
+      "SRLegacyFoodItem": {
+        "properties": {
+          "dataType": {
+            "example": "SR Legacy",
+            "type": "string"
+          },
+          "description": {
+            "example": "Broccoli, raw",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 170379,
+            "type": "integer"
+          },
+          "foodCategory": {
+            "$ref": "#/components/schemas/FoodCategory"
+          },
+          "foodClass": {
+            "example": "FinalFood",
+            "type": "string"
+          },
+          "foodNutrients": {
+            "items": {
+              "$ref": "#/components/schemas/FoodNutrient"
+            },
+            "type": "array"
+          },
+          "isHistoricalReference": {
+            "example": true,
+            "type": "boolean"
+          },
+          "ndbNumber": {
+            "example": "11090",
+            "type": "string"
+          },
+          "nutrientConversionFactors": {
+            "items": {
+              "$ref": "#/components/schemas/NutrientConversionFactors"
+            },
+            "type": "array"
+          },
+          "publicationDate": {
+            "example": "4/1/2019",
+            "type": "string"
+          },
+          "scientificName": {
+            "example": "Brassica oleracea var. italica",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fdcId",
+          "dataType",
+          "description"
+        ]
+      },
+      "SampleFoodItem": {
+        "properties": {
+          "datatype": {
+            "example": "Sample",
+            "type": "string"
+          },
+          "description": {
+            "example": "Beef, Tenderloin Roast, select, roasted, comp5, lean (34BLTR)",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 45551,
+            "type": "integer"
+          },
+          "foodAttributes": {
+            "items": {
+              "$ref": "#/components/schemas/FoodCategory"
+            },
+            "type": "array"
+          },
+          "foodClass": {
+            "example": "Composite",
+            "type": "string"
+          },
+          "publicationDate": {
+            "example": "4/1/2019",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fdcId",
+          "dataType",
+          "description"
+        ]
+      },
+      "SearchResult": {
+        "properties": {
+          "currentPage": {
+            "description": "The current page of results being returned.",
+            "type": "integer"
+          },
+          "foodSearchCriteria": {
+            "description": "A copy of the criteria that were used in the search.",
+            "items": {
+              "$ref": "#/components/schemas/FoodSearchCriteria"
+            },
+            "type": "object"
+          },
+          "foods": {
+            "description": "The list of foods found matching the search criteria. See Food Fields below.",
+            "items": {
+              "$ref": "#/components/schemas/SearchResultFood"
+            },
+            "type": "array"
+          },
+          "totalHits": {
+            "description": "The total number of foods found matching the search criteria.",
+            "example": 1034,
+            "type": "integer"
+          },
+          "totalPages": {
+            "description": "The total number of pages found matching the search criteria.",
+            "type": "integer"
+          }
+        }
+      },
+      "SearchResultFood": {
+        "properties": {
+          "additionalDescriptions": {
+            "description": "Any additional descriptions of the food.",
+            "example": "Coon; sharp cheese; Tillamook; Hoop; Pioneer; New York; Wisconsin; Longhorn",
+            "type": "string"
+          },
+          "allHighlightFields": {
+            "description": "allHighlightFields",
+            "type": "string"
+          },
+          "brandOwner": {
+            "description": "Brand owner for the food. Only applies to Branded Foods.",
+            "example": "Supervalu, Inc.",
+            "type": "string"
+          },
+          "dataType": {
+            "description": "The type of the food data.",
+            "example": "Branded",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the food.",
+            "example": "BROCCOLI",
+            "type": "string"
+          },
+          "fdcId": {
+            "description": "Unique ID of the food.",
+            "example": 45001529,
+            "type": "integer"
+          },
+          "foodCode": {
+            "description": "Any A unique ID identifying the food within FNDDS.",
+            "type": "string"
+          },
+          "foodNutrients": {
+            "items": {
+              "$ref": "#/components/schemas/AbridgedFoodNutrient"
+            },
+            "type": "array"
+          },
+          "gtinUpc": {
+            "description": "GTIN or UPC code identifying the food. Only applies to Branded Foods.",
+            "example": "041303020937",
+            "type": "string"
+          },
+          "ingredients": {
+            "description": "The list of ingredients (as it appears on the product label). Only applies to Branded Foods.",
+            "type": "string"
+          },
+          "ndbNumber": {
+            "description": "Unique number assigned for foundation foods. Only applies to Foundation and SRLegacy Foods.",
+            "type": "string"
+          },
+          "publicationDate": {
+            "description": "Date the item was published to FDC.",
+            "example": "4/1/2019",
+            "type": "string"
+          },
+          "scientificName": {
+            "description": "The scientific name of the food.",
+            "type": "string"
+          },
+          "score": {
+            "description": "Relative score indicating how well the food matches the search criteria.",
+            "format": "float",
+            "type": "number"
+          }
+        },
+        "required": [
+          "fdcId",
+          "description"
+        ],
+        "type": "object"
+      },
+      "SurveyFoodItem": {
+        "properties": {
+          "datatype": {
+            "example": "Survey (FNDDS)",
+            "type": "string"
+          },
+          "description": {
+            "example": "Beef curry",
+            "type": "string"
+          },
+          "endDate": {
+            "example": "12/31/2014",
+            "type": "string"
+          },
+          "fdcId": {
+            "example": 337985,
+            "type": "integer"
+          },
+          "foodAttributes": {
+            "items": {
+              "$ref": "#/components/schemas/FoodAttribute"
+            },
+            "type": "array"
+          },
+          "foodClass": {
+            "example": "Survey",
+            "type": "string"
+          },
+          "foodCode": {
+            "example": "27116100",
+            "type": "string"
+          },
+          "foodPortions": {
+            "items": {
+              "$ref": "#/components/schemas/FoodPortion"
+            },
+            "type": "array"
+          },
+          "inputFoods": {
+            "items": {
+              "$ref": "#/components/schemas/InputFoodSurvey"
+            },
+            "type": "array"
+          },
+          "publicationDate": {
+            "example": "4/1/2019",
+            "type": "string"
+          },
+          "startDate": {
+            "example": "1/1/2013",
+            "type": "string"
+          },
+          "wweiaFoodCategory": {
+            "$ref": "#/components/schemas/WweiaFoodCategory"
+          }
+        },
+        "required": [
+          "fdcId",
+          "dataType",
+          "description"
+        ]
+      },
+      "WweiaFoodCategory": {
+        "properties": {
+          "wweiaFoodCategoryCode": {
+            "example": 3002,
+            "type": "integer"
+          },
+          "wweiaFoodCategoryDescription": {
+            "example": "Meat mixed dishes",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "in": "query",
+        "name": "api_key",
+        "type": "apiKey"
+      }
+    }
+  },
   "info": {
-    "description": "The FoodData Central API provides REST access to FoodData Central (FDC). It is intended primarily to assist application developers wishing to incorporate nutrient data into their applications or websites.\n  To take full advantage of the API, developers should familiarize themselves with the database by reading the database documentation available via links on [Data Type Documentation](https://fdc.nal.usda.gov/data-documentation.html). This documentation provides the detailed definitions and descriptions needed to understand the data elements referenced in the API documentation.\n  \n  Additional details about the API including rate limits, access, and licensing are available on the [FDC website](https://fdc.nal.usda.gov/api-guide.html)",
-    "version": "1.0.0",
-    "title": "Food Data Central API",
     "contact": {
       "name": "Food Data Central Contact Form",
       "url": "https://nal.altarama.com/reft100.aspx?key=FoodData"
     },
+    "description": "The FoodData Central API provides REST access to FoodData Central (FDC). It is intended primarily to assist application developers wishing to incorporate nutrient data into their applications or websites.\n  To take full advantage of the API, developers should familiarize themselves with the database by reading the database documentation available via links on [Data Type Documentation](https://fdc.nal.usda.gov/data-documentation.html). This documentation provides the detailed definitions and descriptions needed to understand the data elements referenced in the API documentation.\n  \n  Additional details about the API including rate limits, access, and licensing are available on the [FDC website](https://fdc.nal.usda.gov/api-guide.html)",
     "license": {
       "name": "Creative Commons 0 1.0 Universal",
       "url": "https://creativecommons.org"
-    }
+    },
+    "title": "Food Data Central API",
+    "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "https://api.nal.usda.gov/fdc"
-    }
-  ],
-  "security": [
-    {
-      "ApiKeyAuth": []
-    }
-  ],
-  "tags": [
-    {
-      "name": "FDC",
-      "description": "endpoints to retrieve nutrient data"
-    }
-  ],
+  "openapi": "3.0.0",
   "paths": {
     "/v1/food/{fdcId}": {
       "get": {
-        "tags": [
-          "FDC"
-        ],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "summary": "Fetches details for one food item by FDC ID",
         "description": "Retrieves a single food item by an FDC ID. Optional format and nutrients can be specified.",
         "operationId": "getFood",
         "parameters": [
           {
+            "description": "FDC id of the food to retrieve",
             "in": "path",
             "name": "fdcId",
-            "description": "FDC id of the food to retrieve",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
+            "description": "Optional. 'abridged' for an abridged set of elements, 'full' for all elements (default).",
             "in": "query",
             "name": "format",
-            "description": "Optional. 'abridged' for an abridged set of elements, 'full' for all elements (default).",
             "required": false,
             "schema": {
-              "type": "string",
               "enum": [
                 "abridged",
                 "full"
-              ]
+              ],
+              "type": "string"
             }
           },
           {
+            "description": "Optional. List of up to 25 nutrient numbers. Only the nutrient information for the specified nutrients will be returned. Should be comma separated list (e.g. nutrients=203,204) or repeating parameters (e.g. nutrients=203&nutrients=204). If a food does not have any matching nutrients, the food will be returned with an empty foodNutrients element.",
             "in": "query",
             "name": "nutrients",
-            "description": "Optional. List of up to 25 nutrient numbers. Only the nutrient information for the specified nutrients will be returned. Should be comma separated list (e.g. nutrients=203,204) or repeating parameters (e.g. nutrients=203&nutrients=204). If a food does not have any matching nutrients, the food will be returned with an empty foodNutrients element.",
             "schema": {
-              "type": "array",
-              "minItems": 1,
-              "maxItems": 25,
-              "items": {
-                "type": "integer"
-              },
               "example": [
                 203,
                 204,
                 205
-              ]
+              ],
+              "items": {
+                "type": "integer"
+              },
+              "maxItems": 25,
+              "minItems": 1,
+              "type": "array"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "One food result.",
             "content": {
               "application/json": {
                 "schema": {
@@ -117,7 +1414,8 @@ Source: https://fdc.nal.usda.gov/api-spec/fdc_api.json
                   ]
                 }
               }
-            }
+            },
+            "description": "One food result."
           },
           "400": {
             "description": "bad input parameter"
@@ -125,76 +1423,79 @@ Source: https://fdc.nal.usda.gov/api-spec/fdc_api.json
           "404": {
             "description": "no results found"
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Fetches details for one food item by FDC ID",
+        "tags": [
+          "FDC"
+        ]
       }
     },
     "/v1/foods": {
       "get": {
-        "tags": [
-          "FDC"
-        ],
-        "summary": "Fetches details for multiple food items using input FDC IDs",
         "description": "Retrieves a list of food items by a list of up to 20 FDC IDs. Optional format and nutrients can be specified. Invalid FDC ID's or ones that are not found are omitted and an empty set is returned if there are no matches.",
         "operationId": "getFoods",
         "parameters": [
           {
+            "description": "List of multiple FDC ID's. Should be comma separated list (e.g. fdcIds=534358,373052) or repeating parameters (e.g. fdcIds=534358&fdcIds=373052).",
             "in": "query",
             "name": "fdcIds",
             "required": true,
-            "description": "List of multiple FDC ID's. Should be comma separated list (e.g. fdcIds=534358,373052) or repeating parameters (e.g. fdcIds=534358&fdcIds=373052).",
             "schema": {
-              "type": "array",
-              "minItems": 1,
-              "maxItems": 20,
-              "items": {
-                "type": "string"
-              },
               "example": [
                 534358,
                 373052,
                 616350
-              ]
+              ],
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "minItems": 1,
+              "type": "array"
             }
           },
           {
+            "description": "Optional. 'abridged' for an abridged set of elements, 'full' for all elements (default).",
             "in": "query",
             "name": "format",
-            "description": "Optional. 'abridged' for an abridged set of elements, 'full' for all elements (default).",
             "required": false,
             "schema": {
-              "type": "string",
               "enum": [
                 "abridged",
                 "full"
-              ]
+              ],
+              "type": "string"
             }
           },
           {
+            "description": "Optional. List of up to 25 nutrient numbers. Only the nutrient information for the specified nutrients will be returned. Should be comma separated list (e.g. nutrients=203,204) or repeating parameters (e.g. nutrients=203&nutrients=204). If a food does not have any matching nutrients, the food will be returned with an empty foodNutrients element.",
             "in": "query",
             "name": "nutrients",
-            "description": "Optional. List of up to 25 nutrient numbers. Only the nutrient information for the specified nutrients will be returned. Should be comma separated list (e.g. nutrients=203,204) or repeating parameters (e.g. nutrients=203&nutrients=204). If a food does not have any matching nutrients, the food will be returned with an empty foodNutrients element.",
             "schema": {
-              "type": "array",
-              "minItems": 1,
-              "maxItems": 25,
-              "items": {
-                "type": "integer"
-              },
               "example": [
                 203,
                 204,
                 205
-              ]
+              ],
+              "items": {
+                "type": "integer"
+              },
+              "maxItems": 25,
+              "minItems": 1,
+              "type": "array"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of Food details matching specified FDC ID's. Invalid FDC ID's or ones that are not found are omitted.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "anyOf": [
                       {
@@ -213,40 +1514,40 @@ Source: https://fdc.nal.usda.gov/api-spec/fdc_api.json
                         "$ref": "#/components/schemas/SurveyFoodItem"
                       }
                     ]
-                  }
+                  },
+                  "type": "array"
                 }
               }
-            }
+            },
+            "description": "List of Food details matching specified FDC ID's. Invalid FDC ID's or ones that are not found are omitted."
           },
           "400": {
             "description": "bad input parameter"
           }
-        }
-      },
-      "post": {
+        },
+        "summary": "Fetches details for multiple food items using input FDC IDs",
         "tags": [
           "FDC"
-        ],
-        "summary": "Fetches details for multiple food items using input FDC IDs",
+        ]
+      },
+      "post": {
         "description": "Retrieves a list of food items by a list of up to 20 FDC IDs. Optional format and nutrients can be specified. Invalid FDC ID's or ones that are not found are omitted and an empty set is returned if there are no matches.",
         "operationId": "postFoods",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FoodsCriteria"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "List of Food details matching specified FDC ID's. Invalid FDC ID's or ones that are not found are omitted.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "anyOf": [
                       {
@@ -265,1666 +1566,365 @@ Source: https://fdc.nal.usda.gov/api-spec/fdc_api.json
                         "$ref": "#/components/schemas/SurveyFoodItem"
                       }
                     ]
-                  }
+                  },
+                  "type": "array"
                 }
               }
-            }
+            },
+            "description": "List of Food details matching specified FDC ID's. Invalid FDC ID's or ones that are not found are omitted."
           },
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "summary": "Fetches details for multiple food items using input FDC IDs",
+        "tags": [
+          "FDC"
+        ]
       }
     },
     "/v1/foods/list": {
       "get": {
-        "tags": [
-          "FDC"
-        ],
-        "summary": "Returns a paged list of foods, in the 'abridged' format",
         "description": "Retrieves a paged list of foods. Use the pageNumber parameter to page through the entire result set.",
         "operationId": "getFoodsList",
         "parameters": [
           {
+            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
+            "example": [
+              "Foundation",
+              "SR Legacy"
+            ],
+            "explode": false,
             "in": "query",
             "name": "dataType",
-            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
             "schema": {
-              "type": "array",
               "items": {
-                "type": "string",
                 "enum": [
                   "Branded",
                   "Foundation",
                   "Survey (FNDDS)",
                   "SR Legacy"
-                ]
+                ],
+                "type": "string"
               },
+              "maxItems": 4,
               "minItems": 1,
-              "maxItems": 4
+              "type": "array"
             },
-            "explode": false,
-            "style": "form",
-            "example": [
-              "Foundation",
-              "SR Legacy"
-            ]
+            "style": "form"
           },
           {
+            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
+            "example": 25,
             "in": "query",
             "name": "pageSize",
-            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
             "schema": {
-              "type": "integer",
+              "maximum": 200,
               "minimum": 1,
-              "maximum": 200
-            },
-            "example": 25
-          },
-          {
-            "in": "query",
-            "name": "pageNumber",
-            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
-            "schema": {
-              "type": "integer",
-              "example": 2
+              "type": "integer"
             }
           },
           {
+            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
+            "in": "query",
+            "name": "pageNumber",
+            "schema": {
+              "example": 2,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
             "in": "query",
             "name": "sortBy",
-            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
             "schema": {
-              "type": "string",
               "enum": [
                 "dataType.keyword",
                 "lowercaseDescription.keyword",
                 "fdcId",
                 "publishedDate"
-              ]
+              ],
+              "type": "string"
             }
           },
           {
+            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
             "in": "query",
             "name": "sortOrder",
-            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
             "schema": {
-              "type": "string",
               "enum": [
                 "asc",
                 "desc"
-              ]
+              ],
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of foods for the requested page",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/AbridgedFoodItem"
-                  }
+                  },
+                  "type": "array"
                 }
               }
-            }
+            },
+            "description": "List of foods for the requested page"
           },
           "400": {
             "description": "bad input parameter"
           }
-        }
-      },
-      "post": {
+        },
+        "summary": "Returns a paged list of foods, in the 'abridged' format",
         "tags": [
           "FDC"
-        ],
-        "summary": "Returns a paged list of foods, in the 'abridged' format",
+        ]
+      },
+      "post": {
         "description": "Retrieves a paged list of foods. Use the pageNumber parameter to page through the entire result set.",
         "operationId": "postFoodsList",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FoodListCriteria"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "List of foods for the requested page",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/AbridgedFoodItem"
-                  }
+                  },
+                  "type": "array"
                 }
               }
-            }
+            },
+            "description": "List of foods for the requested page"
           },
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "summary": "Returns a paged list of foods, in the 'abridged' format",
+        "tags": [
+          "FDC"
+        ]
       }
     },
     "/v1/foods/search": {
       "get": {
-        "tags": [
-          "FDC"
-        ],
-        "summary": "Returns a list of foods that matched search (query) keywords",
         "description": "Search for foods using keywords. Results can be filtered by dataType and there are options for result page sizes or sorting.",
         "operationId": "getFoodsSearch",
         "parameters": [
           {
+            "description": "One or more search terms.  The string may include [search operators](https://fdc.nal.usda.gov/help.html#bkmk-2)",
+            "example": "cheddar cheese",
             "in": "query",
             "name": "query",
-            "description": "One or more search terms.  The string may include [search operators](https://fdc.nal.usda.gov/help.html#bkmk-2)",
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "example": "cheddar cheese"
+            }
           },
           {
+            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
+            "example": [
+              "Foundation",
+              "SR Legacy"
+            ],
+            "explode": false,
             "in": "query",
             "name": "dataType",
-            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
             "schema": {
-              "type": "array",
               "items": {
-                "type": "string",
                 "enum": [
                   "Branded",
                   "Foundation",
                   "Survey (FNDDS)",
                   "SR Legacy"
-                ]
+                ],
+                "type": "string"
               },
+              "maxItems": 4,
               "minItems": 1,
-              "maxItems": 4
+              "type": "array"
             },
-            "explode": false,
-            "style": "form",
-            "example": [
-              "Foundation",
-              "SR Legacy"
-            ]
+            "style": "form"
           },
           {
+            "description": "Optional. Filter results based on the brand owner of the food. Only applies to Branded Foods",
+            "example": "Kar Nut Products Company",
             "in": "query",
-            "name": "pageSize",
-            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
+            "name": "brandOwner",
             "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 200
-            },
-            "example": 25
-          },
-          {
-            "in": "query",
-            "name": "pageNumber",
-            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
-            "schema": {
-              "type": "integer",
-              "example": 2
+              "type": "string"
             }
           },
           {
+            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
+            "example": 25,
+            "in": "query",
+            "name": "pageSize",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
+            "in": "query",
+            "name": "pageNumber",
+            "schema": {
+              "example": 2,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
+            "example": "description",
             "in": "query",
             "name": "sortBy",
-            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
             "schema": {
-              "type": "string",
               "enum": [
                 "dataType.keyword",
                 "lowercaseDescription.keyword",
                 "fdcId",
                 "publishedDate"
-              ]
-            },
-            "example": "description"
+              ],
+              "type": "string"
+            }
           },
           {
+            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
+            "example": "asc",
             "in": "query",
             "name": "sortOrder",
-            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
             "schema": {
-              "type": "string",
               "enum": [
                 "asc",
                 "desc"
-              ]
-            },
-            "example": "asc"
-          },
-          {
-            "in": "query",
-            "name": "brandOwner",
-            "description": "Optional. Filter results based on the brand owner of the food. Only applies to Branded Foods",
-            "schema": {
+              ],
               "type": "string"
-            },
-            "example": "Kar Nut Products Company"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of foods that matched search terms",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/SearchResult"
-                  }
+                  },
+                  "type": "array"
                 }
               }
-            }
+            },
+            "description": "List of foods that matched search terms"
           },
           "400": {
             "description": "bad input parameter"
           }
-        }
-      },
-      "post": {
+        },
+        "summary": "Returns a list of foods that matched search (query) keywords",
         "tags": [
           "FDC"
-        ],
-        "summary": "Returns a list of foods that matched search (query) keywords",
+        ]
+      },
+      "post": {
         "description": "Search for foods using keywords. Results can be filtered by dataType and there are options for result page sizes or sorting.",
         "operationId": "postFoodsSearch",
         "requestBody": {
-          "required": true,
-          "description": "The query string may also include standard [search operators](https://fdc.nal.usda.gov/help.html#bkmk-2)",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FoodSearchCriteria"
               }
             }
-          }
+          },
+          "description": "The query string may also include standard [search operators](https://fdc.nal.usda.gov/help.html#bkmk-2)",
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "List of foods that matched search terms",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/SearchResult"
-                  }
+                  },
+                  "type": "array"
                 }
               }
-            }
+            },
+            "description": "List of foods that matched search terms"
           },
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "summary": "Returns a list of foods that matched search (query) keywords",
+        "tags": [
+          "FDC"
+        ]
       }
     },
     "/v1/json-spec": {
       "get": {
-        "tags": [
-          "FDC"
-        ],
-        "summary": "Returns this documentation in JSON format",
         "description": "The OpenAPI 3.0 specification for the FDC API rendered as JSON (JavaScript Object Notation)",
         "operationId": "getJsonSpec",
         "responses": {
           "default": {
             "description": "JSON rendering of OpenAPI 3.0 specification"
           }
-        }
+        },
+        "summary": "Returns this documentation in JSON format",
+        "tags": [
+          "FDC"
+        ]
       }
     },
     "/v1/yaml-spec": {
       "get": {
-        "tags": [
-          "FDC"
-        ],
-        "summary": "Returns this documentation in JSON format",
         "description": "The OpenAPI 3.0 specification for the FDC API rendered as YAML (YAML Ain't Markup Language)",
         "operationId": "getYamlSpec",
         "responses": {
           "default": {
             "description": "YAML rendering of OpenAPI 3.0 specification"
           }
-        }
+        },
+        "summary": "Returns this documentation in JSON format",
+        "tags": [
+          "FDC"
+        ]
       }
     }
   },
-  "components": {
-    "securitySchemes": {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "query",
-        "name": "api_key"
-      }
-    },
-    "schemas": {
-      "AbridgedFoodItem": {
-        "type": "object",
-        "required": [
-          "fdcId",
-          "dataType",
-          "description"
-        ],
-        "properties": {
-          "dataType": {
-            "type": "string",
-            "example": "Branded"
-          },
-          "description": {
-            "type": "string",
-            "example": "NUT 'N BERRY MIX"
-          },
-          "fdcId": {
-            "type": "integer",
-            "example": 534358
-          },
-          "foodNutrients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AbridgedFoodNutrient"
-            }
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "brandOwner": {
-            "type": "string",
-            "description": "only applies to Branded Foods",
-            "example": "Kar Nut Products Company"
-          },
-          "gtinUpc": {
-            "type": "string",
-            "description": "only applies to Branded Foods",
-            "example": "077034085228"
-          },
-          "ndbNumber": {
-            "type": "string",
-            "description": "only applies to Foundation and SRLegacy Foods",
-            "example": "7954"
-          },
-          "foodCode": {
-            "type": "string",
-            "description": "only applies to Survey Foods",
-            "example": "27415110"
-          }
-        }
-      },
-      "BrandedFoodItem": {
-        "type": "object",
-        "required": [
-          "fdcId",
-          "dataType",
-          "description"
-        ],
-        "properties": {
-          "fdcId": {
-            "type": "integer",
-            "example": 534358
-          },
-          "availableDate": {
-            "type": "string",
-            "example": "8/18/2018"
-          },
-          "brandOwner": {
-            "type": "string",
-            "example": "Kar Nut Products Company"
-          },
-          "dataSource": {
-            "type": "string",
-            "example": "LI"
-          },
-          "dataType": {
-            "type": "string",
-            "example": "Branded"
-          },
-          "description": {
-            "type": "string",
-            "example": "NUT 'N BERRY MIX"
-          },
-          "foodClass": {
-            "type": "string",
-            "example": "Branded"
-          },
-          "gtinUpc": {
-            "type": "string",
-            "example": "077034085228"
-          },
-          "householdServingFullText": {
-            "type": "string",
-            "example": "1 ONZ"
-          },
-          "ingredients": {
-            "type": "string",
-            "example": "PEANUTS (PEANUTS, PEANUT AND/OR SUNFLOWER OIL). RAISINS. DRIED CRANBERRIES (CRANBERRIES, SUGAR, SUNFLOWER OIL). SUNFLOWER KERNELS AND ALMONDS (SUNFLOWER KERNELS AND ALMONDS, PEANUT AND/OR SUNFLOWER OIL)."
-          },
-          "modifiedDate": {
-            "type": "string",
-            "example": "8/18/2018"
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "servingSize": {
-            "type": "integer",
-            "format": "float32",
-            "example": 28
-          },
-          "servingSizeUnit": {
-            "type": "string",
-            "example": "g"
-          },
-          "brandedFoodCategory": {
-            "type": "string",
-            "example": "Popcorn, Peanuts, Seeds & Related Snacks"
-          },
-          "foodNutrients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodNutrient"
-            }
-          },
-          "foodUpdateLog": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodUpdateLog"
-            }
-          },
-          "labelNutrients": {
-            "type": "object",
-            "properties": {
-              "fat": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 8.9992
-                  }
-                }
-              },
-              "saturatedFat": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 0.9996
-                  }
-                }
-              },
-              "transFat": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 0
-                  }
-                }
-              },
-              "cholesterol": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 0
-                  }
-                }
-              },
-              "sodium": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 0
-                  }
-                }
-              },
-              "carbohydrates": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 12.0008
-                  }
-                }
-              },
-              "fiber": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 1.988
-                  }
-                }
-              },
-              "sugars": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 7.9996
-                  }
-                }
-              },
-              "protein": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 4.0012
-                  }
-                }
-              },
-              "calcium": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 19.88
-                  }
-                }
-              },
-              "iron": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 0.7196
-                  }
-                }
-              },
-              "postassium": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 159.88
-                  }
-                }
-              },
-              "calories": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number",
-                    "format": "float",
-                    "example": 140
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FoundationFoodItem": {
-        "required": [
-          "fdcId",
-          "dataType",
-          "description"
-        ],
-        "properties": {
-          "fdcId": {
-            "type": "integer",
-            "example": 747448
-          },
-          "dataType": {
-            "type": "string",
-            "example": "Foundation"
-          },
-          "description": {
-            "type": "string",
-            "example": "Strawberries, raw"
-          },
-          "foodClass": {
-            "type": "string",
-            "example": "FinalFood"
-          },
-          "footNote": {
-            "type": "string",
-            "example": "Source number reflects the actual number of samples analyzed for a nutrient. Repeat nutrient analyses may have been done on the same sample with the values shown."
-          },
-          "isHistoricalReference": {
-            "type": "boolean",
-            "example": false
-          },
-          "ndbNumber": {
-            "type": "string",
-            "example": "9316"
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "12/16/2019"
-          },
-          "scientificName": {
-            "type": "string",
-            "example": "Fragaria X ananassa"
-          },
-          "foodCategory": {
-            "$ref": "#/components/schemas/FoodCategory"
-          },
-          "foodComponents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodComponent"
-            }
-          },
-          "foodNutrients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodNutrient"
-            }
-          },
-          "foodPortions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodPortion"
-            }
-          },
-          "inputFoods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InputFoodFoundation"
-            }
-          },
-          "nutrientConversionFactors": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NutrientConversionFactors"
-            }
-          }
-        }
-      },
-      "SRLegacyFoodItem": {
-        "required": [
-          "fdcId",
-          "dataType",
-          "description"
-        ],
-        "properties": {
-          "fdcId": {
-            "type": "integer",
-            "example": 170379
-          },
-          "dataType": {
-            "type": "string",
-            "example": "SR Legacy"
-          },
-          "description": {
-            "type": "string",
-            "example": "Broccoli, raw"
-          },
-          "foodClass": {
-            "type": "string",
-            "example": "FinalFood"
-          },
-          "isHistoricalReference": {
-            "type": "boolean",
-            "example": true
-          },
-          "ndbNumber": {
-            "type": "string",
-            "example": "11090"
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "scientificName": {
-            "type": "string",
-            "example": "Brassica oleracea var. italica"
-          },
-          "foodCategory": {
-            "$ref": "#/components/schemas/FoodCategory"
-          },
-          "foodNutrients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodNutrient"
-            }
-          },
-          "nutrientConversionFactors": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NutrientConversionFactors"
-            }
-          }
-        }
-      },
-      "SurveyFoodItem": {
-        "required": [
-          "fdcId",
-          "dataType",
-          "description"
-        ],
-        "properties": {
-          "fdcId": {
-            "type": "integer",
-            "example": 337985
-          },
-          "datatype": {
-            "type": "string",
-            "example": "Survey (FNDDS)"
-          },
-          "description": {
-            "type": "string",
-            "example": "Beef curry"
-          },
-          "endDate": {
-            "type": "string",
-            "example": "12/31/2014"
-          },
-          "foodClass": {
-            "type": "string",
-            "example": "Survey"
-          },
-          "foodCode": {
-            "type": "string",
-            "example": "27116100"
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "startDate": {
-            "type": "string",
-            "example": "1/1/2013"
-          },
-          "foodAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodAttribute"
-            }
-          },
-          "foodPortions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodPortion"
-            }
-          },
-          "inputFoods": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InputFoodSurvey"
-            }
-          },
-          "wweiaFoodCategory": {
-            "$ref": "#/components/schemas/WweiaFoodCategory"
-          }
-        }
-      },
-      "SampleFoodItem": {
-        "required": [
-          "fdcId",
-          "dataType",
-          "description"
-        ],
-        "properties": {
-          "fdcId": {
-            "type": "integer",
-            "example": 45551
-          },
-          "datatype": {
-            "type": "string",
-            "example": "Sample"
-          },
-          "description": {
-            "type": "string",
-            "example": "Beef, Tenderloin Roast, select, roasted, comp5, lean (34BLTR)"
-          },
-          "foodClass": {
-            "type": "string",
-            "example": "Composite"
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "foodAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodCategory"
-            }
-          }
-        }
-      },
-      "AbridgedFoodNutrient": {
-        "required": [
-          "id",
-          "nutrientNumber",
-          "unit"
-        ],
-        "properties": {
-          "number": {
-            "type": "integer",
-            "format": "uint",
-            "example": 303
-          },
-          "name": {
-            "type": "string",
-            "example": "Iron, Fe"
-          },
-          "amount": {
-            "type": "number",
-            "format": "float",
-            "example": 0.53
-          },
-          "unitName": {
-            "type": "string",
-            "example": "mg"
-          },
-          "derivationCode": {
-            "type": "string",
-            "example": "LCCD"
-          },
-          "derivationDescription": {
-            "type": "string",
-            "example": "Calculated from a daily value percentage per serving size measure"
-          }
-        }
-      },
-      "FoodNutrient": {
-        "required": [
-          "id",
-          "nutrientNumber",
-          "unit"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "uint",
-            "example": 167514
-          },
-          "amount": {
-            "type": "number",
-            "format": "float",
-            "example": 0
-          },
-          "dataPoints": {
-            "type": "integer",
-            "format": "int32",
-            "example": 49
-          },
-          "min": {
-            "type": "number",
-            "format": "float",
-            "example": 73.73
-          },
-          "max": {
-            "type": "number",
-            "format": "float",
-            "example": 91.8
-          },
-          "median": {
-            "type": "number",
-            "format": "float",
-            "example": 90.3
-          },
-          "type": {
-            "type": "string",
-            "example": "FoodNutrient"
-          },
-          "nutrient": {
-            "$ref": "#/components/schemas/Nutrient"
-          },
-          "foodNutrientDerivation": {
-            "$ref": "#/components/schemas/FoodNutrientDerivation"
-          },
-          "nutrientAnalysisDetails": {
-            "$ref": "#/components/schemas/NutrientAnalysisDetails"
-          }
-        }
-      },
-      "Nutrient": {
-        "description": "a food nutrient",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "uint",
-            "example": 1005
-          },
-          "number": {
-            "type": "string",
-            "example": "305"
-          },
-          "name": {
-            "type": "string",
-            "example": "Carbohydrate, by difference"
-          },
-          "rank": {
-            "type": "integer",
-            "format": "uint",
-            "example": 1110
-          },
-          "unitName": {
-            "type": "string",
-            "example": "g"
-          }
-        }
-      },
-      "FoodNutrientDerivation": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 75
-          },
-          "code": {
-            "type": "string",
-            "example": "LCCD"
-          },
-          "description": {
-            "type": "string",
-            "example": "Calculated from a daily value percentage per serving size measure"
-          },
-          "foodNutrientSource": {
-            "$ref": "#/components/schemas/FoodNutrientSource"
-          }
-        }
-      },
-      "FoodNutrientSource": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 9
-          },
-          "code": {
-            "type": "string",
-            "example": "12"
-          },
-          "description": {
-            "type": "string",
-            "example": "Manufacturer's analytical; partial documentation"
-          }
-        }
-      },
-      "NutrientAnalysisDetails": {
-        "properties": {
-          "subSampleId": {
-            "type": "integer",
-            "example": 343866
-          },
-          "amount": {
-            "type": "number",
-            "format": "float",
-            "example": 0
-          },
-          "nutrientId": {
-            "type": "integer",
-            "example": 1005
-          },
-          "labMethodDescription": {
-            "type": "string",
-            "example": "10.2135/cropsci2017.04.0244"
-          },
-          "labMethodOriginalDescription": {
-            "type": "string"
-          },
-          "labMethodLink": {
-            "type": "string",
-            "format": "url",
-            "example": "https://doi.org/10.2135/cropsci2017.04.0244"
-          },
-          "labMethodTechnique": {
-            "type": "string",
-            "example": "DOI for Beans"
-          },
-          "nutrientAcquisitionDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NutrientAcquisitionDetails"
-            }
-          }
-        }
-      },
-      "NutrientAcquisitionDetails": {
-        "type": "object",
-        "properties": {
-          "sampleUnitId": {
-            "type": "integer",
-            "example": 321632
-          },
-          "purchaseDate": {
-            "type": "string",
-            "example": "12/2/2005"
-          },
-          "storeCity": {
-            "type": "string",
-            "example": "TRUSSVILLE"
-          },
-          "storeState": {
-            "type": "string",
-            "example": "AL"
-          }
-        }
-      },
-      "NutrientConversionFactors": {
-        "properties": {
-          "type": {
-            "type": "string",
-            "example": ".ProteinConversionFactor"
-          },
-          "value": {
-            "type": "number",
-            "format": "float",
-            "example": 6.25
-          }
-        }
-      },
-      "FoodUpdateLog": {
-        "properties": {
-          "fdcId": {
-            "type": "integer",
-            "example": 534358
-          },
-          "availableDate": {
-            "type": "string",
-            "example": "8/18/2018"
-          },
-          "brandOwner": {
-            "type": "string",
-            "example": "Kar Nut Products Company"
-          },
-          "dataSource": {
-            "type": "string",
-            "example": "LI"
-          },
-          "dataType": {
-            "type": "string",
-            "example": "Branded"
-          },
-          "description": {
-            "type": "string",
-            "example": "NUT 'N BERRY MIX"
-          },
-          "foodClass": {
-            "type": "string",
-            "example": "Branded"
-          },
-          "gtinUpc": {
-            "type": "string",
-            "example": "077034085228"
-          },
-          "householdServingFullText": {
-            "type": "string",
-            "example": "1 ONZ"
-          },
-          "ingredients": {
-            "type": "string",
-            "example": "PEANUTS (PEANUTS, PEANUT AND/OR SUNFLOWER OIL). RAISINS. DRIED CRANBERRIES (CRANBERRIES, SUGAR, SUNFLOWER OIL). SUNFLOWER KERNELS AND ALMONDS (SUNFLOWER KERNELS AND ALMONDS, PEANUT AND/OR SUNFLOWER OIL)."
-          },
-          "modifiedDate": {
-            "type": "string",
-            "example": "8/18/2018"
-          },
-          "publicationDate": {
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "servingSize": {
-            "type": "integer",
-            "format": "float32",
-            "example": 28
-          },
-          "servingSizeUnit": {
-            "type": "string",
-            "example": "g"
-          },
-          "brandedFoodCategory": {
-            "type": "string",
-            "example": "Popcorn, Peanuts, Seeds & Related Snacks"
-          },
-          "changes": {
-            "type": "string",
-            "example": "Nutrient Added, Nutrient Updated"
-          },
-          "foodAttributes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FoodAttribute"
-            }
-          }
-        }
-      },
-      "FoodAttribute": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "example": 25117
-          },
-          "sequenceNumber": {
-            "type": "integer",
-            "example": 1
-          },
-          "value": {
-            "type": "string",
-            "example": "Moisture change: -5.0%"
-          },
-          "FoodAttributeType": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "integer",
-                "example": 1002
-              },
-              "name": {
-                "type": "string",
-                "example": "Adjustments"
-              },
-              "description": {
-                "type": "string",
-                "example": "Adjustments made to foods, including moisture and fat changes."
-              }
-            }
-          }
-        }
-      },
-      "FoodCategory": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 11
-          },
-          "code": {
-            "type": "string",
-            "example": "1100"
-          },
-          "description": {
-            "type": "string",
-            "example": "Vegetables and Vegetable Products"
-          }
-        }
-      },
-      "FoodComponent": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 59929
-          },
-          "name": {
-            "type": "string",
-            "example": "External fat"
-          },
-          "dataPoints": {
-            "type": "integer",
-            "example": 24
-          },
-          "gramWeight": {
-            "type": "number",
-            "example": 2.1
-          },
-          "isRefuse": {
-            "type": "boolean",
-            "example": true
-          },
-          "minYearAcquired": {
-            "type": "integer",
-            "example": 2011
-          },
-          "percentWeight": {
-            "type": "number",
-            "example": 0.5
-          }
-        }
-      },
-      "FoodPortion": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 135806
-          },
-          "amount": {
-            "type": "number",
-            "format": "float",
-            "example": 1
-          },
-          "dataPoints": {
-            "type": "integer",
-            "format": "int32",
-            "example": 9
-          },
-          "gramWeight": {
-            "type": "number",
-            "format": "float",
-            "example": 91
-          },
-          "minYearAcquired": {
-            "type": "integer",
-            "example": 2011
-          },
-          "modifier": {
-            "type": "string",
-            "example": "10205"
-          },
-          "portionDescription": {
-            "type": "string",
-            "example": "1 cup"
-          },
-          "sequenceNumber": {
-            "type": "integer",
-            "example": 1
-          },
-          "measureUnit": {
-            "$ref": "#/components/schemas/MeasureUnit"
-          }
-        }
-      },
-      "InputFoodFoundation": {
-        "description": "applies to Foundation foods. Not all inputFoods will have all fields.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "example": 45551
-          },
-          "foodDescription": {
-            "type": "string",
-            "example": "Beef, Tenderloin Roast, select, roasted, comp5, lean (34BLTR)"
-          },
-          "inputFood": {
-            "$ref": "#/components/schemas/SampleFoodItem"
-          }
-        }
-      },
-      "InputFoodSurvey": {
-        "description": "applies to Survey (FNDDS). Not all inputFoods will have all fields.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "example": 18146
-          },
-          "amount": {
-            "type": "number",
-            "format": "float",
-            "example": 1.5
-          },
-          "foodDescription": {
-            "type": "string",
-            "example": "Spices, curry powder"
-          },
-          "ingredientCode": {
-            "type": "integer",
-            "example": 2015
-          },
-          "ingredientDescription": {
-            "type": "string",
-            "example": "Spices, curry powder"
-          },
-          "ingredientWeight": {
-            "type": "number",
-            "format": "float",
-            "example": 9.45
-          },
-          "portionCode": {
-            "type": "string",
-            "example": "21000"
-          },
-          "portionDescription": {
-            "type": "string",
-            "example": "1 tablespoon"
-          },
-          "sequenceNumber": {
-            "type": "integer",
-            "example": 6
-          },
-          "surveyFlag": {
-            "type": "integer",
-            "example": 0
-          },
-          "unit": {
-            "type": "string",
-            "example": "TB"
-          },
-          "inputFood": {
-            "$ref": "#/components/schemas/SurveyFoodItem"
-          },
-          "retentionFactor": {
-            "$ref": "#/components/schemas/RetentionFactor"
-          }
-        }
-      },
-      "MeasureUnit": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 999
-          },
-          "abbreviation": {
-            "type": "string",
-            "example": "undetermined"
-          },
-          "name": {
-            "type": "string",
-            "example": "undetermined"
-          }
-        }
-      },
-      "RetentionFactor": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "example": 235
-          },
-          "code": {
-            "type": "integer",
-            "example": 3460
-          },
-          "description": {
-            "type": "string",
-            "example": "VEG, ROOTS, ETC, SAUTEED"
-          }
-        }
-      },
-      "WweiaFoodCategory": {
-        "properties": {
-          "wweiaFoodCategoryCode": {
-            "type": "integer",
-            "example": 3002
-          },
-          "wweiaFoodCategoryDescription": {
-            "type": "string",
-            "example": "Meat mixed dishes"
-          }
-        }
-      },
-      "FoodsCriteria": {
-        "type": "object",
-        "description": "JSON for request body of 'foods' POST request. Retrieves a list of food items by a list of up to 20 FDC IDs. Optional format and nutrients can be specified. Invalid FDC ID's or ones that are not found are omitted and an empty set is returned if there are no matches.",
-        "properties": {
-          "fdcIds": {
-            "description": "List of multiple FDC ID's",
-            "type": "array",
-            "minItems": 1,
-            "maxItems": 20,
-            "items": {
-              "type": "integer"
-            },
-            "example": [
-              534358,
-              373052,
-              616350
-            ]
-          },
-          "format": {
-            "description": "Optional. 'abridged' for an abridged set of elements, 'full' for all elements (default).",
-            "type": "string",
-            "enum": [
-              "abridged",
-              "full"
-            ]
-          },
-          "nutrients": {
-            "description": "Optional. List of up to 25 nutrient numbers. Only the nutrient information for the specified nutrients will be returned.  If a food does not have any matching nutrients, the food will be returned with an empty foodNutrients element.",
-            "type": "array",
-            "minItems": 1,
-            "maxItems": 25,
-            "items": {
-              "type": "integer"
-            },
-            "example": [
-              203,
-              204,
-              205
-            ]
-          }
-        }
-      },
-      "FoodListCriteria": {
-        "type": "object",
-        "description": "JSON for request body of 'list' POST request",
-        "properties": {
-          "dataType": {
-            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "Branded",
-                "Foundation",
-                "Survey (FNDDS)",
-                "SR Legacy"
-              ]
-            },
-            "minItems": 1,
-            "maxItems": 4,
-            "example": [
-              "Foundation",
-              "SR Legacy"
-            ]
-          },
-          "pageSize": {
-            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 200,
-            "example": 25
-          },
-          "pageNumber": {
-            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
-            "type": "integer",
-            "example": 2
-          },
-          "sortBy": {
-            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
-            "type": "string",
-            "enum": [
-              "dataType.keyword",
-              "lowercaseDescription.keyword",
-              "fdcId",
-              "publishedDate"
-            ]
-          },
-          "sortOrder": {
-            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
-            "type": "string",
-            "enum": [
-              "asc",
-              "desc"
-            ]
-          }
-        }
-      },
-      "FoodSearchCriteria": {
-        "type": "object",
-        "description": "JSON for request body of 'search' POST request",
-        "properties": {
-          "query": {
-            "description": "Search terms to use in the search. The string may also include standard [search operators](https://fdc.nal.usda.gov/help.html#bkmk-2)",
-            "type": "string",
-            "example": "Cheddar cheese"
-          },
-          "dataType": {
-            "description": "Optional. Filter on a specific data type; specify one or more values in an array.",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "Branded",
-                "Foundation",
-                "Survey (FNDDS)",
-                "SR Legacy"
-              ]
-            },
-            "minItems": 1,
-            "maxItems": 4,
-            "example": [
-              "Foundation",
-              "SR Legacy"
-            ]
-          },
-          "pageSize": {
-            "description": "Optional. Maximum number of results to return for the current page. Default is 50.",
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 200,
-            "example": 25
-          },
-          "pageNumber": {
-            "description": "Optional. Page number to retrieve. The offset into the overall result set is expressed as (pageNumber * pageSize)",
-            "type": "integer",
-            "example": 2
-          },
-          "sortBy": {
-            "description": "Optional. Specify one of the possible values to sort by that field. Note, dataType.keyword will be dataType and lowercaseDescription.keyword will be description in future releases.",
-            "type": "string",
-            "enum": [
-              "dataType.keyword",
-              "lowercaseDescription.keyword",
-              "fdcId",
-              "publishedDate"
-            ]
-          },
-          "sortOrder": {
-            "description": "Optional. The sort direction for the results. Only applicable if sortBy is specified.",
-            "type": "string",
-            "enum": [
-              "asc",
-              "desc"
-            ]
-          },
-          "brandOwner": {
-            "description": "Optional. Filter results based on the brand owner of the food. Only applies to Branded Foods.",
-            "type": "string",
-            "example": "Kar Nut Products Company"
-          }
-        }
-      },
-      "SearchResult": {
-        "properties": {
-          "foodSearchCriteria": {
-            "description": "A copy of the criteria that were used in the search.",
-            "type": "object",
-            "items": {
-              "$ref": "#/components/schemas/FoodSearchCriteria"
-            }
-          },
-          "totalHits": {
-            "description": "The total number of foods found matching the search criteria.",
-            "type": "integer",
-            "example": 1034
-          },
-          "currentPage": {
-            "description": "The current page of results being returned.",
-            "type": "integer"
-          },
-          "totalPages": {
-            "description": "The total number of pages found matching the search criteria.",
-            "type": "integer"
-          },
-          "foods": {
-            "description": "The list of foods found matching the search criteria. See Food Fields below.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SearchResultFood"
-            }
-          }
-        }
-      },
-      "SearchResultFood": {
-        "type": "object",
-        "required": [
-          "fdcId",
-          "description"
-        ],
-        "properties": {
-          "fdcId": {
-            "description": "Unique ID of the food.",
-            "type": "integer",
-            "example": 45001529
-          },
-          "dataType": {
-            "description": "The type of the food data.",
-            "type": "string",
-            "example": "Branded"
-          },
-          "description": {
-            "description": "The description of the food.",
-            "type": "string",
-            "example": "BROCCOLI"
-          },
-          "foodCode": {
-            "description": "Any A unique ID identifying the food within FNDDS.",
-            "type": "string"
-          },
-          "foodNutrients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AbridgedFoodNutrient"
-            }
-          },
-          "publicationDate": {
-            "description": "Date the item was published to FDC.",
-            "type": "string",
-            "example": "4/1/2019"
-          },
-          "scientificName": {
-            "description": "The scientific name of the food.",
-            "type": "string"
-          },
-          "brandOwner": {
-            "description": "Brand owner for the food. Only applies to Branded Foods.",
-            "type": "string",
-            "example": "Supervalu, Inc."
-          },
-          "gtinUpc": {
-            "description": "GTIN or UPC code identifying the food. Only applies to Branded Foods.",
-            "type": "string",
-            "example": "041303020937"
-          },
-          "ingredients": {
-            "description": "The list of ingredients (as it appears on the product label). Only applies to Branded Foods.",
-            "type": "string"
-          },
-          "ndbNumber": {
-            "description": "Unique number assigned for foundation foods. Only applies to Foundation and SRLegacy Foods.",
-            "type": "string"
-          },
-          "additionalDescriptions": {
-            "description": "Any additional descriptions of the food.",
-            "type": "string",
-            "example": "Coon; sharp cheese; Tillamook; Hoop; Pioneer; New York; Wisconsin; Longhorn"
-          },
-          "allHighlightFields": {
-            "description": "allHighlightFields",
-            "type": "string"
-          },
-          "score": {
-            "description": "Relative score indicating how well the food matches the search criteria.",
-            "type": "number",
-            "format": "float"
-          }
-        }
-      }
+  "security": [
+    {
+      "ApiKeyAuth": []
     }
-  }
+  ],
+  "servers": [
+    {
+      "url": "https://api.nal.usda.gov/fdc"
+    }
+  ],
+  "tags": [
+    {
+      "description": "endpoints to retrieve nutrient data",
+      "name": "FDC"
+    }
+  ]
 }
 ```

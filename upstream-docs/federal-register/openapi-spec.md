@@ -6,927 +6,10 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
 
 ```json
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "FR API Documentation",
-    "version": ""
-  },
-  "servers": [
-    {
-      "url": "/api/v1/"
-    }
-  ],
-  "paths": {
-    "/documents/{document_number}.{format}": {
-      "get": {
-        "summary": "Fetch a single Federal Register document",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          },
-          {
-            "name": "fields[]",
-            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/DocumentField"
-            }
-          },
-          {
-            "name": "document_number",
-            "description": "Federal Register document number",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Federal Register Documents"
-        ]
-      }
-    },
-    "/documents/{document_numbers}.{format}": {
-      "get": {
-        "summary": "Fetch multiple Federal Register documents",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          },
-          {
-            "name": "fields[]",
-            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/DocumentField"
-            }
-          },
-          {
-            "name": "document_numbers",
-            "description": "Federal Register document number",
-            "in": "path",
-            "explode": false,
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Federal Register Documents"
-        ]
-      }
-    },
-    "/documents.{format}": {
-      "get": {
-        "summary": "Search all Federal Register documents published since 1994.",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          },
-          {
-            "name": "fields[]",
-            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/DocumentField"
-            }
-          },
-          {
-            "name": "per_page",
-            "description": "How many documents to return at once; 1000 maximum.",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "default": 20,
-              "minimum": 1,
-              "maximum": 1000
-            }
-          },
-          {
-            "name": "page",
-            "description": "The page of the result set.",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "order",
-            "description": "The order the results should be returned in.",
-            "in": "query",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "relevance",
-                  "newest",
-                  "oldest",
-                  "executive_order_number"
-                ]
-              }
-            }
-          },
-          {
-            "name": "conditions[term]",
-            "description": "Full text search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[publication_date][is]",
-            "description": "Exact publication date match (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[publication_date][year]",
-            "description": "Find documents published in a given year (YYYY)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrYear"
-            }
-          },
-          {
-            "name": "conditions[publication_date][gte]",
-            "description": "Find documents published on or after a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[publication_date][lte]",
-            "description": "Find documents published on or before a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][is]",
-            "description": "Exact effective date match (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][year]",
-            "description": "Find documents with an effective date in a given year (YYYY)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][gte]",
-            "description": "Find documents with an effective date on or after a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][lte]",
-            "description": "Find documents with an effective date on or before a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[agencies][]",
-            "description": "Publishing agency",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Agency"
-            }
-          },
-          {
-            "name": "conditions[type][]",
-            "description": "Document Type:\n  * RULE: Final Rule\n  * PRORULE: Proposed Rule\n  * NOTICE: Notice\n  * PRESDOCU: Presidential Document\n",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/DocumentType"
-            }
-          },
-          {
-            "name": "conditions[presidential_document_type][]",
-            "description": "Presidential document type; only available for Presidential Docuements",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/PresidentialDocumentType"
-            }
-          },
-          {
-            "name": "conditions[president][]",
-            "description": "Signing President; only available for Presidential Documents",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/President"
-            }
-          },
-          {
-            "name": "conditions[docket_id]",
-            "description": "Agency docket number associated with document",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[regulation_id_number]",
-            "description": "Regulation ID Number (RIN) associated with document",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[sections][]",
-            "description": "Limit to documents that appeared within a particular section of FederalRegister.gov",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Section"
-            }
-          },
-          {
-            "name": "conditions[topics][]",
-            "description": "Limit to documents associated with a particular topic (CFR Indexing term)",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Topic"
-            }
-          },
-          {
-            "name": "conditions[significant]",
-            "description": "Deemed Significant Under EO 12866:\n  * \"0\": Not Deemed Significant\n  * \"1\": Deemed Significant\n",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                0,
-                1
-              ]
-            }
-          },
-          {
-            "name": "conditions[cfr][title]",
-            "description": "documents affecting the associated CFR title",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "conditions[cfr][part]",
-            "description": "Part or part range (eg '17' or '1-50'); requires the CFR title to be provided",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "conditions[near][location]",
-            "description": "Location search; enter zipcode or City and State",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[near][within]",
-            "description": "Location search; maximum distance from location in miles (max 200)",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "maximum": 200
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Federal Register Documents"
-        ]
-      }
-    },
-    "/documents/facets/{facet}": {
-      "get": {
-        "summary": "Fetch counts of matching Federal Register Documents grouped by a facet",
-        "parameters": [
-          {
-            "name": "facet",
-            "description": "What to group the returned documents by for counting (using the \"daily\" grouping may require limiting your request to smaller date ranges)",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Facet"
-            }
-          },
-          {
-            "name": "conditions[term]",
-            "description": "Full text search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[publication_date][is]",
-            "description": "Exact publication date match (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[publication_date][year]",
-            "description": "Find documents published in a given year (YYYY)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrYear"
-            }
-          },
-          {
-            "name": "conditions[publication_date][gte]",
-            "description": "Find documents published on or after a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[publication_date][lte]",
-            "description": "Find documents published on or before a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][is]",
-            "description": "Exact effective date match (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][year]",
-            "description": "Find documents with an effective date in a given year (YYYY)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][gte]",
-            "description": "Find documents with an effective date on or after a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[effective_date][lte]",
-            "description": "Find documents with an effective date on or before a given date (YYYY-MM-DD)",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[agencies][]",
-            "description": "Publishing agency",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Agency"
-            }
-          },
-          {
-            "name": "conditions[type][]",
-            "description": "Document Type:\n  * RULE: Final Rule\n  * PRORULE: Proposed Rule\n  * NOTICE: Notice\n  * PRESDOCU: Presidential Document\n",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/DocumentType"
-            }
-          },
-          {
-            "name": "conditions[presidential_document_type][]",
-            "description": "Presidential document type; only available for Presidential Docuements",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/PresidentialDocumentType"
-            }
-          },
-          {
-            "name": "conditions[president][]",
-            "description": "Signing President; only available for Presidential Documents",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/President"
-            }
-          },
-          {
-            "name": "conditions[docket_id]",
-            "description": "Agency docket number associated with document",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[regulation_id_number]",
-            "description": "Regulation ID Number (RIN) associated with document",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[sections][]",
-            "description": "Limit to documents that appeared within a particular section of FederalRegister.gov",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Section"
-            }
-          },
-          {
-            "name": "conditions[significant]",
-            "description": "Deemed Significant Under EO 12866:\n  * \"0\": Not Deemed Significant\n  * \"1\": Deemed Significant\n",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                0,
-                1
-              ]
-            }
-          },
-          {
-            "name": "conditions[cfr][title]",
-            "description": "documents affecting the associated CFR title",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "conditions[cfr][part]",
-            "description": "Part or part range (eg '17' or '1-50'); requires the CFR title to be provided",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "conditions[near][location]",
-            "description": "Location search; enter zipcode or City and State",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[near][within]",
-            "description": "Location search; maximum distance from location in miles (max 200)",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "maximum": 200
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Federal Register Documents"
-        ]
-      }
-    },
-    "/issues/{publication_date}.{format}": {
-      "get": {
-        "summary": "Fetch document table of contents based on the print edition.",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "json"
-              ]
-            }
-          },
-          {
-            "name": "publication_date",
-            "description": "Exact publication date match (YYYY-MM-DD)",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Federal Register Documents"
-        ]
-      }
-    },
-    "/public-inspection-documents/{document_number}.{format}": {
-      "get": {
-        "summary": "Fetch a single public inspection document.",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          },
-          {
-            "name": "document_number",
-            "description": "Federal Register document number",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Public Inspection Documents"
-        ]
-      }
-    },
-    "/public-inspection-documents/{document_numbers}.{format}": {
-      "get": {
-        "summary": "Fetch multiple public inspection documents.",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          },
-          {
-            "name": "document_numbers",
-            "description": "Federal Register document numbers, separated by a comma",
-            "in": "path",
-            "explode": false,
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Public Inspection Documents"
-        ]
-      }
-    },
-    "/public-inspection-documents/current.{format}": {
-      "get": {
-        "summary": "Fetch all the public inspection documents that are currently on public inspection.",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Public Inspection Documents"
-        ]
-      }
-    },
-    "/public-inspection-documents.{format}": {
-      "get": {
-        "summary": "Search all the public inspection documents that are currently on public inspection; use the document search to find documents that have been published.",
-        "parameters": [
-          {
-            "name": "format",
-            "description": "What format the response should be",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Format"
-            }
-          },
-          {
-            "name": "fields[]",
-            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/PublicInspectionDocumentField"
-            }
-          },
-          {
-            "name": "per_page",
-            "description": "How many documents to return at once; 1000 maximum.",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "default": 20,
-              "minimum": 1,
-              "maximum": 1000
-            }
-          },
-          {
-            "name": "page",
-            "description": "The page of the result set.",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "conditions[available_on]",
-            "description": "Public Inspection issue date (YYYY-MM-DD)",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/FrDate"
-            }
-          },
-          {
-            "name": "conditions[term]",
-            "description": "Full text search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "conditions[agencies][]",
-            "description": "Publishing agency",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/Agency"
-            }
-          },
-          {
-            "name": "conditions[type][]",
-            "description": "Document Type:\n  * RULE: Final Rule\n  * PRORULE: Proposed Rule\n  * NOTICE: Notice\n  * PRESDOCU: Presidential Document\n",
-            "in": "query",
-            "explode": true,
-            "schema": {
-              "$ref": "#/components/schemas/DocumentType"
-            }
-          },
-          {
-            "name": "conditions[special_filing]",
-            "description": "Filing type:\n  * \"0\": Regular Filing\n  * \"1\": Special Filing\n",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                0,
-                1
-              ]
-            }
-          },
-          {
-            "name": "conditions[docket_id]",
-            "description": "Agency docket number associated with document",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Public Inspection Documents"
-        ]
-      }
-    },
-    "/agencies": {
-      "get": {
-        "summary": "Fetch all agency details",
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Agencies"
-        ]
-      }
-    },
-    "/agencies/{slug}": {
-      "get": {
-        "summary": "Fetch a particular agency's details",
-        "parameters": [
-          {
-            "name": "slug",
-            "description": "Federal Register slug for the agency",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Agency"
-            }
-          },
-          {
-            "name": "id",
-            "description": "Federal Register ID for the agency (deprecated)",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            },
-            "deprecated": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Agencies"
-        ]
-      }
-    },
-    "/images/{identifier}": {
-      "get": {
-        "summary": "Fetch the available image variants and their metadata for a single image identifier",
-        "parameters": [
-          {
-            "name": "identifier",
-            "description": "Federal Register image identifier",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "tags": [
-          "Images"
-        ]
-      }
-    },
-    "/suggested_searches": {
-      "get": {
-        "summary": "Fetch all suggested searches or limit by FederalRegister.gov section",
-        "parameters": [
-          {
-            "name": "conditions[sections]",
-            "description": "Federal Register slug for the section",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/Section"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Suggested Searches"
-        ]
-      }
-    },
-    "/suggested_searches/{slug}": {
-      "get": {
-        "summary": "Fetch a particular suggested search",
-        "parameters": [
-          {
-            "name": "slug",
-            "description": "Federal Register slug for the suggested search",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SuggestedSearch"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "tags": [
-          "Suggested Searches"
-        ]
-      }
-    }
-  },
   "components": {
     "schemas": {
       "Agency": {
-        "type": "array",
         "items": {
-          "type": "string",
           "enum": [
             "action",
             "administration-office-executive-office-of-the-president",
@@ -1400,13 +483,13 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "women-s-progress-commemoration-commission",
             "women-s-suffrage-centennial-commission",
             "workers-compensation-programs-office"
-          ]
-        }
+          ],
+          "type": "string"
+        },
+        "type": "array"
       },
       "DocumentField": {
-        "type": "array",
         "items": {
-          "type": "string",
           "enum": [
             "abstract",
             "action",
@@ -1464,23 +547,24 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "topics",
             "type",
             "volume"
-          ]
-        }
+          ],
+          "type": "string"
+        },
+        "type": "array"
       },
       "DocumentType": {
-        "type": "array",
         "items": {
-          "type": "string",
           "enum": [
             "RULE",
             "PRORULE",
             "NOTICE",
             "PRESDOCU"
-          ]
-        }
+          ],
+          "type": "string"
+        },
+        "type": "array"
       },
       "Facet": {
-        "type": "string",
         "enum": [
           "daily",
           "weekly",
@@ -1492,12 +576,54 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
           "section",
           "type",
           "subtype"
-        ]
+        ],
+        "type": "string"
+      },
+      "Format": {
+        "enum": [
+          "json",
+          "csv"
+        ],
+        "type": "string"
+      },
+      "FrDate": {
+        "format": "date",
+        "type": "string"
+      },
+      "FrYear": {
+        "type": "string"
+      },
+      "President": {
+        "items": {
+          "enum": [
+            "william-j-clinton",
+            "george-w-bush",
+            "barack-obama",
+            "donald-trump",
+            "joe-biden",
+            "donald-trump"
+          ],
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "PresidentialDocumentType": {
+        "items": {
+          "enum": [
+            "determination",
+            "executive_order",
+            "memorandum",
+            "notice",
+            "proclamation",
+            "presidential_order",
+            "other"
+          ],
+          "type": "string"
+        },
+        "type": "array"
       },
       "PublicInspectionDocumentField": {
-        "type": "array",
         "items": {
-          "type": "string",
           "enum": [
             "agencies",
             "agency_letters",
@@ -1526,56 +652,13 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "toc_doc",
             "toc_subject",
             "type"
-          ]
-        }
-      },
-      "President": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": [
-            "william-j-clinton",
-            "george-w-bush",
-            "barack-obama",
-            "donald-trump",
-            "joe-biden",
-            "donald-trump"
-          ]
-        }
-      },
-      "PresidentialDocumentType": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "enum": [
-            "determination",
-            "executive_order",
-            "memorandum",
-            "notice",
-            "proclamation",
-            "presidential_order",
-            "other"
-          ]
-        }
-      },
-      "Format": {
-        "type": "string",
-        "enum": [
-          "json",
-          "csv"
-        ]
-      },
-      "FrDate": {
-        "type": "string",
-        "format": "date"
-      },
-      "FrYear": {
-        "type": "string"
+          ],
+          "type": "string"
+        },
+        "type": "array"
       },
       "Section": {
-        "type": "array",
         "items": {
-          "type": "string",
           "enum": [
             "business-and-industry",
             "environment",
@@ -1583,11 +666,12 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "money",
             "science-and-technology",
             "world"
-          ]
-        }
+          ],
+          "type": "string"
+        },
+        "type": "array"
       },
       "SuggestedSearch": {
-        "type": "string",
         "enum": [
           "accountable-care-organizations",
           "agricultural-grades-and-standards",
@@ -1682,12 +766,11 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
           "veterans-employment-training",
           "veterinary-biologics-animal-disease",
           "voting-elections"
-        ]
+        ],
+        "type": "string"
       },
       "Topic": {
-        "type": "array",
         "items": {
-          "type": "string",
           "enum": [
             "accountants",
             "accounting",
@@ -9473,10 +8556,927 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "shipyard-financing",
             "first-step-act",
             "sentence-computation"
-          ]
-        }
+          ],
+          "type": "string"
+        },
+        "type": "array"
       }
     }
-  }
+  },
+  "info": {
+    "title": "FR API Documentation",
+    "version": ""
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/agencies": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch all agency details",
+        "tags": [
+          "Agencies"
+        ]
+      }
+    },
+    "/agencies/{slug}": {
+      "get": {
+        "parameters": [
+          {
+            "deprecated": true,
+            "description": "Federal Register ID for the agency (deprecated)",
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Federal Register slug for the agency",
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Agency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch a particular agency's details",
+        "tags": [
+          "Agencies"
+        ]
+      }
+    },
+    "/documents.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Agency docket number associated with document",
+            "in": "query",
+            "name": "conditions[docket_id]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Deemed Significant Under EO 12866:\n  * \"0\": Not Deemed Significant\n  * \"1\": Deemed Significant\n",
+            "in": "query",
+            "name": "conditions[significant]",
+            "schema": {
+              "enum": [
+                0,
+                1
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Document Type:\n  * RULE: Final Rule\n  * PRORULE: Proposed Rule\n  * NOTICE: Notice\n  * PRESDOCU: Presidential Document\n",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[type][]",
+            "schema": {
+              "$ref": "#/components/schemas/DocumentType"
+            }
+          },
+          {
+            "description": "documents affecting the associated CFR title",
+            "in": "query",
+            "name": "conditions[cfr][title]",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Exact effective date match (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[effective_date][is]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Exact publication date match (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[publication_date][is]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents published in a given year (YYYY)",
+            "in": "query",
+            "name": "conditions[publication_date][year]",
+            "schema": {
+              "$ref": "#/components/schemas/FrYear"
+            }
+          },
+          {
+            "description": "Find documents published on or after a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[publication_date][gte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents published on or before a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[publication_date][lte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents with an effective date in a given year (YYYY)",
+            "in": "query",
+            "name": "conditions[effective_date][year]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents with an effective date on or after a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[effective_date][gte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents with an effective date on or before a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[effective_date][lte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Full text search",
+            "in": "query",
+            "name": "conditions[term]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "How many documents to return at once; 1000 maximum.",
+            "in": "query",
+            "name": "per_page",
+            "schema": {
+              "default": 20,
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Limit to documents associated with a particular topic (CFR Indexing term)",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[topics][]",
+            "schema": {
+              "$ref": "#/components/schemas/Topic"
+            }
+          },
+          {
+            "description": "Limit to documents that appeared within a particular section of FederalRegister.gov",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[sections][]",
+            "schema": {
+              "$ref": "#/components/schemas/Section"
+            }
+          },
+          {
+            "description": "Location search; enter zipcode or City and State",
+            "in": "query",
+            "name": "conditions[near][location]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Location search; maximum distance from location in miles (max 200)",
+            "in": "query",
+            "name": "conditions[near][within]",
+            "schema": {
+              "maximum": 200,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Part or part range (eg '17' or '1-50'); requires the CFR title to be provided",
+            "in": "query",
+            "name": "conditions[cfr][part]",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Presidential document type; only available for Presidential Docuements",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[presidential_document_type][]",
+            "schema": {
+              "$ref": "#/components/schemas/PresidentialDocumentType"
+            }
+          },
+          {
+            "description": "Publishing agency",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[agencies][]",
+            "schema": {
+              "$ref": "#/components/schemas/Agency"
+            }
+          },
+          {
+            "description": "Regulation ID Number (RIN) associated with document",
+            "in": "query",
+            "name": "conditions[regulation_id_number]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Signing President; only available for Presidential Documents",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[president][]",
+            "schema": {
+              "$ref": "#/components/schemas/President"
+            }
+          },
+          {
+            "description": "The order the results should be returned in.",
+            "in": "query",
+            "name": "order",
+            "schema": {
+              "items": {
+                "enum": [
+                  "relevance",
+                  "newest",
+                  "oldest",
+                  "executive_order_number"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "The page of the result set.",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          },
+          {
+            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
+            "explode": true,
+            "in": "query",
+            "name": "fields[]",
+            "schema": {
+              "$ref": "#/components/schemas/DocumentField"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Search all Federal Register documents published since 1994.",
+        "tags": [
+          "Federal Register Documents"
+        ]
+      }
+    },
+    "/documents/facets/{facet}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Agency docket number associated with document",
+            "in": "query",
+            "name": "conditions[docket_id]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Deemed Significant Under EO 12866:\n  * \"0\": Not Deemed Significant\n  * \"1\": Deemed Significant\n",
+            "in": "query",
+            "name": "conditions[significant]",
+            "schema": {
+              "enum": [
+                0,
+                1
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Document Type:\n  * RULE: Final Rule\n  * PRORULE: Proposed Rule\n  * NOTICE: Notice\n  * PRESDOCU: Presidential Document\n",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[type][]",
+            "schema": {
+              "$ref": "#/components/schemas/DocumentType"
+            }
+          },
+          {
+            "description": "documents affecting the associated CFR title",
+            "in": "query",
+            "name": "conditions[cfr][title]",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Exact effective date match (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[effective_date][is]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Exact publication date match (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[publication_date][is]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents published in a given year (YYYY)",
+            "in": "query",
+            "name": "conditions[publication_date][year]",
+            "schema": {
+              "$ref": "#/components/schemas/FrYear"
+            }
+          },
+          {
+            "description": "Find documents published on or after a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[publication_date][gte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents published on or before a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[publication_date][lte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents with an effective date in a given year (YYYY)",
+            "in": "query",
+            "name": "conditions[effective_date][year]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents with an effective date on or after a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[effective_date][gte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Find documents with an effective date on or before a given date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[effective_date][lte]",
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Full text search",
+            "in": "query",
+            "name": "conditions[term]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Limit to documents that appeared within a particular section of FederalRegister.gov",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[sections][]",
+            "schema": {
+              "$ref": "#/components/schemas/Section"
+            }
+          },
+          {
+            "description": "Location search; enter zipcode or City and State",
+            "in": "query",
+            "name": "conditions[near][location]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Location search; maximum distance from location in miles (max 200)",
+            "in": "query",
+            "name": "conditions[near][within]",
+            "schema": {
+              "maximum": 200,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Part or part range (eg '17' or '1-50'); requires the CFR title to be provided",
+            "in": "query",
+            "name": "conditions[cfr][part]",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Presidential document type; only available for Presidential Docuements",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[presidential_document_type][]",
+            "schema": {
+              "$ref": "#/components/schemas/PresidentialDocumentType"
+            }
+          },
+          {
+            "description": "Publishing agency",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[agencies][]",
+            "schema": {
+              "$ref": "#/components/schemas/Agency"
+            }
+          },
+          {
+            "description": "Regulation ID Number (RIN) associated with document",
+            "in": "query",
+            "name": "conditions[regulation_id_number]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Signing President; only available for Presidential Documents",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[president][]",
+            "schema": {
+              "$ref": "#/components/schemas/President"
+            }
+          },
+          {
+            "description": "What to group the returned documents by for counting (using the \"daily\" grouping may require limiting your request to smaller date ranges)",
+            "in": "path",
+            "name": "facet",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Facet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch counts of matching Federal Register Documents grouped by a facet",
+        "tags": [
+          "Federal Register Documents"
+        ]
+      }
+    },
+    "/documents/{document_numbers}.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register document number",
+            "explode": false,
+            "in": "path",
+            "name": "document_numbers",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          },
+          {
+            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
+            "explode": true,
+            "in": "query",
+            "name": "fields[]",
+            "schema": {
+              "$ref": "#/components/schemas/DocumentField"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch multiple Federal Register documents",
+        "tags": [
+          "Federal Register Documents"
+        ]
+      }
+    },
+    "/documents/{document_number}.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register document number",
+            "in": "path",
+            "name": "document_number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          },
+          {
+            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
+            "explode": true,
+            "in": "query",
+            "name": "fields[]",
+            "schema": {
+              "$ref": "#/components/schemas/DocumentField"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch a single Federal Register document",
+        "tags": [
+          "Federal Register Documents"
+        ]
+      }
+    },
+    "/images/{identifier}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register image identifier",
+            "in": "path",
+            "name": "identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "summary": "Fetch the available image variants and their metadata for a single image identifier",
+        "tags": [
+          "Images"
+        ]
+      }
+    },
+    "/issues/{publication_date}.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Exact publication date match (YYYY-MM-DD)",
+            "in": "path",
+            "name": "publication_date",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "enum": [
+                "json"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch document table of contents based on the print edition.",
+        "tags": [
+          "Federal Register Documents"
+        ]
+      }
+    },
+    "/public-inspection-documents.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Agency docket number associated with document",
+            "in": "query",
+            "name": "conditions[docket_id]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Document Type:\n  * RULE: Final Rule\n  * PRORULE: Proposed Rule\n  * NOTICE: Notice\n  * PRESDOCU: Presidential Document\n",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[type][]",
+            "schema": {
+              "$ref": "#/components/schemas/DocumentType"
+            }
+          },
+          {
+            "description": "Filing type:\n  * \"0\": Regular Filing\n  * \"1\": Special Filing\n",
+            "in": "query",
+            "name": "conditions[special_filing]",
+            "schema": {
+              "enum": [
+                0,
+                1
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Full text search",
+            "in": "query",
+            "name": "conditions[term]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "How many documents to return at once; 1000 maximum.",
+            "in": "query",
+            "name": "per_page",
+            "schema": {
+              "default": 20,
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Public Inspection issue date (YYYY-MM-DD)",
+            "in": "query",
+            "name": "conditions[available_on]",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FrDate"
+            }
+          },
+          {
+            "description": "Publishing agency",
+            "explode": true,
+            "in": "query",
+            "name": "conditions[agencies][]",
+            "schema": {
+              "$ref": "#/components/schemas/Agency"
+            }
+          },
+          {
+            "description": "The page of the result set.",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          },
+          {
+            "description": "Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.",
+            "explode": true,
+            "in": "query",
+            "name": "fields[]",
+            "schema": {
+              "$ref": "#/components/schemas/PublicInspectionDocumentField"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Search all the public inspection documents that are currently on public inspection; use the document search to find documents that have been published.",
+        "tags": [
+          "Public Inspection Documents"
+        ]
+      }
+    },
+    "/public-inspection-documents/current.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch all the public inspection documents that are currently on public inspection.",
+        "tags": [
+          "Public Inspection Documents"
+        ]
+      }
+    },
+    "/public-inspection-documents/{document_numbers}.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register document numbers, separated by a comma",
+            "explode": false,
+            "in": "path",
+            "name": "document_numbers",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch multiple public inspection documents.",
+        "tags": [
+          "Public Inspection Documents"
+        ]
+      }
+    },
+    "/public-inspection-documents/{document_number}.{format}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register document number",
+            "in": "path",
+            "name": "document_number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "What format the response should be",
+            "in": "path",
+            "name": "format",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Format"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch a single public inspection document.",
+        "tags": [
+          "Public Inspection Documents"
+        ]
+      }
+    },
+    "/suggested_searches": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register slug for the section",
+            "in": "query",
+            "name": "conditions[sections]",
+            "schema": {
+              "$ref": "#/components/schemas/Section"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch all suggested searches or limit by FederalRegister.gov section",
+        "tags": [
+          "Suggested Searches"
+        ]
+      }
+    },
+    "/suggested_searches/{slug}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Federal Register slug for the suggested search",
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SuggestedSearch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Fetch a particular suggested search",
+        "tags": [
+          "Suggested Searches"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1/"
+    }
+  ]
 }
 ```

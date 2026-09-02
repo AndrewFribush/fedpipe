@@ -10,143 +10,7 @@ Source: https://api.nhtsa.gov/SafetyRatings
   "Message": "Results returned successfully",
   "Results": [
     {
-      "ModelYear": 2026,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2025,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2024,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2023,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2022,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2021,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2020,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2019,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2018,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2017,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2016,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2015,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2014,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2013,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2012,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2011,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2010,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2009,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2008,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2007,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2006,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2005,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2004,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2003,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2002,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2001,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 2000,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1999,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1998,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1997,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1996,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1995,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1994,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1993,
-      "VehicleId": 0
-    },
-    {
-      "ModelYear": 1992,
+      "ModelYear": 1990,
       "VehicleId": 0
     },
     {
@@ -154,7 +18,143 @@ Source: https://api.nhtsa.gov/SafetyRatings
       "VehicleId": 0
     },
     {
-      "ModelYear": 1990,
+      "ModelYear": 1992,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1993,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1994,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1995,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1996,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1997,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1998,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 1999,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2000,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2001,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2002,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2003,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2004,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2005,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2006,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2007,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2008,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2009,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2010,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2011,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2012,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2013,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2014,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2015,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2016,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2017,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2018,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2019,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2020,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2021,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2022,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2023,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2024,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2025,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2026,
       "VehicleId": 0
     }
   ]

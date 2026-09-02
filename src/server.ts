@@ -33,6 +33,11 @@ import { buildInstructions } from "./server/instructions.js";
 import { buildAnalysisPrompts } from "./server/prompts.js";
 import { executeInSandbox } from "./shared/sandbox.js";
 import { DOMAINS, type ApiModule } from "./shared/types.js";
+import { readFileSync } from "node:fs";
+
+const PKG_VERSION = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf8")
+).version as `${number}.${number}.${number}`;
 
 const logger = {
   ...console,
@@ -172,7 +177,7 @@ for (const mod of activeModules) {
 
 const server = new FastMCP({
   name: "fedpipe",
-  version: "2.0.0",
+  version: PKG_VERSION,
   logger,
   instructions: buildInstructions(activeModules),
 });
