@@ -88,9 +88,9 @@ function buildRoutingTable(modules: ApiModule[]): string {
     const entries = questionMap.get(question);
     if (!entries?.length) continue;
 
-    const routeStr = entries
-      .map((e) => `${e.displayName}(${e.route})`)
-      .join(" + ");
+    // Tool names are module-prefixed already — wrapping each route in its
+    // module's display name doubled the size of this guide for no signal.
+    const routeStr = entries.map((e) => e.route).join("; ");
     lines.push(`${question.toUpperCase()} \u2192 ${routeStr}`);
   }
 

@@ -61,8 +61,8 @@ describe("buildInstructions", () => {
     });
     const result = buildInstructions([mod]);
     expect(result).toContain("=== ROUTING TABLE ===");
-    expect(result).toContain("ECONOMY → Test Module(GDP, UNRATE)");
-    expect(result).toContain("HOUSING → Test Module(MORTGAGE30US)");
+    expect(result).toContain("ECONOMY → GDP, UNRATE");
+    expect(result).toContain("HOUSING → MORTGAGE30US");
   });
 
   it("merges crossRef from multiple modules into one routing line", () => {
@@ -77,7 +77,7 @@ describe("buildInstructions", () => {
       crossRef: [{ question: "economy", route: "cpi_breakdown, employment" }],
     });
     const result = buildInstructions([fred, bls]);
-    expect(result).toContain("ECONOMY → FRED(GDP, UNRATE) + BLS(cpi_breakdown, employment)");
+    expect(result).toContain("ECONOMY → GDP, UNRATE; cpi_breakdown, employment");
   });
 
   it("outputs question types in QUESTION_TYPES order, not alphabetical", () => {
