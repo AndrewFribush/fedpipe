@@ -21,14 +21,17 @@
 
 ## Features
 
-- **300+ tools** across 40+ government APIs — economic, health, legislative, financial, environmental, and more
+- **355 tools** across 42 government APIs — economic, health, legislative, financial, environmental, and more
 - **Cross-referencing** — built-in instructions guide the LLM to combine data from multiple agencies (e.g., FDA adverse events + lobbying spend + campaign contributions)
 - **Code mode** — WASM-sandboxed JavaScript execution reduces context window usage by 98-100% for large responses
 - **Selective loading** — load only the modules you need: `--modules fred,treasury,congress`
 - **Dual transport** — stdio for desktop clients, HTTP Stream for web/remote
 - **TypeScript SDK** — every API is importable as a standalone typed client, no MCP required
 - **Disk-backed caching** — responses cached to disk, survives restarts
-- **Rate limiting + retry** — token-bucket rate limiter with exponential backoff on 429/503
+- **Rate limiting + retry** — token-bucket rate limiter with exponential backoff on 429/503, tuned to each agency's published limits
+- **Battle-tested nightly** — every tool runs against the live APIs each night, with silent-empty detection and schema-drift guards; agency doc changes land as reviewable commits
+- **LLM-friendly hardening** — strict schemas with did-you-mean rejections, argument normalization (whitespace, numeric strings, zero-width chars), fuzzy name resolution (tickers, country/state names, vehicle models), and a 120KB output cap that degrades gracefully
+- **`fedpipe doctor`** — one command to check key setup and live connectivity per module
 
 ## Quick Start
 
