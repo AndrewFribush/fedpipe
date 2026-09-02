@@ -146,6 +146,40 @@ Defined in `server/prompts.ts`. These span multiple modules — e.g. `follow_the
 
 Cross-cutting prompts are **module-aware**: when modules are selectively loaded (`MODULES=fred,bls`), prompt steps that reference unloaded tools are silently removed. The prompt reads naturally with only the available tools.
 
+## The Hardening Layer
+
+Every tool passes through `src/server/hardening.ts` at registration:
+
+- **Argument normalization** — strings are trimmed and stripped of zero-width
+  characters; numeric strings coerce for number params, `"true"`/`"false"` for
+  booleans; negative pagination values clamp. LLM callers are sloppy in
+  predictable ways; the server absorbs them.
+- **Strict schemas with did-you-mean** — unknown parameters are rejected (zod's
+  default silently strips them, which returns unfiltered data that *looks*
+  right). The error names the closest valid parameter and lists all of them.
+- **Output capping** — responses over 120KB degrade gracefully: long string
+  leaves truncate first, then the largest arrays shrink, always leaving valid
+  JSON and a summary note saying exactly what was trimmed.
+
+Module SDKs add their own defenses where agencies are inconsistent: quote
+escaping in generated SoQL/OData, state name↔abbreviation matching (CDC),
+fuzzy registry-name resolution (NHTSA models, World Bank countries, SEC
+tickers), a JSON repairer for NAEP's unescaped quotes, and endpoint-name
+alias fallbacks (DOL).
+
+## The Test Ladder
+
+| Layer | Command | What it proves |
+|---|---|---|
+| Unit (1000+) | `npm test` | Pure logic, envelopes, hardening functions, doc-rot guard |
+| Offline replay | `npm run test:offline` | Every tool end-to-end from the disk cache, zero network |
+| Live smoke | `npm run test:live` | Every tool against the real APIs — silent-empty guard (empty results fail unless allow-listed) and schema-drift guard (column changes vs `tests/live/response-shapes.json`) |
+| Nightly CI | `live-smoke.yml` | Live suite + `doctor --live` summary + upstream doc-mirror refresh with auto-committed diffs |
+
+Failure classifications in the live suite tell you who to blame:
+`[REPO BUG (4xx)]`, `[UPSTREAM (5xx/timeout/network)]` (retried with backoff),
+`[QUOTA EXHAUSTED]`, `[SILENT EMPTY]`, `[SCHEMA DRIFT]`.
+
 ## Key Design Decisions
 
 | Decision | Why |
