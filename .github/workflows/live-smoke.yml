@@ -62,6 +62,18 @@ jobs:
         if: always()
         run: node scripts/live-summary.mjs live-results.json >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Module health (doctor --live)
+        if: always()
+        continue-on-error: true
+        run: |
+          {
+            echo ""
+            echo "### fedpipe doctor --live"
+            echo '```'
+            node dist/server.js doctor --live 2>&1 | sed 's/\x1b\[[0-9;]*m//g'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
