@@ -162,8 +162,11 @@ export async function getTransportStats(opts?: {
   const wheres: string[] = [];
   if (opts?.startDate) wheres.push(`date >= '${esc(opts.startDate)}'`);
   if (opts?.endDate) wheres.push(`date <= '${esc(opts.endDate)}'`);
-  // Filter out empty placeholder rows
-  wheres.push("general_economic_indicators IS NOT NULL");
+  // NOTE: an earlier "placeholder filter" on general_economic_indicators
+  // silently dropped 2 of every 3 months — that column is quarterly GDP.
+  // Rows are keyed by date and every historical month has some data, so no
+  // sentinel filter; just exclude future placeholder dates.
+  wheres.push(`date <= '${new Date().toISOString().slice(0, 10)}'`);
   if (opts?.where) wheres.push(opts.where);
   if (wheres.length) params.$where = wheres.join(" AND ");
 
