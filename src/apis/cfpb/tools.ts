@@ -17,6 +17,32 @@ import {
 } from "./sdk.js";
 import { tableResponse, listResponse, recordResponse, emptyResponse } from "../../shared/response.js";
 
+
+/**
+ * The Trends/GeoStates endpoints return raw Elasticsearch payloads (200KB+
+ * of nested buckets). Flatten every aggregation into compact
+ * {key, count, [nested series]} rows.
+ */
+function digestEsAggs(aggs: Record<string, any> | undefined): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [name, node] of Object.entries(aggs ?? {})) {
+    const inner = (node as any)?.[name] ?? node;
+    const buckets = inner?.buckets ?? (node as any)?.buckets;
+    if (!Array.isArray(buckets)) continue;
+    out[name] = buckets.slice(0, 60).map((b: any) => {
+      const row: Record<string, unknown> = { key: b.key_as_string ?? b.key, count: b.doc_count };
+      for (const [k2, v2] of Object.entries(b)) {
+        const nb = (v2 as any)?.buckets;
+        if (Array.isArray(nb)) {
+          row[k2] = nb.slice(0, 60).map((x: any) => ({ key: x.key_as_string ?? x.key, count: x.doc_count }));
+        }
+      }
+      return row;
+    });
+  }
+  return out;
+}
+
 export const tools: Tool<any, any>[] = [
   {
     name: "cfpb_search_complaints",
@@ -120,7 +146,11 @@ export const tools: Tool<any, any>[] = [
           { items },
         );
       }
-      return recordResponse(`CFPB complaint trends (${args.lens ?? "overview"})`, data as Record<string, unknown>);
+      const d: any = data;
+      return recordResponse(`CFPB complaint trends (${args.lens ?? "overview"})`, {
+        totalComplaints: d?.hits?.total?.value ?? null,
+        aggregations: digestEsAggs(d?.aggregations),
+      });
     },
   },
 
@@ -162,7 +192,11 @@ export const tools: Tool<any, any>[] = [
       if (Array.isArray(states) && states.length) {
         return tableResponse(`CFPB complaints by state: ${states.length} states`, { rows: states });
       }
-      return recordResponse("CFPB complaints by state", data as Record<string, unknown>);
+      const sd: any = data;
+      return recordResponse("CFPB complaints by state", {
+        totalComplaints: sd?.hits?.total?.value ?? null,
+        aggregations: digestEsAggs(sd?.aggregations),
+      });
     },
   },
 
