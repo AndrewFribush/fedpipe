@@ -55,7 +55,17 @@ export const tools: Tool<any, any>[] = [
     execute: async ({ dataset, variables, for_geo, in_geo, ucgid, descriptive, predicates }) => {
       const extra: Record<string, string> = {};
       for (const pair of (predicates ?? "").split("&").map((s: string) => s.trim()).filter(Boolean)) {
-        const [k, ...v] = pair.split("="); if (k && v.length) extra[k] = v.join("=");
+        const [k, ...v] = pair.split("=");
+        if (!k || !v.length) {
+          // Silently dropping a malformed predicate returns unfiltered data
+          // that looks right — fail loudly instead.
+          throw new Error(
+            `Malformed predicate "${pair}" — predicates are KEY=VALUE pairs joined by '&' ` +
+            `(e.g. 'NAICS2017=72&EMPSZES=001'). The Census API has no comparison operators; ` +
+            `filter numerically on your side or narrow the geography.`,
+          );
+        }
+        extra[k] = v.join("=");
       }
       const data = await queryCensus(dataset, variables, for_geo, in_geo, extra, { ucgid, descriptive });
       const rows = data.rows.map(row => rowToObject(data.headers, row));
