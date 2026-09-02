@@ -215,7 +215,7 @@ export const tools: Tool<any, any>[] = [
     description:
       "Get itemized disbursements from a PAC or committee — shows exactly which candidates and committees received money, how much, and when.\n" +
       "This is the KEY tool for conflict-of-interest investigations: trace direct money from named industry PACs to named politicians.\n" +
-      "Example: fec_committee_disbursements(committee_id='C00004275', cycle=2018, recipient_name='Crapo') shows ABA BankPAC donations to Sen. Crapo.\n" +
+      "Example: fec_committee_disbursements(committee_id='C00004275', cycle=2022, recipient_name='Crapo') shows ABA BankPAC donations to Sen. Crapo (verified live).\n" +
       "WORKFLOW: (1) fec_search_committees(name='Company', committee_type='Q') to find PAC ID, (2) this tool with recipient_name filter.\n" +
       "Try multiple cycles (election year ± 1 cycle) since PACs often give early.\n" +
       "Common PAC IDs: ABA BankPAC=C00004275, Wells Fargo=C00034595, Citigroup=C00008474, Goldman Sachs=C00350744, Pfizer=C00016683, Merck=C00097485.",
