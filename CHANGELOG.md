@@ -14,14 +14,15 @@ Credits in the README). Everything below is on top of upstream v2026.6.10.
   that ignore the notification; `--modules a,b` registers exactly those,
   eagerly. `load_modules` waits for the session to register before adding
   tools, so the notification lands even on the first call of a session.
-- **7 new modules**: `gleif` (Global LEI registry — entity resolution + corporate
-  ownership, keyless), `courtlistener` (federal/state court opinions + RECAP/PACER
-  dockets; search keyless, detail needs a free token), `nonprofits` (IRS Form 990
-  financials via ProPublica Nonprofit Explorer, keyless), and four bulk-ingest
-  modules — `form5500` (DOL employee-benefit-plan filings), `faa` (FAA aircraft
-  registry), `exempt-orgs` (IRS Exempt-Org Business Master File — the full
-  registry of ~1.96M tax-exempt orgs), and `ntsb` (NTSB aviation accident
-  database). 49 modules total.
+- **13 new modules** (49 → 55 sources). Entity/finance: `gleif` (Global LEI
+  registry), `nonprofits` (IRS Form 990 via ProPublica), `exempt-orgs` (IRS
+  Exempt-Org Business Master File — ~1.96M tax-exempt orgs), `ofac` (Treasury OFAC
+  SDN sanctions screening), `cftc` (Commitments of Traders futures positioning).
+  Legal/influence: `courtlistener` (court opinions + RECAP/PACER dockets), `fara`
+  (DOJ foreign-agent registrants), `fcc` (FCC ECFS proceeding comments).
+  Transportation: `faa` (aircraft registry), `ntsb` (aviation accidents).
+  Benefits/health/science: `form5500` (DOL benefit plans), `orange-book` (FDA
+  approved drugs + patents), `nsf` (NSF research awards).
 - **Bulk-ingest modules**: a new module shape for datasets published as bulk
   downloads rather than live APIs (`src/shared/bulk.ts`). The module downloads the
   archive once on first use, extracts it (built-in `zlib`, no zip dep — a

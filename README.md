@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Live API smoke test](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml)
 
-375 tools covering economic, fiscal, health, education, energy, environment, lobbying, housing, patents, safety, banking, consumer protection, workplace safety, transportation, seismic, clinical trials, pharma payments, research funding, procurement, legislative, court/litigation, corporate-ownership, nonprofit, retirement-plan, and aircraft-registry data.
+384 tools covering economic, fiscal, health, education, energy, environment, lobbying, housing, patents, safety, banking, consumer protection, workplace safety, transportation, seismic, clinical trials, pharma payments, research funding, procurement, legislative, court/litigation, corporate-ownership, nonprofit, retirement-plan, and aircraft-registry data.
 
 **20+ APIs require no key** · The rest use free keys that take under a minute to get
 
@@ -21,7 +21,7 @@
 
 ## Features
 
-- **375+ tools** across 49 government data sources — economic, health, legislative, financial, legal, environmental, and more
+- **384+ tools** across 55 government data sources — economic, health, legislative, financial, legal, environmental, and more
 - **Cross-referencing** — built-in instructions plus `resolve_entity`/`resolve_person`/`resolve_place` combine data from multiple agencies (e.g., FDA adverse events + lobbying spend + campaign contributions + benefit-plan filings)
 - **Bulk-ingest sources** — where an agency publishes bulk downloads instead of a query API (e.g. DOL Form 5500), the module fetches and indexes the dataset locally on first use (SQLite via built-in `node:sqlite`), then serves fast local queries
 - **Code mode** — WASM-sandboxed JavaScript execution reduces context window usage by 98-100% for large responses
@@ -135,12 +135,12 @@ Full documentation at **[andrewfribush.github.io/fedpipe](https://andrewfribush.
 |----------|------|
 | **Economic** | Treasury, FRED, BLS, BEA, EIA |
 | **Legislative** | Congress.gov, Federal Register, GovInfo, Regulations.gov |
-| **Financial** | FEC, Senate Lobbying, SEC, FDIC, CFPB, GLEIF, Nonprofits (IRS 990), Exempt Orgs (IRS BMF), Form 5500 |
+| **Financial** | FEC, Senate Lobbying, SEC, FDIC, CFPB, GLEIF, Nonprofits (IRS 990), Exempt Orgs (IRS BMF), Form 5500, OFAC Sanctions, CFTC COT |
 | **Spending** | USAspending, Open Payments |
-| **Health & Safety** | CDC, FDA, CMS, ClinicalTrials.gov, NIH, NHTSA, DOL |
+| **Health & Safety** | CDC, FDA, FDA Orange Book, CMS, ClinicalTrials.gov, NIH, NHTSA, DOL |
 | **Environment** | EPA, NOAA, NREL, USGS |
-| **Legal & Justice** | CourtListener, FBI Crime Data, DOJ News |
-| **Education** | NAEP, College Scorecard, USPTO |
+| **Legal & Justice** | CourtListener, FARA, FCC ECFS, FBI Crime Data, DOJ News |
+| **Education & Science** | NAEP, College Scorecard, USPTO, NSF |
 | **Demographics** | Census, HUD, FEMA |
 | **Transportation** | BTS, FAA Aircraft Registry, NTSB Aviation Accidents |
 | **Other** | USDA NASS, USDA FoodData, World Bank |

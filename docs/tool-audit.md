@@ -517,3 +517,25 @@ more bulk-shaped sources with no query API of their own.
   U.S. numbers. Also added a 21-day TTL fallback since NTSB's endpoint omits
   Last-Modified. This is the only source that justified a new dependency; every
   other bulk module stays zero-dep. 49 modules / 375 tools.
+
+**8-source "API-ize" batch (2026-09-02).** After a systematic look at whether to
+carpet-bomb Data.gov (no — it's a metadata catalog of mostly geospatial/municipal
+long-tail; curation + cross-agency joins are the moat), verified and built 6 of a
+targeted 8. All live-verified:
+- ✅ **nsf** — NSF research awards (keyless). Quantum-computing search returns awards.
+- ✅ **fara** — DOJ foreign-agent registrants (keyless). Ballard Partners (reg 7070).
+- ✅ **fcc** — FCC ECFS proceeding comments (shared DATA_GOV_API_KEY). Docket 17-108 filings.
+- ✅ **cftc** — Commitments of Traders via Socrata (keyless). Gold speculators net +243,334 (2026-08-25).
+- ✅ **ofac** — Treasury OFAC SDN sanctions. ~6MB list fetched + searched in memory
+  (any Node). Rosneft → 3, Wagner → 1. Plugs into resolve_entity/resolve_person.
+- ✅ **orange-book** — FDA Orange Book drugs + patents. ~1MB tilde-delimited ZIP
+  parsed in memory. Ozempic application 209637 → 92 listed patents (patent-cliff).
+- ⏸ **FEMA NFIP** — HELD. Every OpenFEMA NFIP endpoint (claims, policies) is
+  deprecated and frozen as of 2026-06-01, removed 2026-10-15, with no discoverable
+  successor. Building on it would ship a module that breaks in weeks — revisit when
+  FEMA publishes the replacement.
+- ⏸ **OPM salaries** — HELD. The only official source (FedScope) is anonymized,
+  binned microdata (salary in $10k bands, no names) across ~15 coded dimension
+  files — it doesn't deliver "federal salaries" as implied, is the most complex,
+  and joins nothing. Named-salary data exists only via third-party FOIA republishers.
+55 modules / 384 tools.
