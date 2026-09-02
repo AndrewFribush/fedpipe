@@ -12,47 +12,11 @@
  * Requires Node >= 22.5 (for `node:sqlite`). No API key.
  */
 
-import { inflateRawSync } from "node:zlib";
-import { existsSync, mkdirSync, readdirSync, renameSync, rmSync, statSync } from "node:fs";
-import { homedir, tmpdir } from "node:os";
+import { existsSync, readdirSync, renameSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { bulkCacheDir, openSqlite, unzipEntries, csvRecords, type SqliteDb } from "../../shared/bulk.js";
 
-// ─── Storage location (mirrors shared/client.ts cache dir) ───────────
-
-function cacheDir(): string {
-  const base = process.env.XDG_CACHE_HOME || join(homedir(), ".cache");
-  const dir = join(base, "fedpipe", "form5500");
-  try {
-    mkdirSync(dir, { recursive: true });
-    return dir;
-  } catch {
-    const fallback = join(tmpdir(), "fedpipe", "form5500");
-    mkdirSync(fallback, { recursive: true });
-    return fallback;
-  }
-}
-
-// ─── node:sqlite (Node >= 22.5), loaded lazily so older Node only fails
-//     when this module is actually used ─────────────────────────────
-
-type SqliteDb = {
-  exec(sql: string): void;
-  prepare(sql: string): { run(...a: unknown[]): unknown; get(...a: unknown[]): any; all(...a: unknown[]): any[] };
-  close(): void;
-};
-
-async function openSqlite(path: string): Promise<SqliteDb> {
-  let mod: { DatabaseSync: new (p: string) => SqliteDb };
-  try {
-    mod = (await import("node:sqlite")) as unknown as { DatabaseSync: new (p: string) => SqliteDb };
-  } catch {
-    throw new Error(
-      "form5500 needs Node's built-in SQLite (node:sqlite), available in Node >= 22.5. " +
-      `You are on ${process.version}. Upgrade Node to use the Form 5500 tools.`,
-    );
-  }
-  return new mod.DatabaseSync(path);
-}
+const cacheDir = () => bulkCacheDir("form5500");
 
 // ─── Config ──────────────────────────────────────────────────────────
 
@@ -82,67 +46,22 @@ const COLUMNS: Record<string, string> = {
   total_participants: "TOT_PARTCP_BOY_CNT",
 };
 
-// ─── Minimal single-entry ZIP extraction (deflate) ───────────────────
-
-function unzipSingleEntry(buf: Buffer): Buffer {
-  if (buf.readUInt32LE(0) !== 0x04034b50) throw new Error("form5500: unexpected archive format (no ZIP local header)");
-  const method = buf.readUInt16LE(8);
-  const nameLen = buf.readUInt16LE(26);
-  const extraLen = buf.readUInt16LE(28);
-  const compSize = buf.readUInt32LE(18);
-  const dataStart = 30 + nameLen + extraLen;
-  const comp = buf.subarray(dataStart, compSize > 0 ? dataStart + compSize : undefined);
-  if (method === 0) return comp;           // stored
-  if (method === 8) return inflateRawSync(comp); // deflate
-  throw new Error(`form5500: unsupported ZIP compression method ${method}`);
-}
-
-// ─── CSV parsing (quoted fields with embedded commas/quotes/newlines) ─
-
-/** Parse one CSV record starting at `pos`; returns the fields and the index
- *  just past the record's line terminator. RFC-4180 quoting. */
-function parseRecord(s: string, pos: number): { fields: string[]; next: number } | null {
-  if (pos >= s.length) return null;
-  const fields: string[] = [];
-  let field = "";
-  let inQuotes = false;
-  let i = pos;
-  for (; i < s.length; i++) {
-    const c = s[i];
-    if (inQuotes) {
-      if (c === '"') {
-        if (s[i + 1] === '"') { field += '"'; i++; }
-        else inQuotes = false;
-      } else field += c;
-    } else if (c === '"') {
-      inQuotes = true;
-    } else if (c === ",") {
-      fields.push(field); field = "";
-    } else if (c === "\n") {
-      fields.push(field);
-      return { fields, next: i + 1 };
-    } else if (c === "\r") {
-      // swallow; the \n (if present) ends the record
-      if (s[i + 1] === "\n") { fields.push(field); return { fields, next: i + 2 }; }
-      fields.push(field); return { fields, next: i + 1 };
-    } else field += c;
-  }
-  fields.push(field);
-  return { fields, next: i };
-}
-
 // ─── Ingest ──────────────────────────────────────────────────────────
 
 async function buildDb(year: number, dbPath: string, lastModified: string): Promise<void> {
   const res = await fetch(sourceUrl(year));
   if (!res.ok) throw new Error(`form5500: download failed (HTTP ${res.status}) for ${year}`);
   const zip = Buffer.from(await res.arrayBuffer());
-  const csv = unzipSingleEntry(zip).toString("utf8");
+  const entries = unzipEntries(zip);
+  let csvBuf: Buffer | undefined;
+  for (const [name, b] of entries) if (name.toLowerCase().endsWith(".csv")) { csvBuf = b; break; }
+  if (!csvBuf) throw new Error("form5500: no CSV found in the archive");
+  const gen = csvRecords(csvBuf.toString("utf8"));
 
-  const header = parseRecord(csv, 0);
-  if (!header) throw new Error("form5500: empty dataset");
+  const header = gen.next();
+  if (header.done) throw new Error("form5500: empty dataset");
   const colIndex: Record<string, number> = {};
-  header.fields.forEach((name, idx) => { colIndex[name.trim()] = idx; });
+  (header.value as string[]).forEach((name, idx) => { colIndex[name.trim()] = idx; });
   const picks = Object.entries(COLUMNS).map(([col, src]) => ({ col, idx: colIndex[src] ?? -1 }));
 
   const tmp = `${dbPath}.tmp-${process.pid}`;
@@ -155,14 +74,9 @@ async function buildDb(year: number, dbPath: string, lastModified: string): Prom
   const insert = db.prepare(`INSERT INTO plans(${cols.join(",")}) VALUES(${cols.map(() => "?").join(",")})`);
 
   db.exec("BEGIN");
-  let pos = header.next;
   let count = 0;
-  for (;;) {
-    const rec = parseRecord(csv, pos);
-    if (!rec) break;
-    pos = rec.next;
-    if (rec.fields.length === 1 && rec.fields[0] === "") continue; // trailing blank line
-    const vals = picks.map(p => (p.idx >= 0 ? (rec.fields[p.idx] ?? "") : ""));
+  for (const rec of gen) {
+    const vals = picks.map(p => (p.idx >= 0 ? (rec[p.idx] ?? "") : ""));
     insert.run(...vals);
     count++;
   }

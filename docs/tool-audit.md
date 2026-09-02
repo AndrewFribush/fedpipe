@@ -483,5 +483,18 @@ to 32 plans incl. the 401(k) (143,146 active participants) and, by EIN 91-042569
 22 plans / 808,110 total active participants. Excluded from the nightly smoke
 suite (a fresh CI runner would re-download each night) — verified by hand instead.
 The sponsor EIN is the join key back to resolve_entity/SEC. Still bulk-shaped and
-pending: 5500-SF small plans and Schedule H asset dollars (separate DOL datasets),
-plus the FAA aircraft registry (bot-blocked download — needs a fetch workaround).
+pending for 5500: 5500-SF small plans and Schedule H asset dollars (separate DOL
+datasets).
+
+**Second bulk-ingest module (2026-09-02):** `faa` — FAA Releasable Aircraft
+Database. The ~80MB download is behind a CDN that 503s HEAD requests and bare
+clients, so the module fetches with a browser User-Agent + Accept and uses a
+ranged GET (not HEAD) for the freshness check. It's a multi-entry ZIP, so the
+shared extractor was generalized to parse the central directory (single- and
+multi-entry, stored + deflate). Verified live: cold ingest indexed 316,370
+aircraft (joining MASTER.txt registrations to the ACFTREF.txt make/model
+reference); N628TS → Gulfstream G650ER (2015), FALCON LANDING LLC, Hawthorne CA;
+NetJets → 32 aircraft. Owner name is the join key to resolve_entity. Both bulk
+modules share `src/shared/bulk.ts` (cache dir, node:sqlite, ZIP, CSV) with unit
+tests, and both are excluded from the nightly smoke suite (a fresh CI runner
+would re-download tens of MB each night). 47 modules / 372 tools.

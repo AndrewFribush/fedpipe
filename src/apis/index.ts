@@ -32,6 +32,7 @@ export * as epaAqs from "./epa-aqs/sdk.js";
 export * as fbi from "./fbi/sdk.js";
 export * as fda from "./fda/sdk.js";
 export * as fdic from "./fdic/sdk.js";
+export * as faa from "./faa/sdk.js";
 export * as fec from "./fec/sdk.js";
 export * as federalRegister from "./federal-register/sdk.js";
 export * as fema from "./fema/sdk.js";
