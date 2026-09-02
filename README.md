@@ -32,6 +32,7 @@
 - **Battle-tested nightly** — every tool runs against the live APIs each night, with silent-empty detection and schema-drift guards; agency doc changes land as reviewable commits
 - **LLM-friendly hardening** — strict schemas with did-you-mean rejections, argument normalization (whitespace, numeric strings, zero-width chars), fuzzy name resolution (tickers, country/state names, vehicle models), and a 120KB output cap that degrades gracefully
 - **`fedpipe doctor`** — one command to check key setup and live connectivity per module
+- **Discovery built in** — `find_tools` searches all tools by topic; per-module reference data is browsable as MCP resources
 
 ## Quick Start
 

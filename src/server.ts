@@ -322,6 +322,33 @@ const server = new FastMCP({
  * (e.g. `title`) are preserved via spread.
  */
 
+
+// ─── Prompt argument completions ─────────────────────────────────────
+
+const US_STATES = ["AL Alabama","AK Alaska","AZ Arizona","AR Arkansas","CA California","CO Colorado","CT Connecticut","DE Delaware","DC District of Columbia","FL Florida","GA Georgia","HI Hawaii","ID Idaho","IL Illinois","IN Indiana","IA Iowa","KS Kansas","KY Kentucky","LA Louisiana","ME Maine","MD Maryland","MA Massachusetts","MI Michigan","MN Minnesota","MS Mississippi","MO Missouri","MT Montana","NE Nebraska","NV Nevada","NH New Hampshire","NJ New Jersey","NM New Mexico","NY New York","NC North Carolina","ND North Dakota","OH Ohio","OK Oklahoma","OR Oregon","PA Pennsylvania","RI Rhode Island","SC South Carolina","SD South Dakota","TN Tennessee","TX Texas","UT Utah","VT Vermont","VA Virginia","WA Washington","WV West Virginia","WI Wisconsin","WY Wyoming"];
+
+/** Attach state-name completion to any prompt argument named "state". */
+function withCompletions(prompts: unknown[]): unknown[] {
+  return (prompts as Array<{ arguments?: Array<{ name: string; complete?: unknown }> }>).map(pr => ({
+    ...pr,
+    arguments: pr.arguments?.map(a =>
+      a.name === "state" && !a.complete
+        ? {
+            ...a,
+            complete: async (value: string) => {
+              const q = value.trim().toLowerCase();
+              const starts = US_STATES.filter(s => s.toLowerCase().startsWith(q) || s.slice(3).toLowerCase().startsWith(q));
+              const contains = US_STATES.filter(s => q && s.toLowerCase().includes(q) && !starts.includes(s));
+              const values = [...starts, ...contains]
+                .map(s => (q.length <= 2 && /^[a-z]{0,2}$/.test(q) ? s.slice(0, 2) : s.slice(3)))
+                .slice(0, 20);
+              return { values };
+            },
+          }
+        : a),
+  }));
+}
+
 const DEFAULT_TOOL_ANNOTATIONS = {
   readOnlyHint: true,
   idempotentHint: true,
@@ -345,7 +372,7 @@ for (const mod of activeModules) {
     annotations: { ...DEFAULT_TOOL_ANNOTATIONS, ...(t.annotations ?? {}) },
   }));
   server.addTools(annotated as any);
-  if (mod.prompts?.length) server.addPrompts(mod.prompts as any);
+  if (mod.prompts?.length) server.addPrompts(withCompletions(mod.prompts) as any);
 }
 
 // ─── clear_cache tool ────────────────────────────────────────────────
@@ -421,7 +448,7 @@ server.addTool({
 
 // ─── Cross-cutting analysis prompts ──────────────────────────────────
 
-server.addPrompts(buildAnalysisPrompts(activeModules) as any);
+server.addPrompts(withCompletions(buildAnalysisPrompts(activeModules)) as any);
 
 // ─── Code mode tool ──────────────────────────────────────────────────
 
