@@ -1190,4 +1190,20 @@ const RAW_PROMPTS: InputPrompt<any, any>[] = [
         "Note that high profits fund R&D — present both perspectives.";
     },
   },
+  {
+    name: "company_full_profile",
+    description: "Everything the federal government knows about a company in one flow: identity, financials, insiders, PAC money, lobbying, and federal awards.",
+    arguments: [
+      { name: "company", description: "Company name or stock ticker (e.g. 'Boeing', 'PLTR')", required: true },
+    ],
+    load: async ({ company }) => {
+      return `Build the complete federal picture of ${company}:\n\n` +
+        `1. **Resolve** — resolve_entity(name='${company}') gives the CIK, FEC committee IDs, lobbying presence, and award activity, plus exact follow-up calls\n` +
+        "2. **Financial health** — sec_company_financials with the resolved CIK (revenue trend, CAGR); sec_insider_transactions for what executives are doing with their own shares\n" +
+        "3. **Political money out** — fec_committee_disbursements for each PAC (who they fund); lobbying_search for what they lobby on and through whom\n" +
+        "4. **Government money in** — usa_spending_by_award with the resolved recipient name (contracts/grants, which agencies)\n" +
+        "5. **Cross-reference** — do the members receiving PAC money sit on committees overseeing the agencies awarding the contracts? Use congress_committees and congress_member_details\n\n" +
+        "Present the money circuit: federal awards in → revenue → PAC/lobbying out → the legislators who oversee the awards. Keep every claim tied to a specific filing, award, or disbursement.";
+    },
+  },
 ];
