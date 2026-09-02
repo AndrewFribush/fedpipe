@@ -55,8 +55,8 @@ Skipped
   our first name lookup for places is a 1.4 MB fetch (then cached); theirs is a local DB. Ours needs
   no Docker.
 - Their `get_population_data` prompt — our `state_profile` prompt covers the same ground.
-- Sub-place geographies by name (tracts, ZCTAs, school districts) — resolvable only via the address
-  geocoder today. County subdivisions and ZCTAs by name could be added the same way as places.
+- Sub-place geographies by name: tracts and school districts remain geocoder-only. (ZCTAs and
+  county subdivisions resolve natively as of 2026-09-02.)
 
 Also seen in [brockwebb/census-mcp-server](https://github.com/brockwebb/census-mcp-server) (broken on install as of 2026-09-01)
 - "Pragmatics" / methodology guidance bundled with every response (margin-of-error thresholds,
@@ -122,5 +122,5 @@ The community [anshumax/world_bank_mcp_server](https://github.com/anshumax/world
 
 - Recorded-fixture contract tests per module (offline shape checks). (The nightly live run is in place; this would be the offline tier.)
 - SEC segment data; Form 3/5; concept search; CAGR.
-- Census methodology guidance; ZCTA / county-subdivision name resolution.
+- Census methodology guidance. (~~ZCTA / county-subdivision name resolution~~ — done 2026-09-02.)
 - Data Commons module.
