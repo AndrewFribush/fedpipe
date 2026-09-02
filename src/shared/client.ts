@@ -12,8 +12,8 @@
  *   - Auth via query param, header, or request body
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { writeFile } from "node:fs/promises";
+import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync } from "node:fs";
+import { writeFile, rename } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { homedir, tmpdir } from "node:os";
 
@@ -335,7 +335,10 @@ function flushGlobalSync(): void {
   _globalDirty = false;
   try {
     mkdirSync(dirname(CACHE_FILE), { recursive: true });
-    writeFileSync(CACHE_FILE, JSON.stringify(mergedCacheObject(Date.now())), "utf-8");
+    // Write-then-rename: a crash mid-write must not corrupt the cache file.
+    const tmp = `${CACHE_FILE}.${process.pid}.tmp`;
+    writeFileSync(tmp, JSON.stringify(mergedCacheObject(Date.now())), "utf-8");
+    renameSync(tmp, CACHE_FILE);
   } catch { /* best effort */ }
 }
 
@@ -352,9 +355,12 @@ function scheduleGlobalWrite(): void {
     _globalWriteTimer = undefined;
     if (!_globalDirty) return;
     _globalDirty = false;
-    // Async write — non-blocking; merged over the on-disk state so
-    // concurrent server processes don't clobber each other.
-    writeFile(CACHE_FILE, JSON.stringify(mergedCacheObject(Date.now())), "utf-8").catch(() => {});
+    // Async write-then-rename — non-blocking, atomic, merged over the
+    // on-disk state so concurrent server processes don't clobber each other.
+    const tmp = `${CACHE_FILE}.${process.pid}.tmp`;
+    writeFile(tmp, JSON.stringify(mergedCacheObject(Date.now())), "utf-8")
+      .then(() => rename(tmp, CACHE_FILE))
+      .catch(() => {});
   }, 2000);
   if (typeof _globalWriteTimer === "object" && "unref" in _globalWriteTimer) {
     _globalWriteTimer.unref();
