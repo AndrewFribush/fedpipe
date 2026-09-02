@@ -211,7 +211,10 @@ export const tools: Tool<any, any>[] = [
     }),
     execute: async ({ vin }) => {
       const data = await decodeVin(vin);
-      if (!data || data.ErrorCode === "0") return emptyResponse(`Could not decode VIN: ${vin}`);
+      // vPIC returns ErrorCode "0" for a CLEAN decode — the previous check had
+      // this inverted and rejected the best results. A VIN that truly can't be
+      // decoded comes back with no Make, so gate on that instead.
+      if (!data || !data.Make) return emptyResponse(`Could not decode VIN: ${vin}`);
       return recordResponse(`VIN ${vin}`, {
         make: data.Make, model: data.Model, year: data.ModelYear,
         manufacturer: data.Manufacturer, vehicleType: data.VehicleType,

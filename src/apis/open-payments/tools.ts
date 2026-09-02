@@ -23,6 +23,28 @@ import {
 } from "./sdk.js";
 import { tableResponse, listResponse, emptyResponse } from "../../shared/response.js";
 
+/**
+ * The general-payment endpoint returns ~40 raw Socrata columns per row. Project
+ * to the fields that answer "who got paid how much by whom, for what" so the
+ * table is readable. Callers who need the full record can use the CMS record_id.
+ */
+function briefPayment(r: Record<string, any>): Record<string, unknown> {
+  const name = [r.covered_recipient_first_name, r.covered_recipient_last_name].filter(Boolean).join(" ");
+  const product = [r.name_of_drug_or_biological_or_device_or_medical_supply_1, r.name_of_drug_or_biological_or_device_or_medical_supply_2].filter(Boolean).join("; ");
+  return {
+    recipient: name || r.teaching_hospital_name || undefined,
+    specialty: r.covered_recipient_specialty_1 || undefined,
+    location: [r.recipient_city, r.recipient_state].filter(Boolean).join(", ") || undefined,
+    company: r.applicable_manufacturer_or_applicable_gpo_making_payment_name || undefined,
+    amount: r.total_amount_of_payment_usdollars != null ? `$${Number(r.total_amount_of_payment_usdollars).toLocaleString()}` : undefined,
+    date: r.date_of_payment || undefined,
+    nature: r.nature_of_payment_or_transfer_of_value || undefined,
+    product: product || undefined,
+    programYear: r.program_year || undefined,
+    recordId: r.record_id || undefined,
+  };
+}
+
 export const tools: Tool<any, any>[] = [
   {
     name: "open_payments_search",
@@ -44,7 +66,7 @@ export const tools: Tool<any, any>[] = [
       if (!data.results?.length) return emptyResponse("No payments found matching the criteria.");
       return tableResponse(
         `Open Payments: ${data.count?.toLocaleString() ?? "?"} matching records (showing ${data.results.length})`,
-        { rows: data.results as Record<string, unknown>[], total: data.count },
+        { rows: (data.results as Record<string, any>[]).map(briefPayment), total: data.count },
       );
     },
   },
@@ -78,7 +100,7 @@ export const tools: Tool<any, any>[] = [
       if (!data.results?.length) return emptyResponse("No payments found.");
       return tableResponse(
         `Top payments (sorted by amount, ${data.count?.toLocaleString() ?? "?"} total matches)`,
-        { rows: data.results as Record<string, unknown>[], total: data.count },
+        { rows: (data.results as Record<string, any>[]).map(briefPayment), total: data.count },
       );
     },
   },

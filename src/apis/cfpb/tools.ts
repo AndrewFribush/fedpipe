@@ -17,6 +17,17 @@ import {
 } from "./sdk.js";
 import { tableResponse, listResponse, recordResponse, emptyResponse } from "../../shared/response.js";
 
+/**
+ * The CFPB `_meta` carries a ~100-entry `break_points` array (internal
+ * pagination-scoring cursors) that's pure noise in a tool result. Keep the
+ * useful counters (total_record_count, last_updated, staleness) and drop it.
+ */
+function cleanMeta(meta: unknown): Record<string, unknown> | undefined {
+  if (!meta || typeof meta !== "object") return undefined;
+  const { break_points: _drop, ...rest } = meta as Record<string, unknown>;
+  return rest;
+}
+
 
 /**
  * The Trends/GeoStates endpoints return raw Elasticsearch payloads (200KB+
@@ -77,7 +88,7 @@ export const tools: Tool<any, any>[] = [
       if (!complaints.length) return emptyResponse("No complaints found matching the search criteria.");
       return listResponse(
         `CFPB complaints: ${total.toLocaleString()} total matches, showing ${Math.min(complaints.length, 50)}`,
-        { items: complaints, total, meta: data._meta },
+        { items: complaints, total, meta: cleanMeta(data._meta) },
       );
     },
   },
@@ -109,7 +120,7 @@ export const tools: Tool<any, any>[] = [
       if (!buckets.length) return emptyResponse(`No aggregation results for '${args.field}'.`);
       return tableResponse(
         `CFPB aggregation by '${args.field}': ${total.toLocaleString()} total complaints, ${buckets.length} groups`,
-        { rows: buckets, total, meta: data._meta },
+        { rows: buckets, total, meta: cleanMeta(data._meta) },
       );
     },
   },
