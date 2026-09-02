@@ -3280,7 +3280,10 @@
  },
  "usa_spending_over_time": {
   "dataType": "timeseries",
-  "columns": []
+  "columns": [
+   "amount",
+   "period"
+  ]
  },
  "usgs_daily_water_data": {
   "dataType": "list"
