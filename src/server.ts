@@ -485,6 +485,94 @@ server.addTool({
 });
 
 server.addTool({
+  name: "resolve_person",
+  description:
+    "Resolve a federal politician across agencies in one call: FEC candidate identity (candidate ID, " +
+    "office, party, latest fundraising) and their congressional identity (BioGuide ID for bills, votes, " +
+    "and committee lookups). The follow-the-money starting point for people, as resolve_entity is for companies.",
+  annotations: { title: "Resolve Politician Across Agencies", readOnlyHint: true, idempotentHint: true, openWorldHint: true, destructiveHint: false },
+  parameters: z.object({
+    name: z.string().describe("Politician's name: 'Fetterman', 'Katie Britt', 'Ocasio-Cortez'"),
+  }),
+  execute: async ({ name }) => {
+    const call = async (tool: string, args: Record<string, unknown>): Promise<any> => {
+      const fn = allToolMap.get(tool);
+      if (!fn) return null;
+      try {
+        const out = await (fn as (a: unknown, c: unknown) => Promise<unknown>)(args, { log: { debug() {}, error() {}, info() {}, warn() {} } });
+        return JSON.parse(typeof out === "string" ? out : JSON.stringify(out));
+      } catch (e) {
+        return { _error: String((e as Error)?.message ?? e).slice(0, 160) };
+      }
+    };
+
+    const fec = await call("fec_search_candidates", { name, per_page: 5 });
+    const candidates = (fec?.data?.items ?? []).map((c: any) => ({
+      candidateId: c.candidateId, name: c.name, office: c.office, party: c.party,
+      state: c.state, district: c.district, electionYears: c.electionYears?.slice?.(-3),
+      incumbency: c.incumbency, status: c.status,
+    }));
+    const best = candidates[0] ?? null;
+
+    // Congress-side: no name search upstream — pull the state delegation and
+    // match on name tokens.
+    let member: any = null;
+    if (best?.state) {
+      const members = await call("congress_search_members", { state: best.state, currentMember: true, limit: 100 });
+      const tokens = name.toLowerCase().split(/[\s,.-]+/).filter((t: string) => t.length > 1);
+      member = (members?.data?.items ?? []).find((m: any) =>
+        tokens.every((t: string) => String(m.name ?? "").toLowerCase().includes(t)) ||
+        String(m.name ?? "").toLowerCase().includes(tokens[tokens.length - 1]));
+    }
+
+    // Latest fundraising for the top candidate match.
+    let money: any = null;
+    if (best?.candidateId) {
+      const fin = await call("fec_candidate_financials", { candidate_id: best.candidateId });
+      // Table envelope: columns + rows, one row per cycle, newest last.
+      const cols: string[] = fin?.data?.columns ?? [];
+      const rows: unknown[][] = fin?.data?.rows ?? [];
+      if (rows.length && !fin?._error) {
+        const last = rows[rows.length - 1] as unknown[];
+        const at = (c: string) => last[cols.indexOf(c)] ?? null;
+        money = {
+          receipts: at("receipts"),
+          disbursements: at("disbursements"),
+          cashOnHand: at("cashOnHand"),
+          coverageThrough: at("coverageEnd"),
+        };
+      }
+    }
+
+    const found: string[] = [];
+    const notFound: string[] = [];
+    (best ? found : notFound).push("FEC");
+    (member ? found : notFound).push("Congress");
+
+    return JSON.stringify({
+      summary: `Person "${name}": found in ${found.join(", ") || "no sources"}` +
+        (notFound.length ? ` — nothing in ${notFound.join(", ")}` : "") +
+        (best ? `. FEC: ${best.name} (${best.party?.[0] ?? "?"}-${best.state}, ${best.office})` : "") +
+        (member ? `; BioGuide ${member.bioguideId}` : ""),
+      dataType: "record",
+      record: {
+        query: name,
+        fecCandidates: candidates.length ? candidates : (fec?._error ? { error: fec._error } : null),
+        congressMember: member ? { bioguideId: member.bioguideId, name: member.name, party: member.party, state: member.state } : null,
+        latestFundraising: money,
+        nextSteps: {
+          fundraisingDetail: best ? `fec_candidate_financials(candidate_id='${best.candidateId}', cycle=<year>)` : undefined,
+          outsideSpending: best ? `fec_outside_spending_by_candidate(candidate_id='${best.candidateId}', cycle=<year>)` : undefined,
+          bills: member ? `congress_member_bills(bioguide_id='${member.bioguideId}')` : undefined,
+          fullBio: member ? `congress_member_details(bioguide_id='${member.bioguideId}')` : undefined,
+          contributions: best ? `fec_individual_contributions(committee_id=<their committee>, cycle=<year>)` : undefined,
+        },
+      },
+    });
+  },
+});
+
+server.addTool({
   name: "find_tools",
   description:
     "Search this server's " + String(activeModules.reduce((n, m) => n + m.tools.length, 0)) + " tools by keyword. " +
