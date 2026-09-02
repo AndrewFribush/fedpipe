@@ -110,6 +110,20 @@ Health
 41 modules total.
 ```
 
+### Health check
+
+`fedpipe doctor` reports your environment's readiness — which modules work
+with no key, which keys you've set, and which are missing (with signup links):
+
+```bash
+npx fedpipe doctor
+npx fedpipe doctor --live   # also ping one endpoint per reachable module
+```
+
+`--live` calls one argument-free tool per module (requesting a single row) and
+reports latency or the exact upstream error — the fastest way to tell "my
+config is wrong" from "the agency is down".
+
 For scripting or tooling, add `--json` to get structured output:
 
 ```bash

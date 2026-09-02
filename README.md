@@ -72,6 +72,13 @@ Add to `claude_desktop_config.json` for Claude Desktop:
 }
 ```
 
+### Health check
+
+```bash
+npx fedpipe doctor         # key status per module, with signup links
+npx fedpipe doctor --live  # plus a live ping of every reachable module
+```
+
 ## Example Prompts
 
 Once connected, ask your AI assistant natural language questions:
