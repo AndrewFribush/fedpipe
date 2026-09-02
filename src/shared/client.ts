@@ -12,9 +12,9 @@
  *   - Auth via query param, header, or request body
  */
 
-import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { homedir, tmpdir } from "node:os";
 
 // ─── Types ───────────────────────────────────────────────────────────
@@ -298,7 +298,37 @@ function migrateLegacyFiles(): void {
   }
 }
 
+let _exitFlushRegistered = false;
+
+/** Synchronous flush for process exit — the debounced timer is unref'd and
+ * dies with the process, which silently lost every response cached in a
+ * session's final 2 seconds (short MCP sessions never warmed the cache). */
+function flushGlobalSync(): void {
+  if (!_globalDirty) return;
+  _globalDirty = false;
+  const now = Date.now();
+  const obj: Record<string, Record<string, CacheEntry>> = {};
+  for (const [ns, map] of _globalStore) {
+    const entries: Record<string, CacheEntry> = {};
+    for (const [key, entry] of map) {
+      if (entry.expires > now && !entry.volatile) entries[key] = entry;
+    }
+    if (Object.keys(entries).length > 0) obj[ns] = entries;
+  }
+  try {
+    mkdirSync(dirname(CACHE_FILE), { recursive: true });
+    writeFileSync(CACHE_FILE, JSON.stringify(obj), "utf-8");
+  } catch { /* best effort */ }
+}
+
 function scheduleGlobalWrite(): void {
+  if (!_exitFlushRegistered) {
+    _exitFlushRegistered = true;
+    process.on("exit", flushGlobalSync);
+    for (const sig of ["SIGINT", "SIGTERM"] as const) {
+      process.on(sig, () => { flushGlobalSync(); process.exit(sig === "SIGINT" ? 130 : 143); });
+    }
+  }
   if (_globalWriteTimer) return;
   _globalWriteTimer = setTimeout(() => {
     _globalWriteTimer = undefined;
