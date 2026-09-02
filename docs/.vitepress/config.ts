@@ -31,7 +31,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     outline: [2, 3],
     logo: undefined,
-    siteTitle: "US Gov Open Data MCP",
+    siteTitle: "fedpipe",
 
     nav: [
       { text: "Guide", link: "/guide/getting-started" },

@@ -46,7 +46,7 @@ Add to `.vscode/mcp.json` for VS Code / Copilot:
 ```json
 {
   "servers": {
-    "us-gov-open-data": {
+    "fedpipe": {
       "command": "npx",
       "args": ["-y", "fedpipe"],
       "env": {
@@ -63,7 +63,7 @@ Add to `claude_desktop_config.json` for Claude Desktop:
 ```json
 {
   "mcpServers": {
-    "us-gov-open-data": {
+    "fedpipe": {
       "command": "npx",
       "args": ["-y", "fedpipe"],
       "env": {

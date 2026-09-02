@@ -28,7 +28,7 @@ Add to `.vscode/mcp.json`:
 ```json
 {
   "servers": {
-    "us-gov-open-data": {
+    "fedpipe": {
       "command": "npx",
       "args": ["-y", "fedpipe"],
       "env": {
@@ -47,7 +47,7 @@ Add to `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "us-gov-open-data": {
+    "fedpipe": {
       "command": "npx",
       "args": ["-y", "fedpipe"],
       "env": {
