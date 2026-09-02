@@ -122,7 +122,10 @@ npx fedpipe doctor --live   # also ping one endpoint per reachable module
 
 `--live` calls one argument-free tool per module (requesting a single row) and
 reports latency or the exact upstream error — the fastest way to tell "my
-config is wrong" from "the agency is down".
+config is wrong" from "the agency is down". Add `--fresh` to bypass the cache,
+`--json` for machine-readable output; the exit code is non-zero when required
+keys are missing or probes fail, so it drops straight into cron or a container
+healthcheck.
 
 For scripting or tooling, add `--json` to get structured output:
 
