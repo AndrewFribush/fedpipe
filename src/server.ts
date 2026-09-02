@@ -192,6 +192,40 @@ const server = new FastMCP({
  * so they're idempotent and openWorld by default. Per-tool annotations
  * (e.g. `title`) are preserved via spread.
  */
+
+/** Edit distance for did-you-mean parameter suggestions. */
+function editDistance(a: string, b: string): number {
+  const dp = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++)
+    for (let j = 1; j <= b.length; j++)
+      dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return dp[a.length][b.length];
+}
+
+/**
+ * Strict parameter schema with a self-service rejection message: names each
+ * unknown key, suggests the closest valid parameter, and lists what the tool
+ * accepts — so a misspelled filter is a one-step fix for the caller instead
+ * of silently returning unfiltered data.
+ */
+function strictParams(obj: z.ZodObject<any>): z.ZodObject<any> {
+  const valid = Object.keys(obj.shape);
+  return z.strictObject(obj.shape, {
+    error: iss => {
+      if (iss.code !== "unrecognized_keys") return undefined;
+      const named = (iss.keys ?? []).map(k => {
+        const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9]/g, "");
+        const best = valid
+          .map(v => ({ v, d: editDistance(norm(k), norm(v)) }))
+          .sort((a, b) => a.d - b.d)[0];
+        return `"${k}"` + (best && best.d <= 3 ? ` (did you mean "${best.v}"?)` : "");
+      }).join(", ");
+      return `Unknown parameter(s): ${named}. This tool accepts: ${valid.join(", ") || "(no parameters)"}`;
+    },
+  });
+}
+
 const DEFAULT_TOOL_ANNOTATIONS = {
   readOnlyHint: true,
   idempotentHint: true,
@@ -205,7 +239,7 @@ for (const mod of activeModules) {
     // Reject unknown parameters instead of zod's default silent stripping —
     // a misspelled filter (min_magnitude vs minmagnitude) must error loudly,
     // not quietly return unfiltered data.
-    parameters: t.parameters instanceof z.ZodObject ? t.parameters.strict() : t.parameters,
+    parameters: t.parameters instanceof z.ZodObject ? strictParams(t.parameters) : t.parameters,
     annotations: { ...DEFAULT_TOOL_ANNOTATIONS, ...(t.annotations ?? {}) },
   }));
   server.addTools(annotated as any);
