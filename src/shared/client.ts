@@ -208,7 +208,16 @@ const CACHE_DIR = getCacheDir();
 const CACHE_FILE = join(CACHE_DIR, "cache.json");
 const MAX_ENTRIES_PER_MODULE = 200;
 
-interface CacheEntry { data: unknown; expires: number; lastAccess: number; }
+interface CacheEntry { data: unknown; expires: number; lastAccess: number; volatile?: boolean; }
+
+/**
+ * Entries whose serialized payload exceeds this stay in-memory only — still
+ * cached for the session, but never written to cache.json. Without the cap a
+ * few multi-MB responses (World Bank's full indicator catalog, FRED's
+ * category tree) balloon the store to 80MB+, making every debounced flush
+ * re-serialize it all on the event loop.
+ */
+const MAX_PERSISTED_ENTRY_BYTES = Number(process.env.FEDPIPE_CACHE_MAX_ENTRY_BYTES ?? 2_000_000);
 
 // ─── Global disk store (shared by all DiskCache instances) ───────────
 
@@ -300,7 +309,7 @@ function scheduleGlobalWrite(): void {
     for (const [ns, map] of _globalStore) {
       const entries: Record<string, CacheEntry> = {};
       for (const [key, entry] of map) {
-        if (entry.expires > now) entries[key] = entry;
+        if (entry.expires > now && !entry.volatile) entries[key] = entry;
       }
       if (Object.keys(entries).length > 0) obj[ns] = entries;
     }
@@ -367,9 +376,17 @@ class DiskCache {
     }
 
     const now = Date.now();
-    map.set(key, { data, expires: now + this.ttlMs, lastAccess: now });
-    _globalDirty = true;
-    scheduleGlobalWrite();
+    let volatile = false;
+    try {
+      volatile = JSON.stringify(data).length > MAX_PERSISTED_ENTRY_BYTES;
+    } catch {
+      volatile = true; // unserializable — keep off disk
+    }
+    map.set(key, { data, expires: now + this.ttlMs, lastAccess: now, volatile });
+    if (!volatile) {
+      _globalDirty = true;
+      scheduleGlobalWrite();
+    }
   }
 
   clear(): void {
