@@ -265,6 +265,11 @@ Every tool with required params needs an entry in `tests/live/args.ts` — the s
 missing. Detail tools whose IDs churn (press releases, filings, complaints) derive their ID at runtime
 from the sibling search tool. Run one module with `npm run test:live -- -t usgs`.
 
+For fast iteration without the network, `npm run test:offline` replays every
+tool from the local disk cache (fetch is stubbed out) — warm it with a live run
+first; cold or key-gated tools skip rather than fail.
+
+
 Tools broken *upstream* (an agency removed an endpoint, a domain is down) go in
 `tests/live/known-upstream-failures.json` with the date and reason. They run with `it.fails`, so the
 suite stays green during the outage and turns red the day the tool starts working again — remove the
