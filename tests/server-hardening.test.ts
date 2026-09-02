@@ -1,8 +1,22 @@
 import { describe, it, expect } from "vitest";
 import { z } from "zod";
 import {
-  strictParams, normalizeArgs, capToolOutput, MAX_TOOL_OUTPUT_CHARS,
+  strictParams, normalizeArgs, capToolOutput, MAX_TOOL_OUTPUT_CHARS, editDistance,
 } from "../src/server/hardening.js";
+
+describe("editDistance", () => {
+  it("counts substitutions and insertions", () => {
+    expect(editDistance("kitten", "sitting")).toBe(3);
+    expect(editDistance("", "abc")).toBe(3);
+    expect(editDistance("same", "same")).toBe(0);
+  });
+
+  it("counts an adjacent transposition as one edit, so 'fce' prefers 'fec' over 'fbi'", () => {
+    expect(editDistance("fce", "fec")).toBe(1);
+    expect(editDistance("fce", "fbi")).toBe(2);
+    expect(editDistance("minmagntiude", "minmagnitude")).toBe(1);
+  });
+});
 
 describe("strictParams", () => {
   const schema = strictParams(z.object({

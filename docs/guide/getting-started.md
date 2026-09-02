@@ -85,6 +85,22 @@ node dist/server.js --modules fred,treasury --transport httpStream --port 8080
 
 With all 42 modules, the server sends ~16K tokens of instructions to the LLM. With 3 modules, this drops to ~3K. Use selective loading when you only need a few data sources and want to minimize context overhead.
 
+### Lazy Loading (load only what you need, decided at runtime)
+
+When you don't know up front which modules a session will need, start lazy:
+
+```bash
+node dist/server.js --lazy          # or FEDPIPE_LAZY=1
+```
+
+The server registers only 7 tools: the three cross-agency resolvers (`resolve_entity`, `resolve_person`, `resolve_place` — these work immediately, no loading required), `find_tools`, `load_modules`, `code_mode`, and `clear_cache`. The client's workflow is:
+
+1. `find_tools("insider trading")` → matches name `sec` tools and says the module isn't loaded yet
+2. `load_modules(modules=["sec"])` → registers SEC's tools; the server sends `notifications/tools/list_changed` so the client picks them up mid-session
+3. Call the tools normally
+
+`--lazy` composes with `--modules`: the filter defines what's *loadable*, lazy defers *registering* it. Instructions shrink to a short module directory (~1K tokens) until modules load.
+
 To see all available module names without starting the server:
 
 ```bash

@@ -25,6 +25,7 @@
 - **Cross-referencing** — built-in instructions guide the LLM to combine data from multiple agencies (e.g., FDA adverse events + lobbying spend + campaign contributions)
 - **Code mode** — WASM-sandboxed JavaScript execution reduces context window usage by 98-100% for large responses
 - **Selective loading** — load only the modules you need: `--modules fred,treasury,congress`
+- **Lazy loading** — `--lazy` starts with just 7 discovery tools (the cross-agency resolvers, `find_tools`, `load_modules`); the client discovers what covers a topic and loads those modules mid-session, so 350+ tool schemas never flood its context
 - **Dual transport** — stdio for desktop clients, HTTP Stream for web/remote
 - **TypeScript SDK** — every API is importable as a standalone typed client, no MCP required
 - **Disk-backed caching** — responses cached to disk, survives restarts

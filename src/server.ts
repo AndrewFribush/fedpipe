@@ -91,11 +91,12 @@ function parseArgs() {
   const modulesFilter = get("--modules") ?? process.env.MODULES;
   const listModules = args.includes("--list-modules") || args.includes("--list");
   const doctor = args.includes("doctor") || args.includes("--doctor");
+  const lazy = args.includes("--lazy") || process.env.FEDPIPE_LAZY === "1";
 
-  return { transport, port, modulesFilter, listModules, doctor };
+  return { transport, port, modulesFilter, listModules, doctor, lazy };
 }
 
-const { transport, port, modulesFilter, listModules, doctor } = parseArgs();
+const { transport, port, modulesFilter, listModules, doctor, lazy } = parseArgs();
 
 if (process.argv.includes("--version") || process.argv.includes("-v")) {
   console.log(PKG_VERSION);
@@ -108,6 +109,9 @@ Usage:
   fedpipe                          start the MCP server (stdio transport)
   fedpipe --transport httpStream --port 8080
   fedpipe --modules fred,census    load only the named modules
+  fedpipe --lazy                   start with discovery tools only; the
+                                   client loads modules on demand via
+                                   find_tools + load_modules
   fedpipe --list-modules [--json]  list modules and their key requirements
   fedpipe doctor [--live] [--fresh] [--json]
                                    check key setup and API connectivity
@@ -335,7 +339,14 @@ const server = new FastMCP({
   name: "fedpipe",
   version: PKG_VERSION,
   logger,
-  instructions: buildInstructions(activeModules),
+  instructions: lazy
+    ? `This server started in LAZY mode: only the discovery and cross-agency tools are registered ` +
+      `(find_tools, resolve_entity, resolve_person, resolve_place, code_mode, clear_cache, load_modules). ` +
+      `${activeModules.length} API modules (${activeModules.reduce((n, m) => n + m.tools.length, 0)} tools) are available but not yet loaded. ` +
+      `Workflow: find_tools('your topic') to discover which module covers it, then load_modules(modules=['sec','fec']) ` +
+      `to register those tools, then call them. The resolvers work immediately without loading anything.\n\n` +
+      `Available modules: ${activeModules.map(m => `${m.name} (${m.displayName})`).join(", ")}.`
+    : buildInstructions(activeModules),
 });
 
 // ─── Register all module tools + prompts ─────────────────────────────
@@ -393,7 +404,12 @@ const DEFAULT_TOOL_ANNOTATIONS = {
   destructiveHint: false,
 } as const;
 
-for (const mod of activeModules) {
+/** Module names whose tools are registered with the MCP server right now. */
+const registeredModules = new Set<string>();
+
+function registerModuleTools(mod: ApiModule): void {
+  if (registeredModules.has(mod.name)) return;
+  registeredModules.add(mod.name);
   const annotated = mod.tools.map(t => ({
     ...t,
     execute: async (args: unknown, ctx: unknown) => {
@@ -411,6 +427,12 @@ for (const mod of activeModules) {
   server.addTools(annotated as any);
   if (mod.prompts?.length) server.addPrompts(withCompletions(mod.prompts) as any);
 }
+
+// Lazy mode starts with only the server-level tools (find_tools, the
+// resolvers, load_modules) so a client's context isn't flooded with 350+
+// tool schemas up front; modules register on demand and fastmcp sends
+// notifications/tools/list_changed so clients pick them up.
+if (!lazy) for (const mod of activeModules) registerModuleTools(mod);
 
 // ─── clear_cache tool ────────────────────────────────────────────────
 
@@ -775,13 +797,64 @@ server.addTool({
     scored.sort((a, b) => b.score - a.score || a.tool.localeCompare(b.tool));
     const top = scored.slice(0, limit);
     if (!top.length) return JSON.stringify({ summary: `No tools match "${query}".`, dataType: "empty", data: null });
+    // In lazy mode a match may belong to a module that isn't registered yet —
+    // mark it and say how to load it, so the miss is self-service.
+    const isLoaded = (m: string) => m === "(server)" || registeredModules.has(m);
+    const unloaded = lazy ? [...new Set(top.map(r => r.module).filter(m => !isLoaded(m)))] : [];
     return JSON.stringify({
-      summary: `${scored.length} tool(s) match "${query}", showing ${top.length}`,
+      summary: `${scored.length} tool(s) match "${query}", showing ${top.length}` +
+        (unloaded.length ? `. Not yet loaded: ${unloaded.join(", ")} — call load_modules(modules=[...]) to enable those tools` : ""),
       dataType: "list",
-      data: { items: top.map(({ score: _s, ...r }) => r), total: scored.length },
+      data: { items: top.map(({ score: _s, ...r }) => (lazy ? { ...r, loaded: isLoaded(r.module) } : r)), total: scored.length },
     });
   },
 });
+
+// ─── load_modules (lazy mode) ────────────────────────────────────────
+
+if (lazy) {
+  server.addTool({
+    name: "load_modules",
+    description:
+      "Load one or more API modules' tools into this session (the server started in lazy mode with " +
+      "only the discovery tools registered). Use find_tools to see which module covers a topic, then " +
+      "load it here. Pass ['all'] to load everything. Available modules: " +
+      activeModules.map(m => m.name).join(", ") + ".",
+    annotations: { title: "Load API Modules", readOnlyHint: false, idempotentHint: true, openWorldHint: false, destructiveHint: false },
+    parameters: z.object({
+      modules: z.array(z.string()).min(1).describe("Module names from find_tools results, e.g. ['sec','fec'], or ['all']"),
+    }),
+    execute: async ({ modules }) => {
+      const wanted = modules.map(m => m.trim().toLowerCase());
+      const byName = new Map(activeModules.map(m => [m.name.toLowerCase(), m]));
+      const toLoad = wanted.includes("all")
+        ? activeModules
+        : wanted.flatMap(w => byName.get(w) ?? []);
+      const unknown = wanted.filter(w => w !== "all" && !byName.has(w));
+      const suggestions = unknown.map(u => {
+        const closest = activeModules
+          .map(m => ({ n: m.name, d: editDistance(u, m.name.toLowerCase()) }))
+          .sort((a, b) => a.d - b.d)[0];
+        return closest && closest.d <= 3 ? `"${u}" (did you mean "${closest.n}"?)` : `"${u}"`;
+      });
+      const loaded: string[] = [];
+      const already: string[] = [];
+      for (const mod of toLoad) {
+        (registeredModules.has(mod.name) ? already : loaded).push(`${mod.name} (${mod.tools.length} tools)`);
+        registerModuleTools(mod);
+      }
+      const totalTools = activeModules.filter(m => registeredModules.has(m.name)).reduce((n, m) => n + m.tools.length, 0);
+      return JSON.stringify({
+        summary: (loaded.length ? `Loaded ${loaded.join(", ")}` : "Nothing new to load") +
+          (already.length ? `; already loaded: ${already.join(", ")}` : "") +
+          (suggestions.length ? `; unknown: ${suggestions.join(", ")}` : "") +
+          `. ${registeredModules.size}/${activeModules.length} modules (${totalTools} tools) now active.`,
+        dataType: "record",
+        record: { loaded, alreadyLoaded: already, unknown: suggestions, registeredModules: [...registeredModules].sort() },
+      });
+    },
+  });
+}
 
 server.addTool({
   name: "clear_cache",
