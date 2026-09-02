@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Tropical Storm Edouard Impacting the Northwestern Gulf Coast; Hazardous Heat expands in the East
+# Edouard Continues to Impact Texas; Severe Storms and Heavy Rain from the Lower Great Lakes to Mid-Atlantic
 
-Tropical Storm Edouard will impact the northwestern Gulf Coast through Wednesday with gusty winds, storm surge, and heavy rainfall. Flash and river flooding will be possible, especially in southeastern Texas. Hazardous heat will expand across the central and eastern U.S. by mid-week, and daily chances for severe thunderstorms are expected from the eastern Great Lakes to the Mid-Atlantic this week.
+Edouard will continue to bring gusty winds, heavy rainfall, and a flash flood threat over parts of eastern Texas. Severe thunderstorms and heavy rain are possible across portions of the eastern Great Lakes to the Mid-Atlantic today. Severe storms are also expected across the northern Rockies. Dangerous heat persists over the central and eastern states through Friday night.
 Read More >
 
 Customize Your Weather.gov
