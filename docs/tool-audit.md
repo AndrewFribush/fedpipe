@@ -380,3 +380,11 @@ fail, 46 key-gated), doctor --live green on 32 modules.
 Final tally: **42 modules, 355 tools, 1057 unit tests, 484 live tests**
 (1 expected upstream failure, 46 key-gated), docs site green, package
 verified from the tarball, four consecutive green CI validations.
+
+**Final sweep (04:30–05:00 CDT):** every structured-string filter parameter
+audited for silent-misparse (census predicates, scorecard/FDIC filters now
+error loudly with correct syntax; FEMA/Treasury verified loud upstream); the
+one call-style example embedded in a tool description was factually wrong
+(wrong FEC cycle — corrected and verified live); and all 24 FRED series / World
+Bank indicator IDs recommended by the routing guidance were validated against
+the live sources — all current.
