@@ -27,7 +27,7 @@ const api = createClient({
 // CDC datasets are inconsistent: some store "OH", others "Ohio". Match both
 // forms regardless of which the caller passed.
 
-const STATE_NAMES: Record<string, string> = {
+export const STATE_NAMES: Record<string, string> = {
   AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
   CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia",
   FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois",

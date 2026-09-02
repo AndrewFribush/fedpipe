@@ -4,7 +4,8 @@
 
 import { z } from "zod";
 import type { Tool } from "fastmcp";
-import { getLeadingCausesOfDeath, getLifeExpectancy, getMortalityRates, getPlacesHealth, getPlacesCityHealth, getCovidData, getWeeklyDeaths, getDisabilityData, getDrugOverdoseData, getNutritionObesityData, getHistoricalDeathRates, getBirthIndicators, queryDataset, DATASETS } from "./sdk.js";
+import { getLeadingCausesOfDeath, getLifeExpectancy, getMortalityRates, getPlacesHealth, getPlacesCityHealth, getCovidData, getWeeklyDeaths, getDisabilityData, getDrugOverdoseData, getNutritionObesityData, getHistoricalDeathRates, getBirthIndicators, queryDataset, DATASETS, STATE_NAMES,
+} from "./sdk.js";
 import { tableResponse, emptyResponse } from "../../shared/response.js";
 
 export const tools: Tool<any, any>[] = [
@@ -55,14 +56,31 @@ export const tools: Tool<any, any>[] = [
       quarter: z.string().optional().describe("Quarter: '2024 Q4', '2025 Q1'. Omit for all."),
       cause: z.string().optional().describe("'All causes', 'Heart disease', 'Cancer', 'COVID-19', 'Drug overdose', 'Suicide', 'Diabetes', 'Alzheimer disease'"),
       rate_type: z.enum(["Age-adjusted", "Crude"]).optional().describe("Rate type (default: Age-adjusted)"),
+      state: z.string().optional().describe("State filter (name or 2-letter code) — returns just that state's rate column alongside overall/sex rates instead of all ~50 rate_<state> columns"),
       limit: z.number().int().max(1000).default(200).describe("Max records (default 200)"),
     }),
-    execute: async ({ quarter, cause, rate_type, limit }) => {
+    execute: async ({ quarter, cause, rate_type, state, limit }) => {
       const data = await getMortalityRates({ quarter, cause, rateType: rate_type, limit });
       if (!data.length) return emptyResponse("No mortality rate data found.");
+      let rows: Record<string, unknown>[] = data;
+      if (state) {
+        // The dataset is one wide row per cause with ~50 rate_<state> columns —
+        // project down to the requested state.
+        const norm = state.trim().toLowerCase().replace(/[^a-z]+/g, "_");
+        const full = Object.keys(STATE_NAMES).includes(state.trim().toUpperCase())
+          ? STATE_NAMES[state.trim().toUpperCase()].toLowerCase().replace(/[^a-z]+/g, "_")
+          : norm;
+        const stateCol = data.map(r => Object.keys(r).find(k => k === `rate_${full}` || k === `rate_${norm}`)).find(Boolean) ?? `rate_${full}`;
+        rows = data.map(r => ({
+          year_and_quarter: r.year_and_quarter, time_period: r.time_period,
+          cause_of_death: r.cause_of_death, rate_type: r.rate_type, unit: r.unit,
+          rate_overall: r.rate_overall, rate_sex_female: r.rate_sex_female, rate_sex_male: r.rate_sex_male,
+          [stateCol]: (r as Record<string, unknown>)[stateCol] ?? null,
+        }));
+      }
       return tableResponse(
-        `Mortality rates: ${data.length} records${quarter ? ` (${quarter})` : ""}${cause ? ` for ${cause}` : ""}`,
-        { rows: data },
+        `Mortality rates: ${rows.length} records${quarter ? ` (${quarter})` : ""}${cause ? ` for ${cause}` : ""}${state ? ` — ${state}` : ""}`,
+        { rows },
       );
     },
   },
