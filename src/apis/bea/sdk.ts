@@ -287,6 +287,21 @@ export async function getParameterValuesFiltered(
 // ─── Data Retrieval ─────────────────────────────────────────────────────
 
 /** Get national GDP data from NIPA tables. */
+/**
+ * Expand a "LASTn" year token into explicit comma-separated years.
+ *
+ * The Regional dataset accepts "LAST5"/"LAST10" natively, but the NIPA,
+ * NIUnderlyingDetail, and FixedAssets datasets do NOT — they answer "No data
+ * exists for the Year/Frequencies passed", so the friendly default silently
+ * failed. Explicit years are valid in every dataset, so expanding is safe.
+ */
+export function expandLastNYears(year: string, now = new Date().getFullYear()): string {
+  const m = /^LAST(\d+)$/i.exec(year.trim());
+  if (!m) return year;
+  const n = Math.max(1, Number(m[1]));
+  return Array.from({ length: n }, (_, i) => now - i).join(",");
+}
+
 export async function getNationalGdp(opts: {
   /** NIPA table (default: "T10101"). See nipaTables in types.ts. */
   tableName?: string;
@@ -304,7 +319,7 @@ export async function getNationalGdp(opts: {
     DataSetName: "NIPA",
     TableName: tableName,
     Frequency: frequency,
-    Year: year,
+    Year: expandLastNYears(year),
   });
 
   const data = extractData(raw);
@@ -478,7 +493,7 @@ export async function getNipaUnderlyingDetail(opts: {
     DataSetName: "NIUnderlyingDetail",
     TableName: tableName,
     Frequency: frequency,
-    Year: year,
+    Year: expandLastNYears(year),
   });
 
   const data = extractData(raw);
@@ -503,7 +518,7 @@ export async function getFixedAssets(opts: {
     method: "GetData",
     DataSetName: "FixedAssets",
     TableName: tableName,
-    Year: year,
+    Year: expandLastNYears(year),
   });
 
   const data = extractData(raw);
