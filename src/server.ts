@@ -437,10 +437,12 @@ server.addTool({
       ? String(secBest.name).replace(/[,.]?\s+(INC|CORP|CO|LLC|LP|PLC|LTD|HOLDINGS?|GROUP|COMPANY|TECHNOLOGIES)\.?$/i, "").trim()
       : name;
 
-    const [fec, lobbyClient, spending] = await Promise.all([
+    const [fec, lobbyClient, spending, pharma, fdaEvents] = await Promise.all([
       call("fec_search_committees", { name: searchName, per_page: 5 }),
       call("lobbying_search", { client_name: searchName, page_size: 3 }),
       call("usa_spending_by_award", { recipient: searchName, limit: 3 }),
+      call("open_payments_search", { company: searchName, year: "2023", limit: 1 }),
+      call("fda_drug_counts", { count_field: "patient.reaction.reactionmeddrapt.exact", search: `patient.drug.openfda.manufacturer_name:"${searchName.toUpperCase()}"`, limit: 3 }),
     ]);
     const fecItems = (fec?.data?.items ?? []).map((c: any) => ({
       committeeId: c.committeeId, name: c.name, type: c.type, designation: c.designation, state: c.state,
@@ -453,12 +455,18 @@ server.addTool({
       recipientName: a.recipientName, awardAmount: a.awardAmount, awardingAgency: a.awardingAgency,
     }));
 
+    const pharmaHit = (pharma?.data?.items?.length ?? pharma?.data?.rows?.length ?? 0) > 0;
+    const pharmaTotal = Number(/([\d,]+) (?:total|record)/.exec(pharma?.summary ?? "")?.[1]?.replace(/,/g, "") ?? 0);
+    const fdaTop = (fdaEvents?.data?.rows ?? []).map((r: unknown[]) => ({ reaction: r[0], count: r[1] }));
+
     const found: string[] = [];
     const notFound: string[] = [];
     (secBest ? found : notFound).push("SEC");
     (fecItems.length ? found : notFound).push("FEC");
     (lobbyItems.length ? found : notFound).push("lobbying");
     (awards.length ? found : notFound).push("USAspending");
+    if (pharmaHit) found.push("OpenPayments");
+    if (fdaTop.length) found.push("FDA-FAERS");
 
     return JSON.stringify({
       summary: `Entity "${name}": found in ${found.join(", ") || "no sources"}` +
@@ -472,6 +480,8 @@ server.addTool({
         fecCommittees: fecItems.length ? fecItems : (fec?._error ? { error: fec._error } : null),
         lobbying: lobbyItems.length ? { totalFilings: lobbyTotal || undefined, recent: lobbyItems } : (lobbyClient?._error ? { error: lobbyClient._error } : null),
         federalAwards: awards.length ? awards : (spending?._error ? { error: spending._error } : null),
+        pharma: pharmaHit ? { openPaymentsRecords2023: pharmaTotal || true, detail: `open_payments_by_company / open_payments_top(company='${searchName}')` } : undefined,
+        fdaAdverseEvents: fdaTop.length ? { topReactions: fdaTop, detail: `fda_drug_events(search='patient.drug.openfda.manufacturer_name:\"${searchName.toUpperCase()}\"')` } : undefined,
         nextSteps: {
           financials: secBest ? `sec_company_financials(cik='${secBest.cik}')` : undefined,
           insiders: secBest ? `sec_insider_transactions(cik='${secBest.cik}')` : undefined,
