@@ -133,7 +133,9 @@ export const tools: Tool<any, any>[] = [
     name: "census_search_variables",
     description:
       "Search for Census variable names/codes by keyword. Helps discover what data is available " +
-      "in a given dataset. Returns variable IDs you can use with census_query.",
+      "in a given dataset. Returns variable IDs you can use with census_query.\n" +
+      "Margin-of-error variables aren't in the catalog: swap the E suffix for M on any estimate " +
+      "(B19013_001E has MOE B19013_001M) and query it directly.",
     annotations: { title: "Census: Search Variables", readOnlyHint: true },
     parameters: z.object({
       dataset: z.string().describe("Census dataset path, e.g. '2023/acs/acs1'"),
