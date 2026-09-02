@@ -120,10 +120,16 @@ Usage:
                                    discovery tools; the client loads modules
                                    on demand via find_tools + load_modules
   fedpipe --transport httpStream --port 8080
-  fedpipe --modules fred,census    register only the named modules, eagerly
-  fedpipe --eager                  register all modules up front (for clients
-                                   that ignore tools/list_changed)
+  fedpipe --modules fred,census    pre-register the named modules (or a domain,
+                                   e.g. --modules finance) eagerly; the rest of
+                                   the catalog stays loadable via load_modules
+  fedpipe --eager                  register all modules up front (recommended
+                                   for Claude Code, whose deferred-tool index
+                                   keeps this cheap — see the README)
   fedpipe --list-modules [--json]  list modules and their key requirements
+
+  In every mode the index stays live: find_tools searches all tools and
+  load_modules can register any module (by name, by domain, or ['all']).
   fedpipe doctor [--live] [--fresh] [--json]
                                    check key setup and API connectivity
   fedpipe --version
@@ -300,29 +306,39 @@ let activeModules = MODULES;
 
 if (modulesFilter) {
   const wanted = new Set(modulesFilter.split(",").map(s => s.trim().toLowerCase()));
-  activeModules = MODULES.filter(m => wanted.has(m.name.toLowerCase()));
+  // A token can name a module ("sec") or a whole domain ("finance") — the
+  // latter preloads every module in that category.
+  const domainSet = new Set(MODULES.flatMap(m => m.domains.map(d => d.toLowerCase())));
+  activeModules = MODULES.filter(
+    m => wanted.has(m.name.toLowerCase()) || m.domains.some(d => wanted.has(d.toLowerCase())),
+  );
 
   if (activeModules.length === 0) {
     console.error(
-      `No modules matched "${modulesFilter}". Available: ${MODULES.map(m => m.name).join(", ")}`,
+      `No modules matched "${modulesFilter}". Available modules: ${MODULES.map(m => m.name).join(", ")}. ` +
+        `Or a domain: ${[...domainSet].sort().join(", ")}.`,
     );
     process.exit(1);
   }
 
   // A typo'd name silently loading a partial server is worse than an error.
   const known = new Set(MODULES.map(m => m.name.toLowerCase()));
-  const unknown = [...wanted].filter(w => !known.has(w));
+  const unknown = [...wanted].filter(w => !known.has(w) && !domainSet.has(w));
   for (const u of unknown) {
     const closest = MODULES
       .map(m => ({ n: m.name, d: editDistance(u, m.name.toLowerCase()) }))
       .sort((a, b) => a.d - b.d)[0];
     console.error(
-      `WARNING: unknown module "${u}" in --modules ignored${closest && closest.d <= 3 ? ` (did you mean "${closest.n}"?)` : ""}`,
+      `WARNING: unknown module/domain "${u}" in --modules ignored${closest && closest.d <= 3 ? ` (did you mean "${closest.n}"?)` : ""}`,
     );
   }
 
+  // "Preloaded", not "loaded" — the rest of the catalog stays discoverable via
+  // find_tools and loadable via load_modules; --modules only picks what
+  // registers up front.
   console.error(
-    `Loaded ${activeModules.length}/${MODULES.length} modules: ${activeModules.map(m => m.name).join(", ")}`,
+    `Preloaded ${activeModules.length}/${MODULES.length} modules: ${activeModules.map(m => m.name).join(", ")}. ` +
+      `The other ${MODULES.length - activeModules.length} stay loadable via load_modules.`,
   );
 }
 
@@ -357,7 +373,12 @@ const server = new FastMCP({
       `Workflow: find_tools('your topic') to discover which module covers it, then load_modules(modules=['sec','fec']) ` +
       `to register those tools, then call them. The resolvers work immediately without loading anything.\n\n` +
       `Available modules: ${activeModules.map(m => `${m.name} (${m.displayName})`).join(", ")}.`
-    : buildInstructions(activeModules),
+    : buildInstructions(activeModules) +
+      (activeModules.length < MODULES.length
+        ? `\n\nStarted with ${activeModules.length} of ${MODULES.length} modules pre-registered. ` +
+          `The rest stay discoverable via find_tools and loadable via load_modules ` +
+          `(by module name, by domain, or ['all']).`
+        : ""),
 });
 
 // ─── Register all module tools + prompts ─────────────────────────────
@@ -761,7 +782,7 @@ server.addTool({
 server.addTool({
   name: "find_tools",
   description:
-    "Search this server's " + String(activeModules.reduce((n, m) => n + m.tools.length, 0)) + " tools by keyword. " +
+    "Search this server's " + String(MODULES.reduce((n, m) => n + m.tools.length, 0)) + " tools by keyword. " +
     "Matches tool names, descriptions, and module names; returns the best matches with their descriptions. " +
     "Use when you're unsure which tool covers a topic ('drought', 'insider trading', 'school lunch').",
   annotations: { title: "Find Tools", readOnlyHint: true, idempotentHint: true, openWorldHint: false, destructiveHint: false },
@@ -790,7 +811,7 @@ server.addTool({
       }
       if (score > 0) scored.push({ tool: t.name, module: "(server)", description: t.description, score });
     }
-    for (const mod of activeModules) {
+    for (const mod of MODULES) {
       for (const t of mod.tools) {
         const name = t.name.toLowerCase();
         const desc = (t.description ?? "").toLowerCase();
@@ -811,39 +832,54 @@ server.addTool({
     // In lazy mode a match may belong to a module that isn't registered yet —
     // mark it and say how to load it, so the miss is self-service.
     const isLoaded = (m: string) => m === "(server)" || registeredModules.has(m);
-    const unloaded = lazy ? [...new Set(top.map(r => r.module).filter(m => !isLoaded(m)))] : [];
+    // A match may belong to a module that isn't registered yet — mark it and
+    // say how to load it, so the miss is self-service in every start mode.
+    const unloaded = [...new Set(top.map(r => r.module).filter(m => !isLoaded(m)))];
     return JSON.stringify({
       summary: `${scored.length} tool(s) match "${query}", showing ${top.length}` +
         (unloaded.length ? `. Not yet loaded: ${unloaded.join(", ")} — call load_modules(modules=[...]) to enable those tools` : ""),
       dataType: "list",
-      data: { items: top.map(({ score: _s, ...r }) => (lazy ? { ...r, loaded: isLoaded(r.module) } : r)), total: scored.length },
+      data: { items: top.map(({ score: _s, ...r }) => ({ ...r, loaded: isLoaded(r.module) })), total: scored.length },
     });
   },
 });
 
 // ─── load_modules (lazy mode) ────────────────────────────────────────
 
-if (lazy) {
+// Always registered, in every start mode — the index has to stay reachable so
+// the client can discover and pull in anything from the full catalog, whether
+// the server booted lazy, eager, or with a --modules subset. It operates on
+// MODULES (the whole catalog), not just what was pre-registered at startup.
+{
+  const allDomains = [...new Set(MODULES.flatMap(m => m.domains.map(d => d.toLowerCase())))].sort();
   server.addTool({
     name: "load_modules",
     description:
-      "Load one or more API modules' tools into this session (the server started in lazy mode with " +
-      "only the discovery tools registered). Use find_tools to see which module covers a topic, then " +
-      "load it here. Pass ['all'] to load everything. Available modules: " +
-      activeModules.map(m => m.name).join(", ") + ".",
+      "Register one or more API modules' tools into this session. Use find_tools to see which module " +
+      "covers a topic, then load it here. Accepts module names (['sec','fec']), a domain to load a whole " +
+      "category (['finance']), or ['all'] for everything. The full catalog stays loadable no matter how " +
+      "the server was started. Modules: " + MODULES.map(m => m.name).join(", ") + ". " +
+      "Domains: " + allDomains.join(", ") + ".",
     annotations: { title: "Load API Modules", readOnlyHint: false, idempotentHint: true, openWorldHint: false, destructiveHint: false },
     parameters: z.object({
-      modules: z.array(z.string()).min(1).describe("Module names from find_tools results, e.g. ['sec','fec'], or ['all']"),
+      modules: z.array(z.string()).min(1).describe("Module names, a domain name to load a whole category, or ['all']"),
     }),
     execute: async ({ modules }) => {
       const wanted = modules.map(m => m.trim().toLowerCase());
-      const byName = new Map(activeModules.map(m => [m.name.toLowerCase(), m]));
+      const byName = new Map(MODULES.map(m => [m.name.toLowerCase(), m]));
+      const domainSet = new Set(allDomains);
+      const resolveToken = (w: string): ApiModule[] => {
+        if (byName.has(w)) return [byName.get(w)!];
+        if (domainSet.has(w)) return MODULES.filter(m => m.domains.some(d => d.toLowerCase() === w));
+        return [];
+      };
+      // Dedupe by module name so a domain + one of its members doesn't double-count.
       const toLoad = wanted.includes("all")
-        ? activeModules
-        : wanted.flatMap(w => byName.get(w) ?? []);
-      const unknown = wanted.filter(w => w !== "all" && !byName.has(w));
+        ? MODULES
+        : [...new Map(wanted.flatMap(resolveToken).map(m => [m.name, m])).values()];
+      const unknown = wanted.filter(w => w !== "all" && resolveToken(w).length === 0);
       const suggestions = unknown.map(u => {
-        const closest = activeModules
+        const closest = MODULES
           .map(m => ({ n: m.name, d: editDistance(u, m.name.toLowerCase()) }))
           .sort((a, b) => a.d - b.d)[0];
         return closest && closest.d <= 3 ? `"${u}" (did you mean "${closest.n}"?)` : `"${u}"`;
@@ -863,12 +899,12 @@ if (lazy) {
         (registeredModules.has(mod.name) ? already : loaded).push(`${mod.name} (${mod.tools.length} tools)`);
         registerModuleTools(mod);
       }
-      const totalTools = activeModules.filter(m => registeredModules.has(m.name)).reduce((n, m) => n + m.tools.length, 0);
+      const totalTools = MODULES.filter(m => registeredModules.has(m.name)).reduce((n, m) => n + m.tools.length, 0);
       return JSON.stringify({
         summary: (loaded.length ? `Loaded ${loaded.join(", ")}` : "Nothing new to load") +
           (already.length ? `; already loaded: ${already.join(", ")}` : "") +
           (suggestions.length ? `; unknown: ${suggestions.join(", ")}` : "") +
-          `. ${registeredModules.size}/${activeModules.length} modules (${totalTools} tools) now active.` +
+          `. ${registeredModules.size}/${MODULES.length} modules (${totalTools} tools) now active.` +
           (loaded.length ? " If the new tools aren't visible yet, request tools/list to refresh." : ""),
         dataType: "record",
         record: { loaded, alreadyLoaded: already, unknown: suggestions, registeredModules: [...registeredModules].sort() },
@@ -889,19 +925,19 @@ server.addTool({
   },
   parameters: z.object({
     source: z.string().optional().describe(
-      `Module name to clear: ${activeModules.map(m => m.name).join(", ")}. Omit for all.`
+      `Module name to clear: ${MODULES.map(m => m.name).join(", ")}. Omit for all.`
     ),
   }),
   execute: async ({ source }) => {
     const target = source?.toLowerCase();
     const cleared: string[] = [];
-    for (const mod of activeModules) {
+    for (const mod of MODULES) {
       if (target && mod.name.toLowerCase() !== target) continue;
       if (mod.clearCache) { mod.clearCache(); cleared.push(mod.name); }
     }
     return cleared.length
       ? `Cache cleared: ${cleared.join(", ")}. Next queries will fetch fresh data.`
-      : source ? `Unknown source "${source}". Available: ${activeModules.map(m => m.name).join(", ")}` : "No caches to clear.";
+      : source ? `Unknown source "${source}". Available: ${MODULES.map(m => m.name).join(", ")}` : "No caches to clear.";
   },
 });
 
@@ -921,9 +957,11 @@ const TOOL_ALIASES: Record<string, string> = {
   // "fda_search_events": "fda_drug_events",
 };
 
-// Build a lookup map of all registered tools for code_mode to call
+// Build a lookup map of every tool in the catalog for code_mode + the
+// resolvers to call — deliberately the full MODULES set, not just what's
+// registered, so code_mode and resolve_* work without a prior load_modules.
 const allToolMap = new Map<string, (args: Record<string, unknown>) => Promise<unknown>>();
-for (const mod of activeModules) {
+for (const mod of MODULES) {
   for (const tool of mod.tools) {
     allToolMap.set(tool.name, (tool as any).execute);
   }
