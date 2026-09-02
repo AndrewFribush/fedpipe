@@ -107,6 +107,7 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Architecture", link: "/guide/architecture" },
             { text: "Adding Modules", link: "/guide/adding-modules" },
+            { text: "Troubleshooting", link: "/guide/troubleshooting" },
           ],
         },
       ],
