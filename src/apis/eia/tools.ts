@@ -85,11 +85,15 @@ export const tools: Tool<any, any>[] = [
       frequency: z.enum(["monthly", "annual"]).optional().describe("Frequency (default: monthly)"),
       start: z.string().optional().describe("Start date (YYYY-MM or YYYY). Default: 2 years ago"),
       end: z.string().optional().describe("End date (YYYY-MM or YYYY). Default: latest available"),
-      length: z.number().int().max(5000).optional().describe("Max rows (API max: 5000). Omit to let date range control volume."),
+      length: z.number().int().max(5000).optional().describe("Max rows (API max: 5000). Default 500 (rows are newest-first). A national query fans out across every state × sector, so raise this only with a state/sector filter."),
       offset: z.number().int().optional().describe("Row offset for pagination"),
     }),
     execute: async ({ state, sector, data_type, fuel_type, frequency, start, end, length, offset }) => {
-      const res = await getElectricity({ state, sector, dataType: data_type, fuelType: fuel_type, frequency, start, end, length, offset });
+      // The API returns up to 5000 rows by default — a national, all-sector query
+      // over a 2-year window blows past any context budget. Cap unspecified
+      // requests to the 500 newest rows (the API sorts by period desc); callers
+      // narrow with state/sector or raise `length` when they need more.
+      const res = await getElectricity({ state, sector, dataType: data_type, fuelType: fuel_type, frequency, start, end, length: length ?? 500, offset });
       const data = res.response?.data || [];
 
       if (!data.length) return emptyResponse("No electricity data found.");
