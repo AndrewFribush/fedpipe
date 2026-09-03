@@ -375,8 +375,10 @@ async function queryDol<T>(
   try {
     return await attempt(agencyEndpoint);
   } catch (e) {
+    // DOL returns 500 ("ensure the dataset name in the URL is correct"), not
+    // 404, when a dataset has been renamed — so retry the alias on either.
     const alias = DOL_ENDPOINT_ALIASES[agencyEndpoint];
-    if (alias && /HTTP 404/.test(String(e))) return attempt(alias);
+    if (alias && /HTTP (404|500)/.test(String(e))) return attempt(alias);
     throw e;
   }
 }
