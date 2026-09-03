@@ -63,6 +63,7 @@ export * as orangeBook from "./orange-book/sdk.js";
 export * as regulations from "./regulations/sdk.js";
 export * as sec from "./sec/sdk.js";
 export * as senateLobbying from "./senate-lobbying/sdk.js";
+export * as spaceWeather from "./space-weather/sdk.js";
 export * as treasury from "./treasury/sdk.js";
 export * as usaspending from "./usaspending/sdk.js";
 export * as usdaFooddata from "./usda-fooddata/sdk.js";
