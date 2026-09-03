@@ -78,11 +78,12 @@ export const tools: Tool<any, any>[] = [
     description:
       "Get quarterly Call Report financial data for FDIC-insured banks.\n" +
       "Includes assets, deposits, net income, ROA, ROE, loan loss reserves.\n" +
-      "Filter by CERT number (specific bank) or STALP (state). Dollar values in thousands.",
+      "Filter by CERT number (specific bank) or STALP (state). Dollar values in thousands.\n" +
+      "Returns a compact column set by default (CERT, name, quarter, assets, deposits, net income, ROA, ROE); pass `fields` to widen.",
     annotations: { title: "FDIC: Bank Financials", readOnlyHint: true },
     parameters: z.object({
       filters: z.string().optional().describe("Filter: 'CERT:3511' (specific bank), 'STALP:\"CA\"', 'REPDTE:20240331' (quarter)"),
-      fields: z.string().optional().describe("Fields: 'CERT,INSTNAME,REPDTE,ASSET,DEP,NETINC,ROA,ROE'"),
+      fields: z.string().optional().describe("Comma-separated fields. Default: a compact set. Override to widen, e.g. 'CERT,INSTNAME,REPDTE,ASSET,DEP,NETINC,ROA,ROE,LNLSNET'"),
       sort_by: z.string().optional().describe("Sort field: 'REPDTE' (default), 'ASSET', 'NETINC'"),
       sort_order: z.enum(["ASC", "DESC"]).optional().describe("Sort direction"),
       limit: z.number().int().max(100).default(25).describe("Max results (default 25)"),
@@ -104,11 +105,12 @@ export const tools: Tool<any, any>[] = [
     name: "fdic_summary",
     description:
       "Get aggregate banking statistics — industry totals by state or charter type.\n" +
-      "Useful for overview metrics: total banks, deposits, assets by state/year.",
+      "Useful for overview metrics: total banks, deposits, assets by state/year.\n" +
+      "Returns a compact column set by default (year, state, bank count, assets, deposits, net income, offices/branches); pass `fields` to widen.",
     annotations: { title: "FDIC: Banking Summary", readOnlyHint: true },
     parameters: z.object({
       filters: z.string().optional().describe("Filter: 'STALP:\"TX\"', 'YEAR:2023'"),
-      fields: z.string().optional().describe("Fields to return"),
+      fields: z.string().optional().describe("Comma-separated fields to return. Default: a compact summary set. Pass your own (e.g. 'YEAR,STNAME,ASSET,DEP,NETINC,SAVINGS') to override."),
       sort_by: z.string().optional().describe("Sort field"),
       sort_order: z.enum(["ASC", "DESC"]).optional().describe("Sort direction"),
       limit: z.number().int().max(100).default(25).describe("Max results (default 25)"),

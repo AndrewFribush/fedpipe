@@ -122,16 +122,21 @@ export async function searchPublications(params: {
   collection?: string;
   congress?: number;
   pageSize?: number;
+  sortBy?: "relevance" | "date";
 }): Promise<SearchResult> {
   // The search service takes filters as field operators inside the query
   // string — top-level body fields like "collection" are silently ignored.
   let query = params.query;
   if (params.collection) query += ` collection:(${params.collection})`;
   if (params.congress) query += ` congress:${params.congress}`;
+  // The API's implicit default (no `sorts`) is relevance ranking — and it
+  // rejects an explicit {field:"relevance"} with a 500, so only send `sorts`
+  // for the date option (newest published first).
   const body: Record<string, unknown> = {
     query,
     pageSize: params.pageSize ?? 10,
     offsetMark: "*",
+    ...(params.sortBy === "date" ? { sorts: [{ field: "publishdate", sortOrder: "DESC" }] } : {}),
   };
 
   const res = await api.post<{ count?: number; results?: Record<string, unknown>[] }>("/search", body);

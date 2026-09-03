@@ -260,11 +260,11 @@ export const tools: Tool<any, any>[] = [
       "Search FDA drug shortage listings — which drugs are in shortage and why.\n" +
       "Tracks status, dosage form, therapeutic category, company, and shortage reason.\n\n" +
       "Example searches:\n" +
-      "- 'status:\"Currently in Shortage\"' — active shortages\n" +
+      "- 'status:\"Current\"' — active shortages (status values: Current, To Be Discontinued, Resolved)\n" +
       "- 'dosage_form:\"Capsule\"' — capsule shortages\n" +
       "- 'therapeutic_category:\"Antiviral\"' — antiviral shortages\n" +
       "- 'generic_name:\"Adderall\"' — specific drug\n\n" +
-      "Count fields: update_type, status.exact, therapeutic_category.exact",
+      "Count fields: update_type, status, therapeutic_category.exact",
     annotations: { title: "FDA: Drug Shortages", readOnlyHint: true },
     parameters: searchParams,
     execute: async ({ search, limit, skip }) => {

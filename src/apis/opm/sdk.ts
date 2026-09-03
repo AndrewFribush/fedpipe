@@ -83,10 +83,29 @@ export interface AgencyWorkforce {
   topStates: { state: string; employees: number; avgSalary: number }[];
 }
 
+/**
+ * Common agency acronyms → a distinctive substring of the FedScope agency
+ * (AGYT, department/independent-agency level) name. FedScope files agencies by
+ * full name, so a bare acronym like "NASA" otherwise matches nothing. Only
+ * top-level agencies belong here — bureau acronyms (FBI, IRS) live under a
+ * parent department and won't match at this level.
+ */
+const AGENCY_ALIASES: Record<string, string> = {
+  NASA: "AERONAUTICS AND SPACE", EPA: "ENVIRONMENTAL PROTECTION", SSA: "SOCIAL SECURITY",
+  VA: "VETERANS AFFAIRS", DHS: "HOMELAND SECURITY", DOD: "DEPARTMENT OF DEFENSE",
+  DOJ: "DEPARTMENT OF JUSTICE", USDA: "DEPARTMENT OF AGRICULTURE", HHS: "HEALTH AND HUMAN SERVICES",
+  HUD: "HOUSING AND URBAN", DOT: "DEPARTMENT OF TRANSPORTATION", DOL: "DEPARTMENT OF LABOR",
+  DOI: "DEPARTMENT OF THE INTERIOR", GSA: "GENERAL SERVICES", NSF: "NATIONAL SCIENCE FOUNDATION",
+  SEC: "SECURITIES AND EXCHANGE", FCC: "COMMUNICATIONS COMMISSION", FDIC: "DEPOSIT INSURANCE",
+  FTC: "TRADE COMMISSION", OPM: "PERSONNEL MANAGEMENT", SBA: "SMALL BUSINESS",
+  NRC: "NUCLEAR REGULATORY", USAID: "INTERNATIONAL DEVELOPMENT",
+};
+
 /** Federal workforce for agencies whose name matches `name` (latest period). */
 export async function agencyWorkforce(name: string): Promise<AgencyWorkforce[]> {
   const { agency, latest } = await load();
-  const q = name.toUpperCase();
+  const key = name.trim().toUpperCase();
+  const q = (AGENCY_ALIASES[key] ?? name).toUpperCase();
   const hits = agency.filter(r => r.datecode === latest && r.agency.toUpperCase().includes(q));
   const byAgency = new Map<string, AgencyRow[]>();
   for (const r of hits) (byAgency.get(r.agency) ?? byAgency.set(r.agency, []).get(r.agency)!).push(r);

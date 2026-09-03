@@ -194,6 +194,15 @@ export const FILTER_EXAMPLES = {
   "Asset range": "ASSET:[100000 TO 500000]",
 } as const;
 
+/**
+ * Compact default column subsets. The FDIC summary and financials endpoints
+ * otherwise return the full ~250-field Call Report schema per row, which
+ * drowns the useful numbers. Callers can still pass their own `fields` to
+ * override (or widen) these.
+ */
+export const SUMMARY_FIELDS = "YEAR,STNAME,STALP,BANKS,ASSET,DEP,DEPDOM,NETINC,OFFICES,BRANCHES";
+export const FINANCIAL_FIELDS = "CERT,INSTNAME,REPDTE,ASSET,DEP,DEPDOM,NETINC,ROA,ROE";
+
 // ─── Helpers ─────────────────────────────────────────────────────────
 
 async function queryEndpoint<T>(
@@ -285,6 +294,7 @@ export async function getFinancials(opts: {
 } = {}): Promise<FdicApiResponse<FinancialRecord>> {
   return queryEndpoint<FinancialRecord>("financials", {
     ...opts,
+    fields: opts.fields ?? FINANCIAL_FIELDS,
     limit: opts.limit ?? 25,
     sort_by: opts.sort_by ?? "REPDTE",
     sort_order: opts.sort_order ?? "DESC",
@@ -311,6 +321,7 @@ export async function getSummary(opts: {
 } = {}): Promise<FdicApiResponse> {
   return queryEndpoint("summary", {
     ...opts,
+    fields: opts.fields ?? SUMMARY_FIELDS,
     limit: opts.limit ?? 25,
   });
 }

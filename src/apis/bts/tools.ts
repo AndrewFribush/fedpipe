@@ -42,7 +42,26 @@ export const tools: Tool<any, any>[] = [
         limit: args.limit,
       });
       if (!data.length) return emptyResponse("No transportation statistics found for the given criteria.");
-      return tableResponse(`${data.length} month(s) of transportation data`, { rows: data as Record<string, unknown>[], total: data.length });
+      // The raw series carries ~65 unlabeled per-state capital-expenditure
+      // columns (capital_expenditures_state, _1.._65) that don't belong in a
+      // national-indicators view, plus columns that are null across the whole
+      // window. Drop both so the table is the actual national indicators.
+      const rows = data as Record<string, unknown>[];
+      const isStateCapex = (k: string) => /^capital_expenditures_state(_\d+)?$/.test(k);
+      const populated = new Set<string>();
+      for (const r of rows) for (const [k, v] of Object.entries(r)) {
+        if (isStateCapex(k)) continue;
+        if (v !== null && v !== undefined && v !== "") populated.add(k);
+      }
+      const pruned = rows.map(r => {
+        const o: Record<string, unknown> = {};
+        for (const k of Object.keys(r)) if (populated.has(k)) o[k] = r[k];
+        return o;
+      });
+      return tableResponse(
+        `${data.length} month(s) of transportation data (${populated.size} populated indicators)`,
+        { rows: pruned, total: data.length },
+      );
     },
   },
 

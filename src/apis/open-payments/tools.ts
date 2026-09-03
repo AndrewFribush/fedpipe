@@ -23,6 +23,28 @@ import {
 } from "./sdk.js";
 import { tableResponse, listResponse, emptyResponse } from "../../shared/response.js";
 
+/**
+ * The general-payment endpoint returns ~40 raw Socrata columns per row. Project
+ * to the fields that answer "who got paid how much by whom, for what" so the
+ * table is readable. Callers who need the full record can use the CMS record_id.
+ */
+function briefPayment(r: Record<string, any>): Record<string, unknown> {
+  const name = [r.covered_recipient_first_name, r.covered_recipient_last_name].filter(Boolean).join(" ");
+  const product = [r.name_of_drug_or_biological_or_device_or_medical_supply_1, r.name_of_drug_or_biological_or_device_or_medical_supply_2].filter(Boolean).join("; ");
+  return {
+    recipient: name || r.teaching_hospital_name || undefined,
+    specialty: r.covered_recipient_specialty_1 || undefined,
+    location: [r.recipient_city, r.recipient_state].filter(Boolean).join(", ") || undefined,
+    company: r.applicable_manufacturer_or_applicable_gpo_making_payment_name || undefined,
+    amount: r.total_amount_of_payment_usdollars != null ? `$${Number(r.total_amount_of_payment_usdollars).toLocaleString()}` : undefined,
+    date: r.date_of_payment || undefined,
+    nature: r.nature_of_payment_or_transfer_of_value || undefined,
+    product: product || undefined,
+    programYear: r.program_year || undefined,
+    recordId: r.record_id || undefined,
+  };
+}
+
 export const tools: Tool<any, any>[] = [
   {
     name: "open_payments_search",
@@ -36,6 +58,7 @@ export const tools: Tool<any, any>[] = [
       doctor: z.string().optional().describe("Doctor last name: 'Smith', 'Jones' (case-insensitive)"),
       state: z.string().optional().describe("Two-letter state: 'CA', 'TX', 'NY'"),
       specialty: z.string().optional().describe("Medical specialty (partial match): 'Cardiology', 'Orthopedic', 'Psychiatry'"),
+      product: z.string().optional().describe("Drug/device brand name (partial match): 'Ozempic', 'Humira', 'Stelara'. Matches either associated-product column, so it isolates one drug from a company's whole portfolio."),
       year: z.string().optional().describe("Payment year (auto-discovers latest if omitted). Available: 2018-2024+, new years added automatically when CMS publishes."),
       limit: z.number().int().max(100).default(20).describe("Max results (default 20)"),
     }),
@@ -44,7 +67,7 @@ export const tools: Tool<any, any>[] = [
       if (!data.results?.length) return emptyResponse("No payments found matching the criteria.");
       return tableResponse(
         `Open Payments: ${data.count?.toLocaleString() ?? "?"} matching records (showing ${data.results.length})`,
-        { rows: data.results as Record<string, unknown>[], total: data.count },
+        { rows: (data.results as Record<string, any>[]).map(briefPayment), total: data.count },
       );
     },
   },
@@ -61,14 +84,17 @@ export const tools: Tool<any, any>[] = [
       doctor: z.string().optional().describe("Doctor last name"),
       state: z.string().optional().describe("Two-letter state: 'WA', 'CA', 'TX'"),
       specialty: z.string().optional().describe("Specialty: 'Orthopaedic', 'Cardio', 'Neurology'"),
+      product: z.string().optional().describe("Drug/device brand name (partial match): 'Ozempic', 'Humira'. Isolates one product — combine with a company/state/specialty filter (a product alone matches too many rows to sort in time)."),
       year: z.string().optional().describe("Year (auto-discovers latest)"),
       limit: z.number().int().max(100).default(20).describe("Number of top results (default 20)"),
     }),
     execute: async (args) => {
       // Unfiltered sorts/group-bys scan the whole ~14M-row annual dataset and time out upstream
-      // (3+ minutes); with a state/company/specialty filter they return in ~2s.
+      // (3+ minutes); a state/company/specialty/doctor filter narrows the sort enough to return
+      // in ~2s. `product` narrows the row set but a common drug still matches ~100k+ rows, so it
+      // does NOT count toward the guard — it must accompany one of the selective filters.
       if (!args.state && !args.company && !args.specialty && !args.doctor) {
-        throw new Error("open_payments_top: provide at least one of state, company, specialty, or doctor — an unfiltered sort times out on the CMS API.");
+        throw new Error("open_payments_top: provide at least one of state, company, specialty, or doctor (product alone is not selective enough) — an unfiltered sort times out on the CMS API.");
       }
       const data = await searchPaymentsAdvanced({
         ...args,
@@ -78,7 +104,7 @@ export const tools: Tool<any, any>[] = [
       if (!data.results?.length) return emptyResponse("No payments found.");
       return tableResponse(
         `Top payments (sorted by amount, ${data.count?.toLocaleString() ?? "?"} total matches)`,
-        { rows: data.results as Record<string, unknown>[], total: data.count },
+        { rows: (data.results as Record<string, any>[]).map(briefPayment), total: data.count },
       );
     },
   },
@@ -94,14 +120,17 @@ export const tools: Tool<any, any>[] = [
       state: z.string().optional().describe("Two-letter state: 'WA', 'CA', 'TX'"),
       specialty: z.string().optional().describe("Specialty: 'Orthopaedic', 'Cardio', 'Neurology'"),
       company: z.string().optional().describe("Company name: 'Pfizer', 'Stryker'"),
+      product: z.string().optional().describe("Drug/device brand name (partial match): 'Ozempic', 'Humira'. Finds the doctors paid most for one product — combine with a company/state/specialty filter (a product alone matches too many rows to group in time)."),
       year: z.string().optional().describe("Year (auto-discovers latest)"),
       limit: z.number().int().max(100).default(20).describe("Number of top doctors (default 20)"),
     }),
     execute: async (args) => {
       // Unfiltered sorts/group-bys scan the whole ~14M-row annual dataset and time out upstream
-      // (3+ minutes); with a state/company/specialty filter they return in ~2s.
+      // (3+ minutes); a state/company/specialty filter narrows the group-by enough to return in
+      // ~2s. `product` narrows rows but a common drug still matches ~100k+ (a product-only group-by
+      // was observed to abort), so it does NOT count toward the guard — it must accompany one.
       if (!args.state && !args.company && !args.specialty) {
-        throw new Error("open_payments_top_doctors: provide at least one of state, company, specialty, or doctor — an unfiltered sort times out on the CMS API.");
+        throw new Error("open_payments_top_doctors: provide at least one of state, company, or specialty (product alone is not selective enough) — an unfiltered group-by times out on the CMS API.");
       }
       const data = await getTopDoctorTotals(args);
       if (!data.results?.length) return emptyResponse("No grouped payment data found.");

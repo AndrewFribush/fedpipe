@@ -375,13 +375,28 @@ export async function getUVIndex(opts: {
   );
 }
 
+/** Two-letter state → 2-digit FIPS, for building 5-digit county FIPS filters. */
+const STATE_ABBR_TO_FIPS: Record<string, string> = {
+  AL: "01", AK: "02", AZ: "04", AR: "05", CA: "06", CO: "08", CT: "09", DE: "10", DC: "11", FL: "12",
+  GA: "13", HI: "15", ID: "16", IL: "17", IN: "18", IA: "19", KS: "20", KY: "21", LA: "22", ME: "23",
+  MD: "24", MA: "25", MI: "26", MN: "27", MS: "28", MO: "29", MT: "30", NE: "31", NV: "32", NH: "33",
+  NJ: "34", NM: "35", NY: "36", NC: "37", ND: "38", OH: "39", OK: "40", OR: "41", PA: "42", RI: "44",
+  SC: "45", SD: "46", TN: "47", TX: "48", UT: "49", VT: "50", VA: "51", WA: "53", WV: "54", WI: "55", WY: "56",
+};
+
 /**
  * Get Toxics Release Inventory (TRI) facility data by state.
  * Returns facilities reporting chemical releases to EPA under EPCRA Section 313.
  *
+ * `county` accepts a name ("HARRIS") or a FIPS code — either the 5-digit
+ * state+county ("22095", as resolve_place returns) or the bare 3-digit county
+ * ("095"). Prefer FIPS: EnviroFacts' REST path syntax treats "." as a
+ * table.column separator, so a county_name containing a period (e.g. the parish
+ * "ST. JOHN THE BAPTIST") makes the query 500. FIPS sidesteps that entirely.
+ *
  * Example:
  *   const data = await getToxicReleases({ state: "TX" });
- *   const data = await getToxicReleases({ state: "CA", rows: 50 });
+ *   const data = await getToxicReleases({ state: "LA", county: "22095" });
  */
 export async function getToxicReleases(opts: {
   state: string;
@@ -389,9 +404,24 @@ export async function getToxicReleases(opts: {
   rows?: number;
 }): Promise<TRIFacility[]> {
   const limit = opts.rows ?? 100;
-  let path = `/tri.tri_facility/state_abbr/equals/${opts.state.toUpperCase()}`;
+  const state = opts.state.toUpperCase();
+  let path = `/tri.tri_facility/state_abbr/equals/${state}`;
   if (opts.county) {
-    path += `/county_name/equals/${encodeURIComponent(opts.county.toUpperCase())}`;
+    const c = opts.county.trim();
+    const stateFips = STATE_ABBR_TO_FIPS[state];
+    if (/^\d{5}$/.test(c)) {
+      path += `/state_county_fips_code/equals/${c}`;
+    } else if (/^\d{3}$/.test(c) && stateFips) {
+      path += `/state_county_fips_code/equals/${stateFips}${c}`;
+    } else if (c.includes(".")) {
+      // The period breaks EnviroFacts' path parser. Drop everything up to the
+      // first period ("ST. JOHN THE BAPTIST" → "JOHN THE BAPTIST") and match as
+      // a substring so the parish still resolves.
+      const frag = (c.replace(/^[^.]*\.\s*/, "").trim() || c.replace(/\./g, " ").trim()).toUpperCase();
+      path += `/county_name/contains/${encodeURIComponent(frag)}`;
+    } else {
+      path += `/county_name/equals/${encodeURIComponent(c.toUpperCase())}`;
+    }
   }
   path += `/1:${limit}/JSON`;
   return envirofacts.get<TRIFacility[]>(path);

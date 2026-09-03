@@ -168,6 +168,27 @@ interface FilterOpts {
   doctor?: string;
   state?: string;
   specialty?: string;
+  product?: string;
+}
+
+/**
+ * A payment records its associated drug/device across two parallel columns, so a
+ * product filter must match EITHER one. These are the two columns; the filter is
+ * an OR group over both.
+ */
+const DRUG_COLS = [
+  "name_of_drug_or_biological_or_device_or_medical_supply_1",
+  "name_of_drug_or_biological_or_device_or_medical_supply_2",
+] as const;
+
+/** Nested OR condition group matching a product name across both drug columns. */
+type Condition = { property: string; value: string; operator: string };
+type ConditionGroup = { groupOperator: "or"; conditions: Condition[] };
+function productGroup(product: string): ConditionGroup {
+  return {
+    groupOperator: "or",
+    conditions: DRUG_COLS.map(property => ({ property, value: `%${product}%`, operator: "LIKE" })),
+  };
 }
 
 /** Build GET-style condition params (conditions[0][property]=...) */
@@ -183,15 +204,27 @@ function buildGetConditions(opts: FilterOpts, params: Record<string, string | nu
   if (opts.doctor) add("covered_recipient_last_name", opts.doctor.toUpperCase(), "=");
   if (opts.state) add("recipient_state", opts.state.toUpperCase(), "=");
   if (opts.specialty) add("covered_recipient_specialty_1", `%${opts.specialty}%`, "LIKE");
+  if (opts.product) {
+    // Top-level conditions are ANDed, so this OR group means "(product in col 1
+    // OR col 2) AND <other filters>".
+    params[`conditions[${i}][groupOperator]`] = "or";
+    DRUG_COLS.forEach((property, j) => {
+      params[`conditions[${i}][conditions][${j}][property]`] = property;
+      params[`conditions[${i}][conditions][${j}][value]`] = `%${opts.product}%`;
+      params[`conditions[${i}][conditions][${j}][operator]`] = "LIKE";
+    });
+    i++;
+  }
 }
 
 /** Build POST-style condition array for JSON body */
-function buildPostConditions(opts: FilterOpts): Array<{ property: string; value: string; operator: string }> {
-  const conditions: Array<{ property: string; value: string; operator: string }> = [];
+function buildPostConditions(opts: FilterOpts): Array<Condition | ConditionGroup> {
+  const conditions: Array<Condition | ConditionGroup> = [];
   if (opts.company) conditions.push({ property: "submitting_applicable_manufacturer_or_applicable_gpo_name", value: `%${opts.company}%`, operator: "LIKE" });
   if (opts.doctor) conditions.push({ property: "covered_recipient_last_name", value: opts.doctor.toUpperCase(), operator: "=" });
   if (opts.state) conditions.push({ property: "recipient_state", value: opts.state.toUpperCase(), operator: "=" });
   if (opts.specialty) conditions.push({ property: "covered_recipient_specialty_1", value: `%${opts.specialty}%`, operator: "LIKE" });
+  if (opts.product) conditions.push(productGroup(opts.product));
   return conditions;
 }
 
@@ -209,6 +242,7 @@ export async function searchPayments(opts?: {
   doctor?: string;
   state?: string;
   specialty?: string;
+  product?: string;
   year?: string;
   limit?: number;
   offset?: number;
@@ -475,6 +509,7 @@ export async function searchPaymentsAdvanced(opts: {
   doctor?: string;
   state?: string;
   specialty?: string;
+  product?: string;
   year?: string;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
@@ -500,6 +535,7 @@ export async function getTopDoctorTotals(opts: {
   state?: string;
   specialty?: string;
   company?: string;
+  product?: string;
   year?: string;
   limit?: number;
 }): Promise<PaymentQueryResult> {
