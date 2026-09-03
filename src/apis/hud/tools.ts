@@ -16,29 +16,36 @@ import {
 } from "./sdk.js";
 import { listResponse, recordResponse, emptyResponse } from "../../shared/response.js";
 
-function fmrToRecord(data: Record<string, unknown>): Record<string, unknown> {
-  const basic = data.basicdata as Record<string, unknown> | undefined;
-  const source = basic ?? data;
+/** HUD wraps every response in a {data: ...} envelope — unwrap it. */
+function unwrapHud(raw: unknown): Record<string, any> {
+  const r = raw as any;
+  if (r && typeof r === "object" && r.data && typeof r.data === "object") return r.data;
+  return (r as Record<string, any>) ?? {};
+}
 
+function fmrToRecord(area: Record<string, any>): Record<string, unknown> {
+  // Entity FMR nests rents under basicdata; state metro/county items carry them inline.
+  const basic = (area.basicdata ?? area) as Record<string, any>;
   return {
-    area_name: source.area_name ?? source.county_name ?? source.metro_name ?? "Unknown area",
-    year: source.year ?? data.year ?? null,
-    efficiency: source.Efficiency ?? source.efficiency ?? source.rent_eff ?? null,
-    oneBedroom: source["One-Bedroom"] ?? source.one_bedroom ?? source.rent_1br ?? null,
-    twoBedroom: source["Two-Bedroom"] ?? source.two_bedroom ?? source.rent_2br ?? null,
-    threeBedroom: source["Three-Bedroom"] ?? source.three_bedroom ?? source.rent_3br ?? null,
-    fourBedroom: source["Four-Bedroom"] ?? source.four_bedroom ?? source.rent_4br ?? null,
+    area_name: area.area_name ?? area.metro_name ?? area.county_name ?? "Unknown area",
+    year: area.year ?? null,
+    efficiency: basic.Efficiency ?? basic.efficiency ?? basic.rent_eff ?? null,
+    oneBedroom: basic["One-Bedroom"] ?? basic.one_bedroom ?? basic.rent_1br ?? null,
+    twoBedroom: basic["Two-Bedroom"] ?? basic.two_bedroom ?? basic.rent_2br ?? null,
+    threeBedroom: basic["Three-Bedroom"] ?? basic.three_bedroom ?? basic.rent_3br ?? null,
+    fourBedroom: basic["Four-Bedroom"] ?? basic.four_bedroom ?? basic.rent_4br ?? null,
   };
 }
 
-function incomeLimitsToRecord(data: Record<string, unknown>): Record<string, unknown> {
+function incomeLimitsToRecord(area: Record<string, any>): Record<string, unknown> {
   return {
-    area_name: data.area_name ?? data.county_name ?? data.metro_name ?? "Unknown area",
-    year: data.year ?? null,
-    median_income: data.median_income ?? data.median ?? null,
-    very_low: data.very_low ?? null,
-    extremely_low: data.extremely_low ?? null,
-    low: data.low ?? null,
+    area_name: area.area_name ?? area.metro_name ?? area.county_name ??
+      (area.statecode ? `State of ${area.statecode}` : "Unknown area"),
+    year: area.year ?? null,
+    median_income: area.median_income ?? area.median ?? null,
+    very_low: area.very_low ?? null,
+    extremely_low: area.extremely_low ?? null,
+    low: area.low ?? null,
   };
 }
 
@@ -54,22 +61,26 @@ export const tools: Tool<any, any>[] = [
       year: z.number().optional().describe("Fiscal year (e.g. 2024). Defaults to current year."),
     }),
     execute: async (args) => {
-      let data: Record<string, unknown>;
+      let raw: unknown;
       if (args.entity_id) {
-        data = await getFairMarketRents(args.entity_id, args.year);
+        raw = await getFairMarketRents(args.entity_id, args.year);
       } else if (args.state) {
-        data = await getStateFairMarketRents(args.state, args.year);
+        raw = await getStateFairMarketRents(args.state, args.year);
       } else {
         return emptyResponse("Provide either state or entity_id.");
       }
 
-      // Handle state data which may return an array
-      if (Array.isArray(data)) {
-        const items = data.map((item: any) => fmrToRecord(item));
-        return listResponse(`Fair Market Rents: ${items.length} area(s)`, { items, total: data.length });
+      const payload = unwrapHud(raw);
+      // State FMR returns metroareas[] + counties[] — list them.
+      if (Array.isArray(payload.metroareas) || Array.isArray(payload.counties)) {
+        const areas = [...(payload.metroareas ?? []), ...(payload.counties ?? [])];
+        const items = areas.map(fmrToRecord);
+        return listResponse(
+          `Fair Market Rents: ${items.length} area(s)${args.state ? ` in ${args.state.toUpperCase()}` : ""} (FY${payload.year ?? args.year ?? "?"})`,
+          { items, total: items.length },
+        );
       }
-
-      const record = fmrToRecord(data);
+      const record = fmrToRecord(payload);
       return recordResponse(`Fair Market Rents — ${record.area_name}`, record);
     },
   },
@@ -84,21 +95,23 @@ export const tools: Tool<any, any>[] = [
       year: z.number().optional().describe("Fiscal year (e.g. 2024). Defaults to current year."),
     }),
     execute: async (args) => {
-      let data: Record<string, unknown>;
+      let raw: unknown;
       if (args.entity_id) {
-        data = await getIncomeLimits(args.entity_id, args.year);
+        raw = await getIncomeLimits(args.entity_id, args.year);
       } else if (args.state) {
-        data = await getStateIncomeLimits(args.state, args.year);
+        raw = await getStateIncomeLimits(args.state, args.year);
       } else {
         return emptyResponse("Provide either state or entity_id.");
       }
 
-      if (Array.isArray(data)) {
-        const items = data.map((item: any) => incomeLimitsToRecord(item));
-        return listResponse(`Income Limits: ${items.length} area(s)`, { items, total: data.length });
+      const payload = unwrapHud(raw);
+      // State income limits return a single aggregate record; entity likewise.
+      if (Array.isArray(payload.metroareas) || Array.isArray(payload.counties)) {
+        const areas = [...(payload.metroareas ?? []), ...(payload.counties ?? [])];
+        const items = areas.map(incomeLimitsToRecord);
+        return listResponse(`Income Limits: ${items.length} area(s)`, { items, total: items.length });
       }
-
-      const record = incomeLimitsToRecord(data);
+      const record = incomeLimitsToRecord(payload);
       return recordResponse(`Income Limits — ${record.area_name}`, record);
     },
   },
