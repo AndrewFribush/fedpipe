@@ -66,7 +66,7 @@ Disaster Declarations Summaries - v2
 
 Version: 2
 
-Last Data Refresh: 09-02-2026
+Last Data Refresh: 09-03-2026
 
 Key
 Value
@@ -403,6 +403,6 @@ https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%20%27Disaste
 
 https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=openFemaDataSet%20eq%20%27DisasterDeclarationsSummaries%27%20and%20datasetVersion%20eq%202
 
-Last updated September 2, 2026
+Last updated September 3, 2026
 
 Return to top

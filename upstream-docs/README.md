@@ -16,7 +16,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
 - `bts` — [Monthly Transportation Statistics](https://data.bts.gov/d/crem-w557) — error: TimeoutError — kept previous snapshot
-- `cdc` — [CDC Open Data](https://data.cdc.gov/) — error: TimeoutError — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -33,16 +32,25 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `doj-news` — [DOJ Newsroom](https://www.justice.gov/news) — client-rendered
 - `dol` — [DOL API User Guide](https://data.dol.gov/user-guide) — client-rendered
 - `dol` — [DOL Open Data Portal](https://data.dol.gov/) — client-rendered
+- `faa` — [Field layout (ardata.pdf)](https://registry.faa.gov/database/ReleasableAircraft.zip) — binary (application/x-zip-compressed)
+- `fara` — [FARA API](https://efile.fara.gov/api) — HTTP 404
+- `fara` — [FARA eFile](https://efile.fara.gov/) — client-rendered
 - `fbi` — [API Docs](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi) — client-rendered
 - `fbi` — [Explorer](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/explorer/crime/crime-trend) — client-rendered
+- `fcc` — [ECFS API](https://www.fcc.gov/ecfs/public-api-docs.html) — HTTP 403
 - `fec` — [Developers](https://api.open.fec.gov/developers/) — client-rendered
 - `fec` — [Get Key](https://api.open.fec.gov/developers/) — client-rendered
+- `form5500` — [Data dictionary](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
+- `form5500` — [Form 5500 datasets](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
+- `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered
 - `govinfo` — [API Docs (Swagger)](https://api.govinfo.gov/docs/) — client-rendered
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
+- `ntsb` — [CAROL query](https://data.ntsb.gov/carol-main-public/) — client-rendered
+- `ofac` — [SDN list](https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists) — client-rendered
 - `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — client-rendered
 - `open-payments` — [Open Payments](https://openpaymentsdata.cms.gov/) — client-rendered
 - `regulations` — [Regulations.gov](https://www.regulations.gov/) — client-rendered

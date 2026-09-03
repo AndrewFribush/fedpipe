@@ -17,9 +17,6 @@ Skip to main content
 
 - Alternative Fuel Stations
 
-Existing API Users: Update any developer.nrel.gov references in your code to developer.nlr.gov. The previous developer.nrel.gov domain was retired on May 29, 2026.
-Learn more about the domain transition.
-
 # Alternative Fuel Stations
 
 Query our database of alternative fuel stations. This dataset powers the Alternative Fueling Station Locator on the Alternative Fuels Data Center.

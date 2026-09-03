@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Edouard Continues to Impact Texas; Severe Storms and Heavy Rain from the Lower Great Lakes to Mid-Atlantic
+# Threats of Heavy Rainfall, Severe Thunderstorms and Dangerous Heat
 
-Edouard will continue to bring gusty winds, heavy rainfall, and a flash flood threat over parts of eastern Texas. Severe thunderstorms and heavy rain are possible across portions of the eastern Great Lakes to the Mid-Atlantic today. Severe storms are also expected across the northern Rockies. Dangerous heat persists over the central and eastern states through Friday night.
+Several complexes of thunderstorms, some severe with heavy rainfall, will impact areas from the northern Plains, Great Lakes, Ohio Valley to the mid-Atlantic. This threat will shift toward the Carolinas on Friday. Heavy rainfall, remnants of Edouard, continues for portions of eastern Texas through today. In-between these systems, a dome of high pressure and heat for central and eastern states.
 Read More >
 
 Customize Your Weather.gov

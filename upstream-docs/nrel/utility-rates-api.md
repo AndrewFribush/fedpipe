@@ -17,9 +17,6 @@ Skip to main content
 
 - Utility Rates
 
-Existing API Users: Update any developer.nrel.gov references in your code to developer.nlr.gov. The previous developer.nrel.gov domain was retired on May 29, 2026.
-Learn more about the domain transition.
-
 # Utility Rates (GET /api/utility_rates/v3)
 
 This service returns annual average utility rates ($/kWH) for residential, commercial and industrial sectors as well as the local utility name for a specific location. This service does not return complex rate information.

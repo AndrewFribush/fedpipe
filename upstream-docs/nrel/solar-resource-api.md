@@ -17,9 +17,6 @@ Skip to main content
 
 - Solar Resource Data
 
-Existing API Users: Update any developer.nrel.gov references in your code to developer.nlr.gov. The previous developer.nrel.gov domain was retired on May 29, 2026.
-Learn more about the domain transition.
-
 # Solar Resource Data (GET /api/solar/solar_resource/v1)
 
 Returns various types of solar data for US locations. The service currently returns data for average Direct Normal Irradiance, average Global Horizontal Irradiance, and average Tilt at Latitude.
