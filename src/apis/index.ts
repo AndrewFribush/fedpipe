@@ -79,3 +79,9 @@ export * as hmda from "./hmda/sdk.js";
 export * as nasa from "./nasa/sdk.js";
 export * as nistNvd from "./nist-nvd/sdk.js";
 export * as usaceNid from "./usace-nid/sdk.js";
+
+// ── Coverage wave 2 ──
+export * as imf from "./imf/sdk.js";
+export * as who from "./who/sdk.js";
+export * as noaaTides from "./noaa-tides/sdk.js";
+export * as femaNri from "./fema-nri/sdk.js";

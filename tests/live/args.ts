@@ -361,6 +361,22 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   // ─── USACE National Inventory of Dams ───────────────────────────────
   dams_search: { query: "Pueblo, Colorado", limit: 5 },
   dams_detail: { federal_id: "CO00299" }, // Pueblo Dam
+
+  // ─── IMF (DataMapper) ───────────────────────────────────────────────
+  imf_indicator: { indicator: "NGDP_RPCH", countries: ["USA", "CHN"], start_year: 2018, end_year: 2024 },
+  imf_search_indicators: { query: "gross debt" },
+
+  // ─── WHO (Global Health Observatory) ────────────────────────────────
+  who_indicator: { indicator: "WHOSIS_000001", country: "USA", start_year: 2010 },
+  who_search_indicators: { query: "life expectancy" },
+
+  // ─── NOAA Tides & Currents (CO-OPS) ─────────────────────────────────
+  tides_stations: { state: "FL", limit: 5 },
+  tides_water_level: { station: "8518750" }, // The Battery, NY
+
+  // ─── FEMA National Risk Index ───────────────────────────────────────
+  fema_nri_county: { county_fips: "08101" }, // Pueblo County
+  fema_nri_state: { state: "CO", limit: 10 },
 };
 
 /**
