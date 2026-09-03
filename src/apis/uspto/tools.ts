@@ -74,6 +74,35 @@ function parseSorts(s?: string): OdpSort[] | undefined {
   return parsed ? [parsed] : undefined;
 }
 
+/**
+ * A raw ODP application carries a dozen bulky "…Bag" arrays. The prosecution
+ * history (`eventDataBag`) alone can exceed 100KB for a single record — a search
+ * with the default (all) fields returns records too large to fit in context.
+ *
+ * When the caller hasn't scoped `fields`, drop the bags that are pure noise for
+ * a search summary — prosecution events, attorney/address/continuity bags —
+ * everywhere they appear, while keeping the useful metadata and the applicant/
+ * inventor/CPC bags. Callers who pass `fields` get exactly what they asked for.
+ */
+const NOISE_BAGS = new Set([
+  "eventDataBag", "attorneyBag", "attorneyAddressBag", "recordAttorney",
+  "correspondenceAddressBag", "powerOfAttorneyBag", "powerOfAttorneyAddressBag",
+  "telecommunicationAddressBag", "parentContinuityBag", "childContinuityBag",
+  "publicationCategoryBag", "printedMetaDataBag", "assignmentBag",
+]);
+function briefApplication(node: any): any {
+  if (Array.isArray(node)) return node.map(briefApplication);
+  if (node && typeof node === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(node)) {
+      if (NOISE_BAGS.has(k)) continue;
+      out[k] = briefApplication(v);
+    }
+    return out;
+  }
+  return node;
+}
+
 export const tools: Tool<any, any>[] = [
   {
     name: "uspto_search_applications",
@@ -110,9 +139,14 @@ export const tools: Tool<any, any>[] = [
         return emptyResponse("No patent applications found matching the criteria.");
       }
 
+      // With no explicit `fields`, the API returns every field — including the
+      // huge prosecution/attorney/continuity bags. Strip those so a page of
+      // results fits in context; a caller who scoped `fields` gets it verbatim.
+      const items = args.fields ? result.results : result.results.map(briefApplication);
+
       const response = listResponse(
         `Found ${result.count.toLocaleString()} application(s), showing ${result.results.length}`,
-        { items: result.results, total: result.count },
+        { items, total: result.count },
       );
       if (result.facets) {
         (response as any).facets = result.facets;

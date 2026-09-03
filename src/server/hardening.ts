@@ -92,8 +92,15 @@ export function strictParams(obj: z.ZodObject<any>): z.ZodObject<any> {
  * Cap tool output size so one tool call can't flood an LLM context window.
  * Structured envelopes are trimmed by dropping rows/items (keeping valid
  * JSON and setting truncated=true); anything else is hard-truncated.
+ *
+ * Kept well under a typical MCP client's per-result token budget (~25k tokens).
+ * An earlier 120k-char limit still produced ~87k-char envelopes that clients
+ * rejected outright ("exceeds maximum allowed tokens") — a cap the client won't
+ * honor is no cap at all. ~48k chars is ≈12–16k tokens: a comfortable ceiling
+ * that leaves headroom. Tools should still bound volume via their own
+ * limit/date-range params; this is only the backstop.
  */
-export const MAX_TOOL_OUTPUT_CHARS = 120_000;
+export const MAX_TOOL_OUTPUT_CHARS = 48_000;
 
 export function capToolOutput(text: string): string {
   if (text.length <= MAX_TOOL_OUTPUT_CHARS) return text;
