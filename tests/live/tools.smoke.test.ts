@@ -47,7 +47,7 @@ const KNOWN_UPSTREAM: Record<string, { since: string; reason: string }> = Object
 );
 
 /** Modules that declare an auth env var but degrade gracefully without one. */
-const WORKS_WITHOUT_KEY = new Set(["fda", "bls"]);
+const WORKS_WITHOUT_KEY = new Set(["fda", "bls", "nist-nvd"]);
 
 /**
  * Bulk-ingest modules download and index a large dataset (tens of MB) on first
@@ -55,7 +55,7 @@ const WORKS_WITHOUT_KEY = new Set(["fda", "bls"]);
  * per-request smoke suite — a fresh CI runner would re-download every night and
  * risk the per-test timeout. They're verified by hand / a dedicated path.
  */
-const BULK_INGEST = new Set(["form5500", "faa", "exempt-orgs", "ntsb", "ofac", "orange-book", "opm"]);
+const BULK_INGEST = new Set(["form5500", "faa", "exempt-orgs", "ntsb", "ofac", "orange-book", "opm", "sba", "eoir-immigration"]);
 
 const noop = () => {};
 const ctx = { log: { info: noop, warn: noop, error: noop, debug: noop }, reportProgress: async () => {}, session: {} };

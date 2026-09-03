@@ -377,6 +377,16 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   // ─── FEMA National Risk Index ───────────────────────────────────────
   fema_nri_county: { county_fips: "08101" }, // Pueblo County
   fema_nri_state: { state: "CO", limit: 10 },
+
+  // ─── Key-gated modules (auto-skipped without their key; args for coverage) ──
+  sam_entity_search: { name: "Pfizer", limit: 5 },
+  sam_exclusions: { name: "test", limit: 5 },
+  sam_opportunities: { posted_from: "01/01/2025", posted_to: "01/31/2025", limit: 5 },
+  fmcsa_search_carriers: { name: "Swift Transportation", limit: 5 },
+  fmcsa_carrier: { dot_number: 76830 },
+  fmcsa_carrier_safety: { dot_number: 76830 },
+  fcc_broadband_datasets: { as_of_date: "2024-06-30" },
+  usitc_run_query: { query: { savedQueryName: "example" } }, // placeholder; needs a real DataWeb body
 };
 
 /**

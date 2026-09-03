@@ -91,3 +91,7 @@ export * as samGov from "./sam-gov/sdk.js";
 export * as fmcsa from "./fmcsa/sdk.js";
 export * as fccBroadband from "./fcc-broadband/sdk.js";
 export * as usitc from "./usitc/sdk.js";
+
+// ── No-API bulk-ingest sources ──
+export * as sba from "./sba/sdk.js";
+export * as eoirImmigration from "./eoir-immigration/sdk.js";
