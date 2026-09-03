@@ -44,6 +44,7 @@ export * as form5500 from "../apis/form5500/sdk.js";
 export * as fred from "../apis/fred/sdk.js";
 export * as gleif from "../apis/gleif/sdk.js";
 export * as govinfo from "../apis/govinfo/sdk.js";
+export * as gridDisturbances from "../apis/grid-disturbances/sdk.js";
 export * as gsaCalc from "../apis/gsa-calc/sdk.js";
 export * as hud from "../apis/hud/sdk.js";
 export * as naep from "../apis/naep/sdk.js";
