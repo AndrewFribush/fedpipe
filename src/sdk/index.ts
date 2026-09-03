@@ -85,3 +85,9 @@ export * as imf from "../apis/imf/sdk.js";
 export * as who from "../apis/who/sdk.js";
 export * as noaaTides from "../apis/noaa-tides/sdk.js";
 export * as femaNri from "../apis/fema-nri/sdk.js";
+
+// ── Key-gated (pending live-audit) ──
+export * as samGov from "../apis/sam-gov/sdk.js";
+export * as fmcsa from "../apis/fmcsa/sdk.js";
+export * as fccBroadband from "../apis/fcc-broadband/sdk.js";
+export * as usitc from "../apis/usitc/sdk.js";
