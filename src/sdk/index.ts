@@ -95,3 +95,5 @@ export * as usitc from "../apis/usitc/sdk.js";
 // ── No-API bulk-ingest sources ──
 export * as sba from "../apis/sba/sdk.js";
 export * as eoirImmigration from "../apis/eoir-immigration/sdk.js";
+export * as atf from "../apis/atf/sdk.js";
+export * as bjs from "../apis/bjs/sdk.js";

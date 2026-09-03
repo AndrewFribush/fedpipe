@@ -1,36 +1,37 @@
 # No-API sources: ingest status
 
-Some federal sources publish no query API. Where a machine-readable **bulk file**
-exists, fedpipe ingests it into a local database (the `shared/bulk.ts` pattern:
-download → parse → SQLite → query locally). Where only PDFs or access-gated
-archives exist, there is nothing clean to ingest, and we say so.
+Some federal sources publish no query API — only bulk files. fedpipe ingests
+each into a local database (the `shared/bulk.ts` pattern: download → parse →
+SQLite → query locally). None of these is a dead end; where access or a URL is
+needed, the module is a ready-to-run **ingest scaffold** you point at the file.
 
-## Ingested as modules (bulk file → local SQLite)
-
-| Module | Source | Shape | Notes |
+| Module | Source | Shape | Ingest |
 |---|---|---|---|
-| `sba` | SBA 7(a) & 504 loan FOIA CSVs (data.sba.gov) | CSV, resolved from the DKAN metastore | Auto-ingests on first query (recent-era files). |
-| `eoir-immigration` | EOIR case-data FOIA release | one multi-GB ZIP of delimited tables | **Deliberate** ingest only (`ingest()`); schema-generic loader. |
+| `sba` | SBA 7(a) & 504 loan FOIA CSVs (data.sba.gov) | CSV, resolved from the DKAN metastore | **Auto** on first query (recent-era files). |
+| `eoir-immigration` | EOIR case-data FOIA release | ~4.5 GB **ZIP64** of delimited tables | **Deliberate** `ingest()` — disk-based, streams via system `unzip`. |
+| `atf` | ATF Federal Firearms Licensee (FFL) listings | rotating monthly delimited files | **Deliberate** `ingest(url)` — CDN blocks scripted fetch, so pass the current file URL. |
+| `bjs` | BJS corrections/victimization extracts (NPS, NCRP, NCVS, FJSP) | delimited files, some ICPSR/NACJD-gated | **Deliberate** `ingest(url)` — pass the extract URL (may require ICPSR access). |
 
-Both need Node ≥ 22.5 (built-in `node:sqlite`). No API keys.
+All need Node ≥ 22.5 (built-in `node:sqlite`). No API keys.
 
-## Genuine dead-ends (no machine-readable bulk source)
+## How the deliberate ones work
 
-These were evaluated and have **no clean bulk feed** — building an ingester would
-mean scraping PDFs or clearing an access wall, which is out of scope. Documented
-here so the gap is explicit, with the canonical source for manual use.
+The `eoir-immigration`, `atf`, and `bjs` loaders are **schema-generic**: they read
+the file's own header row, sniff the delimiter (tab / pipe / comma), and build the
+SQLite table from whatever columns are present — so they don't depend on a
+hard-coded schema, and the exact columns are surfaced by each module's
+`*_dataset_info` tool after the first ingest.
 
-- **ATF (Bureau of Alcohol, Tobacco, Firearms and Explosives)** — the Firearms
-  Commerce Report, AFMER production data, and firearms-trace summaries are
-  published as **PDF** (and a few XLSX) tables only, with no CSV/JSON feed and no
-  API. Source: <https://www.atf.gov/resource-center/data-statistics>. Ingesting
-  would require PDF table extraction per annual report.
-- **BJS (Bureau of Justice Statistics)** — corrections and victimization
-  microdata (NPS, NCRP, NCVS) are distributed through **ICPSR/NACJD**, which
-  gates downloads behind an account/agreement; the public "analysis tools" (CSAT,
-  NCVS dashboards) expose no bulk endpoint. Source:
-  <https://bjs.ojp.gov/> and <https://www.icpsr.umich.edu/web/pages/NACJD/>.
-  Aggregate crime counts are already covered live by the `fbi` module (UCR/NIBRS).
+- `eoir-immigration`: `await ingest()` downloads the 4.5 GB ZIP once and streams
+  the case table in. Large and slow; run it deliberately.
+- `atf`: `await ingest('<file url from atf.gov FFL listing page>')`.
+- `bjs`: `await ingest('<BJS/NACJD extract url>')`.
 
-If either later publishes a CSV/ZIP feed, it becomes a straightforward `bulk.ts`
-module like `sba`.
+## Access notes (being arranged)
+
+- **ATF** rotates its FFL file URLs monthly and blocks scripted requests at the
+  CDN; grab the current URL from
+  <https://www.atf.gov/firearms/listing-federal-firearms-licensees> and pass it in.
+- **BJS** distributes some datasets through ICPSR/NACJD behind an access
+  agreement; once you have the extract URL, ingest it. Aggregate crime counts are
+  already covered live by the `fbi` module (UCR/NIBRS).
