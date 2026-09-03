@@ -6,12 +6,11 @@ import type { ModuleMeta } from "../../shared/types.js";
 
 export default {
   name: "noaa",
-  displayName: "NOAA Climate Data Online",
+  displayName: "NOAA Climate Data (NCEI)",
   category: "Environment",
-  description: "Weather observations, temperature, precipitation, climate normals from NOAA stations across the U.S.",
-  auth: { envVar: "NOAA_API_KEY", signup: "https://www.ncei.noaa.gov/cdo-web/token" },
-  workflow: "noaa_stations to find a station → noaa_climate_data to get observations",
-  tips: "Datasets: GHCND (daily), GSOM (monthly summary), GSOY (annual summary). Location IDs: FIPS:36 (NY), FIPS:06 (CA)",
+  description: "Weather observations — temperature, precipitation, snow, wind — from NOAA/NCEI stations across the U.S. Keyless (NCEI Access + Search services).",
+  workflow: "noaa_stations (by state or lat/lon) to find a station ID → noaa_climate_data for its observations",
+  tips: "Datasets: GHCND (daily), GSOM (monthly), GSOY (annual). Search stations by state code (e.g. 'LA') or lat/lon, then pass the station ID to noaa_climate_data. Values in standard units (°F, inches). No API key needed.",
   domains: ["environment"],
   crossRef: [
     { question: "energy/climate", route: "noaa_climate_data (temperature, precipitation trends)" },
@@ -22,9 +21,9 @@ export default {
   ],
   reference: {
   docs: {
-    "API Docs": "https://www.ncei.noaa.gov/cdo-web/webservices/v2",
-    "Get Key": "https://www.ncei.noaa.gov/cdo-web/token",
-    "Dataset List": "https://www.ncei.noaa.gov/cdo-web/datasets",
+    "NCEI Access Data Service": "https://www.ncei.noaa.gov/access/services/data/v1",
+    "NCEI Search Service": "https://www.ncei.noaa.gov/access/services/search/v1",
+    "GHCN-Daily": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily",
   },
 },
 } satisfies ModuleMeta;
