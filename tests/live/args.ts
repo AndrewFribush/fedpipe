@@ -342,6 +342,25 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   // ─── Nonprofits (IRS Form 990) ──────────────────────────────────────
   nonprofits_search: { query: "American Red Cross", limit: 3 },
   nonprofit_financials: { ein: "53-0196605", years: 3 }, // American National Red Cross
+
+  // ─── NASA (POWER + EONET) ───────────────────────────────────────────
+  nasa_power_point: { lat: 38.25, lon: -104.61, temporal: "daily", start: "2024-06-01", end: "2024-06-07" },
+  nasa_natural_events: { category: "wildfires", limit: 5 },
+
+  // ─── NIST NVD (CVEs) ────────────────────────────────────────────────
+  nvd_search: { keyword: "log4j", limit: 3 },
+  nvd_cve: { cve_id: "CVE-2021-44228" }, // Log4Shell
+
+  // ─── Education Data (IPEDS + CCD) ───────────────────────────────────
+  edu_colleges: { state: "CO", limit: 5 },
+  edu_schools: { state: "CO", county_fips: "08101", limit: 5 }, // Pueblo County
+
+  // ─── HMDA (mortgage lending) ────────────────────────────────────────
+  hmda_lending: { year: 2022, county: "08101" }, // Pueblo County originations
+
+  // ─── USACE National Inventory of Dams ───────────────────────────────
+  dams_search: { query: "Pueblo, Colorado", limit: 5 },
+  dams_detail: { federal_id: "CO00299" }, // Pueblo Dam
 };
 
 /**

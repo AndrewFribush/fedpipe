@@ -72,3 +72,10 @@ export * as usdaNass from "../apis/usda-nass/sdk.js";
 export * as usgs from "../apis/usgs/sdk.js";
 export * as uspto from "../apis/uspto/sdk.js";
 export * as worldBank from "../apis/world-bank/sdk.js";
+
+// ── Coverage wave 1 ──
+export * as educationData from "../apis/education-data/sdk.js";
+export * as hmda from "../apis/hmda/sdk.js";
+export * as nasa from "../apis/nasa/sdk.js";
+export * as nistNvd from "../apis/nist-nvd/sdk.js";
+export * as usaceNid from "../apis/usace-nid/sdk.js";
