@@ -83,7 +83,7 @@ Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
 
 Cuba Sanctions
-Aug 20, 2026
+Sep 03, 2026
 
 Cyber-Related Sanctions
 Aug 24, 2026
@@ -143,7 +143,7 @@ Rough Diamond Trade Controls
 Jun 18, 2018
 
 Russian Harmful Foreign Activities Sanctions
-Aug 26, 2026
+Sep 03, 2026
 
 Somalia Sanctions
 May 24, 2023

@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Threats of Heavy Rainfall, Severe Thunderstorms and Dangerous Heat
+# Severe Weather and Heavy Rain from the Great Lakes to the Mid-Atlantic; Heat Persists in the East
 
-Several complexes of thunderstorms, some severe with heavy rainfall, will impact areas from the northern Plains, Great Lakes, Ohio Valley to the mid-Atlantic. This threat will shift toward the Carolinas on Friday. Heavy rainfall, remnants of Edouard, continues for portions of eastern Texas through today. In-between these systems, a dome of high pressure and heat for central and eastern states.
+Widespread strong thunderstorms with damaging winds and locally heavy rain are expected from the Upper Ohio Valley into the southern Mid-Atlantic today and portions of the central Appalachians and Carolinas on Saturday. Monsoonal moisture will bring a flash flooding threat to the Desert Southwest. Sweltering heat persists from the Plains to the southern Mid-Atlantic through tonight.
 Read More >
 
 Customize Your Weather.gov

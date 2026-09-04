@@ -15,7 +15,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
-- `bts` — [Monthly Transportation Statistics](https://data.bts.gov/d/crem-w557) — error: TimeoutError — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -44,11 +43,14 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `form5500` — [Form 5500 datasets](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered
 - `govinfo` — [API Docs (Swagger)](https://api.govinfo.gov/docs/) — client-rendered
+- `grid-disturbances` — [DOE OE-417 form](https://www.oe.netl.doe.gov/OE417_annual_summary.aspx) — error: ENETUNREACH
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
+- `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 400
+- `noaa` — [NCEI Search Service](https://www.ncei.noaa.gov/access/services/search/v1) — HTTP 404
 - `ntsb` — [CAROL query](https://data.ntsb.gov/carol-main-public/) — client-rendered
 - `ofac` — [SDN list](https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists) — client-rendered
 - `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — client-rendered
@@ -58,5 +60,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot
 - `sec` — [Fair Access Policy](https://www.sec.gov/privacy.htm#security) — HTTP 403 — kept previous snapshot
 - `sec` — [Full-Text Search](https://efts.sec.gov/LATEST/) — HTTP 403
+- `space-weather` — [SWPC data services](https://services.swpc.noaa.gov/) — client-rendered
 - `uspto` — [API docs](https://data.uspto.gov/apis/getting-started) — client-rendered
 - `uspto` — [Rate limits](https://data.uspto.gov/apis/api-rate-limits) — client-rendered
