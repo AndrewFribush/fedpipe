@@ -4,16 +4,17 @@
  * that third parties like TRAC are built on).
  *
  * There is no query API: EOIR publishes one ~4.5 GB ZIP64 archive of delimited
- * tables. That is far too large to buffer in memory, so this ingester is
- * DISK-BASED and STREAMING: it downloads the ZIP to the cache dir, lists entries
- * with `zipinfo`, and streams the case table through `unzip -p` line-by-line into
- * a local SQLite database. The loader is schema-GENERIC — it reads the case
- * file's header, sniffs the delimiter, and builds the table from whatever columns
- * exist — so it does not depend on a hard-coded EOIR schema.
+ * tables. That is far too large to buffer in memory (and macOS's bundled unzip
+ * 6.00 can't read ZIP64), so this ingester is DISK-BASED and STREAMING: it
+ * downloads the ZIP to the cache dir and streams the case table (A_TblCase)
+ * through python3's zipfile line-by-line into a local SQLite database. The loader
+ * is schema-GENERIC — it reads the case file's header, sniffs the delimiter, and
+ * builds the table from whatever columns exist — so it does not depend on a
+ * hard-coded EOIR schema.
  *
- * Requires Node >= 22.5 (node:sqlite) and the system `unzip`/`zipinfo` (present
- * on macOS/Linux). No API key. Ingest is deliberate (call ingest()), not
- * triggered by a query.
+ * Requires Node >= 22.5 (node:sqlite) and python3 (its zipfile handles ZIP64;
+ * both are present on macOS/Linux). No API key. Ingest is deliberate (call
+ * ingest()), not triggered by a query.
  *
  * Standalone:
  *   import { ingest, searchCases } from "fedpipe/sdk/eoir-immigration";
@@ -52,14 +53,22 @@ async function downloadZip(): Promise<void> {
   });
 }
 
+/** List archive entries via python3 (its zipfile handles ZIP64; system unzip 6.00 does not). */
+const PY_LIST = "import zipfile,sys;print('\\n'.join(zipfile.ZipFile(sys.argv[1]).namelist()))";
+/** Stream one archive entry to stdout via python3. */
+const PY_STREAM =
+  "import zipfile,sys\nf=zipfile.ZipFile(sys.argv[1]).open(sys.argv[2])\nw=sys.stdout.buffer\nfor c in iter(lambda: f.read(1<<20), b''): w.write(c)";
+
 async function pickCaseEntry(): Promise<string> {
   const { execFileSync } = await import("node:child_process");
-  const names = execFileSync("zipinfo", ["-1", zipPath()], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+  const names = execFileSync("python3", ["-c", PY_LIST, zipPath()], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
     .split("\n").map((s) => s.trim()).filter(Boolean)
     .filter((n) => /\.(csv|txt|tab)$/i.test(n));
   if (!names.length) throw new Error("eoir-immigration: no delimited tables in the archive.");
-  // Prefer the primary case table, not the many lookup tables.
-  return names.find((n) => /case/i.test(n) && !/lookup|tbllook/i.test(n)) ?? names[0];
+  // Prefer the primary case table (A_TblCase), not identifier/lookup tables.
+  return names.find((n) => /A_TblCase\.csv$/i.test(n))
+    ?? names.find((n) => /case/i.test(n) && !/identifier|lookup|tbllook/i.test(n))
+    ?? names[0];
 }
 
 /**
@@ -79,7 +88,7 @@ export async function ingest(): Promise<{ rowCount: number; columns: string[]; t
   db.exec("PRAGMA journal_mode = OFF; PRAGMA synchronous = OFF;");
   db.exec("CREATE TABLE meta(key TEXT PRIMARY KEY, value TEXT);");
 
-  const child = spawn("unzip", ["-p", zipPath(), entry]);
+  const child = spawn("python3", ["-c", PY_STREAM, zipPath(), entry]);
   child.on("error", (e) => { throw e; });
   const rl = readline.createInterface({ input: child.stdout, crlfDelay: Infinity });
 
@@ -120,7 +129,7 @@ export async function ingest(): Promise<{ rowCount: number; columns: string[]; t
 
 const NOT_INGESTED =
   "eoir-immigration: data not yet ingested. The EOIR case data is a ~4.5 GB FOIA ZIP with no query API. Run the " +
-  "deliberate ingest first: import { ingest } from 'fedpipe/sdk/eoir-immigration'; await ingest(). Requires Node >= 22.5 and system unzip.";
+  "deliberate ingest first: import { ingest } from 'fedpipe/sdk/eoir-immigration'; await ingest(). Requires Node >= 22.5 and python3.";
 
 export function isIngested(): boolean {
   const p = dbPath();

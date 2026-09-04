@@ -8,7 +8,7 @@ needed, the module is a ready-to-run **ingest scaffold** you point at the file.
 | Module | Source | Shape | Ingest |
 |---|---|---|---|
 | `sba` | SBA 7(a) & 504 loan FOIA CSVs (data.sba.gov) | CSV, resolved from the DKAN metastore | **Auto** on first query (recent-era files). |
-| `eoir-immigration` | EOIR case-data FOIA release | ~4.5 GB **ZIP64** of delimited tables | **Deliberate** `ingest()` — disk-based, streams via system `unzip`. |
+| `eoir-immigration` | EOIR case-data FOIA release | ~4.5 GB **ZIP64** of delimited tables | **Deliberate** `ingest()` — disk-based, streams `A_TblCase` via python3 (macOS unzip 6.00 can't read ZIP64). Verified: 3M rows / 39 cols. |
 | `atf` | ATF Federal Firearms Licensee (FFL) listings | rotating monthly delimited files | **Deliberate** `ingest(url)` — CDN blocks scripted fetch, so pass the current file URL. |
 | `bjs` | BJS corrections/victimization extracts (NPS, NCRP, NCVS, FJSP) | delimited files, some ICPSR/NACJD-gated | **Deliberate** `ingest(url)` — pass the extract URL (may require ICPSR access). |
 
@@ -23,7 +23,9 @@ hard-coded schema, and the exact columns are surfaced by each module's
 `*_dataset_info` tool after the first ingest.
 
 - `eoir-immigration`: `await ingest()` downloads the 4.5 GB ZIP once and streams
-  the case table in. Large and slow; run it deliberately.
+  the case table in via python3 (system unzip 6.00 can't read ZIP64). Large and
+  slow; run it deliberately. `FEDPIPE_EOIR_MAX_ROWS` bounds the local table
+  (default 3,000,000 of ~12M).
 - `atf`: `await ingest('<file url from atf.gov FFL listing page>')`.
 - `bjs`: `await ingest('<BJS/NACJD extract url>')`.
 
