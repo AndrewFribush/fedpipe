@@ -72,3 +72,28 @@ export * as usdaNass from "../apis/usda-nass/sdk.js";
 export * as usgs from "../apis/usgs/sdk.js";
 export * as uspto from "../apis/uspto/sdk.js";
 export * as worldBank from "../apis/world-bank/sdk.js";
+
+// ── Coverage wave 1 ──
+export * as educationData from "../apis/education-data/sdk.js";
+export * as hmda from "../apis/hmda/sdk.js";
+export * as nasa from "../apis/nasa/sdk.js";
+export * as nistNvd from "../apis/nist-nvd/sdk.js";
+export * as usaceNid from "../apis/usace-nid/sdk.js";
+
+// ── Coverage wave 2 ──
+export * as imf from "../apis/imf/sdk.js";
+export * as who from "../apis/who/sdk.js";
+export * as noaaTides from "../apis/noaa-tides/sdk.js";
+export * as femaNri from "../apis/fema-nri/sdk.js";
+
+// ── Key-gated (pending live-audit) ──
+export * as samGov from "../apis/sam-gov/sdk.js";
+export * as fmcsa from "../apis/fmcsa/sdk.js";
+export * as fccBroadband from "../apis/fcc-broadband/sdk.js";
+export * as usitc from "../apis/usitc/sdk.js";
+
+// ── No-API bulk-ingest sources ──
+export * as sba from "../apis/sba/sdk.js";
+export * as eoirImmigration from "../apis/eoir-immigration/sdk.js";
+export * as atf from "../apis/atf/sdk.js";
+export * as bjs from "../apis/bjs/sdk.js";
