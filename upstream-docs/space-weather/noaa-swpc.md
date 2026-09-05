@@ -100,14 +100,6 @@ More about the NOAA Space Weather Scales
 
 - Noon 10.7cm Radio Flux: sfu
 
-Issue with Real Time Solar Wind Plots
-
-published:
-
-Thursday, September 03, 2026 19:54 UTC
-
-Real Time Solar Wind plots stopped updating due to a server failure at approximately 1654 UTC. Currently, ACE and SOLAR1 data are unavailable. Our IT team is currently working the issue, hoping to hav...
-
 CCOR-1 White Light Imagery Degradation
 
 published:
@@ -131,6 +123,14 @@ published:
 Thursday, July 23, 2026 17:47 UTC
 
 Coronagraph imagery is now available from NOAA’s Space Weather Observations at L1 to Advance Readiness (SOLAR-1). The Compact Coronagraph 2 (CCOR-2) instrument was declared operational in June 2026, a...
+
+Solar Wind Data and Display Changes
+
+published:
+
+Tuesday, June 30, 2026 21:35 UTC
+
+Solar wind data and display changes on our webpage due to DSCOVR data termination and SOLAR-1 being the primary instrument. Users need to utilize the new solar wind display....
 
 Serving Essential Space Weather Communities
 

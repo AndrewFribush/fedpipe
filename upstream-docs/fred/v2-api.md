@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources & Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Connecting the Dots in Your Community
+## What Work Does Generative AI Do?
 
-Community challenges are often connected in ways that aren’t easy to see. A new systems thinking tool kit offers a framework for tackling complex problems in a transformative way.
+More than 80% of U.S. occupations have at least 1 in 5 workers using artificial intelligence. Which careers and tasks show the most and least AI adoption?
 
 ## Pulse of the Economy
 
@@ -21,7 +21,7 @@ Economic Data
 
 ### Unemployment
 
-As of July 2026
+As of August 2026
 
 3.7%
 
@@ -33,19 +33,19 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 2, 2026
+As of September 3, 2026
 
 From Our President & CEO
 
 ## Pres. Musalem's Remarks and Community Engagement
 
-Article
+Economic Conditions
 
-## The Truth About Common Credit Score Myths
+## Eighth District Economic Activity Increases Modestly
 
-Economic Analysis
+Flash Report
 
-## What Work Does Generative AI Do?
+## Unemployment Remains Steady, Payrolls Rise in August
 
 ## What We Do
 
