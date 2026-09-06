@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Severe Weather and Heavy Rain from the Great Lakes to the Mid-Atlantic; Heat Persists in the East
+# Severe Weather and Heavy Rain from the Ohio Valley to the Mid-Atlantic; Heat Persists in the South-Central U.S.
 
-Widespread strong thunderstorms with damaging winds and locally heavy rain are expected from the Upper Ohio Valley into the southern Mid-Atlantic today and portions of the central Appalachians and Carolinas on Saturday. Monsoonal moisture will bring a flash flooding threat to the Desert Southwest. Sweltering heat persists from the Plains to the southern Mid-Atlantic through tonight.
+Widespread strong thunderstorms with damaging winds and locally heavy rain are expected across portions of the Ohio Valley into southern Mid-Atlantic and Carolinas. Rounds of strong thunderstorms are expected to develop across the northern and central Plains. Sweltering heat remains most persistent across the South-Central Plains and Lower/Middle Mississippi Valley through next week.
 Read More >
 
 Customize Your Weather.gov

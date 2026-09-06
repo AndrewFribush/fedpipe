@@ -6,10 +6,6 @@ Source: https://www.census.gov/data/developers/guidance/api-user-guide.html
 
 Census Data API User Guide
 
-Celebrating 250 Years of Measuring America's People and Economy
-
-Learn more.
-
 # Census Data API User Guide
 
 Skip Navigation
