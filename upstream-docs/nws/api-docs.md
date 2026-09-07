@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Severe Weather and Heavy Rain from the Ohio Valley to the Mid-Atlantic; Heat Persists in the South-Central U.S.
+# Lowell to Impact Hawaii; Heat Persists in the South-Central U.S.
 
-Widespread strong thunderstorms with damaging winds and locally heavy rain are expected across portions of the Ohio Valley into southern Mid-Atlantic and Carolinas. Rounds of strong thunderstorms are expected to develop across the northern and central Plains. Sweltering heat remains most persistent across the South-Central Plains and Lower/Middle Mississippi Valley through next week.
+Hurricane Lowell is forecast to pass west of Kauai`s coastal waters tonight. Impacts such as high surf and heavy rain could impact all of the islands. Sweltering heat remains across the South-Central Plains and Lower/Middle Mississippi Valley into this week with limited nighttime relief. Periods of moderate to heavy rainfall will be possible through Tuesday morning in the northern Rockies.
 Read More >
 
 Customize Your Weather.gov

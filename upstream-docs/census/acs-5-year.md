@@ -222,4 +222,16 @@ FTP Server
 
 To download full datasets, visit our FTP Server.
 
+Error 404 Not Found
+
+## HTTP ERROR 404 Not Found
+
+URI: | /content/census/en/data/developers/data-sets/acs-5year/2024/_jcr_content/root/responsivegrid/ois.nocache.html/census/components/common/body/othersinseries.vsdi
+
+STATUS: | 404
+
+MESSAGE: | Not Found
+
+SERVLET: | org.apache.felix.http.base.internal.dispatch.DispatcherServlet-2e2c122d
+
 Page Last Revised - May 20, 2026
