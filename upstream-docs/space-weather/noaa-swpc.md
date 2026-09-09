@@ -100,14 +100,6 @@ More about the NOAA Space Weather Scales
 
 - Noon 10.7cm Radio Flux: sfu
 
-CCOR-1 White Light Imagery Degradation
-
-published:
-
-Tuesday, September 01, 2026 14:09 UTC
-
-CCOR-1 white-light image quality is currently degraded. The cause of the degradation has been identified and a solution is being worked. The running-difference imagery is unaffected....
-
 SWPCs New Solar Wind Display Officially Operational
 
 published:
@@ -131,6 +123,14 @@ published:
 Tuesday, June 30, 2026 21:35 UTC
 
 Solar wind data and display changes on our webpage due to DSCOVR data termination and SOLAR-1 being the primary instrument. Users need to utilize the new solar wind display....
+
+Learn About Various Solar Storms and Phenomena
+
+published:
+
+Wednesday, June 17, 2026 19:55 UTC
+
+Learn more about various solar storms and phenomena by visiting the "About Space Weather" on our webpage....
 
 Serving Essential Space Weather Communities
 

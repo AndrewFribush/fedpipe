@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Lowell to Impact Hawaii; Heat Persists in the South-Central U.S.
+# Heat Persists in the South Central U.S. and Southwest; Heavy rains in the Desert Southwest and Central Plains
 
-Hurricane Lowell is forecast to pass west of Kauai`s coastal waters tonight. Impacts such as high surf and heavy rain could impact all of the islands. Sweltering heat remains across the South-Central Plains and Lower/Middle Mississippi Valley into this week with limited nighttime relief. Periods of moderate to heavy rainfall will be possible through Tuesday morning in the northern Rockies.
+Sweltering heat remains across the South-Central Plains, Lower/Middle Mississippi Valley, and the Southwest this week with limited nighttime relief. Thunderstorms will bring heavy rainfall leading to localized flash flooding in portions of the Desert Southwest and central Plains. Isolated strong to severe thunderstorms are possible across portions of the central Plains into the Northeast.
 Read More >
 
 Customize Your Weather.gov
