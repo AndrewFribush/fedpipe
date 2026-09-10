@@ -16,6 +16,8 @@ The site is secure.
 
 The https:// ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
 
+NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Please see our migration overview and frequently asked questions for more information and resources.
+
 # Global Historical Climatology Network daily (GHCNd)
 
 The Global Historical Climatology Network daily (GHCNd) is an integrated database of daily climate summaries from land surface stations across the globe. GHCNd is made up of daily climate records from numerous sources that have been integrated and subjected to a common suite of quality assurance reviews.

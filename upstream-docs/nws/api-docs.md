@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heat Persists in the South Central U.S. and Southwest; Heavy rains in the Desert Southwest and Central Plains
+# Heat and Fire Weather Concerns West; Heavy Rain and Thunderstorms from Plains to mid-Atlantic
 
-Sweltering heat remains across the South-Central Plains, Lower/Middle Mississippi Valley, and the Southwest this week with limited nighttime relief. Thunderstorms will bring heavy rainfall leading to localized flash flooding in portions of the Desert Southwest and central Plains. Isolated strong to severe thunderstorms are possible across portions of the central Plains into the Northeast.
+Thunderstorms and locally heavy rainfall is expected from the Central Plains to the Ohio Valley, mid-Atlantic and across the Southeast. Severe weather from the Upper Midwest to Central Plains increases on Friday. Major to Extreme HeatRisk continues across the Southern Plains to the lower Mississippi Valley late this week. Fire weather concerns for the northern Rockies and northern Plains today.
 Read More >
 
 Customize Your Weather.gov

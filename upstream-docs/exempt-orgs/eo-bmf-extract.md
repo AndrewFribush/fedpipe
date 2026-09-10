@@ -177,7 +177,7 @@ Tax exempt bonds
 
 Taxpayer identification numbers (TIN)
 
-The Exempt Organizations Business Master File Extract provides information about an organization from the Internal Revenue Service's Business Master File. This is a cumulative file, and the data are the most recent information the IRS has for these organizations. The files are available in comma separated value (CSV) format. The Exempt Organization Business Master File Extract information sheet PDF explains the codes used in the data files. They are divided by state and region : States and regions are determined from the filing address and represent the location of an organization's headquarters, which may or may not represent the state(s) in which an organization has operations. Records are sorted by Employer Identification Number (EIN). There is one file for each state, the District of Columbia, and Puerto Rico. One file for international (non-domestic) organizations. If you have any questions about the tax-exempt organizations or the content of the files, please contact TE/GE Customer Account Services toll-free line at 877-829-5500 . Exempt organizations by state and region Updated data posting date: Aug. 11, 2026 Record count: 1,957,340 CSV files by state
+The Exempt Organizations Business Master File Extract provides information about an organization from the Internal Revenue Service's Business Master File. This is a cumulative file, and the data are the most recent information the IRS has for these organizations. The files are available in comma separated value (CSV) format. The Exempt Organization Business Master File Extract information sheet PDF explains the codes used in the data files. They are divided by state and region : States and regions are determined from the filing address and represent the location of an organization's headquarters, which may or may not represent the state(s) in which an organization has operations. Records are sorted by Employer Identification Number (EIN). There is one file for each state, the District of Columbia, and Puerto Rico. One file for international (non-domestic) organizations. If you have any questions about the tax-exempt organizations or the content of the files, please contact TE/GE Customer Account Services toll-free line at 877-829-5500 . Exempt organizations by state and region Updated data posting date: 9/8/2026 Record count: 1,964,958 CSV files by state
 
 States A-K | States L-N | States O-W
 Alabama
@@ -258,7 +258,7 @@ Disclaimer of endorsement: Reference above to any specific commercial products, 
 - Tax Exempt Organization Search bulk data downloads
 - Tax Exempt Organization Search Tool
 
-Page Last Reviewed or Updated: 12-Aug-2026
+Page Last Reviewed or Updated: 09-Sep-2026
 
 - Share
 - Facebook

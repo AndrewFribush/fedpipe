@@ -8556,7 +8556,15 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "shipyard-financing",
             "first-step-act",
             "sentence-computation",
-            "transport"
+            "transport",
+            "census",
+            "decennial-census",
+            "residence-criteria",
+            "residence-rules",
+            "usual-residence",
+            "enumeration",
+            "demographic-data",
+            "race-ethnicity"
           ],
           "type": "string"
         },

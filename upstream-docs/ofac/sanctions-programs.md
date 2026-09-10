@@ -77,7 +77,7 @@ Counter Narcotics Trafficking Sanctions
 Aug 20, 2026
 
 Counter Terrorism Sanctions
-Sep 08, 2026
+Sep 09, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
@@ -155,7 +155,7 @@ Sudan and Darfur Sanctions
 Jun 26, 2026
 
 Transnational Criminal Organizations
-Jun 23, 2026
+Sep 09, 2026
 
 Ukraine-/Russia-related Sanctions
 May 08, 2026
