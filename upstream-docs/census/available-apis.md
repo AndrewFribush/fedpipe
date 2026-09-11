@@ -6,6 +6,10 @@ Source: https://www.census.gov/data/developers/data-sets.html
 
 Available APIs
 
+Income, Poverty and Health Insurance
+
+Join us Tuesday, Sept. 15 at 10 am ET for a live webinar announcing new Income, Poverty and Health Insurance estimates for the nation.
+
 # Available APIs
 
 Skip Navigation
@@ -146,6 +150,12 @@ September 03, 2026
 
 The AIES provides the only comprehensive national and subnational data on business revenues, expenses, and assets on an annual basis.
 
+Annual Integrated Economic Survey (AIES) Time Series
+
+September 10, 2026
+
+The AIES Historical Statistics dataset will provide historical content from the legacy surveys mixed with new data moving forward, using the NAICS.
+
 Top of Section
 
 ###
@@ -198,7 +208,7 @@ Census Microdata API
 
 Census Microdata API
 
-August 13, 2026
+September 10, 2026
 
 The U.S. Census Bureau’s microdata is now available as a Census Bureau API.
 
@@ -490,4 +500,4 @@ Vehicle Inventory and Use Survey (VIUS) provides data on the physical and operat
 
 Top of Section
 
-Page Last Revised - July 20, 2026
+Page Last Revised - September 1, 2026

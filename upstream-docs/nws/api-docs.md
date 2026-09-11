@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heat and Fire Weather Concerns West; Heavy Rain and Thunderstorms from Plains to mid-Atlantic
+# Fire Weather Concerns West; Thunderstorms in the Upper Midwest
 
-Thunderstorms and locally heavy rainfall is expected from the Central Plains to the Ohio Valley, mid-Atlantic and across the Southeast. Severe weather from the Upper Midwest to Central Plains increases on Friday. Major to Extreme HeatRisk continues across the Southern Plains to the lower Mississippi Valley late this week. Fire weather concerns for the northern Rockies and northern Plains today.
+Dry and breezy conditions will enhance fire weather concerns across portions of the northern and central High Plains through Saturday, where fuels remain largely receptive. Severe thunderstorms are possible across portions of central Nebraska to the Upper Midwest this Friday afternoon into tonight.
 Read More >
 
 Customize Your Weather.gov

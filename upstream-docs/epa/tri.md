@@ -20,18 +20,18 @@ A lock () or https:// means you’ve safely connected to the .gov website. Share
 Toxics Release Inventory (TRI) Program
 
 ##
+Get TRI Data
+
+Filter TRI tools and datasets based on topics of interest and preferred outputs.
+
+- Get the data
+
+##
 TRI Resources for Teachers and Students
 
 The ready-to-use materials in "TRI in the Classroom" can help students learn about potential impacts to their health and environment from toxic chemicals.
 
 - Go to TRI in the Classroom
-
-##
-2024 TRI Data Available
-
-Get the most recent facility-level data about toxic chemical waste management and pollution prevention activities.
-
-- Get the data
 
 12
 
@@ -69,4 +69,4 @@ Use esta herramienta de búsqueda en español
 
 TRI Program Contacts to ask a question, provide feedback, or report a problem.
 
-Last updated on July 10, 2026
+Last updated on September 10, 2026
