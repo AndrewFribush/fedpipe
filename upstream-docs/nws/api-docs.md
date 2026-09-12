@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Fire Weather Concerns West; Thunderstorms in the Upper Midwest
+# Fire Weather Concerns and Severe Weather
 
-Dry and breezy conditions will enhance fire weather concerns across portions of the northern and central High Plains through Saturday, where fuels remain largely receptive. Severe thunderstorms are possible across portions of central Nebraska to the Upper Midwest this Friday afternoon into tonight.
+Dry and breezy conditions will bring elevated to critical fire weather conditions across portions of the northern and central High Plains through this weekend, where fuels remain largely receptive. Severe thunderstorms and heavy rainfall are possible from the Plains into the Upper Midwest, as well as in the Ohio Valley and portions of the Mid-Atlantic through this weekend.
 Read More >
 
 Customize Your Weather.gov
