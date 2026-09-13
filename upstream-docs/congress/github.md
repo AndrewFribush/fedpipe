@@ -32,7 +32,7 @@ Notifications
 You must be signed in to change notification settings
 
 Fork
-96
+97
 
 Star
 990
@@ -165,7 +165,7 @@ Custom properties
 
 ### Forks
 
-96 forks
+97 forks
 Report repository
 
 ## Releases
