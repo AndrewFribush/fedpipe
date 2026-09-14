@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Fire Weather Concerns and Severe Weather
+# Heavy Rainfall and Severe Thunderstorms in the Midwest and Southwest; Heat Continues in the Southern U.S.
 
-Dry and breezy conditions will bring elevated to critical fire weather conditions across portions of the northern and central High Plains through this weekend, where fuels remain largely receptive. Severe thunderstorms and heavy rainfall are possible from the Plains into the Upper Midwest, as well as in the Ohio Valley and portions of the Mid-Atlantic through this weekend.
+Heavy to excessive rainfall could bring flooding today through Thursday across parts of the central Plains into the Midwest and southern Arizona and New Mexico. Scattered strong to severe thunderstorms may impact parts of eastern Nebraska into western Iowa later today into early evening. Heat Advisories remain in place across much of east Texas into the mid-Mississippi Valley today and Tuesday.
 Read More >
 
 Customize Your Weather.gov

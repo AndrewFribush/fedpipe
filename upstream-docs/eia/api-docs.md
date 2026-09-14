@@ -1172,12 +1172,12 @@ Renewables
 
 ### What's New?
 
+- Monthly Densified Biomass Fuel Report
+- Sep 14, 2026
 - Final 2025 Annual Electric Generator Report data
 - Sep 10, 2026
 - Short-Term Energy Outlook
 - Sep 09, 2026
-- Wholesale Electricity Market Data
-- Sep 03, 2026
 
 ###
 Press Room
