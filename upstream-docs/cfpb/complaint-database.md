@@ -10,15 +10,13 @@ Skip to main content
 
 # Consumer Complaint Database
 
-Explore our database of financial product and service complaints to see how companies respond to consumers. View trends, see maps, read complaints, and download the data.
+Explore our database of financial product and service complaints to see how companies respond to consumers. View complaints and download the data.
 
 ### Explore data
 
-View, filter, map, and read complaint data right in your browser.
+Filter, sort, and view data right in your browser.
 
-Explore data and trends
-
-Read complaints
+Explore data
 
 ### Get data
 
@@ -44,7 +42,6 @@ Browse other complaint reports
 
 Only complaints sent to companies for response are eligible to be published and are only published after the company responds, confirming a commercial relationship or after 15 days, whichever comes first. The database generally updates daily.
 We do not publish complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets.
-We publish the consumer’s narrative description from their complaint if the consumer opts to share it publicly and after the Bureau takes steps to remove personal information.
 This database is not a statistical sample of consumers’ experiences in the marketplace and these complaints are not necessarily representative of all consumers’ experiences with a financial product or company. Complaints are not “information” for purposes of the Information Quality Act.
 
 - More about the data we publish
@@ -57,19 +54,6 @@ When looking at complaint volume for a state or ZIP code, consider the populatio
 We encourage you to pair complaint data with public and private data sets for additional context.
 
 - Learn about past changes to the database
-
-### Viewing trends
-
-Recent complaint data and trends will not yet include all complaints eligible for publication to allow companies 15 days to respond.
-
-- View trends
-
-### Reading complaints
-
-Complaint narratives are consumers’ descriptions of their experiences in their own words. Consider what conclusions may be fairly drawn from reading consumers’ descriptions of their experiences. We do not adopt their views or verify that their experiences are accurate or unbiased.
-Recent complaint data will not include all complaint narratives eligible for publication until we have completed our steps to remove personal information from each consumer narrative.
-
-- Read complaints
 
 ## How we use complaint data
 
@@ -112,22 +96,18 @@ View the full list of complaint form products, sub-products, issues, and sub-iss
 - Learn more about the April 2017 form changes
 - View the full list of complaint form products, sub-products, issues, and sub-issues available from April 2017 through August 2023
 
-Page last modified Aug. 7, 2026
+Page last modified Sept. 14, 2026
 @
 
-11:11 AM EDT
+06:48 PM EDT
 
 Complaints that the CFPB sends to companies for response are published in the Consumer Complaint Database after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first.
 
 Learn how the complaint process works
 
-Consider company and market size and population information when viewing complaint data and trends.
+Consider company and market size and population information when viewing complaint data.
 
 How we use complaint data
-
-With their consent and after taking steps to remove sensitive information, we publish consumers’ complaint narratives in their own words. One consumer’s experience is not necessarily representative of all consumers’ experiences and narratives are not verified before publication.
-
-See narrative scrubbing standard
 
 The CFPB sends complaints to companies for response through a portal where companies securely review and respond to complaints.
 

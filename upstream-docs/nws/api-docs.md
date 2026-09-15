@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rainfall and Severe Thunderstorms in the Midwest and Southwest; Heat Continues in the Southern U.S.
+# Dangerous Heat and Possible Flooding This Week
 
-Heavy to excessive rainfall could bring flooding today through Thursday across parts of the central Plains into the Midwest and southern Arizona and New Mexico. Scattered strong to severe thunderstorms may impact parts of eastern Nebraska into western Iowa later today into early evening. Heat Advisories remain in place across much of east Texas into the mid-Mississippi Valley today and Tuesday.
+Hot temperatures and high humidity are forecast to continue across much of east Texas into the mid-Mississippi Valley through this week. Heavy to excessive rainfall occurring at times through Friday could bring areas of flooding across parts of the central Plains into the upper Midwest and Four Corners states.
 Read More >
 
 Customize Your Weather.gov
