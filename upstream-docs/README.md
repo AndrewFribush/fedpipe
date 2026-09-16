@@ -39,6 +39,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `fcc` — [ECFS API](https://www.fcc.gov/ecfs/public-api-docs.html) — HTTP 403
 - `fec` — [Developers](https://api.open.fec.gov/developers/) — client-rendered
 - `fec` — [Get Key](https://api.open.fec.gov/developers/) — client-rendered
+- `fema` — [OpenFEMA API](https://www.fema.gov/about/openfema/api) — HTTP 403 — kept previous snapshot
 - `form5500` — [Data dictionary](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `form5500` — [Form 5500 datasets](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered

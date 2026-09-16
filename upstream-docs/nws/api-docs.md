@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Dangerous Heat and Possible Flooding This Week
+# Heavy to Excessive Rains in The Four Corners Region and Midwest; Heat Persists in the South-Central U.S.
 
-Hot temperatures and high humidity are forecast to continue across much of east Texas into the mid-Mississippi Valley through this week. Heavy to excessive rainfall occurring at times through Friday could bring areas of flooding across parts of the central Plains into the upper Midwest and Four Corners states.
+Repeated rounds of showers and thunderstorms could bring a flash flooding threat across the Four Corners region and from the mid-Mississippi Valley into the lower Great Lakes. Hot temperatures and high humidity will continue to challenge daily records from the Southern Plains to the lower Mississippi Valley.
 Read More >
 
 Customize Your Weather.gov

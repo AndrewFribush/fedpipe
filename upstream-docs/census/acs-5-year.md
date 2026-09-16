@@ -8,7 +8,7 @@ American Community Survey 5-Year Data (2009-2024)
 
 Income, Poverty and Health Insurance
 
-Join us Tuesday, Sept. 15 at 10 am ET for a live webinar announcing new Income, Poverty and Health Insurance estimates for the nation.
+New Income, Poverty and Health Insurance estimates for the nation are released.
 
 # American Community Survey 5-Year Data (2009-2024)
 

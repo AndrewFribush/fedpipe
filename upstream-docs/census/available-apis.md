@@ -8,7 +8,7 @@ Available APIs
 
 Income, Poverty and Health Insurance
 
-Join us Tuesday, Sept. 15 at 10 am ET for a live webinar announcing new Income, Poverty and Health Insurance estimates for the nation.
+New Income, Poverty and Health Insurance estimates for the nation are released.
 
 # Available APIs
 
@@ -396,7 +396,7 @@ Poverty Statistics
 
 Poverty Statistics: CPS & SAIPE (Time Series: various years)
 
-January 27, 2026
+September 15, 2026
 
 This page describes two API endpoints containing poverty data: the Current Population Survey (CPS) & Small Area Income and Poverty Estimates (SAIPE)
 
