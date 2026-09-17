@@ -71,6 +71,9 @@ G
 
 no data
 
+Current Space Weather Conditions
+on NOAA Scales
+
 R
 
 no data
@@ -82,9 +85,6 @@ no data
 G
 
 no data
-
-Current Space Weather Conditions
-on NOAA Scales
 
 R1 (Minor) Radio Blackout Impacts
 
@@ -150,21 +150,42 @@ Serving Essential Space Weather Communities
 
 - Space Weather Enthusiasts
 
-The Sun (EUV)
-094Å131Å 171Å 195Å 284Å 304Å
+The Sun
+(EUV)
 
-| The Aurora
-Northern Hemisphere Southern Hemisphere
+094Å131Å
+171Å
+195Å 284Å
+304Å
 
-| The Corona
-CCOR-1 CCOR-2 LASCO C2 LASCO C3
+The Aurora
+
+Northern Hemisphere Southern
+Hemisphere
+
+The Corona
+
+CCOR-1 CCOR-2
+LASCO
+C2 LASCO
+C3
 
 GOES X-Ray Flux
 
-| GOES Proton Flux
+GOES Proton Flux
 
-| Planetary K Index
+Planetary K Index
+
 https://services.swpc.noaa.gov
 
 Updated Time:
-NOAA Scales Geomagnetic StormsKp < 5 | Kp = 5 (G1) | Kp = 6 (G2) | Kp = 7 (G3) | Kp = 8, 9- (G4) | Kp = 9o (G5)
+
+NOAA
+Scales Geomagnetic Storms
+
+Kp < 5
+Kp = 5 (G1)
+Kp = 6 (G2)
+Kp = 7 (G3)
+Kp = 8, 9- (G4)
+Kp = 9o (G5)

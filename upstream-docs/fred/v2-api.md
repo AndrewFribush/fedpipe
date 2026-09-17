@@ -33,19 +33,19 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 14, 2026
+As of September 15, 2026
 
 From Our President & CEO
 
 ## Pres. Musalem's Remarks and Community Engagement
 
+News Release
+
+## FOMC Raises Federal Funds Rate Target Range by Quarter Point
+
 Economic Conditions
 
 ## Eighth District Economic Activity Increases Modestly
-
-Flash Report
-
-## Unemployment Remains Steady, Payrolls Rise in August
 
 ## What We Do
 

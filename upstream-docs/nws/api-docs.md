@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy to Excessive Rains in The Four Corners Region and Midwest; Heat Persists in the South-Central U.S.
+# Areas of Dangerous Heat and Heavy Rain with Possible Flooding into this Weekend
 
-Repeated rounds of showers and thunderstorms could bring a flash flooding threat across the Four Corners region and from the mid-Mississippi Valley into the lower Great Lakes. Hot temperatures and high humidity will continue to challenge daily records from the Southern Plains to the lower Mississippi Valley.
+Hot temperatures and high humidity are forecast to continue across much of northeast Texas into the mid-Mississippi Valley into this weekend with heat advisories in effect. Heavy to excessive rainfall occurring at times through Saturday could bring areas of flooding across parts of the central Plains into the upper Midwest/Great Lakes, and Four Corners states.
 Read More >
 
 Customize Your Weather.gov

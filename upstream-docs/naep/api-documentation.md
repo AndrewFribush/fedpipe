@@ -6,8 +6,6 @@ Source: https://www.nationsreportcard.gov/api_documentation.aspx
 
 NAEP Data Service API
 
-Skip to main content
-
 MENU
 CLOSE
 
