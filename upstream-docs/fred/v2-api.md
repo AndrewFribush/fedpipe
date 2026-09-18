@@ -33,7 +33,7 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 15, 2026
+As of September 16, 2026
 
 From Our President & CEO
 

@@ -6,10 +6,6 @@ Source: https://www.census.gov/data/developers/data-sets/acs-5year.html
 
 American Community Survey 5-Year Data (2009-2024)
 
-Income, Poverty and Health Insurance
-
-New Income, Poverty and Health Insurance estimates for the nation are released.
-
 # American Community Survey 5-Year Data (2009-2024)
 
 Skip Navigation

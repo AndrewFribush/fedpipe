@@ -6,10 +6,6 @@ Source: https://www.census.gov/data/developers/data-sets.html
 
 Available APIs
 
-Income, Poverty and Health Insurance
-
-New Income, Poverty and Health Insurance estimates for the nation are released.
-
 # Available APIs
 
 Skip Navigation
@@ -208,7 +204,7 @@ Census Microdata API
 
 Census Microdata API
 
-September 10, 2026
+September 17, 2026
 
 The U.S. Census Bureau’s microdata is now available as a Census Bureau API.
 

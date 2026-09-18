@@ -6,7 +6,7 @@ Source: https://api.nhtsa.gov/SafetyRatings
 
 ```json
 {
-  "Count": 37,
+  "Count": 38,
   "Message": "Results returned successfully",
   "Results": [
     {
@@ -155,6 +155,10 @@ Source: https://api.nhtsa.gov/SafetyRatings
     },
     {
       "ModelYear": 2026,
+      "VehicleId": 0
+    },
+    {
+      "ModelYear": 2027,
       "VehicleId": 0
     }
   ]

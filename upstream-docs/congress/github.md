@@ -16,10 +16,6 @@ Dismiss alert
 
 {{ message }}
 
-### Uh oh!
-
-There was an error while loading. Please reload this page.
-
 LibraryOfCongress
 
 /
@@ -32,10 +28,10 @@ Notifications
 You must be signed in to change notification settings
 
 Fork
-97
+98
 
 Star
-991
+992
 
 main
 
@@ -157,7 +153,7 @@ Custom properties
 
 ### Stars
 
-991 stars
+992 stars
 
 ### Watchers
 
@@ -165,7 +161,7 @@ Custom properties
 
 ### Forks
 
-97 forks
+98 forks
 Report repository
 
 ## Releases

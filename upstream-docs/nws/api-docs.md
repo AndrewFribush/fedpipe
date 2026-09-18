@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Areas of Dangerous Heat and Heavy Rain with Possible Flooding into this Weekend
+# Dangerous Heat and Heavy Rainfall into the Weekend
 
-Hot temperatures and high humidity are forecast to continue across much of northeast Texas into the mid-Mississippi Valley into this weekend with heat advisories in effect. Heavy to excessive rainfall occurring at times through Saturday could bring areas of flooding across parts of the central Plains into the upper Midwest/Great Lakes, and Four Corners states.
+Hot temperatures and high humidity are forecast to continue across the mid-Mississippi Valley into this weekend. Heat Advisories remain in effect. Heavy to excessive rainfall occurring at times through the weekend could bring areas of flooding to parts of the northern Rockies, upper Midwest, central Great Lakes, and southern New England.
 Read More >
 
 Customize Your Weather.gov
