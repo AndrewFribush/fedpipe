@@ -29,11 +29,11 @@ As of August 2026
 
 As of July 2026
 
-3.63%
+3.88%
 
 ### Daily Federal Funds Rate
 
-As of September 16, 2026
+As of September 17, 2026
 
 From Our President & CEO
 

@@ -91,9 +91,6 @@ Aug 24, 2026
 Democratic Republic of the Congo-Related Sanctions
 Jul 10, 2026
 
-Ethiopia-Related Sanctions
-Feb 08, 2022
-
 Foreign Interference in a United States Election Sanctions
 Dec 31, 2024
 
@@ -143,7 +140,7 @@ Rough Diamond Trade Controls
 Jun 18, 2018
 
 Russian Harmful Foreign Activities Sanctions
-Sep 16, 2026
+Sep 18, 2026
 
 Somalia Sanctions
 May 24, 2023
