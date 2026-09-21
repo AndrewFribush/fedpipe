@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Dangerous Heat and Heavy Rainfall into the Weekend
+# Thunderstorms and Heavy Rains in the Appalachians
 
-Hot temperatures and high humidity are forecast to continue across the mid-Mississippi Valley into this weekend. Heat Advisories remain in effect. Heavy to excessive rainfall occurring at times through the weekend could bring areas of flooding to parts of the northern Rockies, upper Midwest, central Great Lakes, and southern New England.
+Multiple rounds of moderate to locally heavy rain will impact portions of the Appalachians and Mid-Atlantic, which may lead to flash flooding concerns. Thunderstorms with isolated severe wind gusts will be possible this afternoon from parts of the Southeast into the southern and central Appalachians. A multi-day heavy rain will pose a flash flood threat in New Mexico beginning Tuesday.
 Read More >
 
 Customize Your Weather.gov
