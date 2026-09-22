@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Thunderstorms and Heavy Rains in the Appalachians
+# Heavy Rainfall and Flooding in the Southwest and Along the East Coast
 
-Multiple rounds of moderate to locally heavy rain will impact portions of the Appalachians and Mid-Atlantic, which may lead to flash flooding concerns. Thunderstorms with isolated severe wind gusts will be possible this afternoon from parts of the Southeast into the southern and central Appalachians. A multi-day heavy rain will pose a flash flood threat in New Mexico beginning Tuesday.
+A multi-day heavy rainfall event is set to begin across New Mexico into west Texas Tuesday through Wednesday. Flash flooding and debris flows in the vicinity of burn scars will also be possible. A strong coastal low will develop offshore of the Mid-Atlantic coast midweek, bringing heavy rainfall, strong winds and coastal flooding to much of the East Coast through Friday.
 Read More >
 
 Customize Your Weather.gov

@@ -33,11 +33,11 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 17, 2026
+As of September 18, 2026
 
-From Our President & CEO
+Media Interviews
 
-## Pres. Musalem's Remarks and Community Engagement
+## Interview with Reuters
 
 News Release
 
