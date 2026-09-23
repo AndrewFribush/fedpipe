@@ -27,11 +27,11 @@ On September 12, 2025, EPA released a proposal to permanently remove program obl
 Read GHGRP rulemaking notice
 
 ##
-Learn About Oil & Gas and GHGRP
+New Content about GHGRP and the Waste Sector
 
-Resources and maps are available to learn more about how oil and gas facilities report to GHGRP, including a new dashboard of oil and gas emissions data reported to GHGRP.
+New resources are available to provide more information on waste sector data under the GHGRP, including municipal and industrial waste landfills.
 
-Access GHGRP Oil and Gas Dashboard
+Learn more about the waste industry
 
 ##
 2023 Data Highlights
@@ -40,16 +40,73 @@ Access GHGRP Oil and Gas Dashboard
 
 Access the most recent GHGRP data
 
-123
+##
+Learn About Oil & Gas and GHGRP
 
-The GHGRP requires reporting of greenhouse gas (GHG) data and other relevant information from large GHG emission sources, fuel and industrial gas suppliers, and CO2 injection sites in the United States.
+Resources and maps are available to learn more about how oil and gas facilities report to GHGRP, including a new dashboard of oil and gas emissions data reported to GHGRP.
 
-## GHGRP Resources
+Access GHGRP Oil and Gas Dashboard
 
-- Read the latest rulemaking notices for GHGRP reporters.
-- Find GHGRP reporter resources organized by subpart.
-- Access historical GHGRP data products with data from reporting years 2010-2024.
+1234
+
+The GHGRP requires reporting of greenhouse gas (GHG) data and other relevant information from large GHG emission sources, fuel and industrial gas suppliers, and CO2 injection sites in the United States. Approximately 8,000 facilities are required to report their emissions annually, and the reported data are made available to the public in October of each year.
+Reminder: e-GGRT requires multi-factor authentication as of August 16, 2024
+
+What's New
+
+- EPA Final Rule extends RY2025 GHGRP Deadline
+- Administrator signs proposed reconsideration of the GHGRP
+- Read more about the proposed reconsideration of the GHGRP
+
+Fact Sheet - Proposed Reconsideration of the Greenhouse Gas Reporting Rule (pdf)
+
+(554.69 KB)
+
+Learn more about the GHGRP, related topics, and other EPA programs.
+
+Learn About GHGRP
+
+Access GHGRP data summaries, downloads, and tools.
+
+Find and Use GHGRP Data
+
+View resources with information for GHGRP reporters.
+
+View Reporter Resources
+
+## Related Resources
+
+### Popular GHGRP Links
+
+- Events and Training
+
+- GHGRP and the Oil & Gas Industry
+
+- Fluorinated GHG Emissions
+
+- Supply, Injection, and Sequestration of CO2
+
+- Current Rulemakings
+
+- e-GGRT
+
+### Climate Change Links
+
+- U.S. GHG Inventory
+
+- Center for Corporate Climate Leadership
+
+- Methane Emissions Reduction Program
+
+- EPA Climate Change Homepage
+
+- Calculate GHG Equivalencies
+
+### Facility Level Information on GreenHouse gases Tool (FLIGHT)
+
+FLIGHT provides maps, charts, and tables to quickly and easily filter GHG data in a variety of ways, including by facility, industry, location, or gas.
+Click the map to launch the tool.
 
 Contact Us About GHG Reporting to ask a question, provide feedback, or report a problem.
 
-Last updated on September 21, 2026
+Last updated on September 22, 2026

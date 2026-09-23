@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rainfall and Flooding in the Southwest and Along the East Coast
+# Heavy Rain and Flooding Possible in the Southwest U.S, Ohio Valley, and Hawaii
 
-A multi-day heavy rainfall event is set to begin across New Mexico into west Texas Tuesday through Wednesday. Flash flooding and debris flows in the vicinity of burn scars will also be possible. A strong coastal low will develop offshore of the Mid-Atlantic coast midweek, bringing heavy rainfall, strong winds and coastal flooding to much of the East Coast through Friday.
+Heavy rainfall is expected to continue through Thursday over New Mexico into far west Texas. Flash flooding and debris flows in wildfire burn areas will be possible. Heavy rain and flash flooding is also expected over the southern Appalachians and Ohio Valley. Tropical Depression 15-E, southeast of Hawaii, is expected to bring heavy rain beginning today to the Big Island and Maui.
 Read More >
 
 Customize Your Weather.gov
