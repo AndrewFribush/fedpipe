@@ -89,7 +89,7 @@ Cyber-Related Sanctions
 Aug 24, 2026
 
 Democratic Republic of the Congo-Related Sanctions
-Jul 10, 2026
+Sep 23, 2026
 
 Foreign Interference in a United States Election Sanctions
 Dec 31, 2024

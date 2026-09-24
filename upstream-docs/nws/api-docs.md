@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rain and Flooding Possible in the Southwest U.S, Ohio Valley, and Hawaii
+# Significant Coastal Impacts to the Mid-Atlantic and Northeast; Tropical Storm Nolo to Impact Hawaii
 
-Heavy rainfall is expected to continue through Thursday over New Mexico into far west Texas. Flash flooding and debris flows in wildfire burn areas will be possible. Heavy rain and flash flooding is also expected over the southern Appalachians and Ohio Valley. Tropical Depression 15-E, southeast of Hawaii, is expected to bring heavy rain beginning today to the Big Island and Maui.
+A strong coastal storm will bring moderate to major coastal flooding, strong winds, heavy rainfall and high surf to the Mid-Atlantic and New England. Tropical Storm Nolo is expected to strengthen into a hurricane today as it moves north toward the Big Island of Hawaii. Heavy rainfall may produce life-threatening, catastrophic flooding and mudslides.
 Read More >
 
 Customize Your Weather.gov
