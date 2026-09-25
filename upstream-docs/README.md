@@ -53,8 +53,8 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `noaa` — [NCEI Search Service](https://www.ncei.noaa.gov/access/services/search/v1) — HTTP 404
 - `ntsb` — [CAROL query](https://data.ntsb.gov/carol-main-public/) — client-rendered
 - `ofac` — [SDN list](https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists) — client-rendered
-- `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — client-rendered
-- `open-payments` — [Open Payments](https://openpaymentsdata.cms.gov/) — client-rendered
+- `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — HTTP 403
+- `open-payments` — [Open Payments](https://openpaymentsdata.cms.gov/) — HTTP 403
 - `regulations` — [Regulations.gov](https://www.regulations.gov/) — client-rendered
 - `sec` — [Developer Resources](https://www.sec.gov/about/developer-resources) — HTTP 403 — kept previous snapshot
 - `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot

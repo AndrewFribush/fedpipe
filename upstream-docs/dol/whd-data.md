@@ -173,8 +173,6 @@ Search
 #
 Forging the Future: A Year of Progress Focused on the American Workforce
 
-Explore the new beta.dol.gov website! Enjoy streamlined navigation and modern design. Your feedback will shape our future improvements.
-
 ## Honoring the American Worker While Driving Efficiency in 2025
 
 ## Introduction: A Historic Milestone

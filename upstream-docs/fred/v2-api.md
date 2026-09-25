@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources & Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## What Work Does Generative AI Do?
+## Do Productivity Booms Push Down Prices?
 
-More than 80% of U.S. occupations have at least 1 in 5 workers using artificial intelligence. Which careers and tasks show the most and least AI adoption?
+New research shows unusually strong growth in labor productivity tends to slow producer price inflation at the industry level. How might AI-driven efficiency gains fit into this picture?
 
 ## Pulse of the Economy
 
@@ -33,7 +33,7 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 22, 2026
+As of September 23, 2026
 
 Media Interviews
 
@@ -43,9 +43,9 @@ News Release
 
 ## FOMC Raises Federal Funds Rate Target Range by Quarter Point
 
-Economic Conditions
+Economic Analysis
 
-## Eighth District Economic Activity Increases Modestly
+## How Lending by the Largest U.S. Banks Has Changed
 
 ## What We Do
 

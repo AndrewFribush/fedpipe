@@ -349,12 +349,12 @@ Renewables
 
 ### What's New?
 
+- U.S. Biofuels Plant Production Capacity Report
+- Sep 24, 2026
+- Electric Power Monthly
+- Sep 24, 2026
 - Wholesale Electricity Market Data
 - Sep 17, 2026
-- Monthly Densified Biomass Fuel Report
-- Sep 14, 2026
-- Final 2025 Annual Electric Generator Report data
-- Sep 10, 2026
 
 ###
 Press Room

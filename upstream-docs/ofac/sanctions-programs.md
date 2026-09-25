@@ -77,7 +77,7 @@ Counter Narcotics Trafficking Sanctions
 Sep 16, 2026
 
 Counter Terrorism Sanctions
-Sep 10, 2026
+Sep 24, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
@@ -134,7 +134,7 @@ North Korea Sanctions
 Mar 12, 2026
 
 Promoting Accountability for Assad and Regional Stabilization Sanctions (PAARSS)
-Aug 24, 2026
+Sep 24, 2026
 
 Rough Diamond Trade Controls
 Jun 18, 2018

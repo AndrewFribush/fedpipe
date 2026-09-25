@@ -402,12 +402,6 @@ Top of Section
 
 Public Sector
 
-Annual Public Sector Statistics (1942 to present)
-
-July 06, 2021
-
-These statistics provide the most comprehensive and precise measure of U.S. state and local governments’ economic activity.
-
 Public Sector: State Government Finances
 
 March 05, 2026
@@ -443,6 +437,12 @@ Public Sector: State and Local Government Finances
 July 30, 2026
 
 This dataset presents statistics from the Census of Governments, State and Local Government Finances.
+
+Public Sector: Government Organization
+
+September 24, 2026
+
+This dataset presents Government Organization & Structure statistics.
 
 Top of Section
 
@@ -496,4 +496,4 @@ Vehicle Inventory and Use Survey (VIUS) provides data on the physical and operat
 
 Top of Section
 
-Page Last Revised - September 1, 2026
+Page Last Revised - September 17, 2026
