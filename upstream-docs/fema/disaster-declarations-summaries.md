@@ -66,7 +66,7 @@ Disaster Declarations Summaries - v2
 
 Version: 2
 
-Last Data Refresh: 09-25-2026
+Last Data Refresh: 09-26-2026
 
 Key
 Value
@@ -119,7 +119,7 @@ csv
 
 Link to csv
 
-70405
+70414
 
 small (10MB - 50MB)
 
@@ -127,7 +127,7 @@ json
 
 Link to json
 
-70405
+70414
 
 small (10MB - 50MB)
 
@@ -135,7 +135,7 @@ jsona
 
 Link to jsona
 
-70405
+70414
 
 small (10MB - 50MB)
 
@@ -143,7 +143,7 @@ jsonl
 
 Link to jsonl
 
-70405
+70414
 
 small (10MB - 50MB)
 
@@ -151,7 +151,7 @@ parquet
 
 Link to parquet
 
-70405
+70414
 
 tiny (< 10MB)
 
@@ -403,6 +403,6 @@ https://www.fema.gov/api/open/v1/OpenFemaDataSets?$filter=name%20eq%20%27Disaste
 
 https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=openFemaDataSet%20eq%20%27DisasterDeclarationsSummaries%27%20and%20datasetVersion%20eq%202
 
-Last updated September 25, 2026
+Last updated September 26, 2026
 
 Return to top

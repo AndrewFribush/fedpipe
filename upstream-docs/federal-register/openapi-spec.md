@@ -8565,7 +8565,9 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "usual-residence",
             "enumeration",
             "demographic-data",
-            "race-ethnicity"
+            "race-ethnicity",
+            "rail-safety",
+            "qualification-maintenance"
           ],
           "type": "string"
         },

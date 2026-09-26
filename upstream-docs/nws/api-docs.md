@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Significant Coastal Impacts to the Eastern Seaboard; Tropical Storm Nolo to Impact Hawaii
+# Significant Coastal Impacts to the Eastern Seaboard; Hurricane Nolo to Impact Hawaii
 
-A Nor'easter will bring significant coastal impacts to the Mid-Atlantic and New England through the weekend. Moderate to major coastal flooding, heavy rain, strong winds and high surf expected. Tropical Storm Nolo will continue to strengthen as it moves north toward the Big Island of Hawaii. Heavy rainfall may bring life-threatening, catastrophic flooding and mudslides through the weekend.
+A Nor'easter will bring significant coastal impacts to the Mid-Atlantic and New England through the weekend. Moderate to major coastal flooding, heavy rain, strong winds and high surf expected. Hurricane Nolo is expected to stay just south of the Big Island of Hawaii. However, strong winds and heavy rainfall may bring life-threatening, catastrophic flooding and mudslides through the weekend.
 Read More >
 
 Customize Your Weather.gov

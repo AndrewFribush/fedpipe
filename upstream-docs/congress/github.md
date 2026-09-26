@@ -28,7 +28,7 @@ Notifications
 You must be signed in to change notification settings
 
 Fork
-100
+99
 
 Star
 995
@@ -161,7 +161,7 @@ Custom properties
 
 ### Forks
 
-100 forks
+99 forks
 Report repository
 
 ## Releases
