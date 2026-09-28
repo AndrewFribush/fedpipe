@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Significant Coastal Impacts from Nor'Easter; Hurricane Nolo Bring Gusty Winds and Heavy Rain to Hawaii
+# Nor'Easter Continues to Bring Heavy Rain and Coastal Impacts; Nolo Continues to Impact Hawaii
 
-A nor'easter will continue to bring significant coastal impacts to the Mid-Atlantic and New England into Monday. Moderate to major coastal flooding, heavy rain, strong winds, and high surf are expected. Hurricane Nolo will remain south of the Big Island of Hawaii with gusty winds and heavy rainfall that may bring significant, life-threatening flooding and mudslides through the weekend.
+The nor’easter will weaken tonight, easing beach conditions and coastal flooding, though locally heavy rain will continue in parts of the Mid-Atlantic and New England into Monday. Hurricane Nolo continues to bring strong winds and large waves to Hawaii. A multi-day rain event will return to the Four Corners region Monday and expand to the south-central U.S. by midweek.
 Read More >
 
 Customize Your Weather.gov
