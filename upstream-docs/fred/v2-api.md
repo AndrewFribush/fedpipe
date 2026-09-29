@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources & Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Do Productivity Booms Push Down Prices?
+## Watch Live: President Musalem’s Speech and Q&A in London
 
-New research shows unusually strong growth in labor productivity tends to slow producer price inflation at the industry level. How might AI-driven efficiency gains fit into this picture?
+St. Louis Fed President Alberto Musalem will discuss central bank communications at the London School of Economics and Political Science Sept. 29 at 12:30 p.m. CT/1:30 p.m. ET. Watch his remarks at the link.
 
 ## Pulse of the Economy
 
@@ -33,11 +33,11 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 24, 2026
+As of September 25, 2026
 
-Media Interviews
+Economic Analysis
 
-## Interview with Reuters
+## Do Productivity Booms Push Down Prices?
 
 News Release
 

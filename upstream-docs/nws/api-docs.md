@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Nor'Easter Continues to Bring Heavy Rain and Coastal Impacts; Nolo Continues to Impact Hawaii
+# Heavy to Excessive Rainfall This Week from the Southwest into Central U.S.
 
-The nor’easter will weaken tonight, easing beach conditions and coastal flooding, though locally heavy rain will continue in parts of the Mid-Atlantic and New England into Monday. Hurricane Nolo continues to bring strong winds and large waves to Hawaii. A multi-day rain event will return to the Four Corners region Monday and expand to the south-central U.S. by midweek.
+Pacific tropical moisture wrapping into a storm over the southwest U.S. will continue a multi-day heavy rainfall event this week that will extend into the Midwest and southern Plains. Considerable flash flooding is possible across portions of New Mexico and west Texas today through Wednesday.
 Read More >
 
 Customize Your Weather.gov

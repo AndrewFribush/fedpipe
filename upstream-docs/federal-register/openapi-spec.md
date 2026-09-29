@@ -8567,7 +8567,9 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "demographic-data",
             "race-ethnicity",
             "rail-safety",
-            "qualification-maintenance"
+            "qualification-maintenance",
+            "stablecoins",
+            "stablecoin-issuers"
           ],
           "type": "string"
         },

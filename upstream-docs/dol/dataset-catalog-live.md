@@ -192,63 +192,59 @@ Source: https://apiprod.dol.gov/v4/datasets
     },
     {
       "agency": {
-        "abbr": "OSHA",
-        "name": "Occupational Safety and Health Administration"
+        "abbr": "OWCP",
+        "name": "Office of Workers' Compensation Programs"
       },
-      "agency_id": 10,
-      "api_url": "accident_lookup2",
+      "agency_id": 6,
+      "api_url": "energy_statistics_historical_20190311_20251231",
       "category": {
-        "name": "Enforcement"
+        "name": "Benefit"
       },
-      "category_id": 13,
-      "category_name": "Enforcement",
-      "created_at": "2026-06-03T19:37:00",
+      "category_id": 2,
+      "category_name": "Benefit",
+      "created_at": "2026-09-28T13:34:15",
       "dataset_type": 1,
-      "description": "This lookup table provides a listing of the codes used in the osha_accident and osha_accident_injury datasets.\r\n\r\nAdditional records can be viewed and/or downloaded from OSHA’s website at www.osha.gov/data.",
-      "frequency": "Daily",
-      "id": 10330,
-      "name": "Accident Lookup2",
-      "published_at": "2026-06-03T19:52:47",
+      "description": "Energy Program Statistical Metrics",
+      "frequency": "Static",
+      "id": 10393,
+      "name": "Energy Statistics (Historical) 20190311 - 20251231",
+      "published_at": "2026-09-28T14:46:59",
       "status": 4,
-      "tablename": "OSHA_accident_lookup2",
+      "tablename": "OWCP_energy_statistics_historical_20190311_20251231",
       "tablename_alias": null,
       "tag_list": [
-        "accidents",
-        "fatalities",
         "injury or illness",
-        "occupations"
+        "claims"
       ],
-      "updated_at": "2026-06-03T19:53:18"
+      "updated_at": "2026-09-28T14:48:45"
     },
     {
       "agency": {
-        "abbr": "OSHA",
-        "name": "Occupational Safety and Health Administration"
+        "abbr": "OWCP",
+        "name": "Office of Workers' Compensation Programs"
       },
-      "agency_id": 10,
-      "api_url": "accident",
+      "agency_id": 6,
+      "api_url": "energy_statistics_weekly_20260101_present",
       "category": {
-        "name": "Enforcement"
+        "name": "Benefit"
       },
-      "category_id": 13,
-      "category_name": "Enforcement",
-      "created_at": "2026-06-03T19:40:53",
+      "category_id": 2,
+      "category_name": "Benefit",
+      "created_at": "2026-09-28T12:47:47",
       "dataset_type": 1,
-      "description": "This dataset provides information regarding incidents reported by employers and investigated by OSHA.\r\n\r\nAdditional records can be viewed and/or downloaded from OSHA’s website at www.osha.gov/data.",
-      "frequency": "Daily",
-      "id": 10331,
-      "name": "Accident",
-      "published_at": "2026-06-03T19:56:00",
+      "description": "Energy Program Statistical Metrics",
+      "frequency": "Weekly",
+      "id": 10392,
+      "name": "Energy Statistics (Weekly) 20260101 – present",
+      "published_at": "2026-09-28T14:47:17",
       "status": 4,
-      "tablename": "OSHA_accident",
+      "tablename": "OWCP_energy_statistics_weekly_20260101_present",
       "tablename_alias": null,
       "tag_list": [
-        "accidents",
-        "fatalities",
-        "industries",
-        "state"
+        "injury or illness",
+        "claims"
       ],
-      "updated_at": "2026-06-03T19:56:22"
+      "updated_at": "2026-09-28T14:50:34"
     },
     {
       "agency": {
@@ -285,7 +281,7 @@ Source: https://apiprod.dol.gov/v4/datasets
     "current_page": 1,
     "next_page": 2,
     "prev_page": null,
-    "total_count": 43,
+    "total_count": 45,
     "total_pages": 5
   }
 }

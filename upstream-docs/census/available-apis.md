@@ -368,7 +368,7 @@ Nonemployer Statistics (NES)
 
 Nonemployer Statistics APIs
 
-May 15, 2025
+September 29, 2026
 
 Nonemployer Statistics provides annual statistics on U.S. businesses with no paid employees or payroll at a detailed geography and industry level.
 
