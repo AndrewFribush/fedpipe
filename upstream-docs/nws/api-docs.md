@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy to Excessive Rainfall This Week from the Southwest into Central U.S.
+# Heavy Rainfall Continues from the Southwest to the Plains; Severe Thunderstorms in the Southern Plains
 
-Pacific tropical moisture wrapping into a storm over the southwest U.S. will continue a multi-day heavy rainfall event this week that will extend into the Midwest and southern Plains. Considerable flash flooding is possible across portions of New Mexico and west Texas today through Wednesday.
+Pacific tropical moisture wrapping into a storm will continue a multi-day heavy rainfall event this week that will impact the Southwest into the Plains. Scattered severe thunderstorms capable of mainly severe wind gusts appear possible across portions of the southern Plains this afternoon into tonight. There is also a risk of isolated severe winds gusts and tornadoes in Kansas into Nebraska.
 Read More >
 
 Customize Your Weather.gov

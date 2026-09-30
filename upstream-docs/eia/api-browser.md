@@ -269,12 +269,12 @@ Renewables
 
 ### What's New?
 
-- U.S. Biofuels Plant Production Capacity Report
-- Sep 24, 2026
+- Monthly Energy Review
+- Sep 29, 2026
 - Electric Power Monthly
 - Sep 24, 2026
-- Wholesale Electricity Market Data
-- Sep 17, 2026
+- U.S. Biofuels Plant Production Capacity Report
+- Sep 24, 2026
 
 ###
 Press Room

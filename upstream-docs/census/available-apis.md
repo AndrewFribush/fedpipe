@@ -16,14 +16,6 @@ Within Developers
 
 # Available APIs
 
-Share
-
-Facebook
-
-X (Twitter)
-
-LinkedIn
-
 We plan on adding more of our publicly available datasets. Here you'll find which of our many data sets are currently available via API. To make specific requests for the release of datasets, please sign up and submit your requests on our Developer Forum.
 
 Visit our Discovery Tool page to learn more.

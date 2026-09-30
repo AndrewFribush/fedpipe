@@ -8569,7 +8569,8 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "rail-safety",
             "qualification-maintenance",
             "stablecoins",
-            "stablecoin-issuers"
+            "stablecoin-issuers",
+            "income-taxes-reporting-recordkeeping-requirements"
           ],
           "type": "string"
         },

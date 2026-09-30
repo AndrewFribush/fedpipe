@@ -18,14 +18,6 @@ Within Developers
 
 January 29, 2026
 
-Share
-
-Facebook
-
-X (Twitter)
-
-LinkedIn
-
 The American Community Survey (ACS) is an ongoing survey that provides data every year—giving communities the current information they need to make important decisions. The ACS covers a broad range of topics about social, economic, housing, and demographic characteristics of the U.S. population.
 
 The ACS 5-year estimates are available for the nation, all states, the District of Columbia, Puerto Rico, all congressional districts and metropolitan statistical areas, counties, places (i.e., towns or cities), ZIP Code Tabulation Areas, census tracts, and block groups.

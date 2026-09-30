@@ -18,14 +18,14 @@ A lock () or https:// means you’ve safely connected to the .gov website. Share
 
 ## What's new
 
-Coming Soon: Data.CMS.gov will publish its Public API Open Data Catalog using the new DCAT-US v3.0 standard at [/data.json], beginning in late September 2026. The legacy DCAT-US 1.1 catalog endpoint will continue to be available during the transition period and will move to: [/v1-1-data.json].
+Attention: On September 29, 2026, Data.CMS.gov published its Public API Open Data Catalog at [/data.json] using the new DCAT-US v3.0 standard. The legacy DCAT-US 1.1 catalog endpoint will continue to be available until March 31, 2027 and can now be found at: [/v1-1-data.json].
 DCAT-US v3.0 is the federal metadata standard for open data catalogs and replaces the legacy DCAT-US 1.1 standard. This update aligns with requirements established under the Office of Management and Budget (OMB) Memorandum M-25-05 and supports the goals of the Evidence Act and government-wide open data policies by improving the consistency, interoperability, and discoverability of CMS data assets.
-More details will be provided once the new standard is launched.
+For more information about the updated DCAT-US v3.0 standards, including code examples, download our API FAQ document.
 
 ## API documentation
 
 Explore the documentation and examples to integrate with our Public API Open Data Catalog.
-Our FAQ contains answers to common questions.
+Our FAQ document contains answers to common questions and sample code for frequently used tasks. It is available as an accessible PDF and as a machine-readable text file for coding agents.
 
 ## API integrations
 

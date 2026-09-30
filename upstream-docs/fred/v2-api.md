@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources & Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Watch Live: President Musalem’s Speech and Q&A in London
+## View President Musalem’s Remarks in London
 
-St. Louis Fed President Alberto Musalem will discuss central bank communications at the London School of Economics and Political Science Sept. 29 at 12:30 p.m. CT/1:30 p.m. ET. Watch his remarks at the link.
+St. Louis Fed President Alberto Musalem discussed central bank communications at the London School of Economics and Political Science on Sept. 29. He also participated in a Q&A.
 
 ## Pulse of the Economy
 
@@ -33,7 +33,7 @@ As of July 2026
 
 ### Daily Federal Funds Rate
 
-As of September 25, 2026
+As of September 28, 2026
 
 Economic Analysis
 
