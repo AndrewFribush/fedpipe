@@ -6,8 +6,6 @@ Source: https://echo.epa.gov/tools/web-services
 
 Web Services | ECHO | US EPA
 
-ECHO is currently experiencing a service disruption that impacts most ECHO searches. EPA's technical support team is working to resolve the issue.
-
 Skip to main content
 
 Official websites use .gov

@@ -62,7 +62,7 @@ Balkans-Related Sanctions
 Nov 20, 2025
 
 Belarus Sanctions
-Sep 17, 2026
+Sep 30, 2026
 
 Burma-Related Sanctions
 May 28, 2026
@@ -74,10 +74,10 @@ Chinese Military Companies Sanctions
 Jun 01, 2022
 
 Counter Narcotics Trafficking Sanctions
-Sep 29, 2026
+Sep 30, 2026
 
 Counter Terrorism Sanctions
-Sep 29, 2026
+Sep 30, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
@@ -116,7 +116,7 @@ Lebanon-Related Sanctions
 Feb 27, 2026
 
 Libya Sanctions
-May 28, 2026
+Sep 30, 2026
 
 Magnitsky Sanctions
 Aug 17, 2023
@@ -152,7 +152,7 @@ Sudan and Darfur Sanctions
 Jun 26, 2026
 
 Transnational Criminal Organizations
-Sep 09, 2026
+Sep 30, 2026
 
 Ukraine-/Russia-related Sanctions
 May 08, 2026

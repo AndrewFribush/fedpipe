@@ -23,17 +23,17 @@ Economic Data
 
 As of August 2026
 
-3.7%
+3.42%
 
 ### PCE Inflation
 
-As of July 2026
+As of August 2026
 
 3.88%
 
 ### Daily Federal Funds Rate
 
-As of September 28, 2026
+As of September 29, 2026
 
 Economic Analysis
 

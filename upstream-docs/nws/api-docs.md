@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rainfall Continues from the Southwest to the Plains; Severe Thunderstorms in the Southern Plains
+# Heavy Rainfall and Severe Thunderstorms in the Southern Plains
 
-Pacific tropical moisture wrapping into a storm will continue a multi-day heavy rainfall event this week that will impact the Southwest into the Plains. Scattered severe thunderstorms capable of mainly severe wind gusts appear possible across portions of the southern Plains this afternoon into tonight. There is also a risk of isolated severe winds gusts and tornadoes in Kansas into Nebraska.
+A slow moving front combined with tropical moisture will maintain the threat of locally considerable flash/urban flooding across much of Texas and Oklahoma through Friday. Isolated severe storms capable of mainly severe wind gusts appear possible over portions of Kansas, Oklahoma, and Texas this afternoon and evening.
 Read More >
 
 Customize Your Weather.gov
