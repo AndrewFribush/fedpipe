@@ -269,12 +269,12 @@ Renewables
 
 ### What's New?
 
-- Natural Gas Monthly
-- Sep 30, 2026
-- Petroleum Supply Monthly
-- Sep 30, 2026
-- Company Level Imports
-- Sep 30, 2026
+- Quarterly Coal Report—Second Quarter 2026
+- Oct 01, 2026
+- Wholesale Electricity Market Data
+- Oct 01, 2026
+- Petroleum Marketing Monthly
+- Oct 01, 2026
 
 ###
 Press Room

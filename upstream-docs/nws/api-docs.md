@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rainfall and Severe Thunderstorms in the Southern Plains
+# Heavy Rain Continues in South-central Texas; Heat Wave in California
 
-A slow moving front combined with tropical moisture will maintain the threat of locally considerable flash/urban flooding across much of Texas and Oklahoma through Friday. Isolated severe storms capable of mainly severe wind gusts appear possible over portions of Kansas, Oklahoma, and Texas this afternoon and evening.
+A slow moving front will maintain the threat of flash/urban flooding across southern and central Texas today and the Central Gulf Coast and Southeast through the weekend. Abnormally, potentially record-breaking temperatures will impact southern California and stretch north toward the Bay Area and Central Valley through next week.
 Read More >
 
 Customize Your Weather.gov
