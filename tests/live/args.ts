@@ -342,6 +342,51 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   // ─── Nonprofits (IRS Form 990) ──────────────────────────────────────
   nonprofits_search: { query: "American Red Cross", limit: 3 },
   nonprofit_financials: { ein: "53-0196605", years: 3 }, // American National Red Cross
+
+  // ─── NASA (POWER + EONET) ───────────────────────────────────────────
+  nasa_power_point: { lat: 38.25, lon: -104.61, temporal: "daily", start: "2024-06-01", end: "2024-06-07" },
+  nasa_natural_events: { category: "wildfires", limit: 5 },
+
+  // ─── NIST NVD (CVEs) ────────────────────────────────────────────────
+  nvd_search: { keyword: "log4j", limit: 3 },
+  nvd_cve: { cve_id: "CVE-2021-44228" }, // Log4Shell
+
+  // ─── Education Data (IPEDS + CCD) ───────────────────────────────────
+  edu_colleges: { state: "CO", limit: 5 },
+  edu_schools: { state: "CO", county_fips: "08101", limit: 5 }, // Pueblo County
+
+  // ─── HMDA (mortgage lending) ────────────────────────────────────────
+  hmda_lending: { year: 2022, county: "08101" }, // Pueblo County originations
+
+  // ─── USACE National Inventory of Dams ───────────────────────────────
+  dams_search: { query: "Pueblo, Colorado", limit: 5 },
+  dams_detail: { federal_id: "CO00299" }, // Pueblo Dam
+
+  // ─── IMF (DataMapper) ───────────────────────────────────────────────
+  imf_indicator: { indicator: "NGDP_RPCH", countries: ["USA", "CHN"], start_year: 2018, end_year: 2024 },
+  imf_search_indicators: { query: "gross debt" },
+
+  // ─── WHO (Global Health Observatory) ────────────────────────────────
+  who_indicator: { indicator: "WHOSIS_000001", country: "USA", start_year: 2010 },
+  who_search_indicators: { query: "life expectancy" },
+
+  // ─── NOAA Tides & Currents (CO-OPS) ─────────────────────────────────
+  tides_stations: { state: "FL", limit: 5 },
+  tides_water_level: { station: "8518750" }, // The Battery, NY
+
+  // ─── FEMA National Risk Index ───────────────────────────────────────
+  fema_nri_county: { county_fips: "08101" }, // Pueblo County
+  fema_nri_state: { state: "CO", limit: 10 },
+
+  // ─── Key-gated modules (auto-skipped without their key; args for coverage) ──
+  sam_entity_search: { name: "Pfizer", limit: 5 },
+  sam_exclusions: { name: "test", limit: 5 },
+  sam_opportunities: { posted_from: "01/01/2025", posted_to: "01/31/2025", limit: 5 },
+  fmcsa_search_carriers: { name: "Swift Transportation", limit: 5 },
+  fmcsa_carrier: { dot_number: 76830 },
+  fmcsa_carrier_safety: { dot_number: 76830 },
+  fcc_broadband_datasets: { as_of_date: "2024-06-30" },
+  usitc_run_query: { query: { savedQueryName: "example" } }, // placeholder; needs a real DataWeb body
 };
 
 /**
