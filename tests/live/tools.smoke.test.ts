@@ -7,8 +7,8 @@
  *   npm run test:live -- -t "usgs"             # one module
  *
  * Modules whose auth env var(s) are missing are skipped, with the env var named in the
- * skip reason. Failures are classified in the message: an HTTP 4xx is almost always a bug
- * in this repo (bad param, renamed field); 5xx / timeout is usually the upstream API.
+ * skip reason. Failure labels describe the observed response; status codes alone
+ * cannot distinguish a bad request from authentication, access policy, or endpoint changes.
  */
 
 import { describe, it, expect } from "vitest";
@@ -16,6 +16,7 @@ import { moduleDirs, getModule, getTools, getAuth, type ModuleTool } from "../he
 import { TOOL_ARGS, ALLOWED_EMPTY, type Args, type DeriveCtx } from "./args.js";
 import knownFailuresJson from "./known-upstream-failures.json" with { type: "json" };
 import responseShapesJson from "./response-shapes.json" with { type: "json" };
+import { failureKind } from "./failure-kind.js";
 import { writeFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
@@ -147,8 +148,8 @@ describe.each(moduleDirs)("%s", (dir) => {
       let out: unknown;
       // A transient upstream flap (5xx, timeout, DNS blip) gets two extra
       // attempts with backoff before failing the nightly — its job is to
-      // catch persistent outages, not one-minute blips. Repo bugs (4xx)
-      // fail immediately: they are deterministic.
+      // catch persistent outages, not one-minute blips. Rejected requests
+      // fail immediately after the SDK's own retry policy.
       for (let attempt = 0; ; attempt++) {
         try {
           out = await tool.execute!(parsed?.data ?? args, ctx);
@@ -158,17 +159,10 @@ describe.each(moduleDirs)("%s", (dir) => {
           if (OFFLINE && /OFFLINE_REPLAY_MISS/.test(msg)) {
             ctx0.skip(); // not in the local cache — nothing to replay
           }
-          const status = /HTTP (\d{3})/.exec(msg)?.[1];
-          const kind = /daily threshold|daily limit|quota/i.test(msg) ? "QUOTA EXHAUSTED (keyless daily cap hit — set the module's API key or wait for reset)"
-            : status
-            ? (status.startsWith("4") ? "REPO BUG (4xx)" : "UPSTREAM (5xx)")
-            : /abort|timeout/i.test(msg) ? "UPSTREAM (timeout)"
-            : /fetch failed|ENOTFOUND|ECONNRE|EAI_AGAIN/i.test(msg) ? "UPSTREAM (network/DNS)"
-            : "THREW";
+          const { kind, maxExtra } = failureKind(msg);
           // Timeouts are slow-fails: one extra attempt fits the test budget;
           // fast 5xx blips get two.
-          const maxExtra = kind === "UPSTREAM (timeout)" ? 1 : 2;
-          if (kind.startsWith("UPSTREAM") && attempt < maxExtra) {
+          if (attempt < maxExtra) {
             await new Promise(r => setTimeout(r, (attempt + 1) * 3000));
             continue;
           }
