@@ -1,7 +1,7 @@
 {
   "name": "fedpipe",
   "version": "2026.6.10",
-  "description": "fedpipe — MCP server + TypeScript SDK for 40+ U.S. government data APIs, verified nightly against the live endpoints. government and international data APIs. 300+ tools with WASM-sandboxed code mode for context reduction. Covers Treasury, FRED, BLS, BEA, EIA, Census, FEC, Congress, Federal Register, USAspending, SEC, FBI, GovInfo, NOAA, USDA, World Bank, CDC, NAEP, College Scorecard, NREL, FDA (25 endpoints), EPA, EPA-AQS, Senate Lobbying, Regulations.gov, USDA FoodData, FEMA, NHTSA, CMS, HUD, USPTO, CFPB, FDIC, DOL, USGS, ClinicalTrials.gov, BTS, Open Payments, NIH RePORTER, DOJ News, GSA CALC+.",
+  "description": "MCP server and TypeScript SDK for U.S. government and international public data, with cross-agency queries and live API checks.",
   "main": "dist/server.js",
   "bin": {
     "fedpipe": "dist/server.js"

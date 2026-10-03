@@ -13,15 +13,16 @@ for (const f of report.testResults ?? []) {
   for (const t of f.assertionResults ?? []) {
     const module = t.ancestorTitles?.[0] ?? "?";
     if (module === "args table covers every tool with required params") continue;
-    rows.push({ module, name: t.title, status: t.status, ms: t.duration ?? 0, msg: (t.failureMessages?.[0] ?? "").split("\n")[0] });
+    const status = t.status === "passed" && t.title.includes("[expected to fail") ? "expected" : t.status;
+    rows.push({ module, name: t.title, status, ms: t.duration ?? 0, msg: (t.failureMessages?.[0] ?? "").split("\n")[0] });
   }
 }
 const by = (s) => rows.filter((r) => r.status === s);
-const passed = by("passed"), failed = by("failed"), skipped = by("skipped").concat(by("pending"));
+const passed = by("passed"), expected = by("expected"), failed = by("failed"), skipped = by("skipped").concat(by("pending"));
 const modules = new Map();
 for (const r of rows) {
-  const m = modules.get(r.module) ?? { passed: 0, failed: 0, skipped: 0 };
-  m[r.status === "passed" ? "passed" : r.status === "failed" ? "failed" : "skipped"]++;
+  const m = modules.get(r.module) ?? { passed: 0, expected: 0, failed: 0, skipped: 0 };
+  m[["passed", "expected", "failed"].includes(r.status) ? r.status : "skipped"]++;
   modules.set(r.module, m);
 }
 const skippedKeyed = new Set(rows.filter((r) => r.status !== "passed" && r.status !== "failed" && /skipped: set (\S+)/.test(r.name)).map((r) => r.name.match(/skipped: set ([^\]]+)/)[1]));
@@ -29,7 +30,7 @@ const skippedKeyed = new Set(rows.filter((r) => r.status !== "passed" && r.statu
 const out = [];
 out.push(`## Live API smoke test — ${new Date(report.startTime ?? Date.now()).toISOString().slice(0, 10)}`);
 out.push("");
-out.push(`**${passed.length} passed · ${failed.length} failed · ${skipped.length} skipped** (${rows.length} tools)`);
+out.push(`**${passed.length} passed · ${expected.length} expected failures · ${failed.length} failed · ${skipped.length} skipped** (${rows.length} tool and resolver cases)`);
 if (skippedKeyed.size) out.push(`Skipped for missing keys: ${[...skippedKeyed].join(", ")}`);
 out.push("");
 if (failed.length) {
@@ -40,7 +41,7 @@ if (failed.length) {
   out.push("");
 }
 out.push("### By module");
-out.push("| Module | ✅ | ❌ | ⏭ |");
-out.push("|---|---|---|---|");
-for (const [m, c] of [...modules.entries()].sort()) out.push(`| ${m} | ${c.passed} | ${c.failed || ""} | ${c.skipped || ""} |`);
+out.push("| Module | Passed | Expected failure | Failed | Skipped |");
+out.push("|---|---|---|---|---|");
+for (const [m, c] of [...modules.entries()].sort()) out.push(`| ${m} | ${c.passed} | ${c.expected || ""} | ${c.failed || ""} | ${c.skipped || ""} |`);
 console.log(out.join("\n"));

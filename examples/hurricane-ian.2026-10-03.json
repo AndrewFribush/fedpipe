@@ -1,0 +1,145 @@
+{
+  "question": "Which public records connect Hurricane Ian's Florida declaration to notices and federal contracts?",
+  "declaration": {
+    "number": 4673,
+    "title": "HURRICANE IAN",
+    "date": "2022-09-29T00:00:00.000Z",
+    "designatedAreas": 69,
+    "countyAreas": 67,
+    "otherAreas": [
+      "Hollywood Indian Reservation",
+      "Miccosukee Tribe of Indians of Florida"
+    ]
+  },
+  "notices": {
+    "matchingDocuments": 16,
+    "latest": [
+      {
+        "number": "2023-26272",
+        "date": "2023-11-30",
+        "title": "Florida; Amendment No. 15 to Notice of a Major Disaster Declaration",
+        "url": "https://www.federalregister.gov/documents/2023/11/30/2023-26272/florida-amendment-no-15-to-notice-of-a-major-disaster-declaration"
+      },
+      {
+        "number": "2023-11514",
+        "date": "2023-05-31",
+        "title": "Florida; Amendment No. 14 to Notice of a Major Disaster Declaration",
+        "url": "https://www.federalregister.gov/documents/2023/05/31/2023-11514/florida-amendment-no-14-to-notice-of-a-major-disaster-declaration"
+      },
+      {
+        "number": "2023-00173",
+        "date": "2023-01-09",
+        "title": "Florida; Amendment No. 13 to Notice of a Major Disaster Declaration",
+        "url": "https://www.federalregister.gov/documents/2023/01/09/2023-00173/florida-amendment-no-13-to-notice-of-a-major-disaster-declaration"
+      }
+    ]
+  },
+  "contracts": {
+    "hasMore": true,
+    "largestMatching": [
+      {
+        "recipientName": "FLUOR FEDERAL SERVICES INC",
+        "awardAmount": 115969886.24,
+        "description": "FEMA PUBLIC ASSISTANCE (PA) TECHNICAL ASSISTANCE CONTRACT IV (PATAC IV) TASK ORDER IN SUPPORT OF DR-4673-FL (HURRICANE IAN) AND DR-4680-FL (HURRICANE NICOLE).",
+        "startDate": "2023-02-08",
+        "endDate": "2024-09-19",
+        "state": "FL"
+      },
+      {
+        "recipientName": "AMERICAN MEDICAL RESPONSE, INC.",
+        "awardAmount": 19888784.67,
+        "description": "EMERGENCY MEDICAL SUPPORT SERVICES TO SUPPORT THE EFFECTS OF HURRICANE IAN IN THE STATE OF FLORIDA",
+        "startDate": "2022-10-10",
+        "endDate": "2023-04-12",
+        "state": "FL"
+      },
+      {
+        "recipientName": "VANGUARD INSPECTION SERVICES",
+        "awardAmount": 2517235.01,
+        "description": "HOUSING INSPECTION SERVICES JUST-IN-TIME HIRING EVENT TO SUPPORT HOUSING INSPECTIONS IN RESPONSE TO HURRICANE IAN, DR4673-FL.",
+        "startDate": "2022-10-12",
+        "endDate": "2022-12-11",
+        "state": "FL"
+      }
+    ]
+  },
+  "interpretation": [
+    "Declaration rows are designated areas, not separate disasters; county and tribal areas are counted separately.",
+    "Notices share disaster identifier FEMA-4673-DR. Contracts are keyword matches, not an exhaustive disaster-ID join.",
+    "Award amounts are current cumulative USD values for matching awards, not spending during the query window or total Ian costs.",
+    "Check descriptions for other disasters, including Hurricane Nicole. Do not attribute a whole multi-disaster award to Ian or sum these examples as a disaster total.",
+    "The fixed date window selects records; later modifications and agency revisions can change a rerun's results."
+  ],
+  "provenance": [
+    {
+      "url": "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries?$format=json&$top=100&$filter=disasterNumber%20eq%204673%20and%20state%20eq%20'FL'&$select=disasterNumber%2CdeclarationTitle%2CdeclarationDate%2CdesignatedArea%2CfipsCountyCode&$orderby=designatedArea%20asc",
+      "method": "GET",
+      "status": 200,
+      "fetchedAt": "2026-10-03T21:20:43.806Z",
+      "sha256": "4ff14912766014d53eb748d7ef0e60298c54e56bea30c9a2e29b375e842be655"
+    },
+    {
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions[correction]=0&per_page=3&order=newest&conditions[term]=FEMA-4673-DR&conditions[agencies][]=federal-emergency-management-agency&conditions[publication_date][gte]=2022-09-01&conditions[publication_date][lte]=2023-12-31",
+      "method": "GET",
+      "status": 200,
+      "fetchedAt": "2026-10-03T21:20:43.981Z",
+      "sha256": "0a7011dcd9fc57f78824ed7243ca798c294d7efe02ad76d8b83c50efab7d0ae1"
+    },
+    {
+      "url": "https://api.usaspending.gov/api/v2/search/spending_by_award/",
+      "method": "POST",
+      "body": {
+        "filters": {
+          "keywords": [
+            "Hurricane Ian"
+          ],
+          "award_type_codes": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "agencies": [
+            {
+              "type": "awarding",
+              "tier": "toptier",
+              "name": "Department of Homeland Security"
+            }
+          ],
+          "place_of_performance_locations": [
+            {
+              "country": "USA",
+              "state": "FL"
+            }
+          ],
+          "time_period": [
+            {
+              "start_date": "2022-09-01",
+              "end_date": "2023-12-31"
+            }
+          ]
+        },
+        "fields": [
+          "Award ID",
+          "Recipient Name",
+          "Awarding Agency",
+          "Award Amount",
+          "Total Outlays",
+          "Description",
+          "Start Date",
+          "End Date",
+          "Award Type",
+          "recipient_id",
+          "Place of Performance State Code"
+        ],
+        "limit": 3,
+        "page": 1,
+        "sort": "Award Amount",
+        "order": "desc"
+      },
+      "status": 200,
+      "fetchedAt": "2026-10-03T21:20:44.345Z",
+      "sha256": "9a5f461e645f037630de1b49016e81c15e9020a3b797eea9115fe7773296e979"
+    }
+  ]
+}
