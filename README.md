@@ -4,13 +4,15 @@ MCP server and TypeScript SDK for U.S. government and international public data.
 
 [![npm version](https://img.shields.io/npm/v/fedpipe)](https://www.npmjs.com/package/fedpipe) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Live API smoke test](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml/badge.svg)](https://github.com/AndrewFribush/fedpipe/actions/workflows/live-smoke.yml)
 
-Query agencies through typed SDK functions or MCP tools, resolve identities across sources, and reduce large responses inside a WASM sandbox. Start with the [Hurricane Ian investigation](#run-an-investigation): three public APIs, fixed queries, and recorded output with request provenance.
+Query agencies through typed SDK functions or MCP tools, resolve identities across sources, and reduce large responses inside a WASM sandbox. This fork adds cross-source identity resolution, a discovery index, live response checks, bulk indexing, and recorded investigations with source provenance.
+
+Start with the [Hurricane Ian investigation](#run-an-investigation): three public APIs, fixed queries, and recorded output with request provenance.
 
 ## Ownership and upstream credit
 
-Andrew Fribush maintains fedpipe as a fork of [Lucas Elzinga's us-gov-open-data-mcp](https://github.com/lzinga/us-gov-open-data-mcp), under the MIT license. The original module architecture, shared client, and government API integrations come from upstream.
+I maintain fedpipe as a fork of [Lucas Elzinga's us-gov-open-data-mcp](https://github.com/lzinga/us-gov-open-data-mcp), under the MIT license. The original module architecture, shared client, and government API integrations come from upstream.
 
-Andrew's work in this fork includes:
+My work in this fork includes:
 
 - [Nightly live checks](.github/workflows/live-smoke.yml), [response-shape and empty-result checks](tests/live/tools.smoke.test.ts), and the [tool audit](docs/tool-audit.md).
 - [Company, person, and place resolution](src/server.ts), an always-available discovery index, and module loading by agency or domain.
