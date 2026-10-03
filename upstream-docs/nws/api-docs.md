@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rain Continues in South-central Texas; Heat Wave in California
+# Excessive Rainfall Possible This Weekend; October Heat Wave in California
 
-A slow moving front will maintain the threat of flash/urban flooding across southern and central Texas today and the Central Gulf Coast and Southeast through the weekend. Abnormally, potentially record-breaking temperatures will impact southern California and stretch north toward the Bay Area and Central Valley through next week.
+A slow moving front will be the focus area for heavy to excessive rainfall and a threat for flash/urban flooding across the northern Gulf Coast and Southeast U.S. through this weekend. Abnormally hot, potentially record-breaking, temperatures will impact southern California and stretch north toward the Bay Area and Central Valley into next week.
 Read More >
 
 Customize Your Weather.gov

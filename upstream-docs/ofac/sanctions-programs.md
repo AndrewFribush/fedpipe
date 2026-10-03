@@ -77,7 +77,7 @@ Counter Narcotics Trafficking Sanctions
 Sep 30, 2026
 
 Counter Terrorism Sanctions
-Sep 30, 2026
+Oct 02, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026

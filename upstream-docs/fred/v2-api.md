@@ -17,11 +17,11 @@ St. Louis Fed President Alberto Musalem discussed central bank communications at
 Explore Federal Reserve
 Economic Data
 
-4.1%
+4.2%
 
 ### Unemployment
 
-As of August 2026
+As of September 2026
 
 3.42%
 
@@ -33,19 +33,19 @@ As of August 2026
 
 ### Daily Federal Funds Rate
 
-As of September 30, 2026
+As of October 1, 2026
 
 Economic Analysis
 
 ## Do Productivity Booms Push Down Prices?
 
-News Release
+Flash Report
 
-## FOMC Raises Federal Funds Rate Target Range by Quarter Point
+## Unemployment Rises Slightly, Job Growth Slows in September
 
 Economic Analysis
 
-## How Lending by the Largest U.S. Banks Has Changed
+## U.S. Banking Industry Performance in Q2
 
 ## What We Do
 
