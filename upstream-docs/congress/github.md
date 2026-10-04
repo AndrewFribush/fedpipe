@@ -31,7 +31,7 @@ Fork
 100
 
 Star
-996
+998
 
 main
 
@@ -153,7 +153,7 @@ Custom properties
 
 ### Stars
 
-996 stars
+998 stars
 
 ### Watchers
 
