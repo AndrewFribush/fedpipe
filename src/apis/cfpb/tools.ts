@@ -30,26 +30,24 @@ function cleanMeta(meta: unknown): Record<string, unknown> | undefined {
 
 
 /**
- * The Trends/GeoStates endpoints return raw Elasticsearch payloads (200KB+
- * of nested buckets). Flatten every aggregation into compact
+ * Flatten Elasticsearch-style buckets into compact
  * {key, count, [nested series]} rows.
  */
 function digestEsAggs(aggs: Record<string, any> | undefined): Record<string, unknown> {
+  const digestBucket = (b: any): Record<string, unknown> => {
+    const row: Record<string, unknown> = { key: b.key_as_string ?? b.key, count: b.doc_count };
+    for (const [name, node] of Object.entries(b)) {
+      const nested = (node as any)?.buckets;
+      if (Array.isArray(nested)) row[name] = nested.slice(0, 60).map(digestBucket);
+    }
+    return row;
+  };
   const out: Record<string, unknown> = {};
   for (const [name, node] of Object.entries(aggs ?? {})) {
     const inner = (node as any)?.[name] ?? node;
     const buckets = inner?.buckets ?? (node as any)?.buckets;
     if (!Array.isArray(buckets)) continue;
-    out[name] = buckets.slice(0, 60).map((b: any) => {
-      const row: Record<string, unknown> = { key: b.key_as_string ?? b.key, count: b.doc_count };
-      for (const [k2, v2] of Object.entries(b)) {
-        const nb = (v2 as any)?.buckets;
-        if (Array.isArray(nb)) {
-          row[k2] = nb.slice(0, 60).map((x: any) => ({ key: x.key_as_string ?? x.key, count: x.doc_count }));
-        }
-      }
-      return row;
-    });
+    out[name] = buckets.slice(0, 60).map(digestBucket);
   }
   return out;
 }
@@ -128,24 +126,25 @@ export const tools: Tool<any, any>[] = [
   {
     name: "cfpb_complaint_trends",
     description:
-      "Get complaint trends over time using the CFPB Trends API.\n" +
-      "Uses dedicated /trends endpoint with lens-based aggregation.\n" +
+      "Get exact complaint counts over time using the supported CFPB search API.\n" +
+      "Defaults to the last 12 calendar months including the current partial month. Maximum 60 intervals; one upstream query per interval.\n" +
       "trend_interval defaults to 'month' ('quarter' and 'year' also accepted).\n" +
       "Lens options: 'overview' (total counts), 'product' (by product), 'issue' (by issue), 'tags' (by tag).\n" +
-      "Sub-lens allows drilling into sub-categories within the lens.",
+      "Native drilldowns: product/sub_product and issue/sub_issue. Other cross-lens drilldowns are no longer available.\n" +
+      "Returns the top 10 lens series and explicit date coverage and omitted-series counts.",
     annotations: { title: "CFPB: Complaint Trends", readOnlyHint: true },
     parameters: z.object({
       lens: z.enum(["overview", "product", "issue", "tags"]).optional().describe("Trend lens (default: overview)"),
       trend_interval: z.enum(["month", "quarter", "year"]).default("month").describe("Time bucket size for trend aggregation (default 'month')"),
-      sub_lens: z.enum(["issue", "product", "sub_product", "sub_issue", "tags"]).optional().describe("Sub-lens drill-down"),
-      sub_lens_depth: z.number().int().optional().describe("Top N sub-aggregations to return (default 10)"),
-      focus: z.string().optional().describe("Focus charts on a specific product or company name"),
+      sub_lens: z.enum(["issue", "product", "sub_product", "sub_issue", "tags"]).optional().describe("Only sub_product with product lens, or sub_issue with issue lens, is supported; other combinations return an error"),
+      sub_lens_depth: z.number().int().min(1).max(60).optional().describe("Top N native subcategories to return (default 10, max 60)"),
+      focus: z.string().optional().describe("Exact value of the selected product, issue, or tags lens; unavailable for overview"),
       product: z.string().optional().describe("Financial product: 'Mortgage', 'Debt collection', etc."),
       company: z.string().optional().describe("Company name: 'Wells Fargo', 'Equifax', etc."),
       state: z.string().optional().describe("Two-letter state code: 'CA', 'TX', 'NY'"),
       issue: z.string().optional().describe("Issue type filter"),
-      date_received_min: z.string().optional().describe("Start date (YYYY-MM-DD)"),
-      date_received_max: z.string().optional().describe("End date (YYYY-MM-DD)"),
+      date_received_min: z.string().optional().describe("Inclusive start date (YYYY-MM-DD); default first day of the 12-month window ending at date_received_max"),
+      date_received_max: z.string().optional().describe("Inclusive end date (YYYY-MM-DD); default today in UTC"),
     }),
     execute: async (args) => {
       const data = await getComplaintTrends(args);
@@ -161,7 +160,7 @@ export const tools: Tool<any, any>[] = [
       return recordResponse(`CFPB complaint trends (${args.lens ?? "overview"})`, {
         totalComplaints: d?.hits?.total?.value ?? null,
         aggregations: digestEsAggs(d?.aggregations),
-      });
+      }, cleanMeta(d?._meta));
     },
   },
 
@@ -198,16 +197,23 @@ export const tools: Tool<any, any>[] = [
     }),
     execute: async (args) => {
       const data = await getStateComplaints(args);
-      if (!data) return emptyResponse("No state complaint data found.");
-      const states = (data as any)?.stateData ?? (data as any)?.states ?? (Array.isArray(data) ? data : null);
-      if (Array.isArray(states) && states.length) {
-        return tableResponse(`CFPB complaints by state: ${states.length} states`, { rows: states });
+      const response = data as any;
+      const facet = response?.aggregations?.state?.state;
+      if (response?.timed_out || response?._shards?.failed || facet?.sum_other_doc_count || facet?.doc_count_error_upper_bound) {
+        throw new Error("CFPB search returned incomplete state counts; narrow the filters or retry.");
       }
-      const sd: any = data;
-      return recordResponse("CFPB complaints by state", {
-        totalComplaints: sd?.hits?.total?.value ?? null,
-        aggregations: digestEsAggs(sd?.aggregations),
+      const buckets = facet?.buckets;
+      if (!Array.isArray(buckets)) {
+        throw new Error("CFPB search response is missing its state aggregation.");
+      }
+      const states = buckets.map((bucket: any) => {
+        if (typeof bucket.key !== "string" || !Number.isSafeInteger(bucket.doc_count) || bucket.doc_count < 0) {
+          throw new Error("CFPB search response contains an invalid state count.");
+        }
+        return { state: bucket.key, complaints: bucket.doc_count };
       });
+      if (!states.length) return emptyResponse("No state complaint data found.");
+      return tableResponse(`CFPB complaints by state: ${states.length} states and territories`, { rows: states });
     },
   },
 

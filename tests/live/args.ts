@@ -242,6 +242,7 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
   nih_projects_by_agency: { fiscal_year: 2024 },
 
   // ─── NOAA ───────────────────────────────────────────────────────────
+  noaa_stations: { state: "VT", limit: 5 },
   noaa_climate_data: { dataset_id: "GHCND", start_date: "2024-01-01", end_date: "2024-01-03", station_id: "GHCND:USW00094728", limit: 10 },
 
   // ─── NREL ───────────────────────────────────────────────────────────
