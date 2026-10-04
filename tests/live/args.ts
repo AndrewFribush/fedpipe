@@ -74,6 +74,10 @@ export const TOOL_ARGS: Record<string, ArgsEntry> = {
 
   // ─── Congress ───────────────────────────────────────────────────────
   congress_bill_details: BILL,
+  // The unbounded /summaries collection currently returns 200 with count: 0.
+  // Pin a historical window with published summaries so the live empty guard
+  // continues to detect response-shape and query regressions.
+  congress_summaries_search: { congress: 117, bill_type: "hr", fromDateTime: "2021-01-01T00:00:00Z", toDateTime: "2022-12-31T23:59:59Z", limit: 5 },
   congress_bill_actions: BILL,
   congress_bill_amendments: BILL,
   congress_bill_summaries: BILL,
