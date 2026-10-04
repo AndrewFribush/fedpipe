@@ -102,6 +102,11 @@ function normMonth(v: string, isEnd: boolean): string {
 /** Normalize a YYYY / YYYY-MM / YYYY-MM-DD bound to an ISO instant for GFZ. */
 function toISO(v: string, isEnd: boolean): string {
   const s = String(v).trim();
+  if (s.includes("T")) {
+    // GFZ accepts UTC timestamps to whole seconds, not JavaScript's fractional
+    // seconds. Keep a supplied instant instead of appending another time to it.
+    return new Date(s).toISOString().replace(/\.\d{3}Z$/, "Z");
+  }
   if (/^\d{4}$/.test(s)) return `${s}-${isEnd ? "12-31T23:59:59Z" : "01-01T00:00:00Z"}`;
   if (/^\d{4}-\d{2}$/.test(s)) {
     if (!isEnd) return `${s}-01T00:00:00Z`;
