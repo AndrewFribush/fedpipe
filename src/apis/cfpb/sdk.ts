@@ -15,6 +15,7 @@
  */
 
 import { createClient, qp } from "../../shared/client.js";
+import { searchComplaintTrends } from "./trends.js";
 
 // ─── Client ──────────────────────────────────────────────────────────
 
@@ -201,7 +202,12 @@ export async function getComplaintAggregations(opts: {
 }
 
 /**
- * Get complaint trends over time using the dedicated /trends endpoint.
+ * Get complaint trends from exact, date-bounded search counts. The upstream
+ * /trends endpoint was retired. Defaults to the last 12 calendar months,
+ * including the current partial month; at most 60 month/quarter/year buckets.
+ * Product/sub_product and issue/sub_issue drilldowns are supported. Cross-lens
+ * drilldowns are unavailable. `focus` selects an exact value of the chosen lens.
+ * Coverage and top-series limits are reported in the returned `_meta`.
  *
  * Example:
  *   const trends = await getComplaintTrends({ lens: "overview", date_received_min: "2020-01-01" });
@@ -225,9 +231,7 @@ export async function getComplaintTrends(opts: {
   zip_code?: string;
   trend_interval?: string;
 }): Promise<unknown> {
-  const params = qp({ ...opts, lens: opts.lens ?? "overview" });
-
-  return client.get<unknown>("/trends", params);
+  return searchComplaintTrends(client, opts);
 }
 
 /**
@@ -258,9 +262,10 @@ export async function getStateComplaints(opts?: {
   submitted_via?: string;
   timely?: string;
 }): Promise<unknown> {
-  const params = qp(opts ?? {});
-
-  return client.get<unknown>("/geo/states", params);
+  // CFPB removed /geo/states. The supported search endpoint supplies the
+  // state facet when aggregations are enabled. Keep company filters exact;
+  // the search helper's fuzzy retry would change the population being counted.
+  return client.get<ComplaintSearchResult>("/", qp({ ...opts, size: 0, no_aggs: false }));
 }
 
 /**
