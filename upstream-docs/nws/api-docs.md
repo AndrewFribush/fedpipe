@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Excessive Rainfall Possible This Weekend; October Heat Wave in California
+# Excessive Rainfall Possible for the Gulf Coast and Florida; October Heat Wave in California
 
-A slow moving front will be the focus area for heavy to excessive rainfall and a threat for flash/urban flooding across the northern Gulf Coast and Southeast U.S. through this weekend. Abnormally hot, potentially record-breaking, temperatures will impact southern California and stretch north toward the Bay Area and Central Valley into next week.
+A slow moving front will be the focus area for heavy to excessive rainfall and a threat for flash/urban flooding across parts of the Gulf Coast into central/northern Florida early this week. Abnormally hot, potentially record-breaking, temperatures will continue for southern California and stretch north toward the Bay Area and Central Valley this week.
 Read More >
 
 Customize Your Weather.gov
