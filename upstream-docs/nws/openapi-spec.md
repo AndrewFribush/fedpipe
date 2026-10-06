@@ -405,6 +405,37 @@ Source: https://api.weather.gov/openapi.json
       }
     },
     "responses": {
+      "ActiveAlertCollection": {
+        "content": {
+          "application/atom+xml": {
+            "schema": {
+              "$ref": "#/components/schemas/AlertAtomFeed"
+            }
+          },
+          "application/geo+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActiveAlertCollectionGeoJson"
+            }
+          },
+          "application/ld+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActiveAlertCollectionJsonLd"
+            }
+          }
+        },
+        "description": "A collection of active alerts.",
+        "headers": {
+          "X-Correlation-Id": {
+            "$ref": "#/components/headers/CorrelationId"
+          },
+          "X-Request-Id": {
+            "$ref": "#/components/headers/RequestId"
+          },
+          "X-Server-Id": {
+            "$ref": "#/components/headers/ServerId"
+          }
+        }
+      },
       "AlertCollection": {
         "content": {
           "application/atom+xml": {
@@ -609,6 +640,67 @@ Source: https://api.weather.gov/openapi.json
         "description": "ATSU Identifier",
         "pattern": "^[A-Z]{3,4}$",
         "type": "string"
+      },
+      "ActiveAlertCollection": {
+        "properties": {
+          "title": {
+            "description": "A title describing the alert collection",
+            "type": "string"
+          },
+          "updated": {
+            "description": "The last time a change occurred to this collection",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ActiveAlertCollectionGeoJson": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ActiveAlertCollection"
+          },
+          {
+            "$ref": "#/components/schemas/GeoJsonFeatureCollection"
+          },
+          {
+            "properties": {
+              "features": {
+                "items": {
+                  "properties": {
+                    "properties": {
+                      "$ref": "#/components/schemas/Alert"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ActiveAlertCollectionJsonLd": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ActiveAlertCollection"
+          },
+          {
+            "properties": {
+              "@context": {
+                "$ref": "#/components/schemas/JsonLdContext"
+              },
+              "@graph": {
+                "items": {
+                  "$ref": "#/components/schemas/Alert"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
       },
       "Alert": {
         "description": "An object representing a public alert message.\nUnless otherwise noted, the fields in this object correspond to the National Weather Service CAP v1.2 specification, which extends the OASIS Common Alerting Protocol (CAP) v1.2 specification and USA Integrated Public Alert and Warning System (IPAWS) Profile v1.0. Refer to this documentation for more complete information.\nhttp://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html http://docs.oasis-open.org/emergency/cap/v1.2/ipaws-profile/v1.0/cs01/cap-v1.2-ipaws-profile-cs01.html https://vlab.noaa.gov/web/nws-common-alerting-protocol/cap-documentation\n",
@@ -4135,7 +4227,7 @@ Source: https://api.weather.gov/openapi.json
   "info": {
     "description": "weather.gov API",
     "title": "weather.gov API",
-    "version": "3.11.0"
+    "version": "3.12.1"
   },
   "openapi": "3.1.2",
   "paths": {
@@ -4259,7 +4351,7 @@ Source: https://api.weather.gov/openapi.json
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/AlertCollection"
+            "$ref": "#/components/responses/ActiveAlertCollection"
           },
           "301": {
             "description": "Certain common queries may be redirected to discrete URLs"
@@ -4277,7 +4369,7 @@ Source: https://api.weather.gov/openapi.json
         "parameters": [],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/AlertCollection"
+            "$ref": "#/components/responses/ActiveAlertCollection"
           },
           "default": {
             "$ref": "#/components/responses/Error"
@@ -4377,7 +4469,7 @@ Source: https://api.weather.gov/openapi.json
         "parameters": [],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/AlertCollection"
+            "$ref": "#/components/responses/ActiveAlertCollection"
           },
           "default": {
             "$ref": "#/components/responses/Error"
@@ -4403,7 +4495,7 @@ Source: https://api.weather.gov/openapi.json
         "parameters": [],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/AlertCollection"
+            "$ref": "#/components/responses/ActiveAlertCollection"
           },
           "default": {
             "$ref": "#/components/responses/Error"

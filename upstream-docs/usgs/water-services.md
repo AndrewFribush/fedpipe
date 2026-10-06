@@ -16,10 +16,11 @@ A lock (
 ) or https:// means you’ve safely connected to the .gov website. Share
 sensitive information only on official, secure websites.
 
-### Important for you to know:
+### WaterServices will be decommissioned February 22nd, 2027
 
-- WaterServices will be decommissioned in early 2027. Applications will need to migrate to the APIs hosted at https://api.waterdata.usgs.gov. Find out more about this transition on our blog
-.
+- WaterServices will be permanently shut down on February 22nd, 2027. Requests will be intentionally slowed down and there will be intentional outages beginning in January 2027. Users must migrate to https://api.waterdata.usgs.gov.
+
+Find out more about this decommissioning process on our blog.
 
 # USGS Water Services
 

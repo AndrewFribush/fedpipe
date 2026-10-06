@@ -33,7 +33,7 @@ As of August 2026
 
 ### Daily Federal Funds Rate
 
-As of October 1, 2026
+As of October 2, 2026
 
 Economic Analysis
 

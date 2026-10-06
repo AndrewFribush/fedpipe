@@ -39,6 +39,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `fcc` — [ECFS API](https://www.fcc.gov/ecfs/public-api-docs.html) — HTTP 403
 - `fec` — [Developers](https://api.open.fec.gov/developers/) — client-rendered
 - `fec` — [Get Key](https://api.open.fec.gov/developers/) — client-rendered
+- `fema` — [OpenFEMA API](https://www.fema.gov/about/openfema/api) — HTTP 403 — kept previous snapshot
 - `form5500` — [Data dictionary](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `form5500` — [Form 5500 datasets](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered
@@ -47,6 +48,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
+- `nfip` — [OpenFEMA NfipClaims](https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v2) — HTTP 403 — kept previous snapshot
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
 - `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 400

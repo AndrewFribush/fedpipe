@@ -62,7 +62,7 @@ Balkans-Related Sanctions
 Nov 20, 2025
 
 Belarus Sanctions
-Sep 30, 2026
+Oct 05, 2026
 
 Burma-Related Sanctions
 May 28, 2026
@@ -74,10 +74,10 @@ Chinese Military Companies Sanctions
 Jun 01, 2022
 
 Counter Narcotics Trafficking Sanctions
-Sep 30, 2026
+Oct 05, 2026
 
 Counter Terrorism Sanctions
-Oct 02, 2026
+Oct 05, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
@@ -107,10 +107,10 @@ International Criminal Court-Related Sanctions
 Aug 18, 2026
 
 Iran Sanctions
-Oct 01, 2026
+Oct 05, 2026
 
 Iraq-Related Sanctions
-Jul 09, 2025
+Oct 05, 2026
 
 Lebanon-Related Sanctions
 Feb 27, 2026
@@ -128,7 +128,7 @@ Nicaragua-related Sanctions
 Apr 16, 2026
 
 Non-Proliferation Sanctions
-Sep 29, 2026
+Oct 05, 2026
 
 North Korea Sanctions
 Mar 12, 2026
@@ -158,7 +158,7 @@ Ukraine-/Russia-related Sanctions
 May 08, 2026
 
 Venezuela-Related Sanctions
-Sep 28, 2026
+Oct 05, 2026
 
 Yemen-related Sanctions
 Nov 18, 2021
