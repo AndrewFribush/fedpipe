@@ -24,7 +24,7 @@ website. Share sensitive information only on official, secure websites.
 
 New data updates:
 See release notes
-| Data as ofJuly 2026
+| Data as ofAugust 2026
 
 Incomplete Data: A change in Department of War (DOW) data processing prevented some components from submitting June 2026 and July 2026 data. Most data has now been received, with some components still outstanding. Visuals and downloads with Status and Dynamics data are affected; all non-DOW data is unaffected. See Release Notes for a full list of affected components. Data will be updated once all submissions are received.
 
@@ -327,7 +327,7 @@ Give Feedback
 Data Sources
 Data Quality
 
-Release 1.15.0 | Site last updated September 16, 2026
+Release 1.16.0 | Site last updated October 7, 2026
 © 2026 Office of Personnel Management
 
 Give feedback

@@ -1172,11 +1172,11 @@ Renewables
 
 ### What's New?
 
-- Quarterly Coal Report—Second Quarter 2026
-- Oct 01, 2026
-- Wholesale Electricity Market Data
-- Oct 01, 2026
+- Short-Term Energy Outlook
+- Oct 06, 2026
 - Petroleum Marketing Monthly
+- Oct 01, 2026
+- Quarterly Coal Report—Second Quarter 2026
 - Oct 01, 2026
 
 ###

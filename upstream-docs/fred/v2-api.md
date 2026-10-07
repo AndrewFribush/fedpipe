@@ -33,11 +33,11 @@ As of August 2026
 
 ### Daily Federal Funds Rate
 
-As of October 2, 2026
+As of October 5, 2026
 
-Economic Analysis
+Event
 
-## Do Productivity Booms Push Down Prices?
+## Tune in to the Oct. 6-7 Livestream
 
 Flash Report
 

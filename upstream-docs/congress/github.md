@@ -16,23 +16,6 @@ Dismiss alert
 
 {{ message }}
 
-LibraryOfCongress
-
-/
-
-api.congress.gov
-
-Public
-
-Notifications
-You must be signed in to change notification settings
-
-Fork
-100
-
-Star
-998
-
 main
 
 BranchesTags
@@ -153,7 +136,7 @@ Custom properties
 
 ### Stars
 
-998 stars
+999 stars
 
 ### Watchers
 

@@ -100,6 +100,14 @@ More about the NOAA Space Weather Scales
 
 - Noon 10.7cm Radio Flux: sfu
 
+G2 (Moderate) Geomagnetic Storm Watch for 09 Oct
+
+published:
+
+Tuesday, October 06, 2026 16:40 UTC
+
+G1 (Minor) to G2 (Moderate) geomagnetic storms are likely on 09 Oct with the arrival of a CME that was associated with a M1.4 flare from Active Region 4549 on 06 Oct. A high chance for additional M-cl...
+
 SWPCs New Solar Wind Display Officially Operational
 
 published:
@@ -123,14 +131,6 @@ published:
 Tuesday, June 30, 2026 21:35 UTC
 
 Solar wind data and display changes on our webpage due to DSCOVR data termination and SOLAR-1 being the primary instrument. Users need to utilize the new solar wind display....
-
-Learn About Various Solar Storms and Phenomena
-
-published:
-
-Wednesday, June 17, 2026 19:55 UTC
-
-Learn more about various solar storms and phenomena by visiting the "About Space Weather" on our webpage....
 
 Serving Essential Space Weather Communities
 

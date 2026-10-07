@@ -434,6 +434,10 @@ Source: https://api.weather.gov/openapi.json
           "X-Server-Id": {
             "$ref": "#/components/headers/ServerId"
           }
+        },
+        "x-url-content-negotiation-extensions": {
+          "atom": "application/atom+xml",
+          "json": "application/geo+json"
         }
       },
       "AlertCollection": {
@@ -4227,7 +4231,7 @@ Source: https://api.weather.gov/openapi.json
   "info": {
     "description": "weather.gov API",
     "title": "weather.gov API",
-    "version": "3.12.1"
+    "version": "3.12.2"
   },
   "openapi": "3.1.2",
   "paths": {

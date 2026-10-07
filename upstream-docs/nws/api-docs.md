@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# October Heat Wave in California; Tropical Cyclone Possible in the Gulf
+# Tropical Storm Isaias in the Gulf; California Heat Continues
 
-Much higher than typical October temperatures will continue across coastal southern California up through the Bay Area and Central Valley through midweek resulting in result in Major to Extreme HeatRisk. A tropical depression is likely to form over the Gulf of America during the middle part of this week with further strengthening possible as it moves northeastward later this week.
+Tropical Storm Isaias is forecast to track toward the central U.S. Gulf Coast while strengthening into a hurricane on Thursday. Residents from Louisiana to the Florida Panhandle should closely monitor the latest updates. Much higher than typical October temperatures will continue across much of California through midweek. Temperatures are forecast to gradually cool beginning Thursday.
 Read More >
 
 Customize Your Weather.gov
