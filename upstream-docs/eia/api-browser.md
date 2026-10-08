@@ -269,12 +269,12 @@ Renewables
 
 ### What's New?
 
+- Annual State Historical Spreadsheets for 2025
+- Oct 07, 2026
+- Final 2025 Annual Electric Sales and Revenue Data
+- Oct 07, 2026
 - Short-Term Energy Outlook
 - Oct 06, 2026
-- Petroleum Marketing Monthly
-- Oct 01, 2026
-- Quarterly Coal Report—Second Quarter 2026
-- Oct 01, 2026
 
 ###
 Press Room

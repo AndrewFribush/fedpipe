@@ -22,17 +22,11 @@ A lock ( ) or https:// means you’ve safely connected to the .gov
 
 website. Share sensitive information only on official, secure websites.
 
-New data updates:
-See release notes
-| Data as ofAugust 2026
-
-Incomplete Data: A change in Department of War (DOW) data processing prevented some components from submitting June 2026 and July 2026 data. Most data has now been received, with some components still outstanding. Visuals and downloads with Status and Dynamics data are affected; all non-DOW data is unaffected. See Release Notes for a full list of affected components. Data will be updated once all submissions are received.
-
 Federal Workforce Data
 
 ###### Explore Data
 
-ANALYTICS
+WORKFORCE INSIGHTS
 
 Workforce Size & Composition
 
@@ -50,6 +44,7 @@ Labor Unions & Bargaining Units
 DATA TOOLS
 
 Table Builder
+FWD Chat
 
 ###### Get Data
 
@@ -104,77 +99,89 @@ Data Sources
 
 Data Quality
 
-Federal Workforce Data
+# Federal workforce data,
+open to everyone
 
-The U.S. Government's official source for data on the federal civilian workforce.
+Federal employees deliver vital services to the American people every day – from keeping our food safe to providing care to our veterans.
 
-Start exploring
+Explore what they do, where they work, and how the workforce is changing.
 
-2,020,230
+New data
+August 2026
 
-Federal civilian employees are currently serving
+August 2026 employment and accessions data now available
 
-Federal employees deliver vital services to the American people every day – from keeping our food safe to providing care to our veterans to responding to disasters.
+Download data
 
-They are nurses, food inspectors, data analysts, park rangers, police officers, accountants, astronauts, engineers and much more.
+BETA
 
-Let’s learn more about them…
+FWD Chat
 
-Source:
+## What would you like to know about the federal workforce?
 
-OPM EHRI Status
+Ask about employment, hiring, departures, and workforce trends across federal civilian agencies.
 
-Source Notes
+FWD Chat uses an LLM—how does it work?
 
-Loading data...
+Try asking:How many federal employees were hired last year?What is the average salary by state?How many federal nurses are also veterans?What are the most common types of employee separations?
 
-###
-Build your own report
+Workforce Insights
 
-Use Table Builder to create a custom report using any federal workforce variable available in FWD.
+## Explore common workforce topics
+
+View ready-made visuals that reveal insights into the federal workforce.
+
+Workforce Size & Composition
+106,823
+nurses are serving as federal employees.
+
+They form the largest occupation in the federal government and mostly work at the Department of Veterans Affairs.
+
+Explore more
+
+Table Builder
+
+## Build your own report
+
+Use Table Builder to create a custom table or chart using any federal workforce variable available in FWD.
+
+Three datasets available:
+
+- Employment — snapshot of all active federal civilian employees
+
+- Accessions — new hires and transfers into agencies
+
+- Separations — retirements, resignations, and other exits
+
+Tailor your analysis with filters. Export results as CSV.
 
 Start building
 
-Explore interactive visuals
+Get Data
 
-View ready-made visuals that reveal insights into the most common federal workforce questions.
+## Access detailed data
 
-Workforce Size & Composition
+Download official data for your own analysis.
 
-Explore federal workforce size by agency, changes over time, and appointment types.
+Data Downloads
+Download TXT or JSON files of monthly EHRI employment, accessions, and separations data.
 
-Workforce Changes
+Bulk API
+Open, programmatic access to EHRI data. No authentication required.
 
-Examine workforce changes, including accessions, separations, and key personnel actions.
+## Resources for HR Professionals
 
-Compensation, Performance, & Leave
+Tools and references for HR professionals working with federal workforce data.
 
-Explore pay distribution, average salaries, performance ratings, and use of administrative leave.
+### GPPA Navigator
 
-Federal Recruitment
+Identify the correct nature of action and legal authority codes for any personnel action
 
-View open job announcements, hiring trends, and average time to hire.
+### EHRI Data Standards
 
-Demographics
+Browse data elements, valid values, and how to report data related to HR, payroll, and training
 
-Explore the makeup of the federal workforce by age, retirement eligibility, education, and veterans status.
-
-Location
-
-Discover where federal employees are concentrated and telework participation.
-
-Labor Unions & Bargaining Units
-
-Discover federal labor and union data, including bargaining units and collective bargaining expenses.
-
-###
-Download raw data
-
-Access detailed data for your own analysis.
-
-Go to Data Downloads
-
-###### Analytics
+###### Workforce Insights
 
 Workforce Size & Composition
 Workforce Changes
@@ -185,7 +192,7 @@ LocationLabor Unions & Bargaining Units
 
 ###### Data Tools
 
-Table Builder
+Table BuilderFWD Chat
 
 ###### Get Data
 
@@ -225,7 +232,7 @@ Give Feedback
 Data Sources
 Data Quality
 
-###### Analytics
+###### Workforce Insights
 
 Workforce Size & Composition
 Workforce Changes
@@ -250,7 +257,7 @@ GPPA Navigator
 
 ###### Data Tools
 
-Table Builder
+Table BuilderFWD Chat
 
 ###### Get Data
 
@@ -276,7 +283,7 @@ Give Feedback
 Data Sources
 Data Quality
 
-###### Analytics
+###### Workforce Insights
 
 Workforce Size & Composition
 Workforce Changes
@@ -287,7 +294,7 @@ LocationLabor Unions & Bargaining Units
 
 ###### Data Tools
 
-Table Builder
+Table BuilderFWD Chat
 
 ###### Get Data
 
@@ -327,7 +334,7 @@ Give Feedback
 Data Sources
 Data Quality
 
-Release 1.16.0 | Site last updated October 7, 2026
+Release 1.16.1 | Site last updated October 7, 2026
 © 2026 Office of Personnel Management
 
 Give feedback

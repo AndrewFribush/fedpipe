@@ -81,6 +81,7 @@ All nursing homes: beds, quality ratings, staffing, penalties, five-star ratings
 - `continuing_care_retirement_community`
 - `special_focus_status`
 - `abuse_icon`
+- `high_performing_icon`
 - `most_recent_health_inspection_more_than_2_years_ago`
 - `provider_changed_ownership_in_last_12_months`
 - `with_a_resident_and_family_council`
@@ -126,6 +127,7 @@ All nursing homes: beds, quality ratings, staffing, penalties, five-star ratings
 - `adjusted_total_nurse_staffing_hours_per_resident_per_day`
 - `adjusted_weekend_total_nurse_staffing_hours_per_resident_per_day`
 - `rating_cycle_1_standard_survey_health_date`
+- `rating_cycle_1_standard_survey_footnote`
 - `rating_cycle_1_total_number_of_health_deficiencies`
 - `rating_cycle_1_number_of_standard_health_deficiencies`
 - `rating_cycle_1_number_of_complaint_health_deficiencies`
@@ -134,6 +136,7 @@ All nursing homes: beds, quality ratings, staffing, penalties, five-star ratings
 - `rating_cycle_1_health_revisit_score`
 - `rating_cycle_1_total_health_score`
 - `rating_cycle_2_standard_health_survey_date`
+- `rating_cycle_2_standard_survey_footnote`
 - `rating_cycle_23_total_number_of_health_deficiencies`
 - `rating_cycle_2_number_of_standard_health_deficiencies`
 - `rating_cycle_23_number_of_complaint_health_deficiencies`
@@ -556,6 +559,7 @@ Health inspection citations in the last 3 years: tag codes, scope/severity, corr
 - `state`
 - `zip_code`
 - `survey_date`
+- `survey_footnote`
 - `survey_type`
 - `deficiency_prefix`
 - `deficiency_category`

@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Tropical Storm Isaias in the Gulf; California Heat Continues
+# Isaias Expected To Be A Strong Hurricane Approaching The Northern Gulf Coast Friday
 
-Tropical Storm Isaias is forecast to track toward the central U.S. Gulf Coast while strengthening into a hurricane on Thursday. Residents from Louisiana to the Florida Panhandle should closely monitor the latest updates. Much higher than typical October temperatures will continue across much of California through midweek. Temperatures are forecast to gradually cool beginning Thursday.
+Isaias is expected to strengthen and be a strong hurricane when it approaches the northern Gulf Coast on Friday. Damaging hurricane-force winds and life-threatening storm surge impacts are expected Friday into Saturday. Isaias will bring heavy rainfall to the northern Gulf Coast and much of the Southeast U.S. Friday into the weekend.
 Read More >
 
 Customize Your Weather.gov

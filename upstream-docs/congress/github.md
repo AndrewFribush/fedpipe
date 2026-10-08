@@ -136,7 +136,7 @@ Custom properties
 
 ### Stars
 
-999 stars
+1.0k stars
 
 ### Watchers
 

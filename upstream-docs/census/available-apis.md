@@ -196,7 +196,7 @@ Census Microdata API
 
 Census Microdata API
 
-September 17, 2026
+October 08, 2026
 
 The U.S. Census Bureau’s microdata is now available as a Census Bureau API.
 
