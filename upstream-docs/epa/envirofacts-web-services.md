@@ -224,7 +224,6 @@ Envirofacts
 
 - Multisystem Search
 - BR Search
-- GHG Search
 - ICIS Search
 - ICIS Air Pollution Search
 - RADNET Radiation Search

@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Isaias Expected To Be A Strong Hurricane Approaching The Northern Gulf Coast Friday
+# Severe Thunderstorms for Mid-Atlantic and Northeast; Typhoon Approaching Guam
 
-Isaias is expected to strengthen and be a strong hurricane when it approaches the northern Gulf Coast on Friday. Damaging hurricane-force winds and life-threatening storm surge impacts are expected Friday into Saturday. Isaias will bring heavy rainfall to the northern Gulf Coast and much of the Southeast U.S. Friday into the weekend.
+A cold front will sweep eastward today accompanied by strong to severe thunderstorms for the mid-Atlantic and Northeast today. In the wake of this cold front, autumn like temperatures and gusty winds from the Plains, Mississippi Valley, Great Lakes to most of the eastern seaboard. Fire weather conditions for lower Mississippi Valley into portions of California. For Guam, a typhoon is approaching.
 Read More >
 
 Customize Your Weather.gov

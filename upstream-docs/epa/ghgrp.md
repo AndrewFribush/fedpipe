@@ -54,7 +54,7 @@ Reminder: e-GGRT requires multi-factor authentication as of August 16, 2024
 
 What's New
 
-- EPA Final Rule extends RY2025 GHGRP Deadline
+- EPA issues interim final rule to extend RY2025 GHGRP reporting deadline to March 10, 2027
 - Administrator signs proposed reconsideration of the GHGRP
 - Read more about the proposed reconsideration of the GHGRP
 
@@ -109,4 +109,4 @@ Click the map to launch the tool.
 
 Contact Us About GHG Reporting to ask a question, provide feedback, or report a problem.
 
-Last updated on September 22, 2026
+Last updated on October 8, 2026

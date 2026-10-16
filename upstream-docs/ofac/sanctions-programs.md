@@ -65,7 +65,7 @@ Belarus Sanctions
 Oct 05, 2026
 
 Burma-Related Sanctions
-May 28, 2026
+Oct 09, 2026
 
 Central African Republic Sanctions
 Dec 08, 2023
@@ -74,16 +74,16 @@ Chinese Military Companies Sanctions
 Jun 01, 2022
 
 Counter Narcotics Trafficking Sanctions
-Oct 05, 2026
+Oct 13, 2026
 
 Counter Terrorism Sanctions
-Oct 05, 2026
+Oct 13, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
 
 Cuba Sanctions
-Sep 29, 2026
+Oct 15, 2026
 
 Cyber-Related Sanctions
 Aug 24, 2026
@@ -104,10 +104,10 @@ Hostages and Wrongfully Detained U.S. Nationals Sanctions
 Mar 25, 2025
 
 International Criminal Court-Related Sanctions
-Aug 18, 2026
+Oct 09, 2026
 
 Iran Sanctions
-Oct 05, 2026
+Oct 15, 2026
 
 Iraq-Related Sanctions
 Oct 05, 2026
@@ -140,7 +140,7 @@ Rough Diamond Trade Controls
 Jun 18, 2018
 
 Russian Harmful Foreign Activities Sanctions
-Sep 18, 2026
+Oct 15, 2026
 
 Somalia Sanctions
 May 24, 2023
@@ -155,10 +155,10 @@ Transnational Criminal Organizations
 Oct 01, 2026
 
 Ukraine-/Russia-related Sanctions
-May 08, 2026
+Oct 09, 2026
 
 Venezuela-Related Sanctions
-Oct 05, 2026
+Oct 14, 2026
 
 Yemen-related Sanctions
 Nov 18, 2021

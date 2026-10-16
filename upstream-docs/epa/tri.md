@@ -20,6 +20,13 @@ A lock () or https:// means you’ve safely connected to the .gov website. Share
 Toxics Release Inventory (TRI) Program
 
 ##
+40 Years of the Toxics Release Inventory
+
+The Toxics Release Inventory is 40! TRI was created to help communities make more informed decisions that impact their health and environment.
+
+- Learn more about TRI
+
+##
 Get TRI Data
 
 Filter TRI tools and datasets based on topics of interest and preferred outputs.
@@ -33,7 +40,7 @@ The ready-to-use materials in "TRI in the Classroom" can help students learn abo
 
 - Go to TRI in the Classroom
 
-12
+123
 
 The Toxics Release Inventory (TRI) is a resource for learning about toxic chemical releases and pollution prevention activities reported by industrial and federal facilities. TRI data support informed decision-making by communities, government agencies, companies, and others. Section 313 of the Emergency Planning and Community Right-to-Know Act (EPCRA) created the TRI.
 
@@ -69,4 +76,4 @@ Use esta herramienta de búsqueda en español
 
 TRI Program Contacts to ask a question, provide feedback, or report a problem.
 
-Last updated on September 10, 2026
+Last updated on October 16, 2026

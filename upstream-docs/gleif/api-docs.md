@@ -6,6 +6,8 @@ Source: https://www.gleif.org/en/lei-data/gleif-api
 
 GLEIF API - LEI Data – GLEIF
 
+Planned maintenance: Brief service interruptions may occur between 19 October and 4 November 2026. &times;
+
 LEI Data
 
 # GLEIF API

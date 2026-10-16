@@ -8570,7 +8570,8 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "qualification-maintenance",
             "stablecoins",
             "stablecoin-issuers",
-            "income-taxes-reporting-recordkeeping-requirements"
+            "income-taxes-reporting-recordkeeping-requirements",
+            "spain"
           ],
           "type": "string"
         },

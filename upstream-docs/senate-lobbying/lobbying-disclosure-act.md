@@ -44,6 +44,11 @@ Frequently Asked Questions – Registration and Reporting
 
 Frequently Asked Questions – Contribution Reporting
 
+### October 2026
+Quarterly Report Filing Reminder
+
+The Lobbying Disclosure Act of 1995, as amended by the Honest Leadership and Open Government Act of 2007, requires all active registrants to file quarterly activity reports with the Clerk of the U.S. House of Representatives and Secretary of the U.S. Senate. The Third Quarter report is due October 20, 2026, covering July 1, 2026 through September 30, 2026.
+
 ### July 2026
 Mid-Year Contribution Report Filing Reminder
 

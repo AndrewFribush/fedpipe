@@ -349,12 +349,12 @@ Renewables
 
 ### What's New?
 
-- Annual State Historical Spreadsheets for 2025
-- Oct 07, 2026
+- Wholesale Electricity Market Data
+- Oct 15, 2026
+- Monthly Densified Biomass Fuel Report
+- Oct 08, 2026
 - Final 2025 Annual Electric Sales and Revenue Data
 - Oct 07, 2026
-- Short-Term Energy Outlook
-- Oct 06, 2026
 
 ###
 Press Room

@@ -4,13 +4,13 @@ Source: https://research.stlouisfed.org/docs/api/fred/v2/
 
 ---
 
-Federal Reserve Bank of St. Louis | Economic Resources & Data
+Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Watch Live: President Musalem’s Q&A at Bloomberg Event
+## Moderated Q&A at Bloomberg Event
 
-St. Louis Fed President Alberto Musalem will participate in a moderated conversation Thursday at 12:40 p.m. CT / 1:40 p.m. ET during Bloomberg’s The Future of Fixed Income event.
+St. Louis Fed President Alberto Musalem (right) shared his current views on the U.S. economy, inflation and monetary policy during Bloomberg’s The Future of Fixed Income event on Oct. 8.
 
 ## Pulse of the Economy
 
@@ -33,19 +33,19 @@ As of August 2026
 
 ### Daily Federal Funds Rate
 
-As of October 6, 2026
+As of October 14, 2026
 
-Event
+Beige Book
 
-## Tune in to the Oct. 6-7 Livestream
+## Eighth District Economic Activity Increases Modestly
 
-Flash Report
+Article
 
-## Unemployment Rises Slightly, Job Growth Slows in September
+## Why Investors Worldwide Hold U.S. Government Debt
 
 Economic Analysis
 
-## U.S. Banking Industry Performance in Q2
+## Eighth District Firms Expect Steady Inflation in Coming Months
 
 ## What We Do
 
