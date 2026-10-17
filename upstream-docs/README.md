@@ -60,6 +60,8 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot
 - `sec` — [Fair Access Policy](https://www.sec.gov/privacy.htm#security) — HTTP 403 — kept previous snapshot
 - `sec` — [Full-Text Search](https://efts.sec.gov/LATEST/) — HTTP 403
+- `senate-lobbying` — [LDA API](https://lda.gov/api/v1/) — HTTP 503 — kept previous snapshot
+- `senate-lobbying` — [LDA Search](https://lda.gov/filings/public/filing/search/) — HTTP 503 — kept previous snapshot
 - `space-weather` — [SWPC data services](https://services.swpc.noaa.gov/) — client-rendered
 - `uspto` — [API docs](https://data.uspto.gov/apis/getting-started) — client-rendered
 - `uspto` — [Rate limits](https://data.uspto.gov/apis/api-rate-limits) — client-rendered

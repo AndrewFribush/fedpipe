@@ -158,7 +158,7 @@ Ukraine-/Russia-related Sanctions
 Oct 09, 2026
 
 Venezuela-Related Sanctions
-Oct 14, 2026
+Oct 16, 2026
 
 Yemen-related Sanctions
 Nov 18, 2021

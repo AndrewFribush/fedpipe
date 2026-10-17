@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Moderated Q&A at Bloomberg Event
+## Young Adults and Tight Labor Markets
 
-St. Louis Fed President Alberto Musalem (right) shared his current views on the U.S. economy, inflation and monetary policy during Bloomberg’s The Future of Fixed Income event on Oct. 8.
+The U.S. unemployment rate has been at or below 4.5% for nearly five years. What kind of difference has this stretch of labor market strength made for young workers?
 
 ## Pulse of the Economy
 
@@ -33,7 +33,11 @@ As of August 2026
 
 ### Daily Federal Funds Rate
 
-As of October 14, 2026
+As of October 15, 2026
+
+Article
+
+## President Musalem Answers Four Questions about the Fed
 
 Beige Book
 
@@ -42,10 +46,6 @@ Beige Book
 Article
 
 ## Why Investors Worldwide Hold U.S. Government Debt
-
-Economic Analysis
-
-## Eighth District Firms Expect Steady Inflation in Coming Months
 
 ## What We Do
 
