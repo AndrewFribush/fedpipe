@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Severe Thunderstorms for Mid-Atlantic and Northeast; Typhoon Approaching Guam
+# Autumn Temperatures for Eastern Third of the Country; Super Typhoon Approaching Guam
 
-A cold front will sweep eastward today accompanied by strong to severe thunderstorms for the mid-Atlantic and Northeast today. In the wake of this cold front, autumn like temperatures and gusty winds from the Plains, Mississippi Valley, Great Lakes to most of the eastern seaboard. Fire weather conditions for lower Mississippi Valley into portions of California. For Guam, a typhoon is approaching.
+Cooler and less humid conditions for the eastern third of the nation as a cold slides off the east coast. Combination of dry and breezy conditions may result in spread of wildfires across the lower Mississippi Valley. In addition, fire weather conditions linger into portions of Southern California. For Guam, a super typhoon is approaching.
 Read More >
 
 Customize Your Weather.gov
