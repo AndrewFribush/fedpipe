@@ -110,4 +110,4 @@ Click the map to launch the tool.
 
 Contact Us About GHG Reporting to ask a question, provide feedback, or report a problem.
 
-Last updated on October 8, 2026
+Last updated on October 16, 2026

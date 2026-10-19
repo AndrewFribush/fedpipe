@@ -49,7 +49,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
-- `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 503
+- `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 400
 - `noaa` — [NCEI Search Service](https://www.ncei.noaa.gov/access/services/search/v1) — HTTP 404
 - `ntsb` — [CAROL query](https://data.ntsb.gov/carol-main-public/) — client-rendered
 - `ofac` — [SDN list](https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists) — client-rendered

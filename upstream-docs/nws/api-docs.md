@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Autumn Temperatures for Eastern Third of the Country; Super Typhoon Approaching Guam
+# Hazardous Coastal Conditions for the Mid-Atlantic; Storm System Approaching Southern Alaska
 
-Cooler and less humid conditions for the eastern third of the nation as a cold slides off the east coast. Combination of dry and breezy conditions may result in spread of wildfires across the lower Mississippi Valley. In addition, fire weather conditions linger into portions of Southern California. For Guam, a super typhoon is approaching.
+A Nor'easter will create hazardous marine and coastal conditions along the Mid-Atlantic coast through mid-week, with significant coastal flooding and beach erosion possible. Meanwhile, another strong storm system is forecast to bring high winds and heavy precipitation to portions of southern Alaska. Elsewhere, relatively benign weather is expected through the first half of the work week.
 Read More >
 
 Customize Your Weather.gov

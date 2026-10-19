@@ -6,8 +6,6 @@ Source: https://echo.epa.gov/tools/web-services
 
 Web Services | ECHO | US EPA
 
-EPA is performing scheduled maintenance on Saturday October 17 between 10:30 am and 5 pm EDT. Many ECHO searches and dashboards may be unavailable during this time.
-
 Skip to main content
 
 Official websites use .gov
