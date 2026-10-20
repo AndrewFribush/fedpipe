@@ -86,7 +86,7 @@ Cuba Sanctions
 Oct 15, 2026
 
 Cyber-Related Sanctions
-Aug 24, 2026
+Oct 19, 2026
 
 Democratic Republic of the Congo-Related Sanctions
 Sep 23, 2026
