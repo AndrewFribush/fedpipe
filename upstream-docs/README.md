@@ -15,6 +15,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
+- `bts` — [BTS Open Data](https://data.bts.gov/) — error: ECONNRESET — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -31,10 +32,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `doj-news` — [DOJ Newsroom](https://www.justice.gov/news) — client-rendered
 - `dol` — [DOL API User Guide](https://data.dol.gov/user-guide) — client-rendered
 - `dol` — [DOL Open Data Portal](https://data.dol.gov/) — client-rendered
-- `epa` — [Envirofacts Web Services](https://www.epa.gov/enviro/web-services) — error: UNABLE_TO_VERIFY_LEAF_SIGNATURE — kept previous snapshot
-- `epa` — [GHGRP](https://www.epa.gov/ghgreporting) — error: UNABLE_TO_VERIFY_LEAF_SIGNATURE — kept previous snapshot
-- `epa` — [SDWIS](https://www.epa.gov/ground-water-and-drinking-water/safe-drinking-water-information-system-sdwis-federal-reporting) — error: UNABLE_TO_VERIFY_LEAF_SIGNATURE — kept previous snapshot
-- `epa` — [TRI](https://www.epa.gov/toxics-release-inventory-tri-program) — error: UNABLE_TO_VERIFY_LEAF_SIGNATURE — kept previous snapshot
 - `faa` — [Field layout (ardata.pdf)](https://registry.faa.gov/database/ReleasableAircraft.zip) — binary (application/x-zip-compressed)
 - `fara` — [FARA API](https://efile.fara.gov/api) — HTTP 404
 - `fara` — [FARA eFile](https://efile.fara.gov/) — client-rendered

@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Hazardous Coastal Conditions for the Mid-Atlantic; Storm System Approaching Southern Alaska
+# Nor'easter Bringing Dangerous Coastal Conditions to the Mid-Atlantic; Pacific Storm to Impact the Southwest U.S.
 
-A Nor'easter will create hazardous marine and coastal conditions along the Mid-Atlantic coast through mid-week, with significant coastal flooding and beach erosion possible. Meanwhile, another strong storm system is forecast to bring high winds and heavy precipitation to portions of southern Alaska. Elsewhere, relatively benign weather is expected through the first half of the work week.
+A Nor'easter well off the East Coast will slowly track north this week and may gain some subtropical characteristics. Strong onshore winds will bring flooding, dangerous marine conditions, and beach erosion along the Mid-Atlantic coast. A Pacific storm will bring gusty winds, severe thunderstorms, and mountain snow to portions of California and the Southwest U.S. through Thursday.
 Read More >
 
 Customize Your Weather.gov
@@ -218,7 +218,7 @@ Information on outages is generally communicated through Administrative messages
 
 The API uses linked data to allow applications to discover content. Similar to a web site that provides HTML links to help users navigate to each page, linked data helps applications navigate to each endpoint. You may also review the OPEN API specification on the "Specification" tab on this page, or directly using the specification endpoint (that is also used to create the tab presentation): https://api.weather.gov/openapi.json.
 
-### How do I get the forecast?
+### How do I get the point forecast?
 
 Forecasts are created at each NWS Weather Forecast Office (WFO) on their own grid definition, at a resolution of about 2.5km x 2.5km. The API endpoint for the 12h forecast periods at a specific grid location is formatted as:
 
@@ -246,7 +246,7 @@ Applications may cache the grid for a location to improve latency and reduce the
 
 The /points endpoint also contains information about the issuing office, observation stations, and zones for a given point location.
 
-### How do I get the forecast as DWML?
+### How do I get the point forecast as DWML?
 
 The forecast can be formatted as DWML for the /forecast and /forecast/hourly endpoints. There is no DWML specification for point lookups, so you first need to use the JSON-only /point endpoint described in the previous question to convert the location to a grid. Once you know the full gridpoint url for the forecast or hourly forecast, you can set the Accept header described in the overview to request the DWML format.
 
@@ -269,6 +269,28 @@ For additional details on the format of an alert's content, please see the CAP d
 The /alerts endpoint contains alerts issued over the past seven days. For an official archive of NWS CAP alerts, please reach out to the National Centers for Environmental Information (NCEI).
 
 Note: The /alerts and /alerts/active endpoints do NOT contain SPC's SEL product language for Tornado Watches. Tornado Watch alerts are derived directly from the local WFO's WCN product.
+
+### How do I get current weather station observations?
+
+Observations are recorded at specific weather stations. To retrieve observations, you need the station ID (e.g., KTOP).
+
+You can find the observation stations for a given area using the /points endpoint. The response will include an observationStations property with a URL to a list of nearby stations:
+
+https://api.weather.gov/points/{latitude},{longitude}
+
+The observationStations endpoint is sorted by distance from the WFO forecast gridpoint, closest to farthest. Data quality can vary by provider. Most stations are not maintained by the NWS, except the ASOS stations. Once you have a specific station ID, you can retrieve its recent observations using the /stations endpoint:
+
+https://api.weather.gov/stations/{stationId}/observations
+
+For example: https://api.weather.gov/stations/KTOP/observations
+
+To retrieve only the single most recent observation for a station, append /latest to the request:
+
+https://api.weather.gov/stations/{stationId}/observations/latest
+
+For example: https://api.weather.gov/stations/KTOP/observations/latest
+
+Note: since this service is designed for realtime data, only 7 days of observations are retained for weather stations.
 
 ### Can I retrieve radar display data?
 
