@@ -9,14 +9,22 @@ The EIA APIv2 route tree, as reported by the API itself (`GET /v2/` and `GET /v2
 ## coal — Coal
 
 EIA coal energy data
-- (children unavailable: The operation was aborted due to timeout)
+- `coal/shipments` — Coal Shipments
+- `coal/consumption-and-quality` — Consumption and Quality
+- `coal/aggregate-production` — Aggregate Production
+- `coal/exports-imports-quantity-price` — Exports\Imports Quantity\Price
+- `coal/market-sales-price` — Market Sales Price
+- `coal/mine-production` — Mine Production
+- `coal/price-by-rank` — Price by Rank
+- `coal/reserves-capacity` — Reserves Capacity
 
 ## crude-oil-imports — Crude Oil Imports
 
 Crude oil imports by country to destination, 
         includes type, grade, quantity.  Source: EIA-814  Interactive data 
         product:  www.eia.gov/petroleum/imports/companylevel/
-- (children unavailable: The operation was aborted due to timeout)
+- data columns: `quantity`
+- frequencies: monthly, annual
 
 ## electricity — Electricity
 
@@ -117,7 +125,10 @@ Annual U.S. projections using National Energy Modelling System (NEMS) for releas
 ## ieo — International Energy Outlook
 
 Annual international projections using the World Energy Projection System (WEPS) model for release year.  Report and interactive projection data browser:  IEO (www.eia.gov/ieo/)
-- (children unavailable: HTTP 429 for https://api.eia.gov/v2/ieo?api_key=85BYhVcILLDkVtR288Q7fQOfYXNGJLSZCiBxjovJ)
+- `ieo/2023` — 2023
+- `ieo/2021` — 2021
+- `ieo/2019` — 2019
+- `ieo/2017` — 2017
 
 ## co2-emissions — State CO2 Emissions- deprecated: see SEDS
 

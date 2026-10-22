@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Nor'easter Bringing Dangerous Coastal Conditions to the Mid-Atlantic; Pacific Storm to Impact the Southwest U.S.
+# Subtropical Storm Josephine Impacts the Eastern Seaboard; Pacific Storm Impacting the Southwest U.S.
 
-A Nor'easter well off the East Coast will slowly track north this week and may gain some subtropical characteristics. Strong onshore winds will bring flooding, dangerous marine conditions, and beach erosion along the Mid-Atlantic coast. A Pacific storm will bring gusty winds, severe thunderstorms, and mountain snow to portions of California and the Southwest U.S. through Thursday.
+Subtropical Storm Josephine will continue to bring significant coastal flooding impacts, dangerous marine conditions, and beach erosion along portions of the Eastern Seaboard. A Pacific storm will interact with tropical moisture and bring excessive rainfall, severe thunderstorms, and high elevation snow to California, the Southwest, and Four Corners region.
 Read More >
 
 Customize Your Weather.gov

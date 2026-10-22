@@ -62,7 +62,7 @@ Balkans-Related Sanctions
 Nov 20, 2025
 
 Belarus Sanctions
-Oct 05, 2026
+Oct 21, 2026
 
 Burma-Related Sanctions
 Oct 09, 2026
@@ -107,7 +107,7 @@ International Criminal Court-Related Sanctions
 Oct 09, 2026
 
 Iran Sanctions
-Oct 15, 2026
+Oct 21, 2026
 
 Iraq-Related Sanctions
 Oct 05, 2026
@@ -131,7 +131,7 @@ Non-Proliferation Sanctions
 Oct 05, 2026
 
 North Korea Sanctions
-Mar 12, 2026
+Oct 21, 2026
 
 Promoting Accountability for Assad and Regional Stabilization Sanctions (PAARSS)
 Sep 24, 2026
@@ -140,7 +140,7 @@ Rough Diamond Trade Controls
 Jun 18, 2018
 
 Russian Harmful Foreign Activities Sanctions
-Oct 15, 2026
+Oct 21, 2026
 
 Somalia Sanctions
 May 24, 2023

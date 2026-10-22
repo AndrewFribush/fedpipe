@@ -11,7 +11,7 @@ CLOSE
 
 SEARCH
 
-# ​​​​​​​​​​​​NAEP Data Service API
+# ​​​​​​​​​​​​​​​​NAEP Data Service API
 
 Are you interested in obtaining NAEP results in a machine-readable format? Do you create your own data visualizations or use tools for data analytics?
 
@@ -109,7 +109,7 @@ https://www.nationsreportcard.gov/Dataservice/GetAdhocData.aspx?type=data&subjec
 
 - Important return: value – the statistic you are looking for.
 
-### Crosstabluation data requests
+### Cross-tabulation data requests
 
 https://www.nationsreportcard.gov/Dataservice/GetAdhocData.aspx?type=data&subject=mathematics&grade=8&subscale=MRPCM&variable=SDRACE%2BGENDER&categoryindex=2%2B1,2%2B2,3%2B1,3%2B2&jurisdiction=NP,CA&stattype=MN%3AMN&Year=2013,2015&StackType=RowThenCol
 
@@ -844,7 +844,7 @@ Special and Optional Parameter Values
 
 - Set value to true to see the data keys
 - Example Call:
-https://www.nationsreportcard.gov/nrcdataservice/GetAdhocData.aspx?type=gaponvaracrossjuris&subject=mathematics&grade=8&subscale=MRPCM&variable=GENDER&jurisdiction=NP,CA,CO,NJ,PA,NV&stattype=MN%3AMN&Year=2015,2013&RevealDataKeys=true
+https://www.nationsreportcard.gov/dataservice/GetAdhocData.aspx?type=gaponvaracrossjuris&subject=mathematics&grade=8&subscale=MRPCM&variable=GENDER&jurisdiction=NP%2cCA%2cCO%2cNJ%2cPA%2cNV&stattype=MN%3aMN&Year=2015%2c2013&RevealDataKeys=true
 
 ### ShowDetails (Show Standard Errors)
 
@@ -852,11 +852,31 @@ The API can return additional statistical details for data queries when the opti
 
 When enabled, the response includes:
 - Standard errors
-- Coefficient of variation (CV)
+
+- Coefficient of variation (CV)​
 
 Example:
 
-https://www.nationsreportcard.gov/Dataservice/GetAdhocData.aspx?type=data&subject=mathematics&grade=8&subscale=MRPCM&variable=SDRACE%2BGENDER&categoryindex=2%2B1,2%2B2,3%2B1,3%2B2&jurisdiction=NP,CA&stattype=MN%3AMN&Year=2013,2015&StackType=RowThenCol&ShowDetails=true
+https://www.nationsreportcard.gov/dataservice/GetAdhocData.aspx?type=data&subject=mathematics&grade=8&subscale=MRPCM&variable=SDRACE%2BGENDER&categoryindex=2%2B1,2%2B2,3%2B1,3%2B2&jurisdiction=NP,CA&stattype=MN%3AMN&Year=2013,2015&StackType=RowThenCol&ShowDetails=true
+
+### Collapse variable categories
+
+- Special parameter that allows collapsed variable categories
+
+- Collapse - [Variable ID]:[jurisdictions]-[label]
+
+- code - variable id to refer to the variable of interest
+- categories – list of category values separated by hyphen
+- label - custom label to describe the collapsed group
+
+- Example Call:
+https://nationsreportcard.gov/dataservice/GetAdhocData.aspx?type=data&subject=mathematics&grade=8&subscale=MRPCM&variable=SDRACE&jurisdiction=NP &stattype=MN%3AMN&Year=2013,2015&Collapse=SDRACE:1-2-Black%20White
+- Example Breakdown: Collapse=SDRACE:1-2-Black%20White
+
+- The SDRACE variable has 6 categories. The first two categories are 1 for White students and 2 for Black students.
+- The example combines White and Black students into a single category. The other 4 categories will display by default.
+
+​
 
 ### CollapseJ (Combine Jurisdictions)
 
@@ -865,11 +885,11 @@ https://www.nationsreportcard.gov/Dataservice/GetAdhocData.aspx?type=data&subjec
 - CollapseJ - [code]:[jurisdictions]-[label]
 
 - code - custom code or id to refer to the jurisdiction group
-- jurisdicitons - list of jurisdictions separated by hyphen
-- label - custom label to describe jurisdiction group
+- jurisdictions - list of jurisdictions separated by hyphen
+- label - custom label to describe jurisdiction group​
 
 - Example Call:
-https://nationsreportcard.gov/GetAdhocData.aspx?type=data&subject=mathematics&grade=8&subscale=MRPCM&variable=SDRACE&jurisdiction=NP,CA,CO,NJ,PA,NY,NV&stattype=MN%3AMN&Year=2013,2015&CollapseJ=THEC:CA-CO-The%20C%20States,ATL:NJ-PA-NY-CT-DE-Atlantic%20States
+https://nationsreportcard.gov/dataservice/GetAdhocData.aspx?type=data&subject=mathematics&grade=8&subscale=MRPCM&variable=SDRACE&jurisdiction=NP,CA,CO,NJ,PA,NY,CT,DE&stattype=MN%3AMN&Year=2013,2015&CollapseJ=THEC:CA-CO-The%20C%20States,ATL:NJ-PA-NY-CT-DE-Atlantic%20States
 - Example Breakdown: THEC:CA-CO-The%20C%20States,ATL:NJ-PA-NY-CT-DE-Atlantic%20States
 
 - There are 2 jurisdiction groups
@@ -883,7 +903,7 @@ https://nationsreportcard.gov/GetAdhocData.aspx?type=data&subject=mathematics&gr
 - Jurisdiction Group 2
 
 - Code - ATL
-- Jurisdictions - NJ, PA, NY, CT, DE
+- Jurisdictions - NJ, PA, NY, CT, DE​
 - Label - Atlantic States​
 
 ​
