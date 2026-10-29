@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Young Adults and Tight Labor Markets
+## The Energy Assistance Landscape: Programs to Reduce Utility Cost Pressures
 
-The U.S. unemployment rate has been at or below 4.5% for nearly five years. What kind of difference has this stretch of labor market strength made for young workers?
+A survey of federal and local programs looks at help available to low-income Eighth District households for paying utility bills, weatherizing homes and improving energy security.
 
 ## Pulse of the Economy
 
@@ -23,29 +23,29 @@ Economic Data
 
 As of September 2026
 
-3.42%
+3.65%
 
 ### PCE Inflation
 
-As of August 2026
+As of September 2026
 
 3.88%
 
 ### Daily Federal Funds Rate
 
-As of October 20, 2026
+As of October 27, 2026
 
-Article
+From Our President & CEO
 
-## President Musalem Answers Four Questions about the Fed
+## Pres. Musalem's Remarks and Community Engagement
 
-Beige Book
+News Release
 
-## Eighth District Economic Activity Increases Modestly
+## FOMC Holds Federal Funds Rate Target Range Steady
 
-Article
+Economic Analysis
 
-## Why Investors Worldwide Hold U.S. Government Debt
+## Measuring Shipping Disruptions with Satellite Data
 
 ## What We Do
 

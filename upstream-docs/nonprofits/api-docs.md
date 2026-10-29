@@ -419,36 +419,34 @@ Contact us at [email protected]
 Nonprofit Explorer includes summary data for nonprofit tax returns and
 full Form 990 documents, in both PDF and digital formats.
 
-The summary data contains information processed by the IRS during the
-2012-2019 calendar years; this generally consists of filings for the
-2011-2018 fiscal years, but may include older records. This data release
-includes only a subset of what can be found in the full Form 990s.
+The summary data contains financial information from tax returns processed
+by the IRS since the 2012 calendar years, as well as data extracted from
+digital filings. IRS summary data also includes limited older records. This
+data release includes only a subset of what can be found in the full Form 990s.
 
 In addition to the raw summary data, we link to PDFs and digital copies
 of full Form 990 documents wherever possible. This consists of separate
 releases by the IRS of Form 990 documents processed by the agency, which
 we update regularly.
 
-We also link to copies of audits nonprofit organizations that spent
-$750,000 or more in Federal grant money in a single fiscal year since
+We also link to copies of audits for nonprofit organizations that spent
+$750,000 or more in federal grant money in a single fiscal year since
 2016. These audits are copied from the Federal Audit Clearinghouse.
 
 ### Which Organizations Are Here?
 
-Every organization that has been recognized as tax exempt by the IRS
-has to file Form 990 every year, unless they make less than $200,000
+Most organizations that have been recognized as tax exempt by the IRS
+have to file the Form 990 every year, unless they make less than $200,000
 in revenue and have less than $500,000 in assets, in which case they
-have to file form 990-EZ. Organizations making less than $50,000
+have to file the Form 990-EZ. Organizations making less than $50,000
 don’t have to file either form but do have to let the IRS they’re
 still in business via a
-Form 990N "e-Postcard."
+Form 990N "e-Postcard," which does not contain financial details. Churches are not required to file Form 990.
 
-Nonprofit Explorer has organizations claiming tax exemption in each
-of the 27 subsections of the 501(c) section of the tax code, and
-which have filed a Form 990, Form 990EZ or Form 990PF. Taxable
+Nonprofit Explorer has organizations that are claiming tax exemption in any
+of the 27 subsections of the 501(c) section of the tax code. Taxable
 trusts and private foundations that are required to file a form
-990PF are also included. Small organizations filing a Form 990N
-"e-Postcard" are not included in this data.
+990PF are also included.
 
 ### Types of Nonprofits
 
@@ -461,15 +459,14 @@ See the list »
 For those interested in acquiring the original data from the source,
 here’s where our data comes from:
 
-Raw filing data. Includes EINs and summary financials as structured data.
+Raw filing data. Includes Employer Identification Numbers and summary financials as structured data.
 
 Exempt Organization profiles. Includes organization names, addresses, etc. You can merge
 this with the raw filing data using EIN numbers.
 
 Form 990 documents. Prior to 2017, these documents were obtained and processed by
 Public.Resource.org
-and ProPublica. Bulk PDF downloads since 2017 are available from
-the IRS.
+and ProPublica.
 
 Form 990 documents as XML files. Includes complete filing data (financial details, names of
 officers, tax schedules, etc.) in machine-readable format. Only
@@ -478,7 +475,7 @@ released prior to October 2021 is also available
 through Amazon Web Services.
 
 Audits. PDFs of single or program-specific audits for nonprofit
-organizations that spent $750,000 or more in Federal grant money
+organizations that spent $750,000 or more in federal grant money
 in a single fiscal year. Available for fiscal year 2015 and
 later.
 
@@ -512,4 +509,4 @@ E-file viewer adapted from
 IRS e-File Viewer by Ben Getson. Code for scraping audit documents adapated from
 Govwiki.
 
-Updated September 23, 2026
+Updated October 22, 2026

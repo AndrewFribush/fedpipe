@@ -170,9 +170,6 @@ ESPAÑOL
 
 Search
 
-#
-Forging the Future: A Year of Progress Focused on the American Workforce
-
 ## Honoring the American Worker While Driving Efficiency in 2025
 
 ## Introduction: A Historic Milestone

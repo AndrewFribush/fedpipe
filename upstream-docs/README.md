@@ -15,19 +15,21 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
+- `census` — [Geocoder](https://geocoding.geo.census.gov/geocoder/) — client-rendered — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
 - `clinical-trials` — [Search Areas](https://clinicaltrials.gov/data-api/about-api/search-areas) — client-rendered
 - `clinical-trials` — [Study Data Structure](https://clinicaltrials.gov/data-api/about-api/study-data-structure) — client-rendered
-- `cms` — [Provider Data API](https://data.cms.gov/provider-data/docs) — client-rendered
-- `cms` — [Provider Data Catalog](https://data.cms.gov/provider-data/) — client-rendered
+- `cms` — [Provider Data API](https://data.cms.gov/provider-data/docs) — HTTP 403
+- `cms` — [Provider Data Catalog](https://data.cms.gov/provider-data/) — HTTP 403
 - `college-scorecard` — [API Documentation](https://collegescorecard.ed.gov/data/api-documentation/) — HTTP 403 — kept previous snapshot
 - `college-scorecard` — [College Scorecard](https://collegescorecard.ed.gov/) — HTTP 403 — kept previous snapshot
 - `college-scorecard` — [Data Dictionary](https://collegescorecard.ed.gov/assets/CollegeScorecardDataDictionary.xlsx) — HTTP 403
 - `congress` — [API Docs](https://api.congress.gov/) — client-rendered
 - `congress` — [Interactive Docs](https://api.congress.gov/#/) — client-rendered
 - `congress` — [Sign Up](https://api.congress.gov/sign-up/) — client-rendered
+- `courtlistener` — [REST API docs](https://www.courtlistener.com/help/api/rest/) — HTTP 405 — kept previous snapshot
 - `doj-news` — [DOJ Newsroom](https://www.justice.gov/news) — client-rendered
 - `dol` — [DOL API User Guide](https://data.dol.gov/user-guide) — client-rendered
 - `dol` — [DOL Open Data Portal](https://data.dol.gov/) — client-rendered
@@ -61,7 +63,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot
 - `sec` — [Fair Access Policy](https://www.sec.gov/privacy.htm#security) — HTTP 403 — kept previous snapshot
 - `sec` — [Full-Text Search](https://efts.sec.gov/LATEST/) — HTTP 403
-- `space-weather` — [GFZ Kp/ap/Ap archive](https://kp.gfz.de/en/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `space-weather` — [SWPC data services](https://services.swpc.noaa.gov/) — client-rendered
 - `uspto` — [API docs](https://data.uspto.gov/apis/getting-started) — client-rendered
 - `uspto` — [Rate limits](https://data.uspto.gov/apis/api-rate-limits) — client-rendered

@@ -8,17 +8,10 @@ RePORT
 
 Skip Navigation Links
 
-#####
+##### NIH Websites Are Changing
 
-NIH Websites Are Changing
-
-Get the Latest Updates and FAQs on the transition
-
-Per
-Executive Order 14434
-, federal agencies are now using "Super Intelligence" (SI) in
-place of "Artificial Intelligence" (AI). You may see both terms
-across NIH content during this transition.
+- Get the Latest Updates and FAQs on the transition
+- Per Executive Order 14434, federal agencies are now using "Super Intelligence" (SI) in place of "Artificial Intelligence" (AI). You may see both terms across NIH content during this transition.
 
 RePORT
 

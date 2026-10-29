@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Subtropical Storm Josephine Impacts the Eastern Seaboard; Pacific Storm Impacting the Southwest U.S.
+# Bering Sea Storms for Alaska; Multi-Day Heavy Rain Event for the Southern Plains and Southwest
 
-Subtropical Storm Josephine will continue to bring significant coastal flooding impacts, dangerous marine conditions, and beach erosion along portions of the Eastern Seaboard. A Pacific storm will interact with tropical moisture and bring excessive rainfall, severe thunderstorms, and high elevation snow to California, the Southwest, and Four Corners region.
+A series of Bering Sea storms will impact western Alaska this week, with elevated water levels, isolated coastal flooding, high surf, erosion, and strong winds. Heavy rain and snow are also expected for the West Coast into Interior Alaska. A multi-day flash flooding threat is forecast across parts of the southern High Plains and Southwest through the weekend. Surf remains high for Florida.
 Read More >
 
 Customize Your Weather.gov

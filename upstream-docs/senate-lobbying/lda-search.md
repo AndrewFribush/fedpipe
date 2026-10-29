@@ -318,7 +318,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 
@@ -830,7 +830,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 
@@ -1473,7 +1473,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 
@@ -1987,7 +1987,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 
@@ -3514,7 +3514,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 
@@ -4034,7 +4034,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 
@@ -4544,7 +4544,7 @@ Mayotte
 
 Mexico
 
-Micronesia (Federated States of)
+Micronesia
 
 Moldova
 

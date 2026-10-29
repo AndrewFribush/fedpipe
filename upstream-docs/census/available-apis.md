@@ -24,15 +24,15 @@ Visit our Discovery Tool page to learn more.
 
 American Community Survey (ACS)
 
-American Community Survey 1-Year Data (2005-2024)
+American Community Survey 1-Year Data (2005-2025)
 
-September 11, 2025
+October 29, 2026
 
 Areas with populations of 65,000+. Covers a broad range of topics about social, economic, demographic, and housing characteristics of the U.S. population.
 
-American Community Survey 1-Year Supplemental Data (2014 - 2024)
+American Community Survey 1-Year Supplemental Data (2014 - 2025)
 
-December 04, 2025
+October 29, 2026
 
 High-level detailed tables tabulated on the 1-year microdata for geographies with populations of 20,000 or more.
 

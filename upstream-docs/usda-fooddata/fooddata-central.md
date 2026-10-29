@@ -42,11 +42,12 @@ BrowseDownloadsRead More
 
 The USDA Global Branded Food Products Database (BFPDB) provided by the Global Data Synchronization Network (GDSN) is updated monthly. BFPDB no longer receives new and/or updated food component information from Label Insight after November 16, 2023. All food component information provided by Label Insight prior to and on this date will remain in the USDA Global Branded Food Products Database.
 
-New for April 2026
+New for October 2026
 
-- New Foods: Inventory and Update Log
-- New Branded Foods Source
-- Coming Soon: Updated Search!
+- New Foods and additional analysis on previous samples have been added: Inventory and Update Log
+
+USDA Food Patterns Equivalents Database (FPED) 2021-2023
+The latest USDA Food Patterns Equivalents Database (FPED) 2021-2023 has been released and is available at: https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/fped-doc-and-datasets/
 
 FNA Child Nutrition Database
 The FNA Child Nutrition Database (CNDB) is now hosted on FDC! Find the CNDB and its related documents on the CNDB page.
