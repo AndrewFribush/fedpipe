@@ -269,12 +269,12 @@ Renewables
 
 ### What's New?
 
+- Wholesale Electricity Market Data
+- Oct 29, 2026
+- Monthly Energy Review
+- Oct 29, 2026
 - Electric Power Monthly
 - Oct 23, 2026
-- Electric Power Annual 2025
-- Oct 21, 2026
-- Wholesale Electricity Market Data
-- Oct 15, 2026
 
 ###
 Press Room
