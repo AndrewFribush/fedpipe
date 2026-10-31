@@ -28,8 +28,8 @@ CodeOpen more actions menu
 
 ## History
 
-831 Commits
-831 Commits
+832 Commits
+832 Commits
 
 ## Folders and files
 
@@ -123,6 +123,12 @@ Congress.gov staff will issue change management communication through the Change
 - API keys and user registration follow the data.gov privacy policy. Read more here.
 
 - API content follows the Library of Congress privacy policy. Read more here.
+
+## Attribution
+
+While not required, the following citation may be used for attribution:
+
+Data retrieved from Congress.gov (https://www.congress.gov/)
 
 ## About
 

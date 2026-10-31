@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Bering Sea Storms for Alaska; Multi-Day Heavy Rain Event for the Southern Plains and Southwest
+# Multi-Day Heavy Rain Event in the Four Corners; Soggy Sunday Expected in Florida
 
-A series of Bering Sea storms will impact western Alaska this week, with elevated water levels, isolated coastal flooding, high surf, erosion, and strong winds. Heavy rain and snow are also expected for the West Coast into Interior Alaska. A multi-day flash flooding threat is forecast across parts of the southern High Plains and Southwest through the weekend. Surf remains high for Florida.
+A series of Pacific storm systems will bring widespread showers, heavy rain, and a flash flooding threat across the Four Corners region this weekend. Ex-Typhoon Champi will approach the Alaskan West Coast bringing localized gusty winds and heavy precipitation. A wet and unsettled weekend is expected across southern Florida with rain expected across the entire peninsula by Sunday.
 Read More >
 
 Customize Your Weather.gov

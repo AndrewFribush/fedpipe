@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## The Energy Assistance Landscape: Programs to Reduce Utility Cost Pressures
+## View President Musalem’s Remarks in New York
 
-A survey of federal and local programs looks at help available to low-income Eighth District households for paying utility bills, weatherizing homes and improving energy security.
+St. Louis Fed President Alberto Musalem outlined his latest views on the U.S. economy and monetary policy in a speech at the Oct. 30 Shadow Open Market Committee meeting.
 
 ## Pulse of the Economy
 
@@ -33,11 +33,11 @@ As of September 2026
 
 ### Daily Federal Funds Rate
 
-As of October 28, 2026
+As of October 29, 2026
 
-From Our President & CEO
+Economic Data
 
-## Pres. Musalem's Remarks and Community Engagement
+## Latest Regional Economic Data and Analysis
 
 News Release
 
