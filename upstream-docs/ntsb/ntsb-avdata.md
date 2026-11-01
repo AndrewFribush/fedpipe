@@ -23,8 +23,8 @@ File size
 File link
 
 avall.zip
-10/1/2026 7:36:33 AM
-96583215
+11/1/2026 6:50:07 AM
+97140358
 
 avall.zip
 
@@ -119,8 +119,8 @@ up01MAY.zip
 up01MAY.zip
 
 up01NOV.zip
-11/1/2025 3:00:47 AM
-759481
+11/1/2026 3:01:28 AM
+1030424
 
 up01NOV.zip
 
