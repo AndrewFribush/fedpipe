@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Multi-Day Heavy Rain Event in the Four Corners; Soggy Sunday Expected in Florida
+# Intensifying Storm Moving Across the Plains; Heavy Rain in Florida; River Flooding in the Southwest
 
-A series of Pacific storm systems will bring widespread showers, heavy rain, and a flash flooding threat across the Four Corners region this weekend. Ex-Typhoon Champi will approach the Alaskan West Coast bringing localized gusty winds and heavy precipitation. A wet and unsettled weekend is expected across southern Florida with rain expected across the entire peninsula by Sunday.
+An intensifying storm system will move into the Plains today, bringing strong winds, locally heavy rain, and scattered severe thunderstorms with a risk of damaging wind gusts and a few tornadoes. Heavy rainfall and isolated flash flooding will continue across eastern and southern Florida. Moderate to major river flooding will continue today across the Southwest and Four Corners Region.
 Read More >
 
 Customize Your Weather.gov

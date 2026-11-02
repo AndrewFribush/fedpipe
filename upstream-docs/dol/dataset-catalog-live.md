@@ -260,7 +260,7 @@ Source: https://apiprod.dol.gov/v4/datasets
       "category_name": "Statistical",
       "created_at": "2024-11-20T20:27:56",
       "dataset_type": 1,
-      "description": "*UPDATED* The National Database of Childcare Prices (NDCP) is the most comprehensive federal source of childcare prices at the county level. The database offers childcare price data by childcare provider type, age of children, and county characteristics. Data are available from 2008 to 2022. The technical guide and more information can be found on our website: https://www.dol.gov/agencies/wb/topics/featured-childcare",
+      "description": "*UPDATED* The National Database of Childcare Prices (NDCP) is the a comprehensive federal source of childcare prices at the county level. The database offers childcare price data by childcare provider type, age of children, and county characteristics. Data are available from 2008 to 2022. The technical guide and more information can be found on our website: https://www.dol.gov/agencies/wb/topics/featured-childcare",
       "frequency": "Ad-Hoc",
       "id": 10278,
       "name": "National Database of Childcare Prices (NDCP)",
@@ -274,7 +274,7 @@ Source: https://apiprod.dol.gov/v4/datasets
         "childcare",
         "persons"
       ],
-      "updated_at": "2026-01-22T15:27:27"
+      "updated_at": "2026-11-02T14:34:29"
     }
   ],
   "meta": {
