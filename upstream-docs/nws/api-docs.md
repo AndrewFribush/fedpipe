@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Intensifying Storm Moving Across the Plains; Heavy Rain in Florida; River Flooding in the Southwest
+# Thunderstorms and Heavy Rainfall in the Mississippi Valley; Heavy Rain Continues in Southeast Florida
 
-An intensifying storm system will move into the Plains today, bringing strong winds, locally heavy rain, and scattered severe thunderstorms with a risk of damaging wind gusts and a few tornadoes. Heavy rainfall and isolated flash flooding will continue across eastern and southern Florida. Moderate to major river flooding will continue today across the Southwest and Four Corners Region.
+A cold front approaching the Mississippi Valley will bring heavy rainfall and isolated severe thunderstorms to the region. Thunderstorms will have the potential to produce isolated severe wind gusts and perhaps a brief tornado or two. Scattered to numerous showers and storms will bring another day of localized flooding to south Florida.
 Read More >
 
 Customize Your Weather.gov

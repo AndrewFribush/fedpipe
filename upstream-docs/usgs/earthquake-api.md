@@ -301,6 +301,48 @@ the geographic point defined by the latitude and longitude parameters.
 NOTE: This option is mutually exclusive with
 maxradius and specifying both will result in an error.
 
+### Time and area limits
+
+Some combinations of time range, area, and ordering take much longer to
+search than others.
+The limits below are being evaluated and are not enforced yet, so these
+requests are currently answered normally. Searches that exceed them may be
+rejected in the future.
+Requests that specify an eventid are not limited.
+
+Request
+Limit
+
+orderby=time or time-asc, with
+limit of 1,000 or less
+
+No limit on the time range.
+
+No limit (or a larger one), whole world
+
+731 days
+
+No limit (or a larger one), within a radius or
+rectangle
+
+1,830 days
+
+orderby=magnitude or magnitude-asc,
+within a radius or rectangle (any limit)
+
+3,660 days
+
+The count method, and requests with no
+limit (or a larger one)
+
+Time range in days &times; area in square degrees up to 100,000,000
+(the whole world is 64,800 square degrees)
+
+The range of the limit parameter is not affected by these
+limits. To search a long time range, use orderby=time or
+time-asc with a limit, or split the search into
+smaller time ranges.
+
 ### Other
 
 parameter

@@ -74,7 +74,10 @@ country, industry, and state.
 
 Have questions about our data
 
-Contact us at developers@bea.gov BEA on GitHub BEA eu.us.opendata pages
+Contact us at developers@bea.gov
+Give Feedback for Interactive Tables and API
+BEA on GitHub
+BEA eu.us.opendata pages
 
 ### Register
 
