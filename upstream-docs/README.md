@@ -48,6 +48,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `grid-disturbances` — [ORNL Open Energy Data Portal](https://openenergyhub.ornl.gov/explore/dataset/oe-417-annual-summaries/) — client-rendered — kept previous snapshot
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
+- `hud` — [FMR & Income Limits API](https://www.huduser.gov/portal/dataset/fmr-api.html) — error: TimeoutError — kept previous snapshot
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
@@ -62,7 +63,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot
 - `sec` — [Fair Access Policy](https://www.sec.gov/privacy.htm#security) — HTTP 403 — kept previous snapshot
 - `sec` — [Full-Text Search](https://efts.sec.gov/LATEST/) — HTTP 403
-- `space-weather` — [GFZ Kp/ap/Ap archive](https://kp.gfz.de/en/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `space-weather` — [SWPC data services](https://services.swpc.noaa.gov/) — client-rendered
 - `uspto` — [API docs](https://data.uspto.gov/apis/getting-started) — client-rendered
 - `uspto` — [Rate limits](https://data.uspto.gov/apis/api-rate-limits) — client-rendered

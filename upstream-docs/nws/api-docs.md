@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Thunderstorms and Heavy Rainfall in the Mississippi Valley; Heavy Rain Continues in Southeast Florida
+# Heavy Rain and Thunderstorms in the Lower Ohio Valley and Southeast; Flooding Continues Along the East Coast of Florida
 
-A cold front approaching the Mississippi Valley will bring heavy rainfall and isolated severe thunderstorms to the region. Thunderstorms will have the potential to produce isolated severe wind gusts and perhaps a brief tornado or two. Scattered to numerous showers and storms will bring another day of localized flooding to south Florida.
+An approaching cold front may produce isolated heavy rainfall and severe weather today over portions of the Lower Ohio Valley and Southeast. While the heavy rainfall is ending across east Florida, significant river flooding is forecast along the St. John’s and the Peace rivers through the end of the week as flood waters will be slow to recede.
 Read More >
 
 Customize Your Weather.gov
