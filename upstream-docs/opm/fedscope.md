@@ -22,6 +22,8 @@ A lock ( ) or https:// means you’ve safely connected to the .gov
 
 website. Share sensitive information only on official, secure websites.
 
+Incomplete Data: A change in Department of War (DOW) data processing continues to impact some components submitting September 2026 data. Visuals and downloads with Status and Dynamics data are affected; all non-DOW data is unaffected. See Release Notes for a full list of affected components. Data will be updated once all submissions are received.
+
 Federal Workforce Data
 
 ###### Explore Data
@@ -107,9 +109,9 @@ Federal employees deliver vital services to the American people every day – fr
 Explore what they do, where they work, and how the workforce is changing.
 
 New data
-August 2026
+September 2026
 
-August 2026 employment and accessions data now available
+September 2026 employment and accessions data now available
 
 Download data
 
@@ -132,7 +134,7 @@ Workforce Insights
 View ready-made visuals that reveal insights into the federal workforce.
 
 Workforce Size & Composition
-106,823
+106,725
 nurses are serving as federal employees.
 
 They form the largest occupation in the federal government and mostly work at the Department of Veterans Affairs.
@@ -334,7 +336,7 @@ Give Feedback
 Data Sources
 Data Quality
 
-Release 1.16.1 | Site last updated October 7, 2026
+Release 1.17.0 | Site last updated November 4, 2026
 © 2026 Office of Personnel Management
 
 Give feedback
