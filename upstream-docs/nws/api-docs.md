@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# River Flooding Continues in East Florida; Rain and Thunderstorms from the Mid-Atlantic to the Northeast Thursday; Heavy Rain in Puerto Rico
+# Heavy Rainfall and Severe Weather Along the East Coast; Unsettled Weather in the Pacific Northwest
 
-Significant river flooding is forecast along the St. John’s and the Peace rivers through the end of the week as flood waters will be slow to recede. Periods of rainfall and thunderstorms are expected across the Lower Great Lakes, Central Appalachians, Mid-Atlantic and Northeast Thursday and Friday. In Puerto Rico, increased moisture in the Atlantic will produce heavy rainfall for the island.
+A cold front across the East Coast will continue to bring heavy to excessive rainfall, gusty to damaging winds, and a possible tornado through Friday. A series of Pacific storms will continue impacts through the middle of next week across the Pacific Northwest and northern California coast. Gusty winds, low elevation rainfall, and high elevation snow are expected.
 Read More >
 
 Customize Your Weather.gov

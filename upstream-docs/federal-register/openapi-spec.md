@@ -8580,7 +8580,8 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "hypersonic-systems",
             "islamic-republic-iran",
             "supercomputing",
-            "department-health-human-services-amends-cfr-chapter-iii-as-follows"
+            "department-health-human-services-amends-cfr-chapter-iii-as-follows",
+            "animal-food-additives"
           ],
           "type": "string"
         },

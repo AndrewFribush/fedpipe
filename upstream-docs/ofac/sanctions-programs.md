@@ -83,10 +83,10 @@ Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
 
 Cuba Sanctions
-Oct 15, 2026
+Nov 05, 2026
 
 Cyber-Related Sanctions
-Oct 19, 2026
+Nov 05, 2026
 
 Democratic Republic of the Congo-Related Sanctions
 Oct 28, 2026
@@ -152,7 +152,7 @@ Sudan and Darfur Sanctions
 Jun 26, 2026
 
 Transnational Criminal Organizations
-Oct 01, 2026
+Nov 05, 2026
 
 Ukraine-/Russia-related Sanctions
 Oct 09, 2026

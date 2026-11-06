@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## View President Musalem’s Remarks in New York
+## Your Fed: Decentralized by Design
 
-St. Louis Fed President Alberto Musalem outlined his latest views on the U.S. economy and monetary policy in a speech at the Oct. 30 Shadow Open Market Committee meeting.
+St. Louis Fed President Alberto Musalem gave a speech on the Fed’s regional structure and the community’s role in our work at a Greater St. Louis Inc. event on Nov. 6.
 
 ## Pulse of the Economy
 
@@ -33,7 +33,7 @@ As of September 2026
 
 ### Daily Federal Funds Rate
 
-As of November 3, 2026
+As of November 4, 2026
 
 Economic Data
 

@@ -15,6 +15,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
+- `cftc` — [CFTC public reporting](https://publicreporting.cftc.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -40,9 +41,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `fcc` — [ECFS API](https://www.fcc.gov/ecfs/public-api-docs.html) — HTTP 403
 - `fec` — [Developers](https://api.open.fec.gov/developers/) — client-rendered
 - `fec` — [Get Key](https://api.open.fec.gov/developers/) — client-rendered
-- `fema` — [Data Sets](https://www.fema.gov/about/openfema/data-sets) — HTTP 403 — kept previous snapshot
-- `fema` — [Disaster Declarations Summaries](https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2) — HTTP 403 — kept previous snapshot
-- `fema` — [OpenFEMA API](https://www.fema.gov/about/openfema/api) — HTTP 403 — kept previous snapshot
 - `form5500` — [Data dictionary](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `form5500` — [Form 5500 datasets](https://www.dol.gov/agencies/ebsa/researchers/data/form-5500-datasets) — HTTP 404
 - `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered
@@ -52,7 +50,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
-- `nfip` — [OpenFEMA NfipClaims](https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v2) — HTTP 403 — kept previous snapshot
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
 - `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 400
