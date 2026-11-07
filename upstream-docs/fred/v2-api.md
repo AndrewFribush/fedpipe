@@ -17,11 +17,11 @@ St. Louis Fed President Alberto Musalem gave a speech on the Fed’s regional st
 Explore Federal Reserve
 Economic Data
 
-4.2%
+4.1%
 
 ### Unemployment
 
-As of September 2026
+As of October 2026
 
 3.65%
 
@@ -33,7 +33,7 @@ As of September 2026
 
 ### Daily Federal Funds Rate
 
-As of November 4, 2026
+As of November 5, 2026
 
 Economic Data
 
@@ -45,7 +45,7 @@ News Release
 
 Economic Analysis
 
-## Measuring Shipping Disruptions with Satellite Data
+## Does Growth in the Money Supply Predict U.S. Inflation?
 
 ## What We Do
 

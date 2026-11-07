@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rainfall and Severe Weather Along the East Coast; Unsettled Weather in the Pacific Northwest
+# Areas of Hazardous Weather This Weekend
 
-A cold front across the East Coast will continue to bring heavy to excessive rainfall, gusty to damaging winds, and a possible tornado through Friday. A series of Pacific storms will continue impacts through the middle of next week across the Pacific Northwest and northern California coast. Gusty winds, low elevation rainfall, and high elevation snow are expected.
+A series of cold fronts from North Pacific storms will bring periods of gusty winds, low elevation rainfall, and high elevation snow to the Pacific Northwest this weekend into next week. Heavy to excessive rainfall may produce areas of flooding over southern Texas this weekend.
 Read More >
 
 Customize Your Weather.gov
@@ -339,7 +339,7 @@ The following issues are related to upstream sources of the API, and are not an 
 - Station observations endpoints always show missing (null) 24h max/min temperatures for stations outside the central time zone due to MADIS ingest bug.
 
 - Delayed observations
-Observations may be delayed up to 20 minutes from MADIS, the upstream source, due to QC processing.
+Observations may be delayed up to 20 minutes from MADIS, the upstream source, due to QC processing. API will contain null values for an observation until the data completes all levels of MADIS QC processing for that variable.
 
 ### Resolutions
 
