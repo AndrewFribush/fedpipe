@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Areas of Hazardous Weather This Weekend
+# Inclement Weather in the Pacific Northwest; Heavy Rain and Thunderstorms in Southern Texas
 
-A series of cold fronts from North Pacific storms will bring periods of gusty winds, low elevation rainfall, and high elevation snow to the Pacific Northwest this weekend into next week. Heavy to excessive rainfall may produce areas of flooding over southern Texas this weekend.
+A series of cold fronts will continue to bring periods of gusty winds, low elevation rainfall, and high elevation snow to the Pacific Northwest this week. Heavy to excessive rainfall may produce areas of flooding over southern Texas through Monday morning.
 Read More >
 
 Customize Your Weather.gov
