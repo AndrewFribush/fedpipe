@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Inclement Weather in the Pacific Northwest; Heavy Rain and Thunderstorms in Southern Texas
+# Weather Impacts for the Pacific Northwest This Week; Watching the Northeast U.S.
 
-A series of cold fronts will continue to bring periods of gusty winds, low elevation rainfall, and high elevation snow to the Pacific Northwest this week. Heavy to excessive rainfall may produce areas of flooding over southern Texas through Monday morning.
+A series of Pacific fronts will bring periods of moderate rain, higher elevation snow, and gusty winds to the Pacific Northwest through this week. A more widespread precipitation event looks likely this weekend. In the Northeast U.S. a storm may bring gusty winds, low elevation rain, and high elevation snow Friday into this coming weekend.
 Read More >
 
 Customize Your Weather.gov

@@ -57,9 +57,7 @@ EIA natural gas survey data
 ## nuclear-outages — Nuclear Outages
 
 EIA nuclear outages survey data
-- `nuclear-outages/us-nuclear-outages` — U.S. Nuclear Outages
-- `nuclear-outages/generator-nuclear-outages` — Generator Level Nuclear Outages
-- `nuclear-outages/facility-nuclear-outages` — Facility Level Nuclear Outages
+- (children unavailable: HTTP 429 for https://api.eia.gov/v2/nuclear-outages?api_key=85BYhVcILLDkVtR288Q7fQOfYXNGJLSZCiBxjovJ)
 
 ## petroleum — Petroleum
 
