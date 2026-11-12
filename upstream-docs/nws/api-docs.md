@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Weather Impacts for the Pacific Northwest This Week; Watching the Northeast U.S.
+# Coastal Storm Along the East Coast; Pacific Storm System in the West on Friday
 
-A series of Pacific fronts will bring periods of moderate rain, higher elevation snow, and gusty winds to the Pacific Northwest through this week. A more widespread precipitation event looks likely this weekend. In the Northeast U.S. a storm may bring gusty winds, low elevation rain, and high elevation snow Friday into this coming weekend.
+A strengthening coastal storm will bring soaking rains to portions of the Mid-Atlantic and Northeast, with accumulating snow likely across the higher elevations of northern New England through Friday. A Pacific storm system will bring heavy low elevation rain, and gusty winds to northern California and the Pacific Northwest, as well as possible blizzard conditions to the Sierra Nevada on Friday.
 Read More >
 
 Customize Your Weather.gov

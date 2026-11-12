@@ -8,7 +8,7 @@ Indicators | Data
 
 # Indicators
 
-Agriculture & Rural DevelopmentAid EffectivenessClimate ChangeEconomy & GrowthEducationEnergy & MiningEnvironmentExternal DebtFinancial SectorGenderHealthInfrastructurePovertyPrivate SectorPublic SectorScience & TechnologySocial DevelopmentSocial Protection & LaborTradeUrban Development
+Agriculture & Rural DevelopmentAid EffectivenessClimate ChangeEconomy & GrowthEducationEnergy & MiningEnvironmentExternal DebtFinancial SectorGenderHealthInfrastructureMillenium development goalsPovertyPrivate SectorPublic SectorScience & TechnologySocial DevelopmentSocial Protection & LaborTradeUrban Development
 
 ### Agriculture & Rural Development
 
@@ -597,6 +597,7 @@ WITS: World Integrated Trade SolutionTCdata360
 - Gender
 - Health
 - Infrastructure
+- Millenium development goals
 - Poverty
 - Private Sector
 - Public Sector

@@ -8581,7 +8581,11 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "islamic-republic-iran",
             "supercomputing",
             "department-health-human-services-amends-cfr-chapter-iii-as-follows",
-            "animal-food-additives"
+            "animal-food-additives",
+            "public-lands-grazing",
+            "nonmetal",
+            "surface-mines",
+            "metal-nonmetal-mines"
           ],
           "type": "string"
         },
