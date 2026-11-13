@@ -27,13 +27,13 @@ OpenFEMA
 
 API Documentation
 
+Working with Large Datasets
+
 Data Sets
 
 Frequently Asked Questions
 
 Changelog
-
-Working with Large Datasets
 
 Developer Resources
 
@@ -44,8 +44,6 @@ Other FEMA Data Sources
 Terms and Conditions
 
 Annual Reports
-
-Data Visualizations
 
 Disaster Relief Fund Reports
 

@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Coastal Storm Along the East Coast; Pacific Storm System in the West on Friday
+# Widespread Precipitation and Gusty Winds in the West; Snow from the Great Lakes to the Northeast
 
-A strengthening coastal storm will bring soaking rains to portions of the Mid-Atlantic and Northeast, with accumulating snow likely across the higher elevations of northern New England through Friday. A Pacific storm system will bring heavy low elevation rain, and gusty winds to northern California and the Pacific Northwest, as well as possible blizzard conditions to the Sierra Nevada on Friday.
+A Pacific storm system is expected to bring strong winds and more precipitation to the western U.S., along with the likelihood of snowfall into the Sierra Nevada. Accumulating snow will develop downwind from the Great Lakes into parts of the Northeast through Saturday. Polar air will surge into the eastern half of the country this weekend.
 Read More >
 
 Customize Your Weather.gov

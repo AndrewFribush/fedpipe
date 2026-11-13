@@ -271,10 +271,10 @@ Renewables
 
 - Monthly Densified Biomass Fuel Report
 - Nov 12, 2026
+- Wholesale Electricity Market Data
+- Nov 12, 2026
 - Short-Term Energy Outlook
 - Nov 10, 2026
-- Petroleum Marketing Monthly
-- Nov 02, 2026
 
 ###
 Press Room

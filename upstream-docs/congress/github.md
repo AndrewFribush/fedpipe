@@ -28,8 +28,8 @@ CodeOpen more actions menu
 
 ## History
 
-833 Commits
-833 Commits
+834 Commits
+834 Commits
 
 ## Folders and files
 
@@ -89,6 +89,10 @@ For every request, three elements are returned:
 An API key is required for access. Sign up for a key here.
 
 Learn more on how you can use your API key to access the Congress.gov API on api.data.gov.
+
+### Key Revocation/Deactivation
+
+Please visit https://api.congress.gov/sign-up/#/deactivate-api-key if you need to revoke/deactivate your API key.
 
 ## Versioning
 

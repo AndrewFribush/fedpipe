@@ -35,10 +35,6 @@ Changelog
 
 API Documentation
 
-Working with Large Datasets
-
-Developer Resources
-
 Open Government
 
 Other FEMA Data Sources
@@ -46,8 +42,6 @@ Other FEMA Data Sources
 Terms and Conditions
 
 Annual Reports
-
-Data Visualizations
 
 Disaster Relief Fund Reports
 

@@ -33,7 +33,7 @@ As of September 2026
 
 ### Daily Federal Funds Rate
 
-As of November 9, 2026
+As of November 11, 2026
 
 Economic Data
 
