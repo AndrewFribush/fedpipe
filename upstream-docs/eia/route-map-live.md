@@ -40,8 +40,7 @@ EIA electricity survey data
 
 Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electricity, renewable, etc.)  
         Interactive product:  https://www.eia.gov/international/data/world
-- data columns: `value`
-- frequencies: monthly, quarterly, annual
+- (children unavailable: The operation was aborted due to timeout)
 
 ## natural-gas — Natural Gas
 

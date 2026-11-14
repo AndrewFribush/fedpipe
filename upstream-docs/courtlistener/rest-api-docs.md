@@ -645,7 +645,7 @@ Learn More
 
 ## Available Jurisdictions
 
-We currently have 3,359 jurisdictions that can be accessed with our APIs. Details about the jurisdictions that are available, including all abbreviations, can be found here.
+We currently have 3,363 jurisdictions that can be accessed with our APIs. Details about the jurisdictions that are available, including all abbreviations, can be found here.
 
 ## Upgrades and Fixes
 
@@ -665,9 +665,9 @@ Additionally, we regularly perform bulk tasks on our servers and maintain a publ
 
 View the Change Log
 
-17,231 views
+20,172 views
 
-Last updated 1 month, 3 weeks ago
+Last updated 2 months, 2 weeks ago
 
 Creator:
 

@@ -28,9 +28,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `congress` — [API Docs](https://api.congress.gov/) — client-rendered
 - `congress` — [Interactive Docs](https://api.congress.gov/#/) — client-rendered
 - `congress` — [Sign Up](https://api.congress.gov/sign-up/) — client-rendered
-- `courtlistener` — [REST API docs](https://www.courtlistener.com/help/api/rest/) — HTTP 405 — kept previous snapshot
 - `doj-news` — [DOJ Newsroom](https://www.justice.gov/news) — client-rendered
-- `dol` — [Dataset Catalog (live)](https://apiprod.dol.gov/v4/datasets) — HTTP 504 — kept previous snapshot
 - `dol` — [DOL API User Guide](https://data.dol.gov/user-guide) — client-rendered
 - `dol` — [DOL Open Data Portal](https://data.dol.gov/) — client-rendered
 - `faa` — [Field layout (ardata.pdf)](https://registry.faa.gov/database/ReleasableAircraft.zip) — binary (application/x-zip-compressed)

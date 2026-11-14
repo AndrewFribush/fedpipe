@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Widespread Precipitation and Gusty Winds in the West; Snow from the Great Lakes to the Northeast
+# Heavy Snow in the Sierra Nevada; Heavy Rainfall in Texas Sunday
 
-A Pacific storm system is expected to bring strong winds and more precipitation to the western U.S., along with the likelihood of snowfall into the Sierra Nevada. Accumulating snow will develop downwind from the Great Lakes into parts of the Northeast through Saturday. Polar air will surge into the eastern half of the country this weekend.
+Heavy snow is expected in the Sierra Nevada mountain ranges into Saturday causing hazardous travel conditions. Winter Storm Warnings have been issued. Thunderstorms and moderate to heavy rainfall are expected across portions of eastern Texas into Louisiana on Sunday.
 Read More >
 
 Customize Your Weather.gov

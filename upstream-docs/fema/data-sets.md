@@ -136,7 +136,7 @@ Hazard Mitigation Assistance (HMA) is for actions taken to reduce or eliminate l
 Hazard mitigation planning reduces loss of life and property by minimizing the impact of disasters. It begins with state, tribal and local governments identifying natural disaster risks and vulnerabilities that are common in their area. After identifying these risks, they develop long-term strategies for protecting people and property from similar events. Mitigation plans are key to breaking the cycle of disaster damage and reconstruction. When applying for certain types of non-emergency disaster assistance, FEMA requires a hazard mitigation plan. These requirements are part of the laws, regulations, and policy surrounding hazard mitigation planning. For more information, visit: Hazard Mitigation Planning
 
 Dataset Name | OpenFEMA API | Files Only
-Hazard Mitigation Grant Program - Disaster Summaries | V2, V3 | N/A
+Hazard Mitigation Grant Program - Disaster Summaries | V3 | N/A
 Hazard Mitigation Plan Statuses | V1 | N/A
 HMA Subapplications | V2 | N/A
 HMA Subapplications by NFIP CRS Communities | V1 | N/A
@@ -152,9 +152,6 @@ Dataset Name | OpenFEMA API | Files Only
 NFIP Redacted Claims | V3 | N/A
 NFIP Redacted Policies | V3 | N/A
 NFIP Reinsurance Placement Information | N/A | LINK
-NFIP Community Layer Comprehensive | V1 | N/A
-NFIP Community Layer No Overlaps Split | V1 | N/A
-NFIP Community Layer No Overlaps Whole | V1 | N/A
 NFIP Community Status Book | V1 | N/A
 NFIP Multiple Loss Properties | V1 | N/A
 NFIP Residential Penetration Rates | V1 | N/A
@@ -169,6 +166,6 @@ OpenFEMA Data Set Fields | V1 | N/A
 Training Course Catalog | V1 | N/A
 Training Class Schedule | V1 | N/A
 
-Last updated October 20, 2026
+Last updated November 13, 2026
 
 Return to top
