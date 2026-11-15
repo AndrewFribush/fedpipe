@@ -117,7 +117,7 @@ If your request fails, the API will return an error message. Common error codes 
 
 The fields parameter allows you to specify which data fields you want to include in the response. This helps minimize the amount of data transferred and makes parsing responses easier.
 All variables are listed in the Data Dictionary and are a combination of the dev-category and developer-friendly name columns. This parameter takes a comma-separated list of field names. For example: fields=id,school.name,school.state will return result records that only contain those three fields.
-Download the Data Dictionary (.xlsx, 703 KB)
+Download the Data Dictionary (.xlsx, 771 KB)
 
 #### Example Field Selection Request
 
@@ -200,5 +200,5 @@ Compare Colleges Compare Fields of Study
 Download the Data Data Documentation API Documentation Change Log Glossary
 
 Powered by College Scorecard Data
-3.6.1 | Contact Us | Notices | Glossary
+3.6.2 | Contact Us | Notices | Glossary
 U.S. Department of Education

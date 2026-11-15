@@ -14070,5 +14070,5 @@ Compare Colleges Compare Fields of Study
 Download the Data Data Documentation API Documentation Change Log Glossary
 
 Powered by College Scorecard Data
-3.6.1 | Contact Us | Notices | Glossary
+3.6.2 | Contact Us | Notices | Glossary
 U.S. Department of Education

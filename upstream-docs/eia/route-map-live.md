@@ -40,7 +40,8 @@ EIA electricity survey data
 
 Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electricity, renewable, etc.)  
         Interactive product:  https://www.eia.gov/international/data/world
-- (children unavailable: The operation was aborted due to timeout)
+- data columns: `value`
+- frequencies: monthly, quarterly, annual
 
 ## natural-gas — Natural Gas
 
@@ -101,8 +102,7 @@ EIA densified biomass data
 ## total-energy — Total Energy
 
 These data represent the most recent comprehensive energy statistics integrated across all energy sources.  The data includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values.  Source: https://www.eia.gov/totalenergy/data/monthly/pdf/mer_a_doc.pdf  Report:  MER (https://www.eia.gov/totalenergy/data/monthly/)
-- data columns: `value`
-- frequencies: annual, monthly
+- (children unavailable: The operation was aborted due to timeout)
 
 ## aeo — Annual Energy Outlook
 
