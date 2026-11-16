@@ -15,6 +15,8 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
+- `cdc` — [CDC Open Data](https://data.cdc.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
+- `cftc` — [CFTC public reporting](https://publicreporting.cftc.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -22,7 +24,9 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `clinical-trials` — [Study Data Structure](https://clinicaltrials.gov/data-api/about-api/study-data-structure) — client-rendered
 - `cms` — [Provider Data API](https://data.cms.gov/provider-data/docs) — HTTP 403
 - `cms` — [Provider Data Catalog](https://data.cms.gov/provider-data/) — HTTP 403
-- `college-scorecard` — [Data Dictionary](https://collegescorecard.ed.gov/assets/CollegeScorecardDataDictionary.xlsx) — binary (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+- `college-scorecard` — [API Documentation](https://collegescorecard.ed.gov/data/api-documentation/) — HTTP 403 — kept previous snapshot
+- `college-scorecard` — [College Scorecard](https://collegescorecard.ed.gov/) — HTTP 403 — kept previous snapshot
+- `college-scorecard` — [Data Dictionary](https://collegescorecard.ed.gov/assets/CollegeScorecardDataDictionary.xlsx) — HTTP 403
 - `congress` — [API Docs](https://api.congress.gov/) — client-rendered
 - `congress` — [Interactive Docs](https://api.congress.gov/#/) — client-rendered
 - `congress` — [Sign Up](https://api.congress.gov/sign-up/) — client-rendered
@@ -56,7 +60,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `ofac` — [SDN list](https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists) — client-rendered
 - `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — HTTP 403
 - `open-payments` — [Open Payments](https://openpaymentsdata.cms.gov/) — HTTP 403
-- `orange-book` — [Orange Book data files](https://www.fda.gov/drugs/drug-approvals-and-databases/orange-book-data-files) — HTTP 404
 - `regulations` — [Regulations.gov](https://www.regulations.gov/) — client-rendered
 - `sec` — [Developer Resources](https://www.sec.gov/about/developer-resources) — HTTP 403 — kept previous snapshot
 - `sec` — [EDGAR APIs](https://www.sec.gov/page/edgar-application-programming-interfaces-old) — HTTP 403 — kept previous snapshot

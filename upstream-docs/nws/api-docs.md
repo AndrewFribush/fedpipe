@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Snow in the Sierra Nevada; Heavy Rainfall in Texas Sunday
+# Two Pacific Storms to Impact the West this Week; Heavy to Excessive Rainfall in Eastern Florida
 
-Heavy snow is expected in the Sierra Nevada mountain ranges into Saturday causing hazardous travel conditions. Winter Storm Warnings have been issued. Thunderstorms and moderate to heavy rainfall are expected across portions of eastern Texas into Louisiana on Sunday.
+Two Pacific storms will impact the western U.S. this week. The second storm arriving Tuesday night into Wednesday may bring heavy to excessive rainfall and possible flooding for coastal central and southern California, while heavy mountain snow is possible across the Sierra Nevada mountains. Heavy to excessive rainfall may bring flooding to parts of the east coast of Florida beginning Tuesday.
 Read More >
 
 Customize Your Weather.gov
