@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## Your Fed: Decentralized by Design
+## View President Musalem’s Remarks in Argentina
 
-St. Louis Fed President Alberto Musalem gave a speech on the Fed’s regional structure and the community’s role in our work at a Greater St. Louis Inc. event on Nov. 6.
+St. Louis Fed President Alberto Musalem shared his latest views on the U.S. economy and monetary policy in a Nov. 17 speech at a Central Bank of Argentina conference.
 
 ## Pulse of the Economy
 
@@ -33,7 +33,7 @@ As of September 2026
 
 ### Daily Federal Funds Rate
 
-As of November 12, 2026
+As of November 13, 2026
 
 Economic Data
 

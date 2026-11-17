@@ -15,8 +15,6 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `bls` — [QCEW Open Data API](https://www.bls.gov/cew/additional-resources/open-data/) — HTTP 403
 - `bls` — [Registration](https://www.bls.gov/developers/home.htm) — HTTP 403 — kept previous snapshot
 - `bls` — [Series Formats](https://www.bls.gov/help/hlpforma.htm) — HTTP 403 — kept previous snapshot
-- `cdc` — [CDC Open Data](https://data.cdc.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
-- `cftc` — [CFTC public reporting](https://publicreporting.cftc.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `clinical-trials` — [API Migration Guide](https://clinicaltrials.gov/data-api/about-api/api-migration) — client-rendered
 - `clinical-trials` — [API v2 Documentation](https://clinicaltrials.gov/data-api/api) — client-rendered
 - `clinical-trials` — [ClinicalTrials.gov](https://clinicaltrials.gov/) — client-rendered
@@ -47,7 +45,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered
 - `govinfo` — [API Docs (Swagger)](https://api.govinfo.gov/docs/) — client-rendered
 - `grid-disturbances` — [DOE OE-417 form](https://www.oe.netl.doe.gov/OE417_annual_summary.aspx) — error: ENETUNREACH
-- `grid-disturbances` — [ORNL Open Energy Data Portal](https://openenergyhub.ornl.gov/explore/dataset/oe-417-annual-summaries/) — client-rendered — kept previous snapshot
+- `grid-disturbances` — [ORNL Open Energy Data Portal](https://openenergyhub.ornl.gov/explore/dataset/oe-417-annual-summaries/) — error: ECONNRESET — kept previous snapshot
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered

@@ -13392,6 +13392,55 @@ Source: https://api.open.fec.gov/swagger/
       },
       "type": "object"
     },
+    "ScheduleESupportOpposeTotals": {
+      "properties": {
+        "candidate_district": {
+          "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+          "type": "string",
+          "x-nullable": true
+        },
+        "candidate_office": {
+          "description": "Federal office candidate runs for: H, S or P",
+          "type": "string",
+          "x-nullable": true
+        },
+        "candidate_state": {
+          "description": "US state or territory where a candidate runs for office",
+          "type": "string",
+          "x-nullable": true
+        },
+        "cycle": {
+          "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+          "type": "integer"
+        },
+        "ie_total": {
+          "type": "number"
+        },
+        "support_oppose_indicator": {
+          "description": "Explains if the money was spent in order to support or oppose a candidate or candidates. (Coded S or O for support or oppose.) This indicator applies to independent expenditures and communication costs.",
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "cycle"
+      ],
+      "type": "object"
+    },
+    "ScheduleESupportOpposeTotalsPage": {
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/OffsetInfo"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/definitions/ScheduleESupportOpposeTotals"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ScheduleF": {
       "properties": {
         "action_code": {
@@ -14910,7 +14959,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15027,7 +15076,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15123,7 +15172,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15230,7 +15279,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15383,7 +15432,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15610,7 +15659,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15828,7 +15877,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -15929,7 +15978,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -16038,7 +16087,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -16333,7 +16382,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -16460,7 +16509,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -16549,7 +16598,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -16657,7 +16706,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -16885,7 +16934,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -17141,7 +17190,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -17351,7 +17400,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -17550,7 +17599,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -17808,7 +17857,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18007,7 +18056,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18109,7 +18158,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18198,7 +18247,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18493,7 +18542,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18640,7 +18689,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18749,7 +18798,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -18908,7 +18957,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -19105,7 +19154,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -19379,7 +19428,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -19549,7 +19598,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -19699,7 +19748,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -19810,7 +19859,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -19971,7 +20020,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -20097,7 +20146,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -20312,7 +20361,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -20494,7 +20543,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -20626,7 +20675,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -20758,7 +20807,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -20890,7 +20939,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21049,7 +21098,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21215,7 +21264,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21360,7 +21409,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21457,7 +21506,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21604,7 +21653,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21686,7 +21735,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -21868,7 +21917,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -22229,7 +22278,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -24388,7 +24437,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -24707,7 +24756,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -24830,7 +24879,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -24984,7 +25033,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25122,7 +25171,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25236,7 +25285,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25332,7 +25381,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25428,7 +25477,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25524,7 +25573,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25667,7 +25716,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -25786,7 +25835,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -26028,7 +26077,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -26987,7 +27036,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27185,7 +27234,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27293,7 +27342,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27408,7 +27457,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27520,7 +27569,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27643,7 +27692,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27746,7 +27795,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27857,7 +27906,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -27972,7 +28021,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -28082,7 +28131,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -28242,7 +28291,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -28547,7 +28596,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -28843,7 +28892,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -29155,7 +29204,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -29336,7 +29385,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -29444,7 +29493,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -29552,7 +29601,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -29690,7 +29739,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -29973,7 +30022,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -30176,7 +30225,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -30311,7 +30360,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -30487,7 +30536,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -30665,7 +30714,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -30901,7 +30950,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -31051,6 +31100,138 @@ Source: https://api.open.fec.gov/swagger/
         ]
       }
     },
+    "/v1/schedules/schedule_e/all_candidates/support_oppose_totals/": {
+      "get": {
+        "description": "\nIndependent expenditure supported or opposed totals for all candidates by cycle or candidate election year.\n",
+        "parameters": [
+          {
+            "collectionFormat": "multi",
+            "description": "\nFilter records to only those that were applicable to a given\ntwo-year period.The cycle begins with an odd year and is named\nfor its ending, even year.\n",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "cycle",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Two-digit US House distirict of the office the candidate is running for. Presidential, Senate and House at-large candidates will have District 00.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "district",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "US state or territory where a candidate runs for office",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "-cycle",
+            "description": "Provide a field to sort by. Use `-` for descending order.\n",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "DEMO_KEY",
+            "description": "\nAPI key for https://api.data.gov. Get one at https://api.data.gov/signup.\n",
+            "in": "query",
+            "name": "api_key",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": 1,
+            "description": "For paginating through results, starting at page 1",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 20,
+            "description": "The number of results returned per page. Defaults to 20.",
+            "in": "query",
+            "name": "per_page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": false,
+            "description": "Hide null values on sorted column(s).",
+            "in": "query",
+            "name": "sort_hide_null",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
+            "in": "query",
+            "name": "sort_null_only",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "description": "Toggle that sorts null values last",
+            "in": "query",
+            "name": "sort_nulls_last",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "Federal office candidate runs for: H, S or P",
+            "enum": [
+              "",
+              "H",
+              "S",
+              "P"
+            ],
+            "in": "query",
+            "name": "office",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "Support or opposition",
+            "enum": [
+              "S",
+              "O",
+              "Other"
+            ],
+            "in": "query",
+            "name": "support_oppose",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ScheduleESupportOpposeTotalsPage"
+            }
+          }
+        },
+        "tags": [
+          "independent expenditures"
+        ]
+      }
+    },
     "/v1/schedules/schedule_e/by_candidate/": {
       "get": {
         "description": "\nSchedule E receipts aggregated by recipient candidate. To avoid double\ncounting, memoed items are not included.\n",
@@ -31122,7 +31303,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -31378,7 +31559,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -31565,7 +31746,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -31713,7 +31894,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -32178,7 +32359,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -32385,7 +32566,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -32515,7 +32696,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -32605,7 +32786,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -32726,7 +32907,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,
@@ -32921,7 +33102,7 @@ Source: https://api.open.fec.gov/swagger/
           },
           {
             "default": false,
-            "description": "Toggle that filters out all rows having sort column that is non-null",
+            "description": "Toggle indicating that the current cursor is in the null-valued portion of the results.",
             "in": "query",
             "name": "sort_null_only",
             "required": false,

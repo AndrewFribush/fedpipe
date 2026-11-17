@@ -259,7 +259,7 @@ Disclaimer of endorsement: Reference above to any specific commercial products, 
 - Tax Exempt Organization Search bulk data downloads
 - Tax Exempt Organization Search Tool
 
-Page Last Reviewed or Updated: 13-Nov-2026
+Page Last Reviewed or Updated: 16-Nov-2026
 
 - Share
 - Facebook

@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Two Pacific Storms to Impact the West this Week; Heavy to Excessive Rainfall in Eastern Florida
+# Widespread Precipitation and Gusty Winds in the West; Snow from the Great Lakes to the Northeast
 
-Two Pacific storms will impact the western U.S. this week. The second storm arriving Tuesday night into Wednesday may bring heavy to excessive rainfall and possible flooding for coastal central and southern California, while heavy mountain snow is possible across the Sierra Nevada mountains. Heavy to excessive rainfall may bring flooding to parts of the east coast of Florida beginning Tuesday.
+A Pacific storm system is expected to bring strong winds and more precipitation to the western U.S., along with the likelihood of snowfall into the Sierra Nevada. Accumulating snow will develop downwind from the Great Lakes into parts of the Northeast through Saturday. Polar air will surge into the eastern half of the country this weekend.
 Read More >
 
 Customize Your Weather.gov

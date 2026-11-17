@@ -8585,7 +8585,8 @@ Source: https://www.federalregister.gov/api/v1/documentation.json
             "public-lands-grazing",
             "nonmetal",
             "surface-mines",
-            "metal-nonmetal-mines"
+            "metal-nonmetal-mines",
+            "telecommunications-television"
           ],
           "type": "string"
         },
