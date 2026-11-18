@@ -13,7 +13,7 @@ Donate Install RECAP
 
 The RECAP Suite is a collection of tools for working with PACER, the data access system for American federal courts.
 
-If you use PACER, consider installing the RECAP extension in your browser. If you are a researcher, you can search millions of federal filings in the RECAP Archive. Journalists and court watchers will find docket alerts and RECAP search alerts invaluable. If you get notifications from PACER, check out our NEF notification handler.
+If you use PACER, consider installing the RECAP extension in your browser. If you are a researcher, you can search millions of federal filings, plus Supreme Court filings since 2000, in the RECAP Archive. Journalists and court watchers will find docket alerts and RECAP search alerts invaluable. If you get notifications from PACER, check out our NEF notification handler.
 
 Add to Chrome
 Add to Edge
@@ -40,15 +40,17 @@ See Screenshots See the FAQs
 
 Thanks to our users and our data consulting projects, the RECAP Archive contains tens of millions of PACER documents, including every free opinion in PACER. Everything in the archive is fully searchable, including millions of pages that were originally scanned PDFs.
 
+The RECAP Archive also includes dockets and filings from the Supreme Court of the United States, gathered directly from the Court's website. It covers cases from 2000 to today, and new filings are added within minutes. Learn more about our Supreme Court collection.
+
 The RECAP Archive is also regularly uploaded to the Internet Archive, where it has a lasting home. This amounts to thousands of liberated documents daily.
 
-Finally, we make the RECAP Archive available via an API or as bulk data for journalists, researchers, startups, and developers.
+Finally, we make the RECAP Archive available via an API or as bulk data for journalists, researchers, startups, and developers. Supreme Court dockets are not yet available in our APIs, but we plan to add them soon.
 
 Visit the RECAP Archive Read about the RECAP APIs
 
 ## Use Docket Alerts to Keep Up with Cases
 
-Thousands of journalists and court watchers subscribe to our docket alerts to know when there are new filings in cases they follow. You can create a number of alerts for free, and you get even more if you have the RECAP extension installed.
+Thousands of journalists and court watchers subscribe to our docket alerts to know when there are new filings in cases they follow. You can create a number of alerts for free, and you get even more if you have the RECAP extension installed. Docket alerts also work for cases at the Supreme Court.
 
 Creating a docket alert is easy. Just find a case you want to follow and press the button that says "Get Alerts". That's it.
 
@@ -56,7 +58,7 @@ Learn More About Docket Alerts
 
 ## Use Search Alerts for Notifications on New Cases or Filings
 
-With RECAP search alerts, you’ll be notified whenever there's a new match in our PACER holdings for any search you make. You can follow topics, people, organizations, and more. You can create a number of alerts for free, and you get even more if you become a member of Free Law Project.
+With RECAP search alerts, you’ll be notified whenever there's a new match in our PACER or Supreme Court holdings for any search you make. You can follow topics, people, organizations, and more. You can create a number of alerts for free, and you get even more if you become a member of Free Law Project.
 
 To save an alert, do a search and hit the bell icon next to your query. That’s it!
 

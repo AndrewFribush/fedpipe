@@ -321,6 +321,11 @@ newly_added_projects_only | Pass the true or false value to newly added projects
 Example:
 { "criteria": { "newly_added_projects_only": false } }
 
+multi_year_award_flag | Pass the true or false value to multi_year_award_flag to retrieve the associated projects with a selected value (true/false).
+
+Example:
+{ "criteria": { "multi_year_award_flag": true } }
+
 sub_project_only | Pass the true or false value to sub-project only to retrieve the associated projects with a selected value (true/false).
 
 Example:

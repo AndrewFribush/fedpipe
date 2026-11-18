@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Widespread Precipitation and Gusty Winds in the West; Snow from the Great Lakes to the Northeast
+# Heavy Rain and Mountain Snow for California; Flooding Impacts Likely in Eastern Florida
 
-A Pacific storm system is expected to bring strong winds and more precipitation to the western U.S., along with the likelihood of snowfall into the Sierra Nevada. Accumulating snow will develop downwind from the Great Lakes into parts of the Northeast through Saturday. Polar air will surge into the eastern half of the country this weekend.
+Another Pacific storm will bring heavy to excessive rainfall and possible flooding for coastal central and southern California today through Thursday, while heavy mountain snow is expected across the Sierra Nevada mountains. Heavy to excessive rainfall will likely bring flash and urban flooding impacts along the I-95 corridor from St. Augustine to Palm Beach, Florida through this weekend.
 Read More >
 
 Customize Your Weather.gov

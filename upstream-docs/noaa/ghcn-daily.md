@@ -16,10 +16,8 @@ The site is secure.
 
 The https:// ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
 
-Please note: Due to scheduled maintenance, many NCEI systems will be unavailable November 17, 6:30 AM ET - 2:00 PM ET. We apologize for any inconvenience.
-
-Please Note: NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Please see our cloud migration overview and frequently asked questions for more information and resources. Check the NCEI Alerts page for impacted products and datasets.
-Current Impact: Expect delayed data archival and slower update cycles for many products.
+Please Note: NCEI is currently moving its data and applications to the cloud. This upgrade may result in temporary data access delays. Check the NCEI Alerts page for impacted products and datasets.
+Current Impact: Many access portals, interactive maps, and data folders are currently unavailable due to the migration. Expect delayed data archival and slower update cycles for many products.
 
 # Global Historical Climatology Network daily (GHCNd)
 
