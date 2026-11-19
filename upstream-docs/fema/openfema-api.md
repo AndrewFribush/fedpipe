@@ -67,23 +67,23 @@ OpenFEMA provides data in machine-readable formats through API’s and downloada
 
 A full list of entities/endpoints supported by the API can be found on the OpenFEMA Data Sets page. Each API endpoint is documented individually.
 
-Each API endpoint is documented individually – each of the links on the points to the documentation.
+Each API endpoint is documented individually – each of the links on the Data Sets page points to the documentation.
 
 Major and minor version features (including the addition or deprecation of datasets) can be found on the Changelog page.
 
 ## Pricing, Registration, and API Key’s
 
-Use of the API requires no registration, follows the same Privacy Policy as FEMA.gov, and adheres to open industry standards.
+Use of the API is free, requires no registration, follows the same Privacy Policy as FEMA.gov, and adheres to open industry standards.
 
 OpenFEMA services are offered subject to your acceptance of the Terms and Conditions contained herein. Information and examples on how to cite OpenFEMA datasets can be found in the Terms and Conditions.
 
 ## Authentication
 
-As the OpenFEMA API is free for public use, authentication is not necessary.
+As the OpenFEMA API is free for public use; authentication is not necessary.
 
 ### User-Agent Recommendation
 
-Although not required, for those who use the API regularly or who have integrated it into their own products, we recommend including a descriptive “user-agent” header (such as a custom application name and contact email). This can help improve blocked IP troubleshooting.
+Although not required, for those who use the API regularly or who have integrated it into their own products, we recommend including a descriptive “user-agent” header (such as a custom application name and contact email). This can help improve troubleshooting blocked IP addresses.
 
 ## Rate Limits
 
@@ -147,9 +147,9 @@ Details regarding deprecations including the new version, the date when the depr
 
 - As described on the Changelog page
 
-- Through a GovDelivery email to those users who have opted-in to notifications
+- Through a GovDelivery email to those users who have opted-in to receive notifications
 
-Once the deprecation period has ended, the endpoint will exist, but it will return no data. Only the metadata object containing deprecation information will be returned. One week later, the endpoint will be removed. A 404 HTTP response will result when trying to access the dataset.
+Once the deprecation period has ended, the endpoint will still exist, but it will return no data. Only the metadata object containing deprecation information will be returned. One week later, the endpoint will be removed. A 404 HTTP response will result when trying to access the dataset.
 
 ## Support
 
@@ -159,6 +159,6 @@ Please contact the OpenFEMA Team at openfema@fema.dhs.gov to suggest additional 
 
 For inquiries not related to OpenFEMA, please see the listing of other FEMA Contacts.
 
-Last updated November 13, 2026
+Last updated November 19, 2026
 
 Return to top

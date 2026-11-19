@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rain and Mountain Snow for California; Flooding Impacts Likely in Eastern Florida
+# Heavy Precipitation in California; Heavy Rainfall Continues in East Florida
 
-Another Pacific storm will bring heavy to excessive rainfall and possible flooding for coastal central and southern California today through Thursday, while heavy mountain snow is expected across the Sierra Nevada mountains. Heavy to excessive rainfall will likely bring flash and urban flooding impacts along the I-95 corridor from St. Augustine to Palm Beach, Florida through this weekend.
+A Pacific storm system will bring widespread rain and mountain snow to the West. Heavy rainfall will impact portions of central and southern California. Moderate to heavy snowfall is expected across the Sierra Nevada and portions of the higher terrain of the interior West. Heavy rainfall and thunderstorms will continue a flash flooding threat across eastern Florida through Saturday.
 Read More >
 
 Customize Your Weather.gov

@@ -74,10 +74,10 @@ Chinese Military Companies Sanctions
 Jun 01, 2022
 
 Counter Narcotics Trafficking Sanctions
-Nov 13, 2026
+Nov 19, 2026
 
 Counter Terrorism Sanctions
-Nov 13, 2026
+Nov 18, 2026
 
 Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
@@ -86,7 +86,7 @@ Cuba Sanctions
 Nov 05, 2026
 
 Cyber-Related Sanctions
-Nov 05, 2026
+Nov 19, 2026
 
 Democratic Republic of the Congo-Related Sanctions
 Oct 28, 2026
@@ -140,7 +140,7 @@ Rough Diamond Trade Controls
 Jun 18, 2018
 
 Russian Harmful Foreign Activities Sanctions
-Oct 21, 2026
+Nov 19, 2026
 
 Somalia Sanctions
 May 24, 2023

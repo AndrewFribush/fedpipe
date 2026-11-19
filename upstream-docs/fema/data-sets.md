@@ -83,7 +83,7 @@ Graphic
 
 Have a Question?
 Visit our Frequently Asked Questions page.
-Email us for any further questions, comments or suggestions for additional data sets.
+Email us with any questions, comments, or suggestions for additional data sets.
 
 ## Disaster Information
 
@@ -166,6 +166,6 @@ OpenFEMA Data Set Fields | V1 | N/A
 Training Course Catalog | V1 | N/A
 Training Class Schedule | V1 | N/A
 
-Last updated November 13, 2026
+Last updated November 18, 2026
 
 Return to top

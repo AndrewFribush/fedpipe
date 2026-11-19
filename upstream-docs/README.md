@@ -45,7 +45,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `gleif` — [LEI search UI](https://search.gleif.org/) — client-rendered
 - `govinfo` — [API Docs (Swagger)](https://api.govinfo.gov/docs/) — client-rendered
 - `grid-disturbances` — [DOE OE-417 form](https://www.oe.netl.doe.gov/OE417_annual_summary.aspx) — error: ENETUNREACH
-- `grid-disturbances` — [ORNL Open Energy Data Portal](https://openenergyhub.ornl.gov/explore/dataset/oe-417-annual-summaries/) — client-rendered — kept previous snapshot
+- `grid-disturbances` — [ORNL Open Energy Data Portal](https://openenergyhub.ornl.gov/explore/dataset/oe-417-annual-summaries/) — error: ECONNRESET — kept previous snapshot
 - `gsa-calc` — [CALC+ app](https://buy.gsa.gov/pricing/) — client-rendered
 - `hud` — [API Registration](https://www.huduser.gov/hudapi/public/register) — client-rendered
 - `naep` — [NAEP Data Explorer](https://www.nationsreportcard.gov/ndecore/landing) — client-rendered
@@ -64,6 +64,5 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `sec` — [Fair Access Policy](https://www.sec.gov/privacy.htm#security) — HTTP 403 — kept previous snapshot
 - `sec` — [Full-Text Search](https://efts.sec.gov/LATEST/) — HTTP 403
 - `space-weather` — [SWPC data services](https://services.swpc.noaa.gov/) — client-rendered
-- `usgs` — [Water Services](https://waterservices.usgs.gov/) — error: UND_ERR_CONNECT_TIMEOUT — kept previous snapshot
 - `uspto` — [API docs](https://data.uspto.gov/apis/getting-started) — client-rendered
 - `uspto` — [Rate limits](https://data.uspto.gov/apis/api-rate-limits) — client-rendered
