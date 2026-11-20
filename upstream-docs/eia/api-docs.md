@@ -1172,11 +1172,11 @@ Renewables
 
 ### What's New?
 
+- Quarterly Domestic Uranium Production Report
+- Nov 20, 2026
 - Global Energy Security Data
 - Nov 16, 2026
 - Wholesale Electricity Market Data
-- Nov 12, 2026
-- Monthly Densified Biomass Fuel Report
 - Nov 12, 2026
 
 ###

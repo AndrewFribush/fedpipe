@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Precipitation in California; Heavy Rainfall Continues in East Florida
+# Heavy Rain Continues Over Eastern Florida; Watching Storm Potential Near the Southeast U.S. Coast
 
-A Pacific storm system will bring widespread rain and mountain snow to the West. Heavy rainfall will impact portions of central and southern California. Moderate to heavy snowfall is expected across the Sierra Nevada and portions of the higher terrain of the interior West. Heavy rainfall and thunderstorms will continue a flash flooding threat across eastern Florida through Saturday.
+Heavy to excessive rainfall will continue to threaten considerable flash and urban flooding impacts over the east central Florida coast from Palm Coast to near Melbourne through Friday. A subtropical or tropical storm may form near or offshore of the southeast U.S. coast this weekend. Regardless of development, strong winds, rough surf, coastal flooding, and heavy rain are likely.
 Read More >
 
 Customize Your Weather.gov
