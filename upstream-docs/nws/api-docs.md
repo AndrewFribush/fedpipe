@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy Rain Continues Over Eastern Florida; Watching Storm Potential Near the Southeast U.S. Coast
+# Heavy to Excessive Rainfall and Flooding in East Florida; Monitoring for Storm Potential Near the Southeast Coast
 
-Heavy to excessive rainfall will continue to threaten considerable flash and urban flooding impacts over the east central Florida coast from Palm Coast to near Melbourne through Friday. A subtropical or tropical storm may form near or offshore of the southeast U.S. coast this weekend. Regardless of development, strong winds, rough surf, coastal flooding, and heavy rain are likely.
+Heavy to excessive rainfall will continue to threaten considerable flash and urban flooding impacts over the east central Florida coast from Palm Coast to near Melbourne through today. A subtropical or tropical storm may form near or offshore of the southeast U.S. coast this weekend. Regardless of development, strong winds, rough surf, coastal flooding, and heavy rain are likely.
 Read More >
 
 Customize Your Weather.gov

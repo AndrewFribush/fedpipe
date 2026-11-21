@@ -18,6 +18,10 @@ A lock
 ()
 or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.
 
+Search IRS tasks, forms, and answers
+
+Suggestions
+
 English
 
 - Español
@@ -27,20 +31,6 @@ English
 - Русский
 - Tiếng Việt
 - Kreyòl ayisyen
-
-Search
-
-Menu
-
-Search
-
-Include Historical Content
-- Any -No
-
-Include Historical Content
-- Any -No
-
-Search
 
 ##
 File

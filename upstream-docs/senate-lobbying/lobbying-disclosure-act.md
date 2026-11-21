@@ -44,6 +44,30 @@ Frequently Asked Questions – Registration and Reporting
 
 Frequently Asked Questions – Contribution Reporting
 
+### November 2026
+
+The LDA (2 U.S.C. § 1604(d)) requires a filer (a registrant or individual lobbyist required to file an LD-203 report) to disclose, if applicable, information for itself and for any political committee it establishes or controls. The required information includes:
+
+The date, the recipient, the name of the covered official, the payee(s), and the amount of funds paid to an entity established, financed, maintained, or controlled by a covered Legislative or Executive Branch official or to an entity designated by such official (except for information required to be disclosed by another entity under 52 U.S.C. § 30104).
+
+Example: A covered Legislative Branch official, Congresswoman Smith, has publicly stated her support for renovating homes for disabled kids through Rooms To Grow, a 501(c)(3) nonprofit organization. Following Congresswoman Smith’s statement, an LDA filer made a $5,000 contribution to Rooms To Grow. The filer is not required to disclose this payment on their LD-203 Semiannual Contribution Report unless it must be reported under 52 U.S.C. § 30104. A contribution made in response to a simple statement of support or solicitation does not automatically qualify as a reportable event under 2 U.S.C. § 1604(d) unless there is further involvement from a covered official.
+
+LDA filers should review their records each semiannual reporting period to ensure that all information required by 2 U.S.C. § 1604(d) is accurately disclosed. The next LD-203 Semiannual Contributions filing deadline is February 1, 2027, for the reporting period July 1, 2026, through December 31, 2026.
+
+For more information on amending previous filings, please click here. If you have additional questions or concerns, please contact either of the offices listed below:
+
+House Legislative Resource Center
+
+202-226-5200
+
+LobbyInfo@mail.house.gov
+
+Senate Office of Public Records
+
+202-224-0758
+
+Lobby@sec.senate.gov
+
 ### October 2026
 Quarterly Report Filing Reminder
 

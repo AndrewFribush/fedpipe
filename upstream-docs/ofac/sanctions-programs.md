@@ -83,7 +83,7 @@ Countering America's Adversaries Through Sanctions Act-Related Sanctions
 Feb 24, 2026
 
 Cuba Sanctions
-Nov 05, 2026
+Nov 20, 2026
 
 Cyber-Related Sanctions
 Nov 19, 2026
@@ -107,7 +107,7 @@ International Criminal Court-Related Sanctions
 Oct 09, 2026
 
 Iran Sanctions
-Nov 09, 2026
+Nov 20, 2026
 
 Iraq-Related Sanctions
 Oct 05, 2026
