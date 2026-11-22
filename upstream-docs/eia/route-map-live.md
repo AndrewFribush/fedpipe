@@ -125,7 +125,10 @@ Annual U.S. projections using National Energy Modelling System (NEMS) for releas
 ## ieo — International Energy Outlook
 
 Annual international projections using the World Energy Projection System (WEPS) model for release year.  Report and interactive projection data browser:  IEO (www.eia.gov/ieo/)
-- (children unavailable: HTTP 429 for https://api.eia.gov/v2/ieo?api_key=85BYhVcILLDkVtR288Q7fQOfYXNGJLSZCiBxjovJ)
+- `ieo/2023` — 2023
+- `ieo/2021` — 2021
+- `ieo/2019` — 2019
+- `ieo/2017` — 2017
 
 ## co2-emissions — State CO2 Emissions- deprecated: see SEDS
 
