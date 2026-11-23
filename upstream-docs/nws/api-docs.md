@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Brochures
-
 Weather-Ready Nation
+
+Brochures
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Heavy to Excessive Rainfall and Flooding in East Florida; Monitoring for Storm Potential Near the Southeast Coast
+# Precipitation, Gusty Winds, and High Surf in the Western U.S.; Lake Effect Snow in Michigan
 
-Heavy to excessive rainfall will continue to threaten considerable flash and urban flooding impacts over the east central Florida coast from Palm Coast to near Melbourne through today. A subtropical or tropical storm may form near or offshore of the southeast U.S. coast this weekend. Regardless of development, strong winds, rough surf, coastal flooding, and heavy rain are likely.
+A series of Pacific storm systems will continue the active pattern across the West Coast, with widespread rain, mountain snow, gusty coastal winds, and high surf for much of the week. There is a threat of moderate to major coastal flooding and high surf to the California coast. Lake-effect snow will impact Michigan today and spread to the Lower Great Lakes overnight.
 Read More >
 
 Customize Your Weather.gov

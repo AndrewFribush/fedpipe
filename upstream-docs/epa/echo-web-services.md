@@ -6,6 +6,8 @@ Source: https://echo.epa.gov/tools/web-services
 
 Web Services | ECHO | US EPA
 
+Many ECHO searches will be unavailable today, November 23, after 6 pm EST, for scheduled maintenance. We will return to normal service after several hours.
+
 Skip to main content
 
 Official websites use .gov
