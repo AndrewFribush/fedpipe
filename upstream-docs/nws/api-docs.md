@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Precipitation, Gusty Winds, and High Surf in the Western U.S.; Lake Effect Snow in Michigan
+# Active Pattern in the West; Monitoring a Coastal Storm for the East Coast Over Thanksgiving
 
-A series of Pacific storm systems will continue the active pattern across the West Coast, with widespread rain, mountain snow, gusty coastal winds, and high surf for much of the week. There is a threat of moderate to major coastal flooding and high surf to the California coast. Lake-effect snow will impact Michigan today and spread to the Lower Great Lakes overnight.
+A series of Pacific storm systems will bring widespread rain, mountain snow, gusty winds, high surf to the West Coast this week. Moderate to major coastal flooding is forecast for the California coast. A coastal storm off the Southeast coast Wednesday will intensify and track up the East Coast over the Thanksgiving holiday, bringing coastal flooding, powerful winds and heavy rainfall.
 Read More >
 
 Customize Your Weather.gov

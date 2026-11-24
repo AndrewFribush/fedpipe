@@ -28,6 +28,7 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `congress` — [API Docs](https://api.congress.gov/) — client-rendered
 - `congress` — [Interactive Docs](https://api.congress.gov/#/) — client-rendered
 - `congress` — [Sign Up](https://api.congress.gov/sign-up/) — client-rendered
+- `courtlistener` — [REST API docs](https://www.courtlistener.com/help/api/rest/) — HTTP 405 — kept previous snapshot
 - `doj-news` — [DOJ Newsroom](https://www.justice.gov/news) — client-rendered
 - `dol` — [DOL API User Guide](https://data.dol.gov/user-guide) — client-rendered
 - `dol` — [DOL Open Data Portal](https://data.dol.gov/) — client-rendered
@@ -51,8 +52,8 @@ Not mirrored this run (PDF, binary, client-rendered JS app, or fetch error — r
 - `nfip` — [OpenFEMA NfipClaims](https://www.fema.gov/openfema-data-page/fima-nfip-redacted-claims-v2) — HTTP 404
 - `nhtsa` — [NHTSA Datasets & APIs](https://www.nhtsa.gov/nhtsa-datasets-and-apis) — HTTP 403 — kept previous snapshot
 - `nih` — [NIH RePORTER](https://reporter.nih.gov/) — client-rendered
-- `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 503
-- `noaa` — [NCEI Search Service](https://www.ncei.noaa.gov/access/services/search/v1) — HTTP 503
+- `noaa` — [NCEI Access Data Service](https://www.ncei.noaa.gov/access/services/data/v1) — HTTP 400
+- `noaa` — [NCEI Search Service](https://www.ncei.noaa.gov/access/services/search/v1) — HTTP 404
 - `ntsb` — [CAROL query](https://data.ntsb.gov/carol-main-public/) — client-rendered
 - `ofac` — [SDN list](https://ofac.treasury.gov/specially-designated-nationals-and-blocked-persons-list-sdn-human-readable-lists) — client-rendered
 - `open-payments` — [API Documentation](https://openpaymentsdata.cms.gov/about/api) — HTTP 403
