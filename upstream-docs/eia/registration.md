@@ -349,12 +349,12 @@ Renewables
 
 ### What's New?
 
+- Wholesale Electricity Market Data
+- Nov 25, 2026
 - Electric Power Monthly
 - Nov 24, 2026
-- Annual Coal Report 2025
-- Nov 23, 2026
-- Quarterly Domestic Uranium Production Report
-- Nov 20, 2026
+- Monthly Energy Review
+- Nov 24, 2026
 
 ###
 Press Room

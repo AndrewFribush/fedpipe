@@ -23,17 +23,17 @@ Economic Data
 
 As of October 2026
 
-3.65%
+3.84%
 
 ### PCE Inflation
 
-As of September 2026
+As of October 2026
 
 3.88%
 
 ### Daily Federal Funds Rate
 
-As of November 20, 2026
+As of November 23, 2026
 
 Economic Analysis
 

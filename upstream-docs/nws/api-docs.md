@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# Active Pattern in the West; Monitoring a Coastal Storm for the East Coast Over Thanksgiving
+# East Coast Storm Impacts Over Thanksgiving; Pacific Storms Continue to Impact the West Coast
 
-A series of Pacific storm systems will bring widespread rain, mountain snow, gusty winds, high surf to the West Coast this week. Moderate to major coastal flooding is forecast for the California coast. A coastal storm off the Southeast coast Wednesday will intensify and track up the East Coast over the Thanksgiving holiday, bringing coastal flooding, powerful winds and heavy rainfall.
+A strong coastal storm will bring high winds, heavy rainfall, and major coastal flooding along the East Coast into Friday. Moderate to heavy snow will accumulate over the mid-Mississippi Valley before shifting to the Appalachians. A series of Pacific storms will impact the West Coast with rain, mountain snow, gusty to high winds, coastal flooding, and high surf into next week.
 Read More >
 
 Customize Your Weather.gov
