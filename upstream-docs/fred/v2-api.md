@@ -8,9 +8,9 @@ Federal Reserve Bank of St. Louis | Economic Resources and Data
 
 COMMITTED TO A STRONG AND RESILIENT ECONOMY FOR ALL
 
-## View President Musalem’s Remarks in Argentina
+## Hyperscalers’ Financing of the AI Investment Boom
 
-St. Louis Fed President Alberto Musalem shared his latest views on the U.S. economy and monetary policy in a Nov. 17 speech at a Central Bank of Argentina conference.
+A look at debt, shareholder payouts, operating income and cash flow reveals differences in how data center builders and semiconductor producers fund investment.
 
 ## Pulse of the Economy
 
@@ -33,19 +33,19 @@ As of October 2026
 
 ### Daily Federal Funds Rate
 
-As of November 23, 2026
+As of November 24, 2026
 
-Economic Analysis
+From Our President & CEO
 
-## Introducing Our Monetary Policy Indicators
+## Pres. Musalem's Remarks and Community Engagement
 
-News Release
+Beige Book
 
-## FOMC Holds Federal Funds Rate Target Range Steady
+## Eighth District Economic Activity Continues to Modestly Increase
 
-Economic Analysis
+Monetary Policy Indicators
 
-## Does Growth in the Money Supply Predict U.S. Inflation?
+## Supply Shocks Surpass Demand in Spurring Excess Inflation
 
 ## What We Do
 
