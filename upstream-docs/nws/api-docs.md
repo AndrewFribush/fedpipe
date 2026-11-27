@@ -48,9 +48,9 @@ INFORMATION
 
 Wireless Emergency Alerts
 
-Weather-Ready Nation
-
 Brochures
+
+Weather-Ready Nation
 
 Cooperative Observers
 
@@ -115,9 +115,9 @@ Multiple locations were found. Please select one of the following:
 
 Location Help
 
-# East Coast Storm Impacts Over Thanksgiving; Pacific Storms Continue to Impact the West Coast
+# Storms Continue to Impact Parts of the U.S. After Thanksgiving
 
-A strong coastal storm will bring high winds, heavy rainfall, and major coastal flooding along the East Coast into Friday. Moderate to heavy snow will accumulate over the mid-Mississippi Valley before shifting to the Appalachians. A series of Pacific storms will impact the West Coast with rain, mountain snow, gusty to high winds, coastal flooding, and high surf into next week.
+A large storm will shift across the eastern Great Lakes and interior New England today and tonight with widespread gusty winds, rain, and coastal flooding. A series of Pacific storms will continue to impact the West Coast with periods of widespread rain, mountain snow, gusty to high winds, coastal flooding, and high surf into next week.
 Read More >
 
 Customize Your Weather.gov
