@@ -33,7 +33,7 @@ As of October 2026
 
 ### Daily Federal Funds Rate
 
-As of November 24, 2026
+As of November 26, 2026
 
 From Our President & CEO
 
